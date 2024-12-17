@@ -6,6 +6,7 @@ const express = require('express');
 const logger = require('morgan');
 const eventRoutes = require("./routes/event-route");
 
+
 const app = express();
 
 
@@ -20,11 +21,11 @@ app.use((req, res, next) => {
     next();
 });
 app.use("/api/v1/", eventRoutes); // home route
-// app.use("/api/v1/events", eventRoutes); // home route
 
 
 
-app.listen(process.env.PORT, '127.0.0.1', () => console.log('Server running on http://127.0.0.1:'+process.env.PORT));
+
+app.listen(process.env.PORT, '127.0.0.1', () => console.log(`Server running on http://localhost:${process.env.PORT}/api/v1/`));
 
 
 
