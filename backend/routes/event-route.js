@@ -1,6 +1,8 @@
 const express = require('express');
 
+import { Router } from 'express';
 
+export const router = Router();
 
 
 const { getHomeController, getEventsController } = require("../controllers/event-controller");
