@@ -37,5 +37,6 @@ exports.CONFIG = void 0;
 const dotenv = __importStar(require("dotenv"));
 dotenv.config();
 exports.CONFIG = {
-    PORT: process.env.PORT || 3000
+    PORT: process.env.PORT || 3000,
+    MONGODB_URL: process.env.MONGODB_URL || '',
 };

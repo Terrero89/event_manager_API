@@ -1,11 +1,12 @@
 import express, { Express, Request, Response } from 'express';
 import bodyParser from 'body-parser';
-import eventRoutes from './routes/event-route';
-import taskRoutes from './routes/task-routes';
+import subtaskRoutes from './routes/subtask-routes';
+import storyRoutes from './routes/story-routes';
 import usersRoutes from './routes/users-routes';
 import { CONFIG } from './config/global';
 require("dotenv").config();
 
+const mongoose = require('mongoose');
 const app: Express = express();
 
 app.use(express.json());
@@ -17,11 +18,15 @@ app.use((req: Request, res: Response, next: any ) => {
     next();
 });
 // ROUTES 
-app.use("/api/v1/", eventRoutes); // home route
-app.use("/api/v1/", taskRoutes); // home route
+app.use("/api/v1/", subtaskRoutes); // home route
+app.use("/api/v1/", storyRoutes); // home route
 app.use("/api/v1/", usersRoutes); // home route
 
 
+
+mongoose.connect(CONFIG.MONGODB_URL).then(() =>{
+    console.log('Connected MongoDB...');
+}).catch((error: Error) => console.log(error));
 app.listen(CONFIG.PORT, () => console.log(`Server running on http://localhost:${CONFIG.PORT}/api/v1/`));
 
 
