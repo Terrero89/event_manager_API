@@ -1,37 +1,29 @@
 import express, { Express, Request, Response } from 'express';
-// var createError = require('http-errors');
+import bodyParser from 'body-parser';
+import eventRoutes from './routes/event-route';
+import taskRoutes from './routes/task-routes';
+import usersRoutes from './routes/users-routes';
+import { CONFIG } from './config/global';
 require("dotenv").config();
-// const express = require('express');
-
-
-// var path = require('path');
-// var cookieParser = require('cookie-parser');
-const logger = require('morgan');
-
-// import {eventRoutes} from './routes/event-route';
 
 const app: Express = express();
 
-app.use(logger('dev'));
 app.use(express.json());
-// app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
 
 // global middleware
 app.use((req: Request, res: Response, next: any ) => {
     console.log(req.method + ' ' + req.path,  + ' ' + req.url );
     next();
 });
-// app.use("/api/v1/", eventRoutes); // home route
+// ROUTES 
+app.use("/api/v1/", eventRoutes); // home route
+app.use("/api/v1/", taskRoutes); // home route
+app.use("/api/v1/", usersRoutes); // home route
 
-app.get(`/api/v1/events`, (req, res) => {
-    res.json({ message: 'Welcome to the event APIiiiiidsds!' });
-});
 
-app.get('/', (req,res)=>{
-    res.send("COOL")
-})
+app.listen(CONFIG.PORT, () => console.log(`Server running on http://localhost:${CONFIG.PORT}/api/v1/`));
 
-app.listen(8080, '127.0.0.1', () => console.log(`Server running on http://localhost:${process.env.PORT}/api/v1/`));
 
 
 
