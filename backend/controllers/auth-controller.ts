@@ -1,8 +1,9 @@
 import { Request, Response } from 'express';
 import { User, IUser } from '../models/user-model';
-
+import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
+import { sendEmail } from '../utils/mailer';
 
 dotenv.config();
 
@@ -16,10 +17,26 @@ export const registerController= async (req: Request, res: Response): Promise<vo
             return;
         }
 
-        const user = new User({ username, email, password });
-        await user.save();
 
-        res.status(201).json({ message: 'User registered successfully!' });
+          // Hash password
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+        // Create new user
+        const user = new User({ username, email, password: hashedPassword });
+        await user.save();
+        
+
+         // Send welcome email
+        const emailSubject = 'Welcome to Our Event manager app!';
+        const emailText = `Hi ${username},\n\nThank you for registering at our app. We're excited to have you on board!`;
+        const emailHtml = `<p>Hi <strong>${username}</strong>,</p><p>Thank you for registering at our app. We're excited to have you on board!</p>`;
+
+        const previewURL = await sendEmail(email, emailSubject, emailText, emailHtml);
+
+        console.log("email being sent successfullyyyyy", previewURL);
+
+        // Respond to the client
+        res.status(201).json({ message: 'User registered successfully', previewURL });
     } catch (error) {
         res.status(500).json({ error: "Error registering user" });
     }
@@ -52,4 +69,17 @@ export const loginController = async (req: Request, res: Response): Promise<void
 // Protected route example
 export const protectedRouteController  = (req: Request, res: Response): void => {
     res.status(200).json({ message: 'Access granted to protected route', user: req.body.user }); // eye on this one
+};
+
+export const sendEmailController = async (req: Request, res: Response): Promise<void> => {
+    const { to, subject, text, html } = req.body;
+
+    try {
+        await sendEmail(to, subject, text, html);
+        console.log("email being sent successfully")
+        res.status(200).json({ message: 'Email sent successfully!' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Failed to send email.' });
+    }
 };

@@ -12,10 +12,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.protectedRouteController = exports.loginController = exports.registerController = void 0;
+exports.sendEmailController = exports.protectedRouteController = exports.loginController = exports.registerController = void 0;
 const user_model_1 = require("../models/user-model");
+const bcrypt_1 = __importDefault(require("bcrypt"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const dotenv_1 = __importDefault(require("dotenv"));
+const mailer_1 = require("../utils/mailer");
 dotenv_1.default.config();
 // Register a new user
 const registerController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -26,9 +28,20 @@ const registerController = (req, res) => __awaiter(void 0, void 0, void 0, funct
             res.status(400).json({ message: 'User already exists' });
             return;
         }
-        const user = new user_model_1.User({ username, email, password });
+        // Hash password
+        const salt = yield bcrypt_1.default.genSalt(10);
+        const hashedPassword = yield bcrypt_1.default.hash(password, salt);
+        // Create new user
+        const user = new user_model_1.User({ username, email, password: hashedPassword });
         yield user.save();
-        res.status(201).json({ message: 'User registered successfully!' });
+        // Send welcome email
+        const emailSubject = 'Welcome to Our Event manager app!';
+        const emailText = `Hi ${username},\n\nThank you for registering at our app. We're excited to have you on board!`;
+        const emailHtml = `<p>Hi <strong>${username}</strong>,</p><p>Thank you for registering at our app. We're excited to have you on board!</p>`;
+        const previewURL = yield (0, mailer_1.sendEmail)(email, emailSubject, emailText, emailHtml);
+        console.log("email being sent successfullyyyyy", previewURL);
+        // Respond to the client
+        res.status(201).json({ message: 'User registered successfully', previewURL });
     }
     catch (error) {
         res.status(500).json({ error: "Error registering user" });
@@ -62,3 +75,16 @@ const protectedRouteController = (req, res) => {
     res.status(200).json({ message: 'Access granted to protected route', user: req.body.user }); // eye on this one
 };
 exports.protectedRouteController = protectedRouteController;
+const sendEmailController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { to, subject, text, html } = req.body;
+    try {
+        yield (0, mailer_1.sendEmail)(to, subject, text, html);
+        console.log("email being sent successfully");
+        res.status(200).json({ message: 'Email sent successfully!' });
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Failed to send email.' });
+    }
+});
+exports.sendEmailController = sendEmailController;

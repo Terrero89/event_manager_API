@@ -6,4 +6,5 @@ const router = (0, express_1.Router)();
 router.post('/login', auth_controller_1.loginController);
 router.post('/register', auth_controller_1.registerController);
 router.get('/protected', auth_controller_1.protectedRouteController);
+router.post('/send-email', auth_controller_1.sendEmailController);
 exports.default = router;
