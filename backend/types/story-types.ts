@@ -1,11 +1,11 @@
 
 // type that defines array of objects
 export type ArrayObjType =  Array<Object>
-export type StoryType = 'story' | 'bug' | 'non-prod' | 'tasks' | 'tech_debt'
+export type StoryType = 'story' | 'bug' | 'non-prod' | 'tasks' | 'tech_debt' | 'spike' | 'POC'
 export type DevType = 'FE' | 'BE' | 'FS' | 'AWS'
 export type StatusType = 'to do' | 'in progress' | 'demo_ready | completed' | 'released'
 export type DifficultyLevelType = 'easy' | 'medium' | 'hard'
-export type WorkType = 'story' | 'bug' | 'non-prod'
+
 
 
 // interface for story data type
@@ -29,15 +29,42 @@ export interface Story {
     sprint: string,
     storyType: string, 
     learning: ArrayObjType,
-    planningNotes: ArrayObjType,
+    planningNotes: string[],
 
 }
 
+// interface for subtask data type
+export interface Subtasks {
+    subtaskTitle: string,   
+    subtaskNumber: string,
+    subtaskDescription: ArrayObjType,
+    subtaskAcceptanceCriteria: ArrayObjType,
+    subtaskDifficultyLevel: DifficultyLevelType,
+    subtaskStoryPoints: number,
+    subtaskWorkType: StoryType,
+    subtaskDevelopmentType: DevType,  // FE | BE | FS | AWS
+    subtaskStatus: StatusType,
+    subtaskComments: ArrayObjType,
+    subtaskReporter: string,
+    
+}
+// Learning interface  type
+
+export interface Learning {
+    learningTitle: string,
+    storyNumber: string,
+    learningDescription: ArrayObjType
+    learningDifficulty: DifficultyLevelType
+
+}
+
+
+
 // interface for user data type
 /**
- * subtasks
- * learning
- * planningNotes
+ * subtasks ''
+ * learning '' 
+ * planningNotes ''
  * acceptanceCriteria
  * storyDescription
  * storyComments

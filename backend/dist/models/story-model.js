@@ -1,9 +1,12 @@
-import mongoose from 'mongoose';
-
-
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Stories = void 0;
+const mongoose_1 = __importDefault(require("mongoose"));
 // Define DevType as an enum
-
-const storySchema = new mongoose.Schema({
+const storySchema = new mongoose_1.default.Schema({
     storyTitle: {
         type: String,
         required: true,
@@ -29,10 +32,9 @@ const storySchema = new mongoose.Schema({
         required: true,
     },
     developmentType: {
-        type:String, // FE | BE | FS
+        type: String, // FE | BE | FS
         required: true,
     },
-
     status: {
         type: String,
         required: true,
@@ -49,9 +51,5 @@ const storySchema = new mongoose.Schema({
         type: Date,
         default: Date.now,
     },
-
 }, { timestamps: true });
-
-
-
-export const Story = mongoose.model('Story', storySchema);
+exports.Stories = mongoose_1.default.model("Stories", storySchema);
