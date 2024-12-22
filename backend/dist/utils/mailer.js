@@ -28,13 +28,13 @@ const sendEmail = (to, subject, text, html) => __awaiter(void 0, void 0, void 0,
             host: 'smtp.ethereal.email',
             port: 587,
             auth: {
-                user: 'ewald4@ethereal.email',
-                pass: 'BgV178KpheJSaR12t1'
+                user: 'allison.schmeler@ethereal.email',
+                pass: 'gQpdKQAsuTbtVB5tYa'
             }
         });
         // Message object
         let message = {
-            from: 'Sergio Terrero <ewald4@ethereal.email>',
+            from: 'Sergio Terrero <allison.schmeler@ethereal.email>',
             to,
             subject,
             text,

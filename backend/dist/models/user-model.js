@@ -48,31 +48,40 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.User = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
-// User schema
 const UserSchema = new mongoose_1.Schema({
-    username: { type: String, required: true, unique: true },
+    username: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-}, { timestamps: true });
-// Hash password before saving
-UserSchema.pre('save', function (next) {
-    return __awaiter(this, void 0, void 0, function* () {
-        if (!this.isModified('password'))
-            return next();
-        try {
-            const salt = yield bcrypt_1.default.genSalt(10);
-            this.password = yield bcrypt_1.default.hash(this.password, salt);
-            next();
-        }
-        catch (err) {
-            next(err);
-        }
-    });
 });
-// Validate password method
+// Add method to validate password
 UserSchema.methods.isValidPassword = function (password) {
     return __awaiter(this, void 0, void 0, function* () {
         return bcrypt_1.default.compare(password, this.password);
     });
 };
 exports.User = mongoose_1.default.model('User', UserSchema);
+// User schema
+// const UserSchema: Schema = new Schema(
+//     {
+//         username: { type: String, required: true, unique: true },
+//         email: { type: String, required: true, unique: true },
+//         password: { type: String, required: true },
+//     },
+//     { timestamps: true }
+// );
+// // Hash password before saving
+// UserSchema.pre<IUser>('save', async function (next) {
+//     if (!this.isModified('password')) return next();
+//     try {
+//         const salt = await bcrypt.genSalt(10);
+//         this.password = await bcrypt.hash(this.password, salt);
+//         next();
+//     } catch (err) {
+//         next(err as Error);
+//     }
+// });
+// // Validate password method
+// UserSchema.methods.isValidPassword = async function (password: string): Promise<boolean> {
+//     return bcrypt.compare(password, this.password);
+// };
+// export const User = mongoose.model<IUser>('User', UserSchema);

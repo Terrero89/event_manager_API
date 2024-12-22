@@ -39,7 +39,6 @@ const registerController = (req, res) => __awaiter(void 0, void 0, void 0, funct
         const emailText = `Hi ${username},\n\nThank you for registering at our app. We're excited to have you on board!`;
         const emailHtml = `<p>Hi <strong>${username}</strong>,</p><p>Thank you for registering at our app. We're excited to have you on board!</p>`;
         const previewURL = yield (0, mailer_1.sendEmail)(email, emailSubject, emailText, emailHtml);
-        console.log("email being sent successfullyyyyy", previewURL);
         // Respond to the client
         res.status(201).json({ message: 'User registered successfully', previewURL });
     }
@@ -52,21 +51,25 @@ exports.registerController = registerController;
 const loginController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { email, password } = req.body;
     try {
+        // Find user by email
         const user = yield user_model_1.User.findOne({ email });
         if (!user) {
             res.status(404).json({ message: 'User not found' });
             return;
         }
+        // Validate password
         const isMatch = yield user.isValidPassword(password);
         if (!isMatch) {
             res.status(401).json({ message: 'Invalid credentials' });
             return;
         }
+        // Generate JWT token
         const token = jsonwebtoken_1.default.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
         res.status(200).json({ token });
     }
     catch (error) {
-        res.status(500).json({ error: "EXPIRE TIME OF SESSION" });
+        console.error('Error logging in:', error);
+        res.status(500).json({ error: 'Internal server error' });
     }
 });
 exports.loginController = loginController;

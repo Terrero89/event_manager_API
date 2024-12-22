@@ -11,19 +11,21 @@ nodemailer.createTestAccount((err, account) => {
 
     console.log('Credentials obtained, sending message...');
 
+
     // Create a SMTP transporter object
     const transporter = nodemailer.createTransport({
         host: 'smtp.ethereal.email',
         port: 587,
         auth: {
-            user: 'ewald4@ethereal.email',
-            pass: 'BgV178KpheJSaR12t1'
+            user: 'allison.schmeler@ethereal.email',
+        pass: 'gQpdKQAsuTbtVB5tYa'
         }
     });
 
     // Message object
+
     let message = {
-        from: 'Sergio Terrero <ewald4@ethereal.email>',
+        from: 'Sergio Terrero <allison.schmeler@ethereal.email>',
         to,
         subject,
         text,
