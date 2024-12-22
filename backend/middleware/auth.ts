@@ -19,3 +19,20 @@ export const verifyToken = (req: AuthRequest, res: Response, next: NextFunction)
         res.status(400).json({ message: 'Invalid token' });
     }
 };
+
+export const verifyTokenFromCookie = (req: Request, res: Response, next: NextFunction): void => {
+    const token = req.cookies.authToken;
+
+    if (!token) {
+        res.status(401).json({ message: 'Unauthorized: Token not provided' });
+        return;
+    }
+
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET as string);
+        req.body.user = decoded;
+        next();
+    } catch (error) {
+        res.status(401).json({ message: 'Unauthorized: Invalid token' });
+    }
+}
