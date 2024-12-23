@@ -69,7 +69,7 @@ const loginController = (req, res) => __awaiter(void 0, void 0, void 0, function
         const token = jsonwebtoken_1.default.sign({ id: user._id }, process.env.JWT_SECRET, {
             expiresIn: "1h",
         });
-        // // Set HttpOnly cookie
+        // Set HttpOnly cookie
         // res.cookie("authToken", token, {
         //   httpOnly: true,
         //   secure: process.env.NODE_ENV === 'development', // Only over HTTPS in production

@@ -4,7 +4,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import {sendEmail} from "../utils/mailer";
-import {CONFIG} from '../config/global';
+
 
 dotenv.config();
 
@@ -76,7 +76,7 @@ export const loginController = async (
             expiresIn: "1h",
         });
 
-        // // Set HttpOnly cookie
+        // Set HttpOnly cookie
         // res.cookie("authToken", token, {
         //   httpOnly: true,
         //   secure: process.env.NODE_ENV === 'development', // Only over HTTPS in production
