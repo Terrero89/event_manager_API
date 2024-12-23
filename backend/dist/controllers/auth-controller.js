@@ -69,13 +69,13 @@ const loginController = (req, res) => __awaiter(void 0, void 0, void 0, function
         const token = jsonwebtoken_1.default.sign({ id: user._id }, process.env.JWT_SECRET, {
             expiresIn: "1h",
         });
-        // Set HttpOnly cookie
-        res.cookie("authToken", token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === 'development', // Only over HTTPS in production
-            sameSite: "strict", // Prevent CSRF attacks
-            maxAge: 3600000, // 1 hour
-        });
+        // // Set HttpOnly cookie
+        // res.cookie("authToken", token, {
+        //   httpOnly: true,
+        //   secure: process.env.NODE_ENV === 'development', // Only over HTTPS in production
+        //   sameSite: "strict", // Prevent CSRF attacks
+        //   maxAge: 3600000, // 1 hour
+        // });
         res.status(200).json({ token, cookie: 'authToken' });
     }
     catch (error) {
@@ -99,6 +99,7 @@ const protectedRouteController = (req, res) => {
     }); // eye on this one
 };
 exports.protectedRouteController = protectedRouteController;
+// test nodemailer only
 const sendEmailController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { to, subject, text, html } = req.body;
     try {

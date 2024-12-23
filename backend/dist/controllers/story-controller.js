@@ -48,7 +48,7 @@ const deleteStoryController = (req, res) => __awaiter(void 0, void 0, void 0, fu
         res.status(404).json({ error: "Story does not exist" });
         return;
     }
-    const story = yield story_model_1.Stories.findById(id);
+    const story = yield story_model_1.Stories.findByIdAndDelete(id);
     if (!story) {
         res.status(404).json({ error: "No story found" });
         return;

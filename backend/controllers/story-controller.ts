@@ -44,7 +44,7 @@ export const deleteStoryController = async (
     return;
   }
 
-  const story = await Stories.findById(id);
+  const story = await Stories.findByIdAndDelete(id);
 
   if (!story) {
     res.status(404).json({ error: "No story found" });

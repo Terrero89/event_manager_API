@@ -8,7 +8,7 @@ const router = Router();
 router.post('/login', loginController)
 router.post('/logout', logoutController)
 router.post('/register', registerController);
-router.get('/protected', verifyToken,  protectedRouteController);
+router.get('/protected', verifyToken, protectedRouteController);
 router.post('/send-email', sendEmailController );
 
 export default router;

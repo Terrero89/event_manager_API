@@ -5,6 +5,7 @@ import storyRoutes from './routes/story-routes';
 import usersRoutes from './routes/users-routes';
 import { CONFIG } from './config/global';
 import authRoutes from './routes/auth-routes';
+import todoRoutes from './routes/todo-routes';
 require("dotenv").config();
 
 const mongoose = require('mongoose');
@@ -14,19 +15,20 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // global middleware
-app.use((req: Request, res: Response, next: express.NextFunction ) => {
-    console.log(req.method + ' ' + req.path,  + ' ' + req.url );
+app.use((req: Request, res: Response, next: express.NextFunction) => {
+    console.log(req.method + ' ' + req.path, + ' ' + req.url);
     next();
 });
 // ROUTES 
-app.use("/api/v1/", subtaskRoutes); // home route
+
+app.use("/api/v1/auth", authRoutes); // user auth
 app.use("/api/v1/", storyRoutes); // home route
 app.use("/api/v1/", usersRoutes); // home route
-app.use("/api/v1/auth",authRoutes);
+app.use("/api/v1/", todoRoutes);
+app.use("/api/v1/", subtaskRoutes); // home route
 
 
-
-mongoose.connect(CONFIG.MONGODB_URL).then(() =>{
+mongoose.connect(CONFIG.MONGODB_URL).then(() => {
     console.log('Connected MongoDB...');
 }).catch((error: Error) => console.log(error));
 app.listen(CONFIG.PORT, () => console.log(`Server running on http://localhost:${CONFIG.PORT}/api/v1/`));
