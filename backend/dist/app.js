@@ -10,11 +10,16 @@ const users_routes_1 = __importDefault(require("./routes/users-routes"));
 const global_1 = require("./config/global");
 const auth_routes_1 = __importDefault(require("./routes/auth-routes"));
 const todo_routes_1 = __importDefault(require("./routes/todo-routes"));
+const cors = require("cors");
 require("dotenv").config();
 const mongoose = require('mongoose');
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
+app.use(cors({
+    origin: 'http://localhost:3000', // Update to your Nuxt frontend's origin
+    credentials: true, // Allow cookies if needed
+}));
 // global middleware
 app.use((req, res, next) => {
     console.log(req.method + ' ' + req.path, +' ' + req.url);
