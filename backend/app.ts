@@ -15,13 +15,17 @@ const app: Express = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-
-app.use(
-    cors({
-      origin: 'http://localhost:3000', // Update to your Nuxt frontend's origin
-      credentials: true, // Allow cookies if needed
-    })
-  );
+app.use(cors());
+// app.use(
+//   cors({
+//     origin: ['http://localhost:3000', 'https://myfrontenddomain.com'], // Multiple domains
+//     methods: ['GET', 'POST', 'PUT', 'DELETE'], // Specific methods
+//     allowedHeaders: ['Content-Type', 'Authorization'], // Custom headers
+//     exposedHeaders: ['Authorization'], // Headers exposed to the client
+//     credentials: true, // Allow cookies
+//     maxAge: 600, // Cache preflight response for 10 minutes
+//   })
+// );
 // global middleware
 app.use((req: Request, res: Response, next: express.NextFunction) => {
     console.log(req.method + ' ' + req.path, + ' ' + req.url);
