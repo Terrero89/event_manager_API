@@ -1,17 +1,38 @@
-<script lang="ts" setup>
-import { CONFIG } from "../config/global";
+<script setup lang="js">
+import { CONFIG } from "../config/globalLinks";
 </script>
 
 <template>
   <div>
     <UHorizontalNavigation
-      :links="CONFIG.defaultLinks"
+      :links="CONFIG.horizontal.storyLinks"
       class="border-b border-gray-200 dark:border-gray-800"
     />
-    <UContainer>
-      <slot />
-    </UContainer>
+
+    <div
+      class="vertical border-b border-l border-r border-gray-200 dark:border-gray-800"
+    >
+      <UVerticalNavigation :links="CONFIG.vertical.default" />
+    </div>
+
+    <slot />
   </div>
 </template>
 
-<style></style>
+<style scoped>
+.vertical {
+  width: 15rem;
+  float: left;
+  margin-right: 1rem;
+  height: 99dvh;
+  display: block;
+  margin-bottom: 1rem;
+}
+
+
+@media (max-width: 756px) {
+  .vertical {
+    max-width: 12rem;
+  }
+}
+</style>

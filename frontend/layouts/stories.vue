@@ -1,27 +1,27 @@
 <script setup lang="js">
-import { CONFIG } from "../config/global";
+import { CONFIG } from "../config/globalLinks";
 </script>
 
 <template>
   <div>
     <UHorizontalNavigation
-      :links="CONFIG.defaultLinks"
+      :links="CONFIG.horizontal.storyLinks"
       class="border-b border-gray-200 dark:border-gray-800"
     />
-
+   
     <div
       class="vertical border-b border-l border-r border-gray-200 dark:border-gray-800"
     >
-      <UVerticalNavigation :links="CONFIG.verticalLinks" />
+      <UVerticalNavigation :links="CONFIG.vertical.default" />
     </div>
-    This will change since this stories layout
+   
     <slot class="slot" />
   </div>
 </template>
 
 <style scoped>
 .vertical {
-  width: 20rem;
+  width: 15rem;
   float: left;
   margin-right: 1rem;
   height: 99dvh;
@@ -30,5 +30,12 @@ import { CONFIG } from "../config/global";
 }
 .slot {
   margin-right: 15rem;
+}
+
+@media (max-width: 756px) {
+    .vertical {
+  max-width: 12rem;
+ 
+}
 }
 </style>

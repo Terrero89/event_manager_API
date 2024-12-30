@@ -1,5 +1,5 @@
 <script setup lang="ts">
-// Import the navLinks from the global configuration file
+
 </script>
 
 <template>
