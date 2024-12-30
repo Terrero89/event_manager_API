@@ -1,4 +1,8 @@
 <script setup lang="ts">
+// Import the navLinks from the global configuration file
+import {CONFIG} from './config/global'
+
+// Define the links array
 const links = [
   [
     {
@@ -28,7 +32,6 @@ const links = [
       icon: "i-heroicons-user-solid",
       to: "/login",
     },
-    
   ],
 ];
 </script>
@@ -36,7 +39,7 @@ const links = [
 <template>
   <div>
     <UHorizontalNavigation
-      :links="links"
+      :links="CONFIG.navLinks"
       class="border-b border-gray-200 dark:border-gray-800"
     />
 
