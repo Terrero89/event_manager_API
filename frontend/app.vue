@@ -1,53 +1,12 @@
 <script setup lang="ts">
 // Import the navLinks from the global configuration file
-import {CONFIG} from './config/global'
-
-// Define the links array
-const links = [
-  [
-    {
-      label: "Ev App",
-      icon: "i-heroicons-light-bulb",
-      to: "/",
-    },
-  ],
-  [
-    {
-      label: "Stories",
-      icon: "i-heroicons-home",
-      to: "/stories",
-    },
-    {
-      label: "Todos",
-      icon: "i-heroicons-chart-bar",
-      to: "/todos",
-    },
-    {
-      label: "Dashboard",
-      icon: "i-heroicons-chart-bar",
-      to: "/dashboard",
-    },
-    {
-      label: "Sign In",
-      icon: "i-heroicons-user-solid",
-      to: "/login",
-    },
-  ],
-];
 </script>
 
 <template>
   <div>
-    <UHorizontalNavigation
-      :links="CONFIG.navLinks"
-      class="border-b border-gray-200 dark:border-gray-800"
-    />
-
-    <UIContainer>
+    <NuxtLayout>
       <NuxtPage />
-    </UIContainer>
-
-   
+    </NuxtLayout>
   </div>
 </template>
 
