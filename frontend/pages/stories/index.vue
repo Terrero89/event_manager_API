@@ -1,53 +1,51 @@
 <script setup>
-import {definePageMeta} from '#imports'
-import {useStoryStore} from "@/stores/stories";
-import {storeToRefs} from "pinia";
-
+import { useStoryStore } from "@/stores/stories";
 const myStore = useStoryStore();
-const {fetchStories} = myStore;
-
-const {status, data: stories, error} = useFetch(
-    "http://localhost:8080/api/v1/stories",
-    {
-      lazy: true,
-    }
-);
-// definePageMeta({
-//   layout: 'stories'
-// })
-
+const { fetchStories } = myStore;
+const props = defineProps([
+  //PROPS HERE
+  "storyTitle",
+  "storyDescription",
+  "difficultyLevel",
+  "storyPoints",
+  "workType",
+  "developmentType",
+  "status",
+  "storyComments",
+  "subtasks",
+  "date",
+  "updatedAt",
+  "reporter",
+  "repoNames",
+  "dateAssigned",
+  "dateCompleted",
+  "sprint",
+  "storyType",
+  "learning",
+  "planningNotes",
+]);
+const {
+  status,
+  data: stories,
+  error,
+} = useFetch("http://localhost:8080/api/v1/stories", {
+  lazy: true,
+});
 </script>
 <template class="border-b border-gray-200">
-
   <div>
     hello
-    <hr class="line"/>
-
-    <div>
-
-      <h1>WHERE SEARCH AND MORE GOES...</h1>
+    <hr class="line" />
+    <StoryItem></StoryItem>
+    <div class="cool">
+      <h1>WHERE SEARCH AND MORE GOES lll...ttre lfdfdffsdffddasasddadsdasasdasdadaSD</h1>
     </div>
-    <!-- you will need to handle a loading state -->
-    <div v-if="status === 'pending'">
-      Loading stories...
-    </div>
-
-    <div v-else>
-      <h1 v-for="story in stories" :key="story">
-        <div>{{ story.storyTitle }}</div>
-      </h1>
-
-    </div>
-
   </div>
-  hello
-
-
 </template>
 
 <style scoped>
-.line {
-  margin: 1.5rem 1rem;
-  border-bottom: 1px solid #efefef;
+.cool{
+  border: solid red 1px;
 }
+
 </style>
