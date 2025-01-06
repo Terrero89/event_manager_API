@@ -11,6 +11,14 @@ const storySchema = new mongoose_1.default.Schema({
         type: String,
         required: true,
     },
+    storyNumber: {
+        type: String,
+        required: true,
+    },
+    storyName: {
+        type: String,
+        required: true,
+    },
     storyDescription: {
         type: Array,
         required: true,

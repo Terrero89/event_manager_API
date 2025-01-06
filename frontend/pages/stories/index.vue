@@ -1,59 +1,56 @@
 <script setup>
-import { useStoryStore } from "@/stores/stories";
+import {useStoryStore} from "@/stores/stories";
 
 const myStore = useStoryStore();
-const { fetchStories } = myStore;
+const {fetchStories} = myStore;
 const props = defineProps([
   //PROPS HERE
-  "storyTitle",
-  "storyDescription",
-  "difficultyLevel",
-  "storyPoints",
-  "workType",
-  "developmentType",
-  "status",
+  "id",
+  "progressType",
+  "storyLength",
+  "storyTitle", // fix bug etc...
+  "storyNumber", // DMR-xxxx
+  "storyName", // C2T xxx
+  "storyDescription", // description
+  "difficultyLevel", // easy, medium, hard
+  "storyPoints", // 1, 2, 3, 5, 8, 13
+  "workType", // feature, bug, production
+  "developmentType", // frontend, backend, fullstack
+  "status", // to do, in progress, demo ready, completed, released
   "storyComments",
   "subtasks",
   "date",
   "updatedAt",
-  "reporter",
-  "repoNames",
+  "reporter", // reported who assigned story
+  "repoNames", // repo we are going to work on
   "dateAssigned",
   "dateCompleted",
-  "sprint",
-  "storyType",
-  "learning",
-  "planningNotes",
+  "sprint", // PL!, 2 etcc
+  "learning", // comments on learning
+  "planningNotes", // planning for the spring
   "updatedAt",
 ]);
-const {
-  status,
-  data: stories,
-  error,
-} = useFetch("http://localhost:8080/api/v1/stories", {
-  lazy: true,
-});
+
+
 </script>
 <template class="border-b border-gray-200">
   <div>
     STORY SECTION HERE
-    <!--    <hr class="line" />-->
-
-    <div class="progress">
-      <!--      component for progress in stories-->
-      <!--      to do, progress, done, demo ready, released-->
-      <!--      todos-->
-      <UIProgress progress-title="Backlog" story-number="2" />
-      <!--      todos-->
-      <UIProgress progress-title="To do" story-number="1" />
-      <!--      progress-->
-      <UIProgress progress-title="Progress" story-number="3" />
-      <!--      done-->
-      <UIProgress progress-title="Done" story-number="1" />
-      <UIProgress progress-title="Release" story-number="2" />
-    </div>
+    <!--      component for progress in stories-->
+    <!--      make a for loop to render each list based on title displaying their respective stories status-->
+    <ProgressList progress-type="Backlog" story-length="2"/>
+    <ProgressList progress-type="To do" story-length="1"/>
+    <ProgressList progress-type="In Progress" story-length="3"/>
+    <ProgressList progress-type="Done" story-length="1"/>
+    <ProgressList progress-type="Released" story-length="2"/>
 
     <h1>STORY LIST</h1>
+
+    <div>
+
+
+
+    </div>
     <!-- <StoryItem
        story-title="Story Title"
        story-description="Story Description"
@@ -100,8 +97,5 @@ const {
 </template>
 
 <style scoped>
-.progress {
-  background-color: #1f242a;
-  padding: 0.2rem;
-}
+
 </style>
