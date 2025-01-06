@@ -32,53 +32,82 @@ const props = defineProps([
 const titleTop = ref(
     "Prevent conversation service API from opening a new conversacion for a new exposure on claim and phone numner."
 );
+
+const developmentTypeClass = computed(() => {
+  switch (props.developmentType) {
+    case 'Frontend':
+      return 'frontend-color';
+    case 'Backend':
+      return 'backend-color';
+    case 'Fullstack':
+      return 'fullstack-color';
+    default:
+      return 'work-type';
+  }
+});
+
+const storyIdLink = computed(() => {
+  return `/stories/${props.id}`
+})
+
 </script>
 
 <template>
   <div>
-    {{id.slice(0,8)}}
-    <div class="story">
-
-      <UTooltip text="More" :popper="{ arrow: true }" class="story-button">
-        <button class="">
-          <Icon name="i-heroicons-ellipsis-horizontal-circle" class="icons"/>
-        </button>
-      </UTooltip>
-
-      <!--         + create a button to be able to move tasks to different status-->
-      <h1>{{ storyTitle }}</h1>
-      <div><span class="type">{{ developmentType }}</span></div>
-      <div><span class="story-name">{{ storyName }} </span></div>
-      <div class="icon-list">
-        <Icon class="story-id doc icons" name="i-heroicons-document"/>
-        <span class="story-id">{{ storyNumber }}</span>
-        <UTooltip text="Story Points" :popper="{ arrow: true }">
-          <span class="story-points"> {{storyPoints}}</span>
-        </UTooltip>
-        <UTooltip text="Priority" :popper="{ arrow: true }">
-          <Icon name="i-heroicons-list-bullet" class="icons"/>
-        </UTooltip>
-        <UTooltip text="Repos" :popper="{ arrow: true }">
+    <NuxtLink :to="storyIdLink">
+      <div class="story">
+        <UTooltip text="More" :popper="{ arrow: true }" class="story-button">
           <button class="">
-            <Icon name="i-heroicons-document-check" class="icons"/>
+            <Icon name="i-heroicons-ellipsis-horizontal-circle" class="icons"/>
           </button>
         </UTooltip>
+        <!--         + create a button to be able to move tasks to different status-->
+        <h1>{{ storyTitle }}</h1>
+        <div><span :class="developmentTypeClass" class="work-type">{{ props.developmentType }}</span></div>
+
+        <div><span class="story-name">{{ storyName }} </span></div>
+        <div class="icon-list">
+          <Icon class="story-id doc icons" name="i-heroicons-document"/>
+          <span class="story-id">{{ storyNumber }}</span>
+          <UTooltip text="Story Points" :popper="{ arrow: true }">
+            <span class="story-points"> {{ storyPoints }}</span>
+          </UTooltip>
+          <UTooltip text="Priority" :popper="{ arrow: true }">
+            <Icon name="i-heroicons-list-bullet" class="icons"/>
+          </UTooltip>
+          <UTooltip text="Repos" :popper="{ arrow: true }">
+            <button class="">
+              <Icon name="i-heroicons-document-check" class="icons"/>
+            </button>
+          </UTooltip>
+        </div>
       </div>
-    </div>
+
+    </NuxtLink>
+
   </div>
 </template>
 
 <style scoped>
 
-.fullStack{
-  background-color: rgba(0, 255, 72, 0.75);
+.work-type{
+
+  color: rgba(208, 206, 206, 0.76);
+  font-size: 0.75rem;
+  font-weight: bold;
+  padding: 0.2rem 0.3rem;
+  border-radius: 0.2rem;
 }
-.backend{
-  background-color: rgba(44, 57, 143, 0.75);
+.frontend-color {
+  background-color: #1e73b6;
 }
 
-.frontend{
-  background-color: rgba(0, 183, 255, 0.75);
+.backend-color {
+  background-color: #7d35ad;
+}
+
+.fullstack-color {
+  background-color: #ad7935;
 }
 
 

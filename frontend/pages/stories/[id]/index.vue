@@ -1,5 +1,4 @@
 <script setup lang="ts">
-
 const props = defineProps([
   //PROPS for header
   "id",
@@ -36,7 +35,15 @@ const titleTop = ref(
 </script>
 
 <template>
-  <div>PROGRESS ITEM {{props.id}}</div>
+<!--  details page here to show all deailsof story-->
+  <div>STORY PAGE
+  <div>UPDATE</div>
+    <div>DELETE</div>
+    <div>SEE TASKS</div>
+<!--    <div>UPDATE</div>-->
+
+
+  </div>
 </template>
 
 <style scoped>

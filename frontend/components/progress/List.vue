@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const props = defineProps([
-    "id" ,
+  "id",
   //PROPS for header
   "progressType",
   "storyLength",
@@ -36,9 +36,6 @@ const titleTop = ref(
 const type1 = ref("FullStack");
 const type2 = ref("Frontend");
 // computer properties
-// const work = computed(() => {
-//   return workType.value ? 'fullstack' : 'frontend';
-// });
 
 const {
   status,
@@ -49,15 +46,19 @@ const {
 });
 
 const filteredStories = computed(() => {
-
   return stories?.value?.filter((story: any) => story.status === props.progressType) || [];
 });
+
+
 </script>
 
 <template>
   <div>
     <div class="progress">
+
+
       <div class="item-status">
+
         <div class="status-title">
           <h1>{{ progressType }}</h1>
           <span class="story-number"> {{ filteredStories.length }} </span>
@@ -65,30 +66,30 @@ const filteredStories = computed(() => {
 
         <div class="story-list">
           <ProgressItem
-              v-for="story in filteredStories"
-              :key="story.storyNumber"
-              :id="story._id"
-              :story-title="story.storyTitle"
-              :story-number="story.storyNumber"
-              :story-name="story.storyName"
-              :story-description="story.storyDescription"
-              :difficulty-level="story.difficultyLevel"
-              :story-points="story.storyPoints"
-              :work-type="story.workType"
-              :development-type="story.developmentType"
-              :status="story.status"
-              :story-comments="story.storyComments"
-              :subtasks="story.subtasks"
-              :date="story.date"
-              :reporter="story.reporter"
-              :repo-names="story.repoNames"
-              :date-assigned="story.dateAssigned"
-              :date-completed="story.dateCompleted"
-              :sprint="story.sprint"
-              :story-type="story.storyType"
-              :learning="story.learning"
-              :planning-notes="story.planningNotes"
-              :updated-at="story.updatedAt"
+                        v-for="story in filteredStories"
+                        :key="story.storyNumber"
+                        :id="story._id"
+                        :story-title="story.storyTitle"
+                        :story-number="story.storyNumber"
+                        :story-name="story.storyName"
+                        :story-description="story.storyDescription"
+                        :difficulty-level="story.difficultyLevel"
+                        :story-points="story.storyPoints"
+                        :work-type="story.workType"
+                        :development-type="story.developmentType"
+                        :status="story.status"
+                        :story-comments="story.storyComments"
+                        :subtasks="story.subtasks"
+                        :date="story.date"
+                        :reporter="story.reporter"
+                        :repo-names="story.repoNames"
+                        :date-assigned="story.dateAssigned"
+                        :date-completed="story.dateCompleted"
+                        :sprint="story.sprint"
+                        :story-type="story.storyType"
+                        :learning="story.learning"
+                        :planning-notes="story.planningNotes"
+                        :updated-at="story.updatedAt"
           />
         </div>
       </div>
@@ -101,8 +102,10 @@ const filteredStories = computed(() => {
   background-color: #1f242a;
   padding: 0.2rem;
 }
-.workType {
-  background-color: rgba(42, 185, 88, 0.75);
+
+.no-story {
+  align-items: center;
+  margin: auto 0;
 }
 
 .item-status {
@@ -126,7 +129,7 @@ const filteredStories = computed(() => {
 
 .status-title {
   padding: 0.1rem;
-  min-width: 7rem;
+  min-width: 8rem;
   margin: 0 0.5rem;
   display: flex;
 
@@ -138,7 +141,6 @@ const filteredStories = computed(() => {
   text-align: center;
   align-content: center;
 }
-
 
 
 .story h1 {
@@ -153,7 +155,7 @@ const filteredStories = computed(() => {
 
 .story-number {
   text-align: center;
-  margin: auto 0;
+  margin: auto 0 auto 1rem;
 }
 
 

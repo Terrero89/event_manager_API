@@ -7,7 +7,6 @@ const props = defineProps([
   //PROPS HERE
   "id",
   "progressType",
-  "storyLength",
   "storyTitle", // fix bug etc...
   "storyNumber", // DMR-xxxx
   "storyName", // C2T xxx
@@ -36,11 +35,11 @@ const props = defineProps([
 <template class="border-b border-gray-200">
   <div>
 
-    <ProgressList progress-type="Backlog" story-length="2" />
-    <ProgressList progress-type="to do" story-length="1"/>
-    <ProgressList progress-type="In Progress" story-length="3"/>
-    <ProgressList progress-type="Done" story-length="1"/>
-    <ProgressList progress-type="Released" story-length="2"/>
+    <ProgressList progress-type="Backlog" />
+    <ProgressList progress-type="to do" />
+    <ProgressList progress-type="In Progress"/>
+    <ProgressList progress-type="Done" />
+    <ProgressList progress-type="Released" />
 
 
 
