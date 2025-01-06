@@ -47,6 +47,11 @@ const {
 } = useFetch("http://localhost:8080/api/v1/stories", {
   lazy: true,
 });
+
+const filteredStories = computed(() => {
+
+  return stories?.value?.filter((story: any) => story.status === props.progressType) || [];
+});
 </script>
 
 <template>
@@ -55,45 +60,39 @@ const {
       <div class="item-status">
         <div class="status-title">
           <h1>{{ progressType }}</h1>
-          <span class="story-number"> {{ storyLength }} </span>
+          <span class="story-number"> {{ filteredStories.length }} </span>
         </div>
 
         <div class="story-list">
-          <ProgressItem v-for="story in stories"
-                        :key=story.storyNumber
-                        :story-title="story.storyTitle"
-                        :story-number="story.storyNumber"
-                        :story-name="story.storyName"
-                        :story-description="story.storyDescription"
-                        :difficulty-level="story.difficultyLevel"
-                        :story-points="story.storyPoints"
-                        :work-type="story.workType"
-                        :development-type="story.developmentType"
-                        :status="story.status"
-                        :story-comments="story.storyComments"
-                        :subtasks="story.subtasks"
-                        :date="story.date"
-                        :reporter="story.reporter"
-                        :repo-names="story.repoNames"
-                        :date-assigned="story.dateAssigned"
-                        :date-completed="story.dateCompleted"
-                        :sprint="story.sprint"
-                        :story-type="story.storyType"
-                        :learning="story.learning"
-                        :planning-notes="story.planningNotes"
-                        :updated-at="story.updatedAt"
-
-
+          <ProgressItem
+              v-for="story in filteredStories"
+              :key="story.storyNumber"
+              :id="story._id"
+              :story-title="story.storyTitle"
+              :story-number="story.storyNumber"
+              :story-name="story.storyName"
+              :story-description="story.storyDescription"
+              :difficulty-level="story.difficultyLevel"
+              :story-points="story.storyPoints"
+              :work-type="story.workType"
+              :development-type="story.developmentType"
+              :status="story.status"
+              :story-comments="story.storyComments"
+              :subtasks="story.subtasks"
+              :date="story.date"
+              :reporter="story.reporter"
+              :repo-names="story.repoNames"
+              :date-assigned="story.dateAssigned"
+              :date-completed="story.dateCompleted"
+              :sprint="story.sprint"
+              :story-type="story.storyType"
+              :learning="story.learning"
+              :planning-notes="story.planningNotes"
+              :updated-at="story.updatedAt"
           />
-
         </div>
-
       </div>
-
     </div>
-
-
-
   </div>
 </template>
 
@@ -108,22 +107,21 @@ const {
 
 .item-status {
   padding: 0.2rem 0;
-  margin: 0.5rem 0;
+  margin: 0.2rem 0;
   border-top: 1px solid rgba(236, 236, 236, 0.14);
   border-bottom: 1px solid rgba(236, 236, 236, 0.14);
+  min-height: 7rem;
   display: flex;
   flex-direction: row;
   background-color: rgb(15, 15, 15) !important;
   border-radius: 5px;
 }
 
-
-
-
 .story-list {
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: flex-start;
+  flex-wrap: wrap;
 }
 
 .status-title {

@@ -36,7 +36,9 @@ const titleTop = ref(
 
 <template>
   <div>
+    {{id.slice(0,8)}}
     <div class="story">
+
       <UTooltip text="More" :popper="{ arrow: true }" class="story-button">
         <button class="">
           <Icon name="i-heroicons-ellipsis-horizontal-circle" class="icons"/>
@@ -47,7 +49,6 @@ const titleTop = ref(
       <h1>{{ storyTitle }}</h1>
       <div><span class="type">{{ developmentType }}</span></div>
       <div><span class="story-name">{{ storyName }} </span></div>
-
       <div class="icon-list">
         <Icon class="story-id doc icons" name="i-heroicons-document"/>
         <span class="story-id">{{ storyNumber }}</span>
@@ -57,7 +58,6 @@ const titleTop = ref(
         <UTooltip text="Priority" :popper="{ arrow: true }">
           <Icon name="i-heroicons-list-bullet" class="icons"/>
         </UTooltip>
-
         <UTooltip text="Repos" :popper="{ arrow: true }">
           <button class="">
             <Icon name="i-heroicons-document-check" class="icons"/>
@@ -69,8 +69,16 @@ const titleTop = ref(
 </template>
 
 <style scoped>
-.workType {
-  background-color: rgba(42, 185, 88, 0.75);
+
+.fullStack{
+  background-color: rgba(0, 255, 72, 0.75);
+}
+.backend{
+  background-color: rgba(44, 57, 143, 0.75);
+}
+
+.frontend{
+  background-color: rgba(0, 183, 255, 0.75);
 }
 
 
@@ -147,7 +155,5 @@ const titleTop = ref(
   margin: auto 0
 }
 
-.story-points {
-  /*background-color: rgba(0, 183, 255, 0.75);*/
-}
+
 </style>
