@@ -74,7 +74,7 @@ export const CONFIG = {
             size: 'md'
           },
          
-          to: "/avatar",
+          to: "/",
           
         },
         
@@ -85,7 +85,7 @@ export const CONFIG = {
         {
           label: "Sprints",
           icon: "i-heroicons-home",
-          to: "/",
+          to: "/sprints",
         },
         {
           label: "Goals",

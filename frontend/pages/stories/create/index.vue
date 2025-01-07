@@ -3,7 +3,9 @@
 </script>
 
 <template>
-<StoryCreate/>
+<div>
+  <StoryCreate/>
+</div>
 </template>
 
 <style scoped>

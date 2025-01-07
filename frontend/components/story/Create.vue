@@ -8,6 +8,7 @@ const form = reactive({
 
   // storyTitle: "",
   // storyNumber: "",
+  // storyName: "storyName",
   // storyDescription: "",
   // difficultyLevel: "",
   // storyPoints: "",
@@ -27,6 +28,7 @@ const form = reactive({
 
   //prefilled
   storyTitle: "c2t please",
+  storyName: "storyName",
   storyNumber: "dm123",
   storyDescription: "descriptiopn",
   difficultyLevel: "Low",
@@ -46,7 +48,6 @@ const form = reactive({
 
 
 });
-const reporters = ref( ["Sergio Terrero", "Pedro Martinez", "Eugenia Derbez", "Jackie Perex", "Pamela Alvarez"])
 const errors = reactive({});
 const router = useRouter();
 
@@ -55,7 +56,7 @@ const router = useRouter();
 const validateFields = () => {
 
 
-
+  errors.storyName = !form.storyName ? "Story Name is required" : "";
   errors.storyTitle = !form.storyTitle ? "Story Title is required" : "";
   errors.storyNumber = !form.storyNumber ? "Story Number is required" : "";
   errors.difficultyLevel = !form.difficultyLevel
@@ -99,7 +100,16 @@ const handleSubmit = async () => {
     <h1 class="title">Create a New Story</h1>
     <form @submit.prevent="handleSubmit">
       <!-- Header Fields -->
-
+      <div class="form-group">
+        <label for="storyName">Story Name</label>
+        <input
+            v-model="form.storyName"
+            type="text"
+            id="story Name"
+            placeholder="Enter Story Name"
+        />
+        <span v-if="errors.storyName" class="error">{{ errors.Name}}</span>
+      </div>
 
 
 

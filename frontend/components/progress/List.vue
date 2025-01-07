@@ -47,7 +47,6 @@ const filteredStories = computed(() => {
   return stories?.value?.filter((story: any) => story.status === props.progressType) || [];
 });
 
-
 </script>
 
 <template>
