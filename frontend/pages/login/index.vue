@@ -1,3 +1,7 @@
 <template>
-    <div>LOGIN PAGE </div>
+    <div>
+      <LoginUI/>
+      <LoginAuth/>
+
+    </div>
 </template>

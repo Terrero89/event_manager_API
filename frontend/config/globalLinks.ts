@@ -13,7 +13,7 @@ export const CONFIG = {
     [
       {
         label: "Stories",
-        icon: "i-heroicons-home",
+        icon: "i-heroicons-puzzle-piece",
         to: "/stories",
       },
       {
@@ -40,7 +40,7 @@ export const CONFIG = {
     [
       {
         label: "Stories",
-        icon: "i-heroicons-home",
+        icon: "i-heroicons-puzzle-piece",
         to: "/stories",
       },
       {
@@ -97,11 +97,7 @@ export const CONFIG = {
           icon: "i-heroicons-chart-bar",
           to: "/",
         },
-        {
-          label: "Reports",
-          icon: "i-heroicons-chart-bar",
-          to: "/",
-        },
+
        
         {
           label: "Calendar",
@@ -117,8 +113,8 @@ export const CONFIG = {
         
       ],
     ],
-  }
+  },
 
-   
+    reporters : ["Sergio Terrero", "Pedro Martinez", "Eugenia Derbez", "Jackie Perex", "Pamela Alvarez"],
 
 };

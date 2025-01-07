@@ -29,9 +29,7 @@ const props = defineProps([
   "planningNotes", // planning for the spring
   "updatedAt",
 ]);
-const titleTop = ref(
-    "Prevent conversation service API from opening a new conversacion for a new exposure on claim and phone numner."
-);
+
 </script>
 
 <template>
