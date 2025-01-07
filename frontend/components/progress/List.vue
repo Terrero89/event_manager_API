@@ -33,8 +33,6 @@ const props = defineProps([
 const titleTop = ref(
     "Prevent conversation service API from opening a new conversacion for a new exposure on claim and phone numner."
 );
-const type1 = ref("FullStack");
-const type2 = ref("Frontend");
 // computer properties
 
 const {

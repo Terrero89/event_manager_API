@@ -51,10 +51,6 @@ const storySchema = new mongoose_1.default.Schema({
         type: Array,
         required: false,
     },
-    subtasks: {
-        type: Array,
-        required: false,
-    },
     date: {
         type: Date,
         default: Date.now,

@@ -1,20 +1,107 @@
+
+<script setup>
+import { reactive, ref } from "vue";
+import { useRouter } from "vue-router";
+import {CONFIG} from "~/config/globalVariables";
+
+const form = reactive({
+
+  // storyTitle: "",
+  // storyNumber: "",
+  // storyDescription: "",
+  // difficultyLevel: "",
+  // storyPoints: "",
+  // workType: "",
+  // developmentType: "",
+  // status: "Backlog",
+  // reporter: "",
+  // subtasks: "",
+  // dateAssigned: new Date(),
+  // dateCompleted: "",
+  // sprint: "",
+  // learning: "",
+  // planningNotes: "",
+  // repoNames: "",
+  // storyComments: "",
+  // updatedAt: new Date(),
+
+  //prefilled
+  storyTitle: "c2t please",
+  storyNumber: "dm123",
+  storyDescription: "descriptiopn",
+  difficultyLevel: "Low",
+  storyPoints: 1,
+  workType: "Story",
+  developmentType: "Frontend",
+  status: "Backlog",
+  reporter: "Sergio",
+  dateAssigned: new Date(),
+  dateCompleted: new Date(),
+  sprint: "PL1",
+  learning: "changed perspective on this exe",
+  planningNotes: "note1,note2",
+  repoNames: "repo1, repo2",
+  storyComments: "comment1,comment2",
+  updatedAt: new Date(),
+
+
+});
+const reporters = ref( ["Sergio Terrero", "Pedro Martinez", "Eugenia Derbez", "Jackie Perex", "Pamela Alvarez"])
+const errors = reactive({});
+const router = useRouter();
+
+
+
+const validateFields = () => {
+
+
+
+  errors.storyTitle = !form.storyTitle ? "Story Title is required" : "";
+  errors.storyNumber = !form.storyNumber ? "Story Number is required" : "";
+  errors.difficultyLevel = !form.difficultyLevel
+      ? "Difficulty Level is required"
+      : "";
+  errors.storyPoints = !form.storyPoints ? "Story Points are required" : "";
+  errors.workType = !form.workType ? "Work Type is required" : "";
+  errors.developmentType = !form.developmentType
+      ? "Development Type is required"
+      : "";
+  errors.status = !form.status ? "Status is required" : "";
+
+  return Object.values(errors).every((err) => !err);
+};
+
+const handleSubmit = async () => {
+  let fixedComments =  form.storyComments.length > 1 ? form.storyComments.split(",") : form.storyComments
+  let fixedRepos = form.repoNames.length > 1 ? form.repoNames.split(",") : form.repoNames
+  let fixedDescription = form.storyDescription.length > 1 ? form.storyDescription.split(",") : form.storyDescription
+  let fixedLeaning = form.learning.length > 1 ? form.learning.split(",") : form.learning
+  let fixedPlanning = form.planningNotes.length > 1 ? form.planningNotes.split(",") : form.planningNotes
+  if (!validateFields()) return;
+  try {
+    await $fetch("http://localhost:8080/api/v1/stories", {
+      method: "POST",
+      body:{...form, storyComments: fixedComments, repoNames:fixedRepos, storyDescription: fixedDescription},
+    });
+
+      console.log({...form, storyComments: fixedComments, repoNames:fixedRepos, storyDescription: fixedDescription, learning: fixedLeaning, planningNotes:fixedPlanning})
+    router.push("/");
+  } catch (error) {
+    console.error("Error submitting form:", error);
+  }
+};
+</script>
+
+
+
 <template>
   <div class="form-container">
-    <h1>Create a New Story</h1>
+    <h1 class="title">Create a New Story</h1>
     <form @submit.prevent="handleSubmit">
       <!-- Header Fields -->
 
 
-      <div class="form-group">
-        <label for="progressType">Progress Type</label>
-        <input
-            v-model="form.progressType"
-            type="text"
-            id="progressType"
-            placeholder="Enter Progress Type"
-        />
-        <span v-if="errors.progressType" class="error">{{ errors.progressType }}</span>
-      </div>
+
 
 
       <!-- Story Details -->
@@ -40,23 +127,14 @@
         <span v-if="errors.storyNumber" class="error">{{ errors.storyNumber }}</span>
       </div>
 
-      <div class="form-group">
-        <label for="storyDescription">Story Description</label>
-        <textarea
-            v-model="form.storyDescription"
-            id="storyDescription"
-            placeholder="Enter Story Description"
-        ></textarea>
-        <span v-if="errors.storyDescription" class="error">{{ errors.storyDescription }}</span>
-      </div>
+
 
       <div class="form-group">
         <label for="difficultyLevel">Difficulty Level</label>
         <select v-model="form.difficultyLevel" id="difficultyLevel">
           <option value="" disabled>Select Level</option>
-          <option value="easy">Easy</option>
-          <option value="medium">Medium</option>
-          <option value="hard">Hard</option>
+          <option  v-for=" level in CONFIG.variables.difficultyLevels" :key="level " :value="level">{{level}}</option>
+
         </select>
         <span v-if="errors.difficultyLevel" class="error">{{ errors.difficultyLevel }}</span>
       </div>
@@ -79,20 +157,17 @@
         <label for="workType">Work Type</label>
         <select v-model="form.workType" id="workType">
           <option value="" disabled>Select Work Type</option>
-          <option value="feature">Feature</option>
-          <option value="bug">Bug</option>
-          <option value="production">Production</option>
+          <option :value="type" v-for="type in CONFIG.variables.workTypes" :key="type">{{type}}</option>
+
         </select>
         <span v-if="errors.workType" class="error">{{ errors.workType }}</span>
       </div>
-
       <div class="form-group">
         <label for="developmentType">Development Type</label>
         <select v-model="form.developmentType" id="developmentType">
           <option value="" disabled>Select Development Type</option>
-          <option value="frontend">Frontend</option>
-          <option value="backend">Backend</option>
-          <option value="fullstack">Fullstack</option>
+          <option :value="type" v-for="type in CONFIG.variables.developmentTypes" :key="type">{{type}}</option>
+
         </select>
         <span v-if="errors.developmentType" class="error">{{ errors.developmentType }}</span>
       </div>
@@ -101,111 +176,56 @@
         <label for="status">Status</label>
         <select v-model="form.status" id="status">
           <option value="" disabled>Select Status</option>
-          <option value="to do">To Do</option>
-          <option value="in progress">In Progress</option>
-          <option value="demo ready">Demo Ready</option>
-          <option value="completed">Completed</option>
-          <option value="released">Released</option>
+          <option :value="status" v-for="status in CONFIG.variables.status" :key="status">{{status}}</option>
+
         </select>
         <span v-if="errors.status" class="error">{{ errors.status }}</span>
       </div>
       <div class="form-group">
         <label for="reporters">Reporter</label>
-        <select v-model="form.status" id="status">
+        <select v-model="form.reporter" id="status">
           <option value="" disabled>Select Reporter</option>
-          <option v-for="reporter in reporters" :key="reporter.id" :value="reporter.id">{{ reporter   }}</option>
+          <option v-for="reporter in CONFIG.variables.reporters" :key="reporter" :value="reporter.id">{{ reporter   }}</option>
 
         </select>
         <span v-if="errors.status" class="error">{{ errors.status }}</span>
       </div>
 
-
-      <!-- Additional Fields -->
-      <div v-for="field in additionalFields" :key="field.key" class="form-group">
-        <label :for="field.key">{{ field.label }}</label>
-        <input
-            v-model="form[field.key]"
-            :type="field.type"
-            :id="field.key"
-            :placeholder="'Enter ' + field.label"
-        />
-        <span v-if="errors[field.key]" class="error">{{ errors[field.key] }}</span>
+      <div class="form-group">
+        <label for="repos">Repo Names</label>
+        <input type="text" class="form-control"
+            v-model="form.repoNames"
+            id="repos"
+            placeholder="Enter repos following a coma"
+        ></input>
+        <span v-if="errors.repoNames" class="error">{{ errors.repoNames }}</span>
       </div>
 
+
+      <div class="form-group">
+        <label for="storyDescription">Story Comments</label>
+        <textarea
+            v-model="form.storyComments"
+            id="storyComments"
+            placeholder="Enter Story Comments"
+        ></textarea>
+        <span v-if="errors.storyComments" class="error">{{ errors.storyComments }}</span>
+      </div>
+{{form.storyComments}}
+      {{typeof form.storyComments}}
+      <div class="form-group">
+        <label for="storyDescription">Story Description</label>
+        <textarea
+            v-model="form.storyDescription"
+            id="storyDescription"
+            placeholder="Enter Story Description"
+        ></textarea>
+        <span v-if="errors.storyDescription" class="error">{{ errors.storyDescription }}</span>
+      </div>
       <button type="submit" class="submit-button">Submit</button>
     </form>
   </div>
 </template>
-
-<script setup>
-import { reactive, ref } from "vue";
-import { useRouter } from "vue-router";
-
-const form = reactive({
-  progressType: "",
-
-  storyTitle: "",
-  storyNumber: "",
-  storyDescription: "",
-  difficultyLevel: "",
-  storyPoints: "",
-  workType: "",
-  developmentType: "",
-  status: "",
-  reporter: "",
-  subtasks: "",
-  dateAssigned: "",
-  dateCompleted: "",
-  sprint: "",
-  learning: "",
-  planningNotes: "",
-  updatedAt: new Date(),
-});
-const reporters = ref( ["Sergio Terrero", "Pedro Martinez", "Eugenia Derbez", "Jackie Perex", "Pamela Alvarez"])
-const errors = reactive({});
-const router = useRouter();
-
-const additionalFields = [
-  { key: "storyComments", label: "Story Comments", type: "text" },
-  { key: "reporter", label: "Reporter", type: "text" },
-  { key: "date", label: "Date", type: "date" },
-  { key: "updatedAt", label: "Updated At", type: "date" },
-  { key: "repoNames", label: "Repository Names", type: "text" },
-];
-
-const validateFields = () => {
-
-  errors.progressType = !form.progressType ? "Progress Type is required" : "";
-
-  errors.storyTitle = !form.storyTitle ? "Story Title is required" : "";
-  errors.storyNumber = !form.storyNumber ? "Story Number is required" : "";
-  errors.difficultyLevel = !form.difficultyLevel
-      ? "Difficulty Level is required"
-      : "";
-  errors.storyPoints = !form.storyPoints ? "Story Points are required" : "";
-  errors.workType = !form.workType ? "Work Type is required" : "";
-  errors.developmentType = !form.developmentType
-      ? "Development Type is required"
-      : "";
-  errors.status = !form.status ? "Status is required" : "";
-
-  return Object.values(errors).every((err) => !err);
-};
-
-const handleSubmit = async () => {
-  if (!validateFields()) return;
-
-  try {
-    await $fetch("/api/stories", {
-      method: "POST",
-      body: form,
-    });
-    router.push("/success");
-  } catch (error) {
-    console.error("Error submitting form:", error);
-  }
-};
-</script>
 
 <style scoped>
 /* General Styles */
@@ -214,6 +234,10 @@ body {
   margin: 0;
   padding: 0;
   background-color: #f9f9f9;
+}
+
+.title{
+  color: #bababa;
 }
 
 /* Form Container */

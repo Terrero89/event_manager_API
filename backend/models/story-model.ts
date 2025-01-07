@@ -49,10 +49,7 @@ const storySchema = new mongoose.Schema(
       type: Array,
       required: false,
     },
-    subtasks: {
-      type: Array,
-      required: false,
-    },
+  
     date: {
       type: Date,
       default: Date.now,

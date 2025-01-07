@@ -17,7 +17,6 @@ const props = defineProps([
   "developmentType", // frontend, backend, fullstack
   "status", // to do, in progress, demo ready, completed, released
   "storyComments",
-  "subtasks",
   "date",
   "updatedAt",
   "reporter", // reported who assigned story
@@ -36,7 +35,7 @@ const props = defineProps([
   <div>
 
     <ProgressList progress-type="Backlog" />
-    <ProgressList progress-type="to do" />
+    <ProgressList progress-type="To do" />
     <ProgressList progress-type="In Progress"/>
     <ProgressList progress-type="Done" />
     <ProgressList progress-type="Released" />

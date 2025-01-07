@@ -115,6 +115,7 @@ export const CONFIG = {
     ],
   },
 
-    reporters : ["Sergio Terrero", "Pedro Martinez", "Eugenia Derbez", "Jackie Perex", "Pamela Alvarez"],
+  reporters : ["Sergio Terrero", "Pedro Martinez", "Eugenia Derbez", "Jackie Perex", "Pamela Alvarez"],
+  difficultyLevels : ["Low", "Medium", "High", "Critical"],
 
 };
