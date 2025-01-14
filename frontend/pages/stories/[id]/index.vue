@@ -34,11 +34,13 @@ const props = defineProps([
 
 <template>
 <!--  details page here to show all deailsof story-->
-  <div>STORY PAGE
+ <div>
+  <div>
   <div>UPDATE</div>
     <div>DELETE</div>
     <div>SEE TASKS</div>
-<!--    <div>UPDATE</div>-->
+ </div>
+
 
 
   </div>

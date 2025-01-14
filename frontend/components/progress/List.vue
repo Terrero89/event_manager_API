@@ -30,9 +30,6 @@ const props = defineProps([
   "updatedAt",
 ]);
 
-const titleTop = ref(
-    "Prevent conversation service API from opening a new conversacion for a new exposure on claim and phone numner."
-);
 // computer properties
 
 const {

@@ -4,12 +4,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const subtask_routes_1 = __importDefault(require("./routes/subtask-routes"));
 const story_routes_1 = __importDefault(require("./routes/story-routes"));
 const users_routes_1 = __importDefault(require("./routes/users-routes"));
 const global_1 = require("./config/global");
 const auth_routes_1 = __importDefault(require("./routes/auth-routes"));
 const todo_routes_1 = __importDefault(require("./routes/todo-routes"));
+const sprint_routes_1 = __importDefault(require("./routes/sprint-routes"));
 const cors = require("cors");
 require("dotenv").config();
 const mongoose = require('mongoose');
@@ -37,7 +37,7 @@ app.use("/api/v1/auth", auth_routes_1.default); // user auth
 app.use("/api/v1/", story_routes_1.default); // home route
 app.use("/api/v1/", users_routes_1.default); // home route
 app.use("/api/v1/", todo_routes_1.default);
-app.use("/api/v1/", subtask_routes_1.default); // home route
+app.use("/api/v1/", sprint_routes_1.default); // home route
 mongoose.connect(global_1.CONFIG.MONGODB_URL).then(() => {
     console.log('Connected MongoDB...');
 }).catch((error) => console.log(error));

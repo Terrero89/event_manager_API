@@ -17,7 +17,7 @@ const links = [
   }, {
     label: 'Command Palette',
     icon: 'i-heroicons-command-line',
-    to: '/components/command-palette'
+    to: '/'
   }], [{
     label: 'Examples',
     icon: 'i-heroicons-light-bulb'

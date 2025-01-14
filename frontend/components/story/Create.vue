@@ -5,7 +5,8 @@ import { useRouter } from "vue-router";
 import {CONFIG} from "~/config/globalVariables";
 
 const form = reactive({
-
+// assignedSprint: " ",
+  //sprintsList: [], // list from sprints to match with input
   // storyTitle: "",
   // storyNumber: "",
   // storyName: "storyName",
@@ -27,6 +28,7 @@ const form = reactive({
   // updatedAt: new Date(),
 
   //prefilled
+  assignedSprint: "PL-001",
   storyTitle: "c2t please",
   storyName: "storyName",
   storyNumber: "dm123",
@@ -72,20 +74,29 @@ const validateFields = () => {
   return Object.values(errors).every((err) => !err);
 };
 
+const {
+  status,
+  data: sprints,
+  error,
+} = useFetch("http://localhost:8080/api/v1/sprints", {
+  lazy: true,
+});
+
 const handleSubmit = async () => {
-  let fixedComments =  form.storyComments.length > 1 ? form.storyComments.split(",") : form.storyComments
-  let fixedRepos = form.repoNames.length > 1 ? form.repoNames.split(",") : form.repoNames
-  let fixedDescription = form.storyDescription.length > 1 ? form.storyDescription.split(",") : form.storyDescription
-  let fixedLeaning = form.learning.length > 1 ? form.learning.split(",") : form.learning
-  let fixedPlanning = form.planningNotes.length > 1 ? form.planningNotes.split(",") : form.planningNotes
+  // let fixedComments =  form.storyComments.length > 1 ? form.storyComments.split(",") : form.storyComments
+  // let fixedRepos = form.repoNames.length > 1 ? form.repoNames.split(",") : form.repoNames
+  // let fixedDescription = form.storyDescription.length > 1 ? form.storyDescription.split(",") : form.storyDescription
+  // let fixedLeaning = form.learning.length > 1 ? form.learning.split(",") : form.learning
+  // let fixedPlanning = form.planningNotes.length > 1 ? form.planningNotes.split(",") : form.planningNotes
   if (!validateFields()) return;
   try {
     await $fetch("http://localhost:8080/api/v1/stories", {
       method: "POST",
-      body:{...form, storyComments: fixedComments, repoNames:fixedRepos, storyDescription: fixedDescription},
+      // body:{...form, storyComments: fixedComments, repoNames:fixedRepos, storyDescription: fixedDescription},
+      body: form
     });
 
-      console.log({...form, storyComments: fixedComments, repoNames:fixedRepos, storyDescription: fixedDescription, learning: fixedLeaning, planningNotes:fixedPlanning})
+      // console.log({...form, storyComments: fixedComments, repoNames:fixedRepos, storyDescription: fixedDescription, learning: fixedLeaning, planningNotes:fixedPlanning})
     router.push("/");
   } catch (error) {
     console.error("Error submitting form:", error);
@@ -97,9 +108,20 @@ const handleSubmit = async () => {
 
 <template>
   <div class="form-container">
+<!--    {{sprints}}-->
     <h1 class="title">Create a New Story</h1>
     <form @submit.prevent="handleSubmit">
       <!-- Header Fields -->
+
+      <div class="form-group">
+        <label for="assignedSprint">Sprint</label>
+        <select v-model="form.assignedSprint" id="assignedSprint">
+          <option value="" disabled>Select sprint</option>
+          <option :value="item.sprintID" v-for="item in sprints" :key="item._id">{{item.sprintID}}</option>
+
+        </select>
+<!--        <span v-if="errors.workType" class="error">{{ errors.workType }}</span>-->
+      </div>
       <div class="form-group">
         <label for="storyName">Story Name</label>
         <input
@@ -195,8 +217,7 @@ const handleSubmit = async () => {
         <label for="reporters">Reporter</label>
         <select v-model="form.reporter" id="status">
           <option value="" disabled>Select Reporter</option>
-          <option v-for="reporter in CONFIG.variables.reporters" :key="reporter" :value="reporter.id">{{ reporter   }}</option>
-
+          <option v-for="reporter in CONFIG.variables.reporters" :key="reporter" :value="reporter">{{ reporter }}</option>
         </select>
         <span v-if="errors.status" class="error">{{ errors.status }}</span>
       </div>
