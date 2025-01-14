@@ -8,54 +8,41 @@ const {
   lazy: true,
 });
 
+const loading = ref(false)
+const selected = ref()
 
+async function search(q: string) {
+  loading.value = true
 
-const dropdown =computed(() => {
-  const person = []
-  for (let i = 0; i < sprints.value?.length; i++) {
-  // BETTER ERROR HANDLING HERE
-  //   values.push(sprints.value[i].sprintID)
-    person.push(sprints.value[i].sprintID)
-  }
-  return person
-})
+  const users: any[] = await $fetch('http://localhost:8080/api/v1/sprints', { params: { q } })
 
-const onBeforeMounted = () => {
-dropdown.value
+  loading.value = false
+
+  return users
 }
-const people = [{
-  id: 1,
-  name: 'Wade Cooper'
-}, {
-  id: 2,
-  name: 'Arlene Mccoy'
-}, {
-  id: 3,
-  name: 'Devon Webb'
-}, {
-  id: 4,
-  name: 'Tom Cook'
-}]
+
+
+
+
 
 </script>
 
 <template>
   <div>
-{{dropdown}}
-    {{ sprints }}
+
+
+
+{{selected}}
     <UInputMenu
-        variant="outline"
-        color="primary"
-        trailing-icon="i-heroicons-chevron-down"
-        class="w-full lg:w-48 test"
-        placeholder="Select a sprint"
-        :options="dropdown"
-        model-value=""
-        value-attribute="sprintID"
+        v-model="selected"
+        :search="search"
+        :loading="loading"
+        placeholder="Search for a user..."
         option-attribute="sprintID"
+        trailing
+        by="id"
+        :popper="{ arrow: true }"
     />
-
-
   </div>
 
 
