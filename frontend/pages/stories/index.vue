@@ -44,11 +44,16 @@ const links = [
       size: "sm"
     }
   }, {
-    label: "Insights",
-    icon: 'i-heroicons-chart-bar',
-    to: '/'
+
+    icon: 'i-heroicons-plus',
+    to: '/sprints/create',
+    badge: {
+      label: 'Add sprint',
+      color: 'green',
+      size: "sm"
+    }
   }, {
-    label: 'Palette',
+    label: 'Insights',
     icon: 'i-heroicons-command-line',
     to: '/'
   }],

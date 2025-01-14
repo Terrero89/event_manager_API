@@ -36,9 +36,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Sprint = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
 const SprintSchema = new mongoose_1.Schema({
-    sprintID: { type: String, required: true },
-    relatedStoryId: { type: String, required: true },
-    startDate: { type: Date, required: true },
+    sprintID: { type: String, required: false },
+    relatedStoryId: { type: String, required: false },
+    startDate: { type: Date, required: false },
     dueDate: { type: Date, required: false },
     summary: { type: Array, required: false },
     piNotes: { type: Array, required: false },
