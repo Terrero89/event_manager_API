@@ -7,8 +7,17 @@
  * When creating sprint, It should be on main Navigation, and will mmodeal some form to add the following info: [sprint number, start date, end date, summary, PI notes]
  * once it's done when creating a story, we can add it to speicfic sprint number'
  *
- * TO ADD: to add sprints, i need to create a model in backend to be able to add it.
+ * TO ADD: to add sprints, i need to create a model in backend to be able to add it. DONE
  * TO FIX
+ * 
+ * 
+ */
+
+/*NEXT STEPS */
+/**
+ * 
+ * 
+ * 
  * 
  * 
  */
