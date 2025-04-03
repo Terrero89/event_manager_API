@@ -5,7 +5,7 @@ import storyRoutes from './routes/story-routes';
 import usersRoutes from './routes/users-routes';
 import { CONFIG } from './config/global';
 import authRoutes from './routes/auth-routes';
-import todoRoutes from './routes/todo-routes';
+import notesRoutes from './routes/notes-routes';
 import cors = require('cors');
 require("dotenv").config();
 
@@ -36,7 +36,7 @@ app.use((req: Request, res: Response, next: express.NextFunction) => {
 app.use("/api/v1/auth", authRoutes); // user auth
 app.use("/api/v1/", storyRoutes); // home route
 app.use("/api/v1/", usersRoutes); // home route
-app.use("/api/v1/", todoRoutes);
+app.use("/api/v1/", notesRoutes);
 app.use("/api/v1/", subtaskRoutes); // home route
 
 

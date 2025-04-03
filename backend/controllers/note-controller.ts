@@ -1,20 +1,20 @@
 import { Request, Response } from "express";
-import { Todo } from "../models/todo-models";
+import { Note} from "../models/notes-models";
 import mongoose from "mongoose";
 
 
 
-export const getTodosController = async (req: Request, res: Response) => {
+export const getNotesController = async (req: Request, res: Response) => {
     try {
-        const allTodos = await Todo.find({}).sort({ createdAt: -1 });
+        const allTodos = await Note.find({}).sort({ createdAt: -1 });
         res.status(200).json(allTodos);
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: "Error fetching Todos" });
+        res.status(500).json({ message: "Error fetching Notes" });
     }
 }
 
-export const getTodoController = async (req: Request, res: Response) => {
+export const getNoteController = async (req: Request, res: Response) => {
     const { id } = req.params; //grabbing id params from the request object
 
     //?handling error if no id is found
@@ -23,39 +23,39 @@ export const getTodoController = async (req: Request, res: Response) => {
         return;
     }
 
-    const todo = await Todo.findById(id); //finding by specific id from params
+    const note = await Note.findById(id); //finding by specific id from params
     //error handling for not id found
-    if (!todo) {
-        res.status(404).json({ error: "NO TODO FOUND" });
+    if (!note) {
+        res.status(404).json({ error: "NO Note FOUND" });
         return;
     }
 
-    res.status(200).json(todo); //return that specific id from tODO
+    res.status(200).json(note); //return that specific id from tODO
 }
 
-export const createTodoController = async (req: Request, res: Response) => {
-    const { title, description, date, dueDate, priorityLevel, status, relatedStoryId } = req.body
+export const createNoteController = async (req: Request, res: Response) => {
+    const { title, description, date, dueDate, priorityLevel, noteName, noteType} = req.body
     // MORE ERROR HANDLING COMING UP
 
 
     try {
-        const todo = await Todo.create({
+        const note = await Note.create({
             title,
             description,
             date,
-            dueDate,
             priorityLevel,
-            status,
-            relatedStoryId
+            noteType,
+            noteName,
+        
         });
 
 
-        res.status(200).json(todo);
+        res.status(200).json(note);
     } catch (error) {
         console.error(error)
     }
 }
-export const updateTodoController = async (req: Request, res: Response) => {
+export const updateNoteController = async (req: Request, res: Response) => {
     const { id } = req.params;
     //check if exist in mongoose
     if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -63,7 +63,7 @@ export const updateTodoController = async (req: Request, res: Response) => {
         return;
     }
     //__id == mongoDB Id/ update id === __id
-    const todo = await Todo.findOneAndUpdate(
+    const note = await Note.findOneAndUpdate(
         { _id: id },
         {
 
@@ -72,14 +72,14 @@ export const updateTodoController = async (req: Request, res: Response) => {
         }
     );
     //if no todo, throw error
-    if (!todo) {
+    if (!note) {
         res.status(400).json({ error: "No such story available" });
         return;
     }
 
-    res.status(200).json(todo);
+    res.status(200).json(note);
 }
-export const deleteTodoController = async (req: Request, res: Response) => {
+export const deleteNoteController = async (req: Request, res: Response) => {
     const { id } = req.params;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -87,12 +87,12 @@ export const deleteTodoController = async (req: Request, res: Response) => {
         return;
     }
 
-    const todo = await Todo.findByIdAndDelete(id);
+    const note = await Note.findByIdAndDelete(id);
 
-    if (!todo) {
+    if (!note) {
         res.status(404).json({ error: "No todo found" });
         return;
     }
 
-    res.status(200).json(todo);
+    res.status(200).json(note);
 }

@@ -1,16 +1,16 @@
 import mongoose, { Schema } from 'mongoose';
 
 
-const TodoSchema: Schema = new Schema({
-    relatedStoryId: { type: String, required: true },
+const NotesSchema: Schema = new Schema({
     title: { type: String, required: true},
+    noteName: { type: String, required: true },
+    noteType: { type: String, required: true },
     description: { type: String, required: true },
     date: { type: Date, required: true },
-    dueDate: { type: Date, required: false },
     priorityLevel: { type: String, required: true },
-    status: { type: String, required: true }
+
 
 });
 
 
-export const Todo = mongoose.model("Todos", TodoSchema);
+export const Note = mongoose.model("Notes", NotesSchema);

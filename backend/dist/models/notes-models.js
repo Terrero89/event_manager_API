@@ -33,15 +33,14 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Todo = void 0;
+exports.Note = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
-const TodoSchema = new mongoose_1.Schema({
-    relatedStoryId: { type: String, required: true },
+const NotesSchema = new mongoose_1.Schema({
     title: { type: String, required: true },
+    noteName: { type: String, required: true },
+    noteType: { type: String, required: true },
     description: { type: String, required: true },
     date: { type: Date, required: true },
-    dueDate: { type: Date, required: false },
     priorityLevel: { type: String, required: true },
-    status: { type: String, required: true }
 });
-exports.Todo = mongoose_1.default.model("Todos", TodoSchema);
+exports.Note = mongoose_1.default.model("Notes", NotesSchema);
