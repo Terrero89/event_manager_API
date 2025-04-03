@@ -10,7 +10,7 @@ const NotesSchema: Schema = new Schema({
     priorityLevel: { type: String, required: true },
 
 
-});
+},{ timestamps: true });
 
 
 export const Note = mongoose.model("Notes", NotesSchema);

@@ -33,14 +33,15 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Note = void 0;
+exports.Event = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
-const NotesSchema = new mongoose_1.Schema({
+const EventsSchema = new mongoose_1.Schema({
     title: { type: String, required: true },
-    noteName: { type: String, required: true },
-    noteType: { type: String, required: true },
+    meetingName: { type: String, required: true },
+    meetingType: { type: String, required: true },
     description: { type: String, required: true },
     date: { type: Date, required: true },
-    priorityLevel: { type: String, required: true },
+    duration: { type: Number, required: true },
+    status: { type: String, required: true },
 }, { timestamps: true });
-exports.Note = mongoose_1.default.model("Notes", NotesSchema);
+exports.Event = mongoose_1.default.model("Events", EventsSchema);

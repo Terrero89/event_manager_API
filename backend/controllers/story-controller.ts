@@ -82,21 +82,17 @@ export const createStoryController = async (req: Request, res: Response) => {
     storyDescription,
     acceptanceCriteria,
     difficultyLevel,
-    storyPoints,
-    workType,
     developmentType,
     status,
     storyComments,
-    subtasks,
-    date,
     reporter,
     repoNames,
     dateAssigned,
-    dateCompleted,
+    daysDuration,
     sprint,
     storyType,
     learning,
-    planningNotes,
+ 
   } = req.body;
   try {
     const story = await Stories.create({
@@ -104,21 +100,17 @@ export const createStoryController = async (req: Request, res: Response) => {
       storyDescription,
       acceptanceCriteria,
       difficultyLevel,
-      storyPoints,
-      workType,
       developmentType,
       status,
       storyComments,
-      subtasks,
-      date,
       reporter,
       repoNames,
       dateAssigned,
-      dateCompleted,
       sprint,
       storyType,
       learning,
-      planningNotes,
+      daysDuration,
+  
     });
     res.status(200).json(story);
   } catch (error) {

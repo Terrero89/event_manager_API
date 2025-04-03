@@ -14,20 +14,30 @@ export const CONFIG = {
         to: "/stories",
       },
       {
-        label: "Todos",
+        label: "Notes",
         icon: "i-heroicons-chart-bar",
-        to: "/todos",
+        to: "/notes",
+      },
+      {
+        label: "Events",
+        icon: "i-heroicons-chart-bar",
+        to: "/events",
+      },
+      {
+        label: "Meetings",
+        icon: "i-heroicons-chart-bar",
+        to: "/meetings",
       },
       {
         label: "Dashboard",
         icon: "i-heroicons-chart-bar",
         to: "/dashboard",
       },
-      {
-        label: "Sign In",
-        icon: "i-heroicons-user-solid",
-        to: "/login",
-      },
+      // {
+      //   label: "Sign In",
+      //   icon: "i-heroicons-user-solid",
+      //   to: "/login",
+      // },
     ],
   ],
 };
