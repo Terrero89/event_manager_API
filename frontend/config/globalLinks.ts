@@ -43,11 +43,19 @@ export const CONFIG = {
         icon: "i-heroicons-puzzle-piece",
         to: "/stories",
       },
-      {
-        label: "Todos",
-        icon: "i-heroicons-chart-bar",
-        to: "/todos",
-      },
+      
+        
+        {
+          label: "Events",
+          icon: "i-heroicons-chart-bar",
+          to: "/events",
+        },
+      
+        {
+          label: "Dashboard",
+          icon: "i-heroicons-chart-bar",
+          to: "/dashboard",
+        },
     
       {
         label: "Sign In",
@@ -92,19 +100,20 @@ export const CONFIG = {
           icon: "i-heroicons-chart-bar",
           to: "/",
         },
+     
         {
-          label: "My Deployments",
+          label: "Notes",
           icon: "i-heroicons-chart-bar",
-          to: "/",
+          to: "/notes",
         },
-
        
         {
-          label: "Calendar",
+          label: "Meetings",
           icon: "i-heroicons-chart-bar",
-          to: "/",
+          to: "/meetings",
         },
-     
+      
+   
         {
           label: "Dashboard",
           icon: "i-heroicons-chart-bar",

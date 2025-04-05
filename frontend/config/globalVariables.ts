@@ -6,6 +6,7 @@ export const CONFIG = {
         developmentTypes: ["Frontend", "Backend", "Fullstack", "AWS"],
         status: ["Backlog", "To Do", "In Progress", "Demo Ready", "Completed", "Released"],
         repoNames: ["example1", "example2", "example3", "example4", "example5"],
+        sprints: [],
     },
 
 };
