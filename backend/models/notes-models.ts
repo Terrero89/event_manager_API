@@ -8,6 +8,7 @@ const NotesSchema: Schema = new Schema({
     description: { type: String, required: true },
     date: { type: Date, required: true },
     priorityLevel: { type: String, required: true },
+    sprintId: { type: String, required: false },
 
 
 },{ timestamps: true });

@@ -34,7 +34,7 @@ export const getNoteController = async (req: Request, res: Response) => {
 }
 
 export const createNoteController = async (req: Request, res: Response) => {
-    const { title, description, date, dueDate, priorityLevel, noteName, noteType} = req.body
+    const { title, description, date, dueDate, priorityLevel, noteName, noteType, sprintId} = req.body
     // MORE ERROR HANDLING COMING UP
 
 
@@ -46,6 +46,7 @@ export const createNoteController = async (req: Request, res: Response) => {
             priorityLevel,
             noteType,
             noteName,
+            sprintId
         
         });
 

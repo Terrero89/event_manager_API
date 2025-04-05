@@ -34,9 +34,8 @@ export const getEventController = async (req: Request, res: Response) => {
 }
 
 export const createEventController = async (req: Request, res: Response) => {
-    const { title, description, date, eventName, eventType, duration, status} = req.body
+    const { title, description, date, eventName, eventType, duration, status, sprintId} = req.body
     // MORE ERROR HANDLING COMING UP
-
 
     try {
         const event = await Event.create({
@@ -47,7 +46,7 @@ export const createEventController = async (req: Request, res: Response) => {
             eventType,
             duration,
             status,
-        
+            sprintId,
         });
 
 

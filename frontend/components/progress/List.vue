@@ -1,3 +1,7 @@
+
+
+
+
 <script setup lang="ts">
 const props = defineProps([
   "id",
@@ -53,13 +57,13 @@ const filteredStories = computed(() => {
 
       <div class="item-status">
 
-        <div class="status-title">
+        <!-- <div class="status-title">
           <h1>{{ progressType }}</h1>
           <span class="story-number"> {{ filteredStories.length }} </span>
-        </div>
+        </div> -->
 
         <div class="story-list">
-          <ProgressItem
+          <!-- <ProgressItem
                         v-for="story in filteredStories"
                         :key="story.storyNumber"
                         :id="story._id"
@@ -84,10 +88,18 @@ const filteredStories = computed(() => {
                         :learning="story.learning"
                         :planning-notes="story.planningNotes"
                         :updated-at="story.updatedAt"
-          />
+          /> -->
         </div>
       </div>
+      <div class="item-status">
+
+<div class="story-list">
+
+</div>
+hello
+</div>
     </div>
+    
   </div>
 </template>
 

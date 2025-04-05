@@ -54,6 +54,7 @@ const storySchema = new mongoose.Schema(
       type: Date,
       default: Date.now,
     },
+    sprintId: { type: String, required: true}
   },
   { timestamps: true }
 );

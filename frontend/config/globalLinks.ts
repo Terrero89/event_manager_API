@@ -42,17 +42,9 @@ export const CONFIG = {
         label: "Stories",
         icon: "i-heroicons-puzzle-piece",
         to: "/stories",
-      },
-      
-        
-        {
-          label: "Events",
-          icon: "i-heroicons-chart-bar",
-          to: "/events",
-        },
-      
-        {
-          label: "Dashboard",
+      },      
+              {
+                        label: "Dashboard",
           icon: "i-heroicons-chart-bar",
           to: "/dashboard",
         },
@@ -95,16 +87,17 @@ export const CONFIG = {
           icon: "i-heroicons-home",
           to: "/sprints",
         },
-        {
-          label: "Goals",
-          icon: "i-heroicons-chart-bar",
-          to: "/",
-        },
+        
      
         {
           label: "Notes",
           icon: "i-heroicons-chart-bar",
           to: "/notes",
+        },
+        {
+          label: "Events",
+          icon: "i-heroicons-chart-bar",
+          to: "/events",
         },
        
         {
@@ -122,8 +115,6 @@ export const CONFIG = {
         
       ],
     ],
-
-    
   },
 
 

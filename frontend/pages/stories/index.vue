@@ -68,7 +68,7 @@ const links = [
       <!--DROPDOWN IN STORIES-->
       <div class="nav-flex my-2 border-b border-gray-200 dark:border-gray-800">
         <UIDropdown/>
-        <UHorizontalNavigation :links="links" class=""/>
+       <UHorizontalNavigation :links="links" class=""/>
       </div>
 
       <!--    -->
@@ -76,11 +76,11 @@ const links = [
     </div>
     <div>
       <ProgressList progress-type="Backlog"/>
-      <ProgressList progress-type="To do"/>
+      <!-- <ProgressList progress-type="To do"/>
       <ProgressList progress-type="In Progress"/>
       <ProgressList progress-type="Done"/>
-      <ProgressList progress-type="Released"/>
-
+      <ProgressList progress-type="Released"/> -->
+<!-- NEED TO ADD A UI COMPONENT FOR PROGRESS LIST UI -->
     </div>
 
 

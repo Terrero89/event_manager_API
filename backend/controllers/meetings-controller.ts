@@ -34,7 +34,8 @@ export const getMeetingController = async (req: Request, res: Response) => {
 }
 
 export const createMeetingController = async (req: Request, res: Response) => {
-    const { title, description, date, meetingName, meetingType, duration, status} = req.body
+    const { title, description, date, meetingName, meetingType, duration, status, sprintId} = req.body
+    
     // MORE ERROR HANDLING COMING UP
 
 
@@ -47,6 +48,7 @@ export const createMeetingController = async (req: Request, res: Response) => {
             meetingType,
             duration,
             status,
+            sprintId
         
         });
 

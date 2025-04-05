@@ -55,5 +55,6 @@ const storySchema = new mongoose_1.default.Schema({
         type: Date,
         default: Date.now,
     },
+    sprintId: { type: String, required: true }
 }, { timestamps: true });
 exports.Stories = mongoose_1.default.model("Stories", storySchema);

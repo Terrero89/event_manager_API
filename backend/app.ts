@@ -1,11 +1,12 @@
 import express, { Express, Request, Response } from 'express';
 import bodyParser from 'body-parser';
+import { CONFIG } from './config/global';
+import eventsRoutes from './routes/events-routes';
 import storyRoutes from './routes/story-routes';
 import usersRoutes from './routes/users-routes';
-import { CONFIG } from './config/global';
 import authRoutes from './routes/auth-routes';
-import todoRoutes from './routes/todo-routes';
-import sprintRoutes from './routes/sprint-routes';
+import notesRoutes from './routes/notes-routes';
+import meetingRoutes from './routes/meetings-routes';
 import cors = require('cors');
 require("dotenv").config();
 
@@ -25,7 +26,7 @@ app.use(cors());
 //     credentials: true, // Allow cookies
 //     maxAge: 600, // Cache preflight response for 10 minutes
 //   })
-// );
+// );eventskRoutes
 // global middleware
 app.use((req: Request, res: Response, next: express.NextFunction) => {
     console.log(req.method + ' ' + req.path, + ' ' + req.url);
@@ -36,8 +37,9 @@ app.use((req: Request, res: Response, next: express.NextFunction) => {
 app.use("/api/v1/auth", authRoutes); // user auth
 app.use("/api/v1/", storyRoutes); // home route
 app.use("/api/v1/", usersRoutes); // home route
-app.use("/api/v1/", todoRoutes);
-app.use("/api/v1/", sprintRoutes ); // home route
+app.use("/api/v1/", notesRoutes);
+app.use("/api/v1/", eventsRoutes); // home route
+app.use("/api/v1/", meetingRoutes);
 
 
 mongoose.connect(CONFIG.MONGODB_URL).then(() => {
