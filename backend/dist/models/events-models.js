@@ -43,6 +43,6 @@ const EventsSchema = new mongoose_1.Schema({
     date: { type: Date, required: true },
     duration: { type: Number, required: true },
     status: { type: String, required: true },
-    sprintId: { type: String, required: false },
+    sprintId: { type: String, required: true },
 }, { timestamps: true });
 exports.Event = mongoose_1.default.model("Events", EventsSchema);

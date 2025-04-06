@@ -1,4 +1,25 @@
 <script setup lang="ts">
+import {onMounted } from 'vue'
+const meetingStore = useMeetingStore();
+import { storeToRefs } from "pinia";
+
+const {
+  fetchMeetings,
+
+} = meetingStore;
+const { meetings } = storeToRefs(meetingStore);
+// for later use
+// const route = useRoute(); //route object
+// const destId = route.params.destinationID;
+
+onMounted(async() => {
+
+  await fetchMeetings()
+
+
+});
+
+
 const navLinks = [
   [],
   [
@@ -53,7 +74,7 @@ const isOpen = ref(false);
     </div>
       <div>Meetings Page</div>
 
-
+{{meetings}}
     </div>
     
     

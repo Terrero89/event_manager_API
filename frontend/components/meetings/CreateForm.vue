@@ -2,6 +2,21 @@
 import { reactive, computed } from "vue";
 import { useRouter } from "vue-router";
 import { CONFIG } from "~/config/globalVariables";
+import {onMounted } from 'vue'
+const meetingStore = useMeetingStore();
+import { storeToRefs } from "pinia";
+
+const {
+  addMeeting,
+
+} = meetingStore;
+const {  } = storeToRefs(meetingStore);
+// for later use
+// const route = useRoute(); //route object
+// const destId = route.params.destinationID;
+
+onMounted(async() => {
+});
 
 // Replace with actual data key if needed (was using eventTypes vs sprints earlier)
 const sprintList = computed(() => CONFIG.variables.sprints || CONFIG.variables.eventTypes);
@@ -42,7 +57,7 @@ const validateFields = () => {
 const handleSubmit = async () => {
   if (!validateFields()) return;
 
-  const newEvent = {
+  const newMeeting = {
     sprintId: form.sprintId,
     title: form.title,
     meetingName: form.meetingName,
@@ -55,19 +70,19 @@ const handleSubmit = async () => {
 
   };
 
-  console.log("Before submission", newEvent);
+  console.log("Before submission", newMeeting);
+await addMeeting(newMeeting)
+  // try {
+  //   await $fetch("http://localhost:8080/api/v1/meetings", {
+  //     method: "POST",
+  //     body: newEvent,
+  //   });
 
-  try {
-    await $fetch("http://localhost:8080/api/v1/meetings", {
-      method: "POST",
-      body: newEvent,
-    });
-
-    console.log("Submitted successfully", newEvent);
-    router.push("/");
-  } catch (error) {
-    console.error("Error submitting form:", error);
-  }
+  //   console.log("Submitted successfully", newEvent);
+  //   router.push("/");
+  // } catch (error) {
+  //   console.error("Error submitting form:", error);
+  // }
 };
 </script>
 <template>

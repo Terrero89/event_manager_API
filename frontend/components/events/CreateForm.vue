@@ -2,6 +2,25 @@
 import { reactive, computed } from "vue";
 import { useRouter } from "vue-router";
 import { CONFIG } from "~/config/globalVariables";
+import {onMounted } from 'vue'
+const eventsStore = useEventStore();
+import { storeToRefs } from "pinia";
+
+const {
+  addEvent,
+
+} = eventsStore;
+const { events } = storeToRefs(eventsStore);
+// for later use
+// const route = useRoute(); //route object
+// const destId = route.params.destinationID;
+
+onMounted(async() => {
+
+  // await addEvent()
+
+
+});
 
 // Replace with actual data key if needed (was using eventTypes vs sprints earlier)
 const sprintList = computed(() => CONFIG.variables.sprints || CONFIG.variables.eventTypes);
@@ -10,12 +29,12 @@ const sprintList = computed(() => CONFIG.variables.sprints || CONFIG.variables.e
 const form = reactive({
   sprintId: "",
   title: "Title",           // Note Title
-  eventName: "",            // Event Name
-  eventType: "",            // Event Type
+  eventName: "dddd",            // Event Name
+  eventType: "dddd",            // Event Type
   date: "",                 // Date
-  description: "",          // Description
+  description: "ddddd",          // Description
   status: "Completed",      // Status
-  duration: "",             // Duration
+  duration: 0,             // Duration
 });
 
 // Error messages
@@ -55,23 +74,11 @@ const handleSubmit = async () => {
 
   };
 
-  console.log("Before submission", newEvent);
-
-  try {
-    await $fetch("http://localhost:8080/api/v1/events", {
-      method: "POST",
-      body: newEvent,
-    });
-
-    console.log("Submitted successfully", newEvent);
-    router.push("/");
-  } catch (error) {
-    console.error("Error submitting form:", error);
-  }
+  await addEvent(newEvent); // Add the new event to the store
 };
 </script>
 <template>
-  hell
+  
   <div class="form-container">
     <h1 class="title">Create a New Story</h1>
     <form @submit.prevent="handleSubmit">
@@ -130,16 +137,13 @@ const handleSubmit = async () => {
 
       <!-- Status -->
       <div class="form-group">
-        <label for="status">Status</label>
-        <input
-          v-model="form.status"
-          type="text"
-          id="status"
-          placeholder="Enter Status (e.g., Completed)"
-        />
+        <label for="reporters">Event Type</label>
+        <select v-model="form.status" id="status">
+          <option value="" disabled>Select Type</option>
+          <option v-for="activity in CONFIG.variables.statusLevel" :key="activity" :value="activity">{{ activity }}</option>
+        </select>
         <span v-if="errors.status" class="error">{{ errors.status}}</span>
       </div>
-
       <!-- Duration -->
       <div class="form-group">
         <label for="duration">Duration</label>
@@ -151,7 +155,7 @@ const handleSubmit = async () => {
         />
         <span v-if="errors.duration" class="error">{{ errors.duration}}</span>
       </div>
-
+{{ form.status }}
       <!-- Priority Level -->
       <div class="form-group">
         <label for="priorityLevel">Description</label>

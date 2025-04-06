@@ -2,6 +2,25 @@
 import { reactive, computed } from "vue";
 import { useRouter } from "vue-router";
 import { CONFIG } from "~/config/globalVariables";
+import {onMounted } from 'vue'
+const noteStore = useNoteStore();
+import { storeToRefs } from "pinia";
+
+const {
+  addNote,
+
+} = noteStore;
+const { notes} = storeToRefs(noteStore);
+// for later use
+// const route = useRoute(); //route object
+// const destId = route.params.destinationID;
+
+onMounted(async() => {
+
+  // await addEvent()
+
+
+});
 
 const sprintList = computed(() => CONFIG.variables.sprints);
 
@@ -41,17 +60,19 @@ const handleSubmit = async () => {
     noteName: form.noteName,
     priorityLevel: form.priorityLevel,
   };
-try {
-    await $fetch("http://localhost:8080/api/v1/notes", {
-      method: "POST",
-      body: newNote,
-    });
 
-    console.log("Submitted successfully", newNote);
-    router.push("/");
-  } catch (error) {
-    console.error("Error submitting form:", error);
-  }
+  await addNote(newNote);
+// try {
+//     await $fetch("http://localhost:8080/api/v1/notes", {
+//       method: "POST",
+//       body: newNote,
+//     });
+
+//     console.log("Submitted successfully", newNote);
+//     router.push("/");
+//   } catch (error) {
+//     console.error("Error submitting form:", error);
+//   }
 };
 </script>
 

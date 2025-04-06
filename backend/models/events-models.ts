@@ -9,7 +9,7 @@ const EventsSchema: Schema = new Schema({
     date: { type: Date, required: true },
     duration: { type: Number, required: true },
     status: { type: String, required: true },
-    sprintId: { type: String, required: false },
+    sprintId: { type: String, required: true },
 
 },{ timestamps: true });
 

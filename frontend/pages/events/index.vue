@@ -1,4 +1,23 @@
 <script setup lang="ts">
+import {onMounted } from 'vue'
+const eventsStore = useEventStore();
+import { storeToRefs } from "pinia";
+
+const {
+  fetchEvents,
+
+} = eventsStore;
+const { events} = storeToRefs(eventsStore);
+// for later use
+// const route = useRoute(); //route object
+// const destId = route.params.destinationID;
+
+onMounted(async() => {
+
+  await fetchEvents()
+
+
+});
 const navLinks = [
   [],
   [
@@ -34,6 +53,7 @@ const isOpen = ref(false);
 
 <template>
   <div>
+
     <div class="nav-flex my-2 border-b border-gray-200 dark:border-gray-800">
       <UHorizontalNavigation :links="navLinks" class="" />
       <UModal v-model="isOpen">
@@ -51,6 +71,7 @@ const isOpen = ref(false);
       >
     </div>
     <div>Events Page</div>
+    {{events}}
   </div>
 </template>
 

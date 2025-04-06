@@ -91,15 +91,16 @@ const filteredStories = computed(() => {
           /> -->
         </div>
       </div>
-      <div class="item-status">
+      <!-- <div class="item-status">
 
 <div class="story-list">
 
 </div>
 hello
-</div>
+</div> -->
+<UIRenderer/>
     </div>
-    
+  
   </div>
 </template>
 
