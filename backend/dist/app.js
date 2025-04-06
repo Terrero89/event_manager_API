@@ -11,6 +11,7 @@ const users_routes_1 = __importDefault(require("./routes/users-routes"));
 const auth_routes_1 = __importDefault(require("./routes/auth-routes"));
 const notes_routes_1 = __importDefault(require("./routes/notes-routes"));
 const meetings_routes_1 = __importDefault(require("./routes/meetings-routes"));
+const sprint_routes_1 = __importDefault(require("./routes/sprint-routes"));
 const cors = require("cors");
 require("dotenv").config();
 const mongoose = require('mongoose');
@@ -40,6 +41,7 @@ app.use("/api/v1/", users_routes_1.default); // home route
 app.use("/api/v1/", notes_routes_1.default);
 app.use("/api/v1/", events_routes_1.default); // home route
 app.use("/api/v1/", meetings_routes_1.default);
+app.use("/api/v1/", sprint_routes_1.default);
 mongoose.connect(global_1.CONFIG.MONGODB_URL).then(() => {
     console.log('Connected MongoDB...');
 }).catch((error) => console.log(error));

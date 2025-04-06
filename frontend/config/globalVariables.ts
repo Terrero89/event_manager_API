@@ -6,7 +6,8 @@ export const CONFIG = {
         developmentTypes: ["Frontend", "Backend", "Fullstack", "AWS"],
         status: ["Backlog", "To Do", "In Progress", "Demo Ready", "Completed", "Released"],
         repoNames: ["example1", "example2", "example3", "example4", "example5"],
-        sprints: [],
+        sprints: ['PL-001','P:-002'],
+        activityType: ["1x1", "Standup", "Retrospective", "Planning", "Review", "Other", "Collaboration", "Training", "Feedback Session", "Brainstorming",  "Problem Solving","Team Building", "Workshops"],
     },
 
 };

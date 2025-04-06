@@ -33,12 +33,12 @@ const navLinks = [
 
 <template>
     <div>
-NOTES
+
         <div class="nav-flex my-2 border-b border-gray-200 dark:border-gray-800">
     
        <UHorizontalNavigation :links=" navLinks" class=""/>
       </div>
-
+<div>NOTES</div>
 
 
     </div>
