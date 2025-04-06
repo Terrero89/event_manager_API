@@ -35,7 +35,7 @@ const onSubmit = async () => {
 <template>
     <div>
       <h1>Create Note</h1>
-      <NotesForm/>
+      <NotesCreateForm/>
     </div>
   </template>
 

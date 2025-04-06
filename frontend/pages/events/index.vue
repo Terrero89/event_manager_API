@@ -38,7 +38,7 @@ const navLinks = [
     
        <UHorizontalNavigation :links=" navLinks" class=""/>
       </div>
-      <div>Events  Page</div>
+      <div>Events Page</div>
 
 
     </div>

@@ -41,8 +41,7 @@ const handleSubmit = async () => {
     noteName: form.noteName,
     priorityLevel: form.priorityLevel,
   };
-console.log(newNote, "Before")
-  try {
+try {
     await $fetch("http://localhost:8080/api/v1/notes", {
       method: "POST",
       body: newNote,
