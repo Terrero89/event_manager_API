@@ -4,8 +4,8 @@ const props = defineProps([
   "title",
   "description",
   "date",
-  "eventType",
-  "eventName",
+  "meetingType",
+  "meetingName",
   "duration",
   "sprintId",
   "status"
@@ -23,8 +23,8 @@ const isOpen = ref(false);
         <!-- <h1>{{id}}</h1> -->
 
         <div class="item-header">
-          <p><strong>Event Type:</strong> {{ eventType }}</p>
-          <p><strong>Event Name: </strong> {{ eventName }}</p>
+          <p><strong>Meeting Type:</strong> {{ meetingType }}</p>
+          <p><strong>Meeting Name: </strong> {{ meetingName }}</p>
           <p><strong>Description: </strong> {{ description }}</p>
         </div>
         <div class="item-content">
@@ -39,8 +39,6 @@ const isOpen = ref(false);
       </div>
      
       <div class="item-buttons my-2">
-        
-      
         <UButton v-if="props.status === 'Pending'" color="neutral" variant="outline"  class="b mx-2">{{props.status}}</UButton>
         <UButton v-if="props.status === 'Completed'" color="blue" variant="outline"  class="b mx-2">{{props.status}}</UButton>
         <UButton v-if="props.status === 'In Progress'" color="yellow" variant="outline"  class="b mx-2">{{props.status}}</UButton>
@@ -49,13 +47,13 @@ const isOpen = ref(false);
         <UModal v-model="isOpen">
     
         
-            <EventsDetails
+            <MeetingsDetails
             :id="id"
             :title="props.title"
             :description="props.description"
             :date="props.date"
-            :eventType="props.eventType"
-            :eventName="props.eventType"
+            :meetingName="props.meetingName"
+            :meetingType="props.meetingType"
             :duration="props.duration"
             :sprintId="props.sprintId"
             :status="props.status"

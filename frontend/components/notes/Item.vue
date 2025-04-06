@@ -9,6 +9,7 @@ const props = defineProps([
   "priorityLevel",
   "sprintId",
 ]);
+const noteIdRoute = computed(()=> `/notes/${props.id}`)
 const isOpen = ref(false);
 </script>
 
@@ -35,8 +36,10 @@ const isOpen = ref(false);
         </div>
       </div>
       <div class="item-buttons my-2">
-        <UButton class="b" @click="isOpen = true">Details</UButton>
+        <UButton class="b" @click="isOpen = true" >Details</UButton>
+        <!-- <NuxtLink :to="noteIdRoute">About page</NuxtLink> -->
         <UModal v-model="isOpen">
+    
          <NotesDetails
              :id="id"
             :title="props.title"
@@ -48,6 +51,7 @@ const isOpen = ref(false);
             :sprintId="props.sprintId"
          
          />
+        
         </UModal>
       </div>
     </UIRenderer>

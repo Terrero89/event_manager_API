@@ -74,7 +74,21 @@ const isOpen = ref(false);
     </div>
       <div>Meetings Page</div>
 
-{{meetings}}
+      <MeetingsList  
+    v-for="item in meetings"
+    :key="item._id"
+    :id="item._id"
+    :description="item.description"
+    :title="item.title"
+    :date="item.date"
+    :meetingName="item.meetingName"
+    :meetingType="item.meetingType"
+    :duration="item.duration"
+    :sprintId="item.sprintId"
+    :status="item.status"
+
+
+      />
     </div>
     
     

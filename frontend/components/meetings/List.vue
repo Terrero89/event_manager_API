@@ -7,8 +7,8 @@ const props = defineProps([
 "title",
 "description",
 "date",
-"eventType",
-"eventName",
+"meetingType",
+"meetingName",
 "duration",
 "sprintId",
 "status"
@@ -32,13 +32,13 @@ const props = defineProps([
         
       </div>
   
-        <EventsItem
+        <MeetingsItem
             :id="id"
             :title="props.title"
             :description="props.description"
             :date="props.date"
-            :eventType="props.eventType"
-            :eventName="props.eventType"
+            :meetingName="props.meetingName"
+            :meetingType="props.meetingType"
             :duration="props.duration"
             :sprintId="props.sprintId"
             :status="props.status"

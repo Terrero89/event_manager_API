@@ -50,10 +50,8 @@ const navLinks = [
 ];
 const isOpen = ref(false);
 </script>
-
 <template>
   <div>
-
     <div class="nav-flex my-2 border-b border-gray-200 dark:border-gray-800">
       <UHorizontalNavigation :links="navLinks" class="" />
       <UModal v-model="isOpen">
@@ -70,9 +68,28 @@ const isOpen = ref(false);
         >Insights</UButton
       >
     </div>
-    <div>Events Page</div>
-    {{events}}
+    <div>NOTES</div>
+
+
+  
+    <EventsList  
+    v-for="item in events"
+    :key="item._id"
+    :id="item._id"
+    :description="item.description"
+    :title="item.title"
+    :date="item.date"
+    :eventName="item.eventName"
+    :eventType="item.eventType"
+    :duration="item.duration"
+    :sprintId="item.sprintId"
+    :status="item.status"
+
+
+      />
+      <!-- {{ notes }} -->
   </div>
+
 </template>
 
 <style scoped>
@@ -80,4 +97,8 @@ const isOpen = ref(false);
   display: flex;
   justify-content: flex-end;
 }
+/* .progress {
+  background-color: #1f242a;
+  padding: 0.2rem;
+} */
 </style>
