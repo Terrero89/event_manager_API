@@ -1,11 +1,20 @@
 <script setup lang="ts">
+import {onMounted } from 'vue'
+const sprintsStore = useSprintsStore();
+import { storeToRefs } from "pinia";
+
+const {
+  fetchSprints,
+
+} = sprintsStore;
+const { items } = storeToRefs(sprintsStore);
 const navLinks = [
   [],
   [
     {
       label: 'Create Sprint',
       icon: 'i-heroicons-plus',
-      to: '/stories/create',
+      to: '/sprints/create',
       badge: {
         label: 'Add Sprint',
         color: 'blue',
@@ -25,30 +34,57 @@ const navLinks = [
  
   ]
 ];
+onMounted(async() => {
+
+await fetchSprints()
+
+
+});
+
 const isOpen = ref(false);
 </script>
-
 <template>
-  <div>
-       <!--DROPDOWN IN STORIES-->
-    
-     <div class="nav-flex my-2 border-b border-gray-200 dark:border-gray-800">
+<div>
+  <div class="nav-flex my-2 border-b border-gray-200 dark:border-gray-800">
+    <UHorizontalNavigation :links="navLinks" class="" />
+    <UModal v-model="isOpen">
+      <div class="p-4">IS HERE</div>
+    </UModal>
 
-       <UHorizontalNavigation :links="navLinks" class=""/>
-       <UModal v-model="isOpen">
-              <div class="p-4">
-             IS HERE 
-              </div>
-            </UModal>
-      
-  <UButton class="my-2 " color="blue" size="xs" variant="soft" label="Add" @Click="isOpen = true">Insights</UButton>
-</div>
-    
-    <div>SPRINTS PAGE </div>
-    <div>ADDING NEEW SPRINT</div>
-    <div>DISPLAY SPRINT EDIT SPRINTS</div>
-    <div>DISPLAY STORIES UNDER SPECIFIC SPRINTS</div>
+    <UButton
+      class="my-2"
+      color="blue"
+      size="xs"
+      variant="soft"
+      label="Add"
+      @Click="isOpen = true"
+      >Insights</UButton
+    >
   </div>
+  <div>NOTES</div>
+
+
+
+  <SprintsList  
+  v-for="item in items"
+  :key="item._id"
+  :id="item._id"
+  :sprintID="item.sprintID"
+  :startDate="item.startDate"
+  :dueDate="item.dueDate"
+  :summary="item.summary"
+  :piNotes="item.piNotes"
+  :storyUnderSprint="item.storyUnderSprint"
+  :relatedStoryId="item.relatedStoryId"
+  
+
+
+ 
+
+
+    />
+ 
+</div>
 
 </template>
 

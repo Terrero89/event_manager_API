@@ -1,15 +1,10 @@
 <script setup>
 import {ref, computed} from 'vue'
 
-// const sprint = ref({
-//   sprintID: '',
-//   relatedStoryId: '',
-//   startDate: '',
-//   dueDate: '',
-//   summary: '',
-//   piNotes: '',
-//   storiesUnderSprint: 0,
-// })
+import {onMounted } from 'vue'
+
+
+
 const sprint = ref({
   sprintID: 'PI-001',
   relatedStoryId: 'DMR-001',
@@ -40,6 +35,7 @@ piNotes: sprint.value.piNotes,
 storiesUnderSprint: sprint.value.storiesUnderSprint
 }
   if (sprintDuration < 0) return;
+
   try {
     await $fetch("http://localhost:8080/api/v1/sprints", {
       method: "POST",
@@ -58,6 +54,8 @@ storiesUnderSprint: sprint.value.storiesUnderSprint
 
 <template>
   <div>
+    {{currentSprint}}
+    {{sprintDuration}}
     <form @submit.prevent="handleSubmit" class="sprint-details  form-container ">
       <h1>Add new Sprint</h1>
       <!-- Sprint ID -->

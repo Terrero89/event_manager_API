@@ -1,24 +1,28 @@
 import { defineStore } from "pinia";
 
 export const useSprintsStore = defineStore({
-  id: "sprint",
+  id: "sprints",
   state: () => ({
     URL: "http://localhost:8080/api/v1/sprints",
     items: [],
     currentSprint:''
   }),
   actions: {
-    async addItem(data) {
+    async addSprint(data) {
       this.isLoading = true; // Start loading
       console.log("DATA:", data);
       try {
+       
         const response = await fetch(this.URL, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
+          
           body: JSON.stringify(data),
-        });
+       
+        },
+        // this.currentSprint = data.sprintID);
         if (!response.ok) {
           throw new Error("Failed to add event");
         }
@@ -43,30 +47,37 @@ export const useSprintsStore = defineStore({
     //   }
 
     // },
-    async fetchItems() {
+    async fetchSprints() {
       const response = await fetch(this.URL);
       const responseData = await response.json();
-      this.notes = responseData;
+      this.items = responseData;
 
       if (!response.ok) {
         const error = new Error(responseData.message || "Failed to fetch!");
         throw error;
       }
 
-      const noteList = [];
+      const itemsList = [];
 
-      for (const key in this.notes) {
-        if (this.notes[key]) {
+      for (const key in this.items) {
+        if (this.items[key]) {
           // Check if city data exists
-          const newNote = {
+          const newItem = {
             ...this.notes[key],
           };
-          noteList.push(newNote);
+          itemsList.push(newItem);
         }
       }
-      this.notes = noteList;
+      this.items = itemsList;
     },
-
+    const sprintDuration = computed(() => {
+        if (sprint.value.startDate && sprint.value.dueDate) {
+          const start = new Date(sprint.value.startDate)
+          const due = new Date(sprint.value.dueDate)
+          return Math.floor((due - start) / (1000 * 60 * 60 * 24)) || 0
+        }
+        return 0
+      })
     // async updateEvent(cityID, payload) {
     //   const url = `https://travel-planning-app-44a08-default-rtdb.firebaseio.com/cities/${cityID}.json`;
     //   const options = {

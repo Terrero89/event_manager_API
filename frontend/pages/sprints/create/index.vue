@@ -15,7 +15,7 @@ import { ref, computed } from 'vue'
 
 <template>
 <div >
-  <SprintCreate/>
+  <SprintsCreate/>
   </div>
 </template>
 
