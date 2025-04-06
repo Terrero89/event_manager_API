@@ -29,15 +29,24 @@ const navLinks = [
     // }
   ]
 ];
+const isOpen = ref(false);
 </script>
 
 <template>
     <div>
 
-        <div class="nav-flex my-2 border-b border-gray-200 dark:border-gray-800">
-    
-       <UHorizontalNavigation :links=" navLinks" class=""/>
-      </div>
+            
+     <div class="nav-flex my-2 border-b border-gray-200 dark:border-gray-800">
+
+<UHorizontalNavigation :links="navLinks" class=""/>
+<UModal v-model="isOpen">
+       <div class="p-4">
+      IS HERE 
+       </div>
+     </UModal>
+
+<UButton class="my-2 " color="blue" size="xs" variant="soft" label="Add" @Click="isOpen = true">Insights</UButton>
+</div>
 <div>NOTES</div>
 
 
@@ -45,3 +54,12 @@ const navLinks = [
     
     
     </template>
+
+<style scoped>
+.nav-flex {
+  display: flex;
+  justify-content: flex-end;
+
+}
+
+  </style>

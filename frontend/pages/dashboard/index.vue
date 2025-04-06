@@ -44,3 +44,12 @@ const navLinks = [
     
     
     </template>
+
+<style scoped>
+.nav-flex {
+  display: flex;
+  justify-content: flex-end;
+
+}
+
+  </style>
