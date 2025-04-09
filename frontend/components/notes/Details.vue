@@ -18,7 +18,7 @@ const props = defineProps([
       <li><strong>ID:</strong> {{ id }}</li>
       <li><strong>Title:</strong> {{ title }}</li>
       <li><strong>Description:</strong> {{ description }}</li>
-      <li><strong>Date:</strong> {{ date }}</li>
+      <li><strong>Date:</strong> {{ formatDate(date) || date }}</li>
       <li><strong>Note Type:</strong> {{ noteType }}</li>
       <li><strong>Note Name:</strong> {{ noteName }}</li>
       <li><strong>Priority Level:</strong> {{ priorityLevel }}</li>

@@ -26,6 +26,7 @@ const props = defineProps([
 
 <template>
   <div>
+    <UIRenderer>
     <div class="story-item">
       <div>
         <h1 class="">{{ storyTitle }}</h1>
@@ -54,6 +55,7 @@ const props = defineProps([
         <p class="">{{ updatedAt }}</p>
       </div>
     </div>
+    </UIRenderer>
   </div>
 </template>
 

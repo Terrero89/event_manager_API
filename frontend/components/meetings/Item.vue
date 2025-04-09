@@ -29,7 +29,7 @@ const isOpen = ref(false);
         </div>
         <div class="item-content">
           <div>
-            <p><strong>Date:</strong> {{ date }}</p>
+            <p><strong>Date: </strong> {{formatDate(date) }}</p>
 
             <p><strong>Duration:</strong> {{ duration}} hours</p>
             <p><strong>Sprint ID:</strong> {{ sprintId }}</p>

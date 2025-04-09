@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {onMounted } from 'vue'
-const sprintsStore = useSprintsStore();
+const sprintsStore = useSprintStore();
 import { storeToRefs } from "pinia";
 
 const {

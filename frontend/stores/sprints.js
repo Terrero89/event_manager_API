@@ -1,13 +1,89 @@
 import { defineStore } from "pinia";
 
-export const useSprintsStore = defineStore({
-  id: "sprints",
+export const useSprintStore = defineStore({
+  id: "sprint",
   state: () => ({
     URL: "http://localhost:8080/api/v1/sprints",
     items: [],
-    currentSprint:''
+    currentSprint:'',
+    sprintList: [],
   }),
   actions: {
+// REFACTOR FOR LATER
+async saveCurrentSprintToLocalStorage(current) {
+    try {
+      // Update Pinia state
+      this.currentSprint = current;
+  
+      // Retrieve sprint list from localStorage or initialize it
+      let existingSprints = [];
+  
+      const stored = localStorage.getItem("sprintList");
+      if (stored) {
+        existingSprints = JSON.parse(stored);
+      }
+  
+      // Only add if not already included
+      if (!existingSprints.includes(current)) {
+        existingSprints.push(current);
+      }
+  
+      // Save both to localStorage
+      localStorage.setItem("currentSprint", current);
+      localStorage.setItem("sprintList", JSON.stringify(existingSprints));
+  
+      // (Optional) Update in-store sprintList too if you're using it
+      this.sprintList = existingSprints;
+  
+      console.log("✅ currentSprint saved:", current);
+      console.log("✅ sprintList in localStorage:", existingSprints);
+  
+    } catch (error) {
+      console.error("❌ Failed to save to localStorage:", error);
+    }
+  },
+      loadCurrentSprintFromLocalStorage() {
+        try {
+          const savedSprint = localStorage.getItem("currentSprint");
+          if (savedSprint) {
+            this.currentSprint = savedSprint;
+            console.log("Loaded currentSprint from localStorage:", savedSprint);
+            return savedSprint;
+           
+          }
+        } catch (error) {
+          console.error("Failed to load from localStorage:", error);
+        }
+      },
+      loadSprintListFromLocalStorage() {
+        try {
+          const savedSprint = localStorage.getItem("sprintList");
+          if (savedSprint) {
+            this.currentSprint = savedSprint;
+            console.log("Loaded currentSprint from localStorage:", savedSprint);
+            return savedSprint;
+           
+          }
+        } catch (error) {
+          console.error("Failed to load from localStorage:", error);
+        }
+      },
+      loadFromLocalStorage(key, fallback) {
+        try {
+          const item = localStorage.getItem(key);
+          if (!item) return fallback;
+      
+          try {
+            return JSON.parse(item);
+          } catch {
+            // If it's not JSON, return it as a plain string
+            return item;
+          }
+        } catch (error) {
+          console.error(`❌ Failed to load "${key}" from localStorage:`, error);
+          return fallback;
+        }
+      },
     async addSprint(data) {
       this.isLoading = true; // Start loading
       console.log("DATA:", data);
@@ -22,7 +98,10 @@ export const useSprintsStore = defineStore({
           body: JSON.stringify(data),
        
         },
-        // this.currentSprint = data.sprintID);
+      
+        
+        this.currentSprint = data.sprintID);
+        this.sprintList.push(data.sprintID);
         if (!response.ok) {
           throw new Error("Failed to add event");
         }
@@ -69,15 +148,10 @@ export const useSprintsStore = defineStore({
         }
       }
       this.items = itemsList;
+      this.sprintList = itemsList.map((item) => item.sprintID);
+      this.currentSprint = itemsList[0].sprintID;
     },
-    const sprintDuration = computed(() => {
-        if (sprint.value.startDate && sprint.value.dueDate) {
-          const start = new Date(sprint.value.startDate)
-          const due = new Date(sprint.value.dueDate)
-          return Math.floor((due - start) / (1000 * 60 * 60 * 24)) || 0
-        }
-        return 0
-      })
+
     // async updateEvent(cityID, payload) {
     //   const url = `https://travel-planning-app-44a08-default-rtdb.firebaseio.com/cities/${cityID}.json`;
     //   const options = {

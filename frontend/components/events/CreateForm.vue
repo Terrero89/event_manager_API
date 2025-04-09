@@ -5,11 +5,12 @@ import { CONFIG } from "~/config/globalVariables";
 import {onMounted } from 'vue'
 const eventsStore = useEventStore();
 import { storeToRefs } from "pinia";
+const sprintsStore = useSprintStore();
 
-const {
-  addEvent,
 
-} = eventsStore;
+const {  addSprint} = sprintsStore;
+const {  loadCurrentSprintFromLocalStorage } = storeToRefs(sprintsStore);
+const {  addEvent } = eventsStore;
 const { events } = storeToRefs(eventsStore);
 // for later use
 // const route = useRoute(); //route object
@@ -23,7 +24,7 @@ onMounted(async() => {
 });
 
 // Replace with actual data key if needed (was using eventTypes vs sprints earlier)
-const sprintList = computed(() => CONFIG.variables.sprints || CONFIG.variables.eventTypes);
+const sprintList = computed(() => sprintsStore.loadFromLocalStorage('sprintList', []).slice(0, 5));
 
 // Main form state
 const form = reactive({

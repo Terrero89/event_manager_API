@@ -1,11 +1,21 @@
 <script setup lang="ts">
+import {onMounted } from 'vue';
+const storyStore = useStoryStore();
+import { storeToRefs } from "pinia";
 
-import {format} from 'date-fns'
-import {useStoryStore} from "@/stores/stories";
-import {calculateSprintDays} from "~/utils/date-time.js";
+const {
+  fetchStories,
 
-const myStore = useStoryStore();
-const {fetchStories} = myStore;
+} = storyStore;
+const { items } = storeToRefs<{ items: Array<{ progressType: string; [key: string]: any }> }>(storyStore);
+
+onMounted(async() => {
+
+await fetchStories()
+
+
+});
+
 const props = defineProps([
   //PROPS HERE
   "id",
@@ -58,6 +68,8 @@ const links = [
     to: '/'
   }],
 ]
+
+
 </script>
 <template class="border-b border-gray-200">
   <div>
@@ -71,17 +83,45 @@ const links = [
        <UHorizontalNavigation :links="links" class=""/>
       </div>
 
-      <!--    -->
+      <div class="progress">
+        <div class="item-buttons">
+       
+        <UModal v-model="isOpen">
+              <div class="p-4">
+            SHOW DETAILS HERE
+              </div>
+            </UModal>
+        
+      </div>
+
+      <StoryList
+      v-for="item in items"
+      :key="item._id"
+      :id="item._id"
+      :progressType="item.progressType"
+      :storyTitle="item.storyTitle"
+      :storyName="item.storyName"
+      :storyDescription="item.storyDescription"
+      :difficultyLevel="item.difficultyLevel"
+      :storyPoints="item.storyPoints"
+      :workType="item.workType"
+      :developmentType="item.developmentType"
+      :status="item.status"
+      :storyComments="item.storyComments"
+      :date="item.date"
+      :reporter="item.reporter"
+      :repoNames="item.repoNames"
+      :dateCompleted="item.dateCompleted"
+      :sprint="item.sprint"
+      :learning="item.learning"
+      :planningNotes="item.planningNotes"
+      />
 
     </div>
-    <div>
-      <ProgressList progress-type="Backlog"/>
-      <!-- <ProgressList progress-type="To do"/>
-      <ProgressList progress-type="In Progress"/>
-      <ProgressList progress-type="Done"/>
-      <ProgressList progress-type="Released"/> -->
-<!-- NEED TO ADD A UI COMPONENT FOR PROGRESS LIST UI -->
+
+
     </div>
+
 
 
   </div>

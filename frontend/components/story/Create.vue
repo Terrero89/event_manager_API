@@ -3,31 +3,16 @@
 import { reactive, ref } from "vue";
 import { useRouter } from "vue-router";
 import {CONFIG} from "~/config/globalVariables";
+const sprintsStore = useSprintStore();
+import { storeToRefs } from "pinia";
 
+const {  addSprint} = sprintsStore;
+const {  loadCurrentSprintFromLocalStorage } = storeToRefs(sprintsStore);
+
+// Replace with actual data key if needed (was using eventTypes vs sprints earlier)
+const sprintList = computed(() => sprintsStore.loadFromLocalStorage('sprintList', []).slice(0, 5));
 const form = reactive({
-// assignedSprint: " ",
-  //sprintsList: [], // list from sprints to match with input
-  // storyTitle: "",
-  // storyNumber: "",
-  // storyName: "storyName",
-  // storyDescription: "",
-  // difficultyLevel: "",
-  // storyPoints: "",
-  // workType: "",
-  // developmentType: "",
-  // status: "Backlog",
-  // reporter: "",
-  // subtasks: "",
-  // dateAssigned: new Date(),
-  // dateCompleted: "",
-  // sprint: "",
-  // learning: "",
-  // planningNotes: "",
-  // repoNames: "",
-  // storyComments: "",
-  // updatedAt: new Date(),
 
-  //prefilled
   assignedSprint: "PL-001",
   storyTitle: "c2t please",
   storyName: "storyName",
@@ -83,11 +68,8 @@ const {
 });
 
 const handleSubmit = async () => {
-  // let fixedComments =  form.storyComments.length > 1 ? form.storyComments.split(",") : form.storyComments
-  // let fixedRepos = form.repoNames.length > 1 ? form.repoNames.split(",") : form.repoNames
-  // let fixedDescription = form.storyDescription.length > 1 ? form.storyDescription.split(",") : form.storyDescription
-  // let fixedLeaning = form.learning.length > 1 ? form.learning.split(",") : form.learning
-  // let fixedPlanning = form.planningNotes.length > 1 ? form.planningNotes.split(",") : form.planningNotes
+
+ 
   if (!validateFields()) return;
   try {
     await $fetch("http://localhost:8080/api/v1/stories", {
@@ -108,7 +90,6 @@ const handleSubmit = async () => {
 
 <template>
   <div class="form-container">
-<!--    {{sprints}}-->
     <h1 class="title">Create a New Story</h1>
     <form @submit.prevent="handleSubmit">
       <!-- Header Fields -->
@@ -117,7 +98,8 @@ const handleSubmit = async () => {
         <label for="assignedSprint">Sprint</label>
         <select v-model="form.assignedSprint" id="assignedSprint">
           <option value="" disabled>Select sprint</option>
-          <option :value="item.sprintID" v-for="item in sprints" :key="item._id">{{item.sprintID}}</option>
+          
+          <option :value="item.sprintID" v-for="item in sprintList" :key="item._id">{{item}}</option>
 
         </select>
 <!--        <span v-if="errors.workType" class="error">{{ errors.workType }}</span>-->

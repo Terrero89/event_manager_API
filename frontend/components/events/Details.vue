@@ -19,7 +19,7 @@ const props = defineProps([
       <li><strong>ID:</strong> {{ id }}</li>
       <li><strong>Title:</strong> {{ title }}</li>
       <li><strong>Description:</strong> {{ description }}</li>
-      <li><strong>Date:</strong> {{ date }}</li>
+      <li><strong>Date:</strong> {{formatDate(date) || date }}</li>
       <li><strong>Note Type:</strong> {{ eventType }}</li>
       <li><strong>Note Name:</strong> {{ eventName }}</li>
       <li><strong>Status</strong> {{ status }}</li>

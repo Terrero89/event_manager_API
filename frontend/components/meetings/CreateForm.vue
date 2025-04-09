@@ -5,7 +5,11 @@ import { CONFIG } from "~/config/globalVariables";
 import {onMounted } from 'vue'
 const meetingStore = useMeetingStore();
 import { storeToRefs } from "pinia";
+const sprintsStore = useSprintStore();
 
+
+const {  addSprint} = sprintsStore;
+const {  loadCurrentSprintFromLocalStorage } = storeToRefs(sprintsStore);
 const {
   addMeeting,
 
@@ -19,7 +23,7 @@ onMounted(async() => {
 });
 
 // Replace with actual data key if needed (was using eventTypes vs sprints earlier)
-const sprintList = computed(() => CONFIG.variables.sprints || CONFIG.variables.eventTypes);
+const sprintList = computed(() => sprintsStore.loadFromLocalStorage('sprintList', []).slice(0, 5));
 
 // Main form state
 const form = reactive({
@@ -52,6 +56,10 @@ const validateFields = () => {
 
   return Object.values(errors).every((err) => !err);
 };
+
+//  sprintsStore.loadFromLocalStorage('currentSprint', '') retrieving current sprint
+
+ // sprintsStore.sprintList = sprintsStore.loadFromLocalStorage('sprintList', [])
 
 // Submit handler
 const handleSubmit = async () => {

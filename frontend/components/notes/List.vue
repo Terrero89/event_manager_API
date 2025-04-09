@@ -12,6 +12,7 @@ const props = defineProps([
 "priorityLevel",
 "sprintId",
 ]);
+const isOpen = ref(false);
 </script>
 <template>
 

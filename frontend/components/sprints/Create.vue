@@ -1,12 +1,20 @@
 <script setup>
 import {ref, computed} from 'vue'
-
+import {CONFIG} from "~/config/globalVariables";
 import {onMounted } from 'vue'
+const sprintsStore = useSprintStore();
+import { storeToRefs } from "pinia";
 
+const {
+  addSprint,
+
+ saveToLocalStorage,
+} = sprintsStore;
+const { sprintList, currentSprint } = storeToRefs(sprintsStore);
 
 
 const sprint = ref({
-  sprintID: 'PI-001',
+  sprintID: 'PI-00111',
   relatedStoryId: 'DMR-001',
   startDate: '2025-01-22',
   dueDate: '2025-01-29',
@@ -24,6 +32,8 @@ const sprintDuration = computed(() => {
   }
   return 0
 })
+
+
 const handleSubmit = async () => {
 const newSprint = {
 sprintID: sprint.value.sprintID,
@@ -34,28 +44,25 @@ summary: sprint.value.summary,
 piNotes: sprint.value.piNotes,
 storiesUnderSprint: sprint.value.storiesUnderSprint
 }
+ sprintsStore.saveCurrentSprintToLocalStorage(newSprint.sprintID) 
+
   if (sprintDuration < 0) return;
+ await addSprint(newSprint)
 
-  try {
-    await $fetch("http://localhost:8080/api/v1/sprints", {
-      method: "POST",
-      // body:{...form, storyComments: fixedComments, repoNames:fixedRepos, storyDescription: fixedDescription},
-      body: newSprint
-    });
-
-    // console.log({...form, storyComments: fixedComments, repoNames:fixedRepos, storyDescription: fixedDescription, learning: fixedLeaning, planningNotes:fixedPlanning})
-    router.push("/");
-  } catch (error) {
-    console.error("Error submitting form:", error);
-  }
 };
+
+//  sprintsStore.loadFromLocalStorage('currentSprint', '') retrieving current sprint
+// sprintsStore.loadFromLocalStorage('sprintList', [])
+ // sprintsStore.sprintList = sprintsStore.loadFromLocalStorage('sprintList', [])
+
 
 </script>
 
 <template>
   <div>
-    {{currentSprint}}
-    {{sprintDuration}}
+    <div>{{sprintList}}</div>
+    <!-- {{currentSprint}}mmmmmm
+ xxx {{sprintsStore.loadSprintListFromLocalStorage()}}fffffff---{{sprintsStore.loadFromLocalStorage('sprintList', [])}} -->
     <form @submit.prevent="handleSubmit" class="sprint-details  form-container ">
       <h1>Add new Sprint</h1>
       <!-- Sprint ID -->

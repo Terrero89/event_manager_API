@@ -1,5 +1,4 @@
 
-
 <script setup>
 
 const props = defineProps([
@@ -13,6 +12,8 @@ const props = defineProps([
 "sprintId",
 "status"
 ]);
+
+const isOpen = ref(false);
 </script>
 <template>
 

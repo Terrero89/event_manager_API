@@ -22,13 +22,15 @@ const isOpen = ref(false);
         <!-- <h1>{{id}}</h1> -->
 
         <div class="item-header">
-          <p><strong>Type:</strong> {{ noteType }}</p>
+          
           <p><strong>Name: </strong> {{ noteName }}</p>
+          <p><strong>Type:</strong> {{ noteType }}</p>
           <p><strong>Description: </strong> {{ description }}</p>
         </div>
         <div class="item-content">
           <div>
-            <p><strong>Date:</strong> {{ date }}</p>
+            <p><strong>Date: </strong> {{formatDate(date) }}</p>
+            
 
             <p><strong>Priority Level:</strong> {{ priorityLevel }}</p>
             <p><strong>Sprint ID:</strong> {{ sprintId }}</p>

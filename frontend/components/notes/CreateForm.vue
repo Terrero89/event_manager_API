@@ -4,7 +4,12 @@ import { useRouter } from "vue-router";
 import { CONFIG } from "~/config/globalVariables";
 import {onMounted } from 'vue'
 const noteStore = useNoteStore();
+const sprintsStore = useSprintStore();
 import { storeToRefs } from "pinia";
+
+const {  addSprint} = sprintsStore;
+const {  loadCurrentSprintFromLocalStorage } = storeToRefs(sprintsStore);
+
 
 const {
   addNote,
@@ -22,7 +27,7 @@ onMounted(async() => {
 
 });
 
-const sprintList = computed(() => CONFIG.variables.sprints);
+let sprintList = sprintsStore.loadCurrentSprintFromLocalStorage();
 
 const form = reactive({
   sprintId: "",
@@ -62,31 +67,28 @@ const handleSubmit = async () => {
   };
 
   await addNote(newNote);
-// try {
-//     await $fetch("http://localhost:8080/api/v1/notes", {
-//       method: "POST",
-//       body: newNote,
-//     });
 
-//     console.log("Submitted successfully", newNote);
-//     router.push("/");
-//   } catch (error) {
-//     console.error("Error submitting form:", error);
-//   }
 };
+
+//  sprintsStore.loadFromLocalStorage('currentSprint', '') retrieving current sprint
+const list = sprintsStore.loadFromLocalStorage('sprintList', []).slice(0, 5);
+ // sprintsStore.sprintList = sprintsStore.loadFromLocalStorage('sprintList', [])
+
 </script>
 
 <template>
   <div class="form-container">
+    {{sprintList}}
 <!--    {{sprints}}-->
-    <h1 class="title">Create a New Story</h1>
+    <h1 class="title">Create a New Note</h1>
+    {{list}}
     <form @submit.prevent="handleSubmit">
       <!-- Header Fields -->
       <div class="form-group">
-        <label for="assignedSprint">Sprint</label>
+        <label for="assignedSprint">Sprint ID</label>
         <select v-model="form.sprintId" id="Sprint">
           <option value="" disabled>Select sprint</option>
-          <option :value="item" v-for="item in sprintList" :key="item">{{item}}</option>
+          <option :value="item" v-for="item in list" :key="item">{{item}}</option>
 
         </select>
        <span v-if="errors.sprintId" class="error">{{ errors.sprintId}}</span>

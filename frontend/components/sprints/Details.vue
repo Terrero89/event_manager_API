@@ -17,9 +17,9 @@ const props = defineProps([
     <ul class="details-list">
         <li><strong>Sprint ID:</strong> {{ sprintID }}</li>
       <li><strong>ID:</strong> {{ id }}</li>
-      <li><strong>Related Stories:</strong> {{ relatedStoriesId}}</li>
-      <li><strong>Date:</strong> {{ startDate }}</li>
-      <li><strong>Due Date</strong> {{ dueDate }}</li>
+      <li><strong>Related Stories:</strong> {{ relatedStoryId }}</li>
+      <li><strong>Date:</strong> {{ formatDate(startDate) }}</li>
+      <li><strong>Due Date</strong> {{ formatDate(dueDate) }}</li>
       <li><strong>Notes: </strong> {{ piNotes}}</li>
       <li><strong>Summary</strong> {{ summary }}</li>
       

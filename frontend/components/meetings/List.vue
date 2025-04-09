@@ -13,6 +13,7 @@ const props = defineProps([
 "sprintId",
 "status"
 ]);
+const isOpen = ref(false);
 </script>
 <template>
 

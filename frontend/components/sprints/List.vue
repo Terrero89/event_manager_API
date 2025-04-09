@@ -12,6 +12,7 @@ const props = defineProps([
 "piNotes",
 "storiesUnderSprint",
 ]);
+const isOpen = ref(false);
 </script>
 <template>
 

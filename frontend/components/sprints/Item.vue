@@ -9,7 +9,7 @@ const props = defineProps([
 "piNotes",
 "storiesUnderSprint",
 ]);
-const noteIdRoute = computed(()=> `/notes/${props.id}`)
+const noteIdRoute = computed(()=> `/story/${props.id}`)
 const isOpen = ref(false);
 </script>
 
@@ -23,17 +23,16 @@ const isOpen = ref(false);
 
         <div class="item-header">
           <p><strong>Related story ID:</strong> {{ relatedStoryId }}</p>
-          <p><strong>Start Date: </strong> {{ startDate }}</p>
-          <p><strong>End Date: </strong> {{ dueDate}}</p>
+         
         </div>
         <div class="item-content">
-          <!-- <div>
-            <p><strong>Date:</strong> {{ date }}</p>
+           <div>
+            <p><strong>Start Date: </strong> {{formatDate(startDate)  }}</p>
+            <p><strong>End Date: </strong> {{ formatDate(dueDate)}}</p>
 
-            <p><strong>Duration:</strong> {{ duration}} hours</p>
-            <p><strong>Sprint ID:</strong> {{ sprintId }}</p>
-            <p><strong>Sprint ID:</strong> {{ sprintId }}</p>
-          </div> -->
+            
+           
+          </div>
         </div>
       </div>
      
