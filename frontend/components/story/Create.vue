@@ -4,19 +4,27 @@ import { reactive, ref } from "vue";
 import { useRouter } from "vue-router";
 import {CONFIG} from "~/config/globalVariables";
 const sprintsStore = useSprintStore();
+const storyStore = useStoryStore();
 import { storeToRefs } from "pinia";
 
-const {  addSprint} = sprintsStore;
-const {  loadCurrentSprintFromLocalStorage } = storeToRefs(sprintsStore);
 
-// Replace with actual data key if needed (was using eventTypes vs sprints earlier)
-const sprintList = computed(() => sprintsStore.loadFromLocalStorage('sprintList', []).slice(0, 5));
+
+const {  addSprint} = sprintsStore;
+const {  addStory } = storyStore;
+const {  } = storeToRefs(sprintsStore);
+const {  } = storeToRefs(storyStore);
+
+// LINE FROM HERE
+
+const sprintList = sprintsStore.loadFromLocalStorage('sprintList', []).slice(0, 5);
+const currSprint = sprintsStore.loadFromLocalStorage('currentSprint', '')
+
 const form = reactive({
 
-  assignedSprint: "PL-001",
+ sprintId: currSprint,
   storyTitle: "c2t please",
-  storyName: "storyName",
   storyNumber: "dm123",
+  storyName: "storyName",
   storyDescription: "descriptiopn",
   difficultyLevel: "Low",
   storyPoints: 1,
@@ -24,25 +32,23 @@ const form = reactive({
   developmentType: "Frontend",
   status: "Backlog",
   reporter: "Sergio",
+  storyComments: "comment1,comment2",
+  learning: "changed perspective on this exe",
+  repoNames: "repo1, repo2",
   dateAssigned: new Date(),
   dateCompleted: new Date(),
-  sprint: "PL1",
-  learning: "changed perspective on this exe",
-  planningNotes: "note1,note2",
-  repoNames: "repo1, repo2",
-  storyComments: "comment1,comment2",
-  updatedAt: new Date(),
 
+  
+ 
+
+ 
 
 });
 const errors = reactive({});
 const router = useRouter();
 
 
-
 const validateFields = () => {
-
-
   errors.storyName = !form.storyName ? "Story Name is required" : "";
   errors.storyTitle = !form.storyTitle ? "Story Title is required" : "";
   errors.storyNumber = !form.storyNumber ? "Story Number is required" : "";
@@ -59,30 +65,34 @@ const validateFields = () => {
   return Object.values(errors).every((err) => !err);
 };
 
-const {
-  status,
-  data: sprints,
-  error,
-} = useFetch("http://localhost:8080/api/v1/sprints", {
-  lazy: true,
-});
 
 const handleSubmit = async () => {
-
- 
   if (!validateFields()) return;
-  try {
-    await $fetch("http://localhost:8080/api/v1/stories", {
-      method: "POST",
-      // body:{...form, storyComments: fixedComments, repoNames:fixedRepos, storyDescription: fixedDescription},
-      body: form
-    });
 
-      // console.log({...form, storyComments: fixedComments, repoNames:fixedRepos, storyDescription: fixedDescription, learning: fixedLeaning, planningNotes:fixedPlanning})
-    router.push("/");
-  } catch (error) {
-    console.error("Error submitting form:", error);
-  }
+  const newSprint = {
+    sprintId: form.sprintId,
+    storyTitle:form.storyTitle,
+    storyName: form.storyName,
+    storyNumber: form.storyNumber,
+    storyDescription: form.storyDescription,
+    difficultyLevel: form.difficultyLevel,
+    storyPoints: form.storyPoints,
+    workType: form.workType,
+    developmentType:form.developmentType,
+    status: form.status,
+    reporter: form.reporter,
+    storyComments: form.storyComments,
+    repoNames: form.repoNames,
+    learning: form.learning,
+    dateAssigned: new Date(),
+    dateCompleted: new Date(),
+   
+
+  };
+
+
+await addStory(newSprint);
+ 
 };
 </script>
 
@@ -93,34 +103,22 @@ const handleSubmit = async () => {
     <h1 class="title">Create a New Story</h1>
     <form @submit.prevent="handleSubmit">
       <!-- Header Fields -->
-
       <div class="form-group">
-        <label for="assignedSprint">Sprint</label>
-        <select v-model="form.assignedSprint" id="assignedSprint">
+        <label for="assignedSprint">Sprint ID</label>
+        <select v-model="form.sprintId" id="assignedSprint">
           <option value="" disabled>Select sprint</option>
           
-          <option :value="item.sprintID" v-for="item in sprintList" :key="item._id">{{item}}</option>
+          <option :value="item" v-for="item in sprintList" :key="item._id">{{item}}</option>
 
         </select>
 <!--        <span v-if="errors.workType" class="error">{{ errors.workType }}</span>-->
-      </div>
-      <div class="form-group">
-        <label for="storyName">Story Name</label>
-        <input
-            v-model="form.storyName"
-            type="text"
-            id="story Name"
-            placeholder="Enter Story Name"
-        />
-        <span v-if="errors.storyName" class="error">{{ errors.Name}}</span>
-      </div>
-
-
-
+      </div>   
+    
+  
 
       <!-- Story Details -->
       <div class="form-group">
-        <label for="storyTitle">Story Title</label>
+        <label for="storyTitle">Story Titlexx</label>
         <input
             v-model="form.storyTitle"
             type="text"
@@ -129,6 +127,18 @@ const handleSubmit = async () => {
         />
         <span v-if="errors.storyTitle" class="error">{{ errors.storyTitle }}</span>
       </div>
+
+    <div class="form-group">
+        <label for="storyNumber">Story Name </label>
+        <input
+            v-model="form.storyName"
+            type="text"
+            id="storyName"
+            placeholder="Enter Story Number"
+        />
+        <span v-if="errors.storyNumber" class="error">{{ errors.storyNumber }}</span>
+      </div>
+ 
 
       <div class="form-group">
         <label for="storyNumber">Story Number (e.g., DMR-XXXX)</label>

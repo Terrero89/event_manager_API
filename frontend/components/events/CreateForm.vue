@@ -23,12 +23,12 @@ onMounted(async() => {
 
 });
 
-// Replace with actual data key if needed (was using eventTypes vs sprints earlier)
-const sprintList = computed(() => sprintsStore.loadFromLocalStorage('sprintList', []).slice(0, 5));
+const sprintList = sprintsStore.loadFromLocalStorage('sprintList', []).slice(0, 5);
+const currSprint = sprintsStore.loadFromLocalStorage('currentSprint', '')
 
 // Main form state
 const form = reactive({
-  sprintId: "",
+  sprintId: currSprint,
   title: "Title",           // Note Title
   eventName: "dddd",            // Event Name
   eventType: "dddd",            // Event Type

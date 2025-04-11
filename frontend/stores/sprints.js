@@ -86,7 +86,7 @@ async saveCurrentSprintToLocalStorage(current) {
       },
     async addSprint(data) {
       this.isLoading = true; // Start loading
-      console.log("DATA:", data);
+
       try {
        
         const response = await fetch(this.URL, {

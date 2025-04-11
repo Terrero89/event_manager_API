@@ -78,49 +78,44 @@ export const updateStoryController = async (req: Request, res: Response) => {
 
 export const createStoryController = async (req: Request, res: Response) => {
   const {
+    sprintId,
     storyTitle,
     storyName,
     storyNumber,
     storyDescription,
-    acceptanceCriteria,
     difficultyLevel,
     storyPoints,
     workType,
     developmentType,
     status,
-    storyComments,
-    subtasks,
-    date,
     reporter,
+    storyComments,
     repoNames,
+    learning,
     dateAssigned,
     dateCompleted,
-    sprint,
-    learning,
+
+
     planningNotes,
   } = req.body;
   try {
     const story = await Stories.create({
+      sprintId,
       storyTitle,
       storyName,
       storyNumber,
       storyDescription,
-      acceptanceCriteria,
       difficultyLevel,
       storyPoints,
       workType,
       developmentType,
       status,
-      storyComments,
-      subtasks,
-      date,
       reporter,
+      storyComments,
       repoNames,
+      learning,
       dateAssigned,
       dateCompleted,
-      sprint,
-      learning,
-      planningNotes,
     });
     res.status(200).json(story);
   } catch (error) {

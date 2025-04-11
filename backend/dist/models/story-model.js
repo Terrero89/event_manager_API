@@ -7,6 +7,10 @@ exports.Stories = void 0;
 const mongoose_1 = __importDefault(require("mongoose"));
 // Define DevType as an enum
 const storySchema = new mongoose_1.default.Schema({
+    sprintId: {
+        type: String,
+        required: true,
+    },
     storyTitle: {
         type: String,
         required: true,
@@ -20,10 +24,6 @@ const storySchema = new mongoose_1.default.Schema({
         required: true,
     },
     storyDescription: {
-        type: Array,
-        required: true,
-    },
-    acceptanceCriteria: {
         type: Array,
         required: true,
     },
@@ -47,14 +47,29 @@ const storySchema = new mongoose_1.default.Schema({
         type: String,
         required: true,
     },
+    reporter: {
+        type: String,
+        required: true,
+    },
     storyComments: {
-        type: Array,
+        type: String,
         required: false,
     },
-    date: {
+    learning: {
+        type: String,
+        required: false,
+    },
+    repoNames: {
+        type: String,
+        required: true,
+    },
+    dateAssigned: {
         type: Date,
         default: Date.now,
     },
-    sprintId: { type: String, required: true }
+    dateCompleted: {
+        type: Date,
+        default: Date.now,
+    },
 }, { timestamps: true });
 exports.Stories = mongoose_1.default.model("Stories", storySchema);

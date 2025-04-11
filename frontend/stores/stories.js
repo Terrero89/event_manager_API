@@ -33,6 +33,26 @@ export const useStoryStore = defineStore({
       this.items = itemsList;
      
     },
+    async addStory(data) {
+      try {
+        const response = await fetch(this.URL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+        if (!response.ok) {
+          throw new Error("Failed to add event");
+        }
 
+        // No need to generate a unique ID here, data is stored directly
+      } catch (error) {
+        console.error("Failed to add story:", error);
+      } finally {
+    
+      }
+    },
 }});
+
 

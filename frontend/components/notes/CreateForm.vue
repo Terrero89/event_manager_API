@@ -8,7 +8,7 @@ const sprintsStore = useSprintStore();
 import { storeToRefs } from "pinia";
 
 const {  addSprint} = sprintsStore;
-const {  loadCurrentSprintFromLocalStorage } = storeToRefs(sprintsStore);
+const {  loadFromLocalStorage } = storeToRefs(sprintsStore);
 
 
 const {
@@ -27,10 +27,14 @@ onMounted(async() => {
 
 });
 
-let sprintList = sprintsStore.loadCurrentSprintFromLocalStorage();
+// sprintsStore.loadFromLocalStorage('currentSprint', '') 
+const sprintList = sprintsStore.loadFromLocalStorage('sprintList', []).slice(0, 5);
+const currSprint = sprintsStore.loadFromLocalStorage('currentSprint', '')
+ // sprintsStore.sprintList = sprintsStore.loadFromLocalStorage('sprintList', [])
+
 
 const form = reactive({
-  sprintId: "",
+  sprintId:  currSprint ,
   title: "",          // Note Title
   description: "",    // Note Description
   date: "",           // Start Date
@@ -49,7 +53,7 @@ const validateFields = () => {
   errors.noteName = !form.noteName ? "Note Name is required" : "";
   errors.date = !form.date ? "Date is required" : "";
   errors.description = !form.description ? "Note Description is required" : "";
-
+  currSprint 
   return Object.values(errors).every((err) => !err);
 };
 
@@ -70,25 +74,23 @@ const handleSubmit = async () => {
 
 };
 
-//  sprintsStore.loadFromLocalStorage('currentSprint', '') retrieving current sprint
-const list = sprintsStore.loadFromLocalStorage('sprintList', []).slice(0, 5);
- // sprintsStore.sprintList = sprintsStore.loadFromLocalStorage('sprintList', [])
+
+
 
 </script>
 
 <template>
   <div class="form-container">
-    {{sprintList}}
+    {{sprintList}}xxx{{currSprint }}
 <!--    {{sprints}}-->
     <h1 class="title">Create a New Note</h1>
-    {{list}}
     <form @submit.prevent="handleSubmit">
       <!-- Header Fields -->
       <div class="form-group">
         <label for="assignedSprint">Sprint ID</label>
         <select v-model="form.sprintId" id="Sprint">
           <option value="" disabled>Select sprint</option>
-          <option :value="item" v-for="item in list" :key="item">{{item}}</option>
+          <option :value="item" v-for="item in sprintList" :key="item">{{item}}</option>
 
         </select>
        <span v-if="errors.sprintId" class="error">{{ errors.sprintId}}</span>

@@ -14,7 +14,7 @@ const {
   addMeeting,
 
 } = meetingStore;
-const {  } = storeToRefs(meetingStore);
+const {  } = storeToRefs(Store);
 // for later use
 // const route = useRoute(); //route object
 // const destId = route.params.destinationID;
@@ -22,12 +22,12 @@ const {  } = storeToRefs(meetingStore);
 onMounted(async() => {
 });
 
-// Replace with actual data key if needed (was using eventTypes vs sprints earlier)
-const sprintList = computed(() => sprintsStore.loadFromLocalStorage('sprintList', []).slice(0, 5));
+const sprintList = sprintsStore.loadFromLocalStorage('sprintList', []).slice(0, 5);
+const currSprint = sprintsStore.loadFromLocalStorage('currentSprint', '')
 
 // Main form state
 const form = reactive({
-  sprintId: "",
+  sprintId: currSprint,
   title: "Title",           // Note Title
   meetingName: "",            // Event Name
   meetingType: "",            // Event Type
@@ -80,17 +80,7 @@ const handleSubmit = async () => {
 
   console.log("Before submission", newMeeting);
 await addMeeting(newMeeting)
-  // try {
-  //   await $fetch("http://localhost:8080/api/v1/meetings", {
-  //     method: "POST",
-  //     body: newEvent,
-  //   });
 
-  //   console.log("Submitted successfully", newEvent);
-  //   router.push("/");
-  // } catch (error) {
-  //   console.error("Error submitting form:", error);
-  // }
 };
 </script>
 <template>

@@ -4,6 +4,10 @@ import mongoose from "mongoose";
 
 const storySchema = new mongoose.Schema(
   {
+    sprintId: {
+      type: String,
+      required: true,
+    },
     storyTitle: {
       type: String,
       required: true,
@@ -20,10 +24,7 @@ const storySchema = new mongoose.Schema(
       type: Array,
       required: true,
     },
-    acceptanceCriteria: {
-      type: Array,
-      required: true,
-    },
+
     difficultyLevel: {
       type: String,
       required: true,
@@ -40,22 +41,36 @@ const storySchema = new mongoose.Schema(
       type: String, // FE | BE | FS
       required: true,
     },
-
     status: {
       type: String,
       required: true,
     },
+   reporter: {
+      type: String, 
+      required: true,
+    },
+   
     storyComments: {
-      type: Array,
+      type: String,
       required: false,
     },
-  
-    date: {
+learning: {
+      type: String,
+      required: false,
+    },
+    repoNames: {
+      type: String, 
+      required: true,
+    },
+    dateAssigned: {
       type: Date,
       default: Date.now,
     },
-    sprintId: { type: String, required: true}
-  },
+    dateCompleted: {
+      type: Date,
+      default: Date.now,
+    },
+  }, 
   { timestamps: true }
 );
 
