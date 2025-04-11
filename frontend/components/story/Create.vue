@@ -31,7 +31,7 @@ const form = reactive({
   workType: "Story",
   developmentType: "Frontend",
   status: "Backlog",
-  reporter: "Sergio",
+  reporter: "",
   storyComments: "comment1,comment2",
   learning: "changed perspective on this exe",
   repoNames: "repo1, repo2",
@@ -49,9 +49,11 @@ const router = useRouter();
 
 
 const validateFields = () => {
-  errors.storyName = !form.storyName ? "Story Name is required" : "";
+  errors.sprintId= !form.sprintId ? "Sprint id is required" : "";
   errors.storyTitle = !form.storyTitle ? "Story Title is required" : "";
+  errors.storyName = !form.storyName ? "Story Name is required" : "";
   errors.storyNumber = !form.storyNumber ? "Story Number is required" : "";
+  errors.storyDescription = !form.storyDescription ? "Story description is required" : "";
   errors.difficultyLevel = !form.difficultyLevel
       ? "Difficulty Level is required"
       : "";
@@ -61,6 +63,12 @@ const validateFields = () => {
       ? "Development Type is required"
       : "";
   errors.status = !form.status ? "Status is required" : "";
+  errors.reporter = !form.reporter ? "Reporter is required" : "";
+  errors.storyComments = !form.storyComments ? "Comments are required" : "";
+  errors.repoNames = !form.repoNames ? "Repo name is required" : "";
+  errors.reporter = !form.reporter ? "Reporter is required" : "";
+  errors.learning = !form.learning ? "Learning is required" : "";
+
 
   return Object.values(errors).every((err) => !err);
 };
@@ -69,7 +77,7 @@ const validateFields = () => {
 const handleSubmit = async () => {
   if (!validateFields()) return;
 
-  const newSprint = {
+  const newStory = {
     sprintId: form.sprintId,
     storyTitle:form.storyTitle,
     storyName: form.storyName,
@@ -91,7 +99,9 @@ const handleSubmit = async () => {
   };
 
 
-await addStory(newSprint);
+await addStory(newStory);
+
+console.log(await addStory(newStory))
  
 };
 </script>
@@ -223,7 +233,10 @@ await addStory(newSprint);
         ></input>
         <span v-if="errors.repoNames" class="error">{{ errors.repoNames }}</span>
       </div>
-
+      <div>
+        <label for="startDate">Start Date:</label>
+        <input v-model="form.dateAssigned" type="date" id="startDate"/>
+      </div>
 
       <div class="form-group">
         <label for="storyDescription">Story Comments</label>
@@ -234,8 +247,9 @@ await addStory(newSprint);
         ></textarea>
         <span v-if="errors.storyComments" class="error">{{ errors.storyComments }}</span>
       </div>
-{{form.storyComments}}
-      {{typeof form.storyComments}}
+
+    
+      
       <div class="form-group">
         <label for="storyDescription">Story Description</label>
         <textarea

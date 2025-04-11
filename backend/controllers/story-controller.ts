@@ -94,9 +94,6 @@ export const createStoryController = async (req: Request, res: Response) => {
     learning,
     dateAssigned,
     dateCompleted,
-
-
-    planningNotes,
   } = req.body;
   try {
     const story = await Stories.create({

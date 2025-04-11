@@ -41,11 +41,10 @@ const isOpen = ref(false);
       <div class="item-buttons my-2">
         
       
-        <UButton v-if="props.status === 'Pending'" color="neutral" variant="outline"  class="b mx-2">{{props.status}}</UButton>
-        <UButton v-if="props.status === 'Completed'" color="blue" variant="outline"  class="b mx-2">{{props.status}}</UButton>
-        <UButton v-if="props.status === 'In Progress'" color="yellow" variant="outline"  class="b mx-2">{{props.status}}</UButton>
+        <UButton v-if="props.status === 'Pending'"   variant="outline"  class="b mx-2">{{props.status}}</UButton>
+        <UButton v-if="props.status === 'Completed'" variant="outline"  class="b mx-2">{{props.status}}</UButton>
+        <UButton v-if="props.status === 'In Progress'"  variant="outline"  class="b mx-2">{{props.status}}</UButton>
         <UButton class="b" @click="isOpen = true" >Details</UButton>
-        <!-- <NuxtLink :to="noteIdRoute">About page</NuxtLink> -->
         <UModal v-model="isOpen">
     
         
