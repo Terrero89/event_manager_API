@@ -1,8 +1,6 @@
 {
 
     "version": 2,
-    "name": "project-manager-app",
     "builds": [{ "src": "backend/app.ts", "use": "@vercel/node" }],
-    "routes": [{ "src": "/(.*)", "dest": "/backend/app.js" }], 
     "rewrites": [{ "source": "/api/v1/(.*)", "destination": "/api/v1/$1" }]
 }
