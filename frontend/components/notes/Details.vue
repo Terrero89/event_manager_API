@@ -15,7 +15,7 @@ const props = defineProps([
   <div class="details-card">
     <h2 class="details-title">Note Details</h2>
     <ul class="details-list">
-      <li><strong>ID:</strong> {{ id }}</li>
+      <li><strong>ID:</strong> {{ _id }}</li>
       <li><strong>Title:</strong> {{ title }}</li>
       <li><strong>Description:</strong> {{ description }}</li>
       <li><strong>Date:</strong> {{ formatDate(date) || date }}</li>

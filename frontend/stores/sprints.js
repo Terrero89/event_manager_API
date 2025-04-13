@@ -3,6 +3,7 @@ import { defineStore } from "pinia";
 export const useSprintStore = defineStore({
   id: "sprint",
   state: () => ({
+    URL_2: "https://project-manager-app-f9829-default-rtdb.firebaseio.com/sprints.json",
     URL: "http://localhost:8080/api/v1/sprints",
     items: [],
     currentSprint:'',
@@ -150,7 +151,28 @@ async saveCurrentSprintToLocalStorage(current) {
       this.items = itemsList;
       this.sprintList = itemsList.map((item) => item.sprintID);
       this.currentSprint = itemsList[0].sprintID;
-    },
+     },
+    // async fetchSprints() {
+    //   const response = await fetch(this.URL);
+    //   const responseData = await response.json();
+    //   this.items = responseData;
+
+    //   if (!response.ok) {
+    //     const error = new Error(responseData.message || "Failed to fetch!");
+    //     throw error;
+    //   }
+
+    //   const itemsList = [];
+
+    //   for (const key in this.items) {
+    //     const newItem = {
+    //       _id: key,
+    //       ...this.items[key],
+    //     };
+    //     expensesList.push(newItem);
+    //   }
+    //   this.expenses = itemsList;
+    // },
 
     // async updateEvent(cityID, payload) {
     //   const url = `https://travel-planning-app-44a08-default-rtdb.firebaseio.com/cities/${cityID}.json`;
