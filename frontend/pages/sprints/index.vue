@@ -62,13 +62,10 @@ const isOpen = ref(false);
     >
   </div>
   <div>NOTES</div>
-
-
-
   <SprintsList  
   v-for="item in items"
-  :key="item._id"
-  :id="item._id"
+  :key="item.id"
+  :id="item.id"
   :sprintID="item.sprintID"
   :startDate="item.startDate"
   :dueDate="item.dueDate"
@@ -77,10 +74,6 @@ const isOpen = ref(false);
   :storyUnderSprint="item.storyUnderSprint"
   :relatedStoryId="item.relatedStoryId"
   
-
-
- 
-
 
     />
  

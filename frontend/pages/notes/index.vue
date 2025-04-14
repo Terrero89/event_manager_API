@@ -70,12 +70,14 @@ const isOpen = ref(false);
       >
     </div>
     <div>NOTES</div>
-
-
+  
+  <div  
+    v-for="note in notes" :key="note.id">
+    {{note.description}} ID: {{note.id}}
+    </div>
   
     <NotesList  
-    v-for="note in notes"
-    :key="note._id"
+    v-for="note in notes" :key="note.id"
     :id="note._id"
     :description="note.description"
     :title="note.title"
@@ -87,7 +89,7 @@ const isOpen = ref(false);
 
 
       />
-      <!-- {{ notes }} -->
+
   </div>
 
 </template>

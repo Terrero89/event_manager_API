@@ -43,7 +43,7 @@ const isOpen = ref(false);
         <UModal v-model="isOpen">
     
          <NotesDetails
-             :id="id"
+             :id="props.id"
             :title="props.title"
             :description="props.description"
             :date="props.date"

@@ -10,6 +10,55 @@ export const useSprintStore = defineStore({
     sprintList: [],
   }),
   actions: {
+    async fetchSprints() {
+      const response = await fetch(this.URL_2);
+      const responseData = await response.json();
+      this.items = responseData;
+
+      if (!response.ok) {
+        const error = new Error(responseData.message || "Failed to fetch!");
+        throw error;
+      }
+
+      const itemsList = [];
+
+      for (const key in this.items) {
+        if (this.items[key]) {
+          // Check if city data exists
+          const newItem = {
+             id: key,
+            ...this.items[key],
+          };
+          itemsList.push(newItem);
+        }
+      }
+      this.items = itemsList;
+      this.sprintList = itemsList.map((item) => item.sprintID);
+      this.currentSprint = itemsList[0].sprintID;
+     },
+
+     async addSprint(data) {
+      this.isLoading = true; // Start loading
+
+      try {
+        const response = await fetch(
+          this.URL_2,
+          {
+            method: "POST",
+            body: JSON.stringify({ ...data }),
+          }
+        );
+        if (!response.ok) {
+          throw new Error("Failed to add event");
+        }
+
+        // No need to generate a unique ID here, data is stored directly
+      } catch (error) {
+        console.error("Failed to add city:", error);
+      } finally {
+        this.isLoading = false; // Stop loading
+      }
+    },
 // REFACTOR FOR LATER
 async saveCurrentSprintToLocalStorage(current) {
     try {
@@ -85,35 +134,7 @@ async saveCurrentSprintToLocalStorage(current) {
           return fallback;
         }
       },
-    async addSprint(data) {
-      this.isLoading = true; // Start loading
 
-      try {
-       
-        const response = await fetch(this.URL, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          
-          body: JSON.stringify(data),
-       
-        },
-      
-        
-        this.currentSprint = data.sprintID);
-        this.sprintList.push(data.sprintID);
-        if (!response.ok) {
-          throw new Error("Failed to add event");
-        }
-
-        // No need to generate a unique ID here, data is stored directly
-      } catch (error) {
-        console.error("Failed to add city:", error);
-      } finally {
-        this.isLoading = false; // Stop loading
-      }
-    },
     // async deleteEvent(itemID) {
     //   let response = await fetch(
     //     `https://travel-planning-app-44a08-default-rtdb.firebaseio.com/cities/${itemID}.json`,
@@ -127,53 +148,6 @@ async saveCurrentSprintToLocalStorage(current) {
     //   }
 
     // },
-    async fetchSprints() {
-      const response = await fetch(this.URL);
-      const responseData = await response.json();
-      this.items = responseData;
-
-      if (!response.ok) {
-        const error = new Error(responseData.message || "Failed to fetch!");
-        throw error;
-      }
-
-      const itemsList = [];
-
-      for (const key in this.items) {
-        if (this.items[key]) {
-          // Check if city data exists
-          const newItem = {
-            ...this.notes[key],
-          };
-          itemsList.push(newItem);
-        }
-      }
-      this.items = itemsList;
-      this.sprintList = itemsList.map((item) => item.sprintID);
-      this.currentSprint = itemsList[0].sprintID;
-     },
-    // async fetchSprints() {
-    //   const response = await fetch(this.URL);
-    //   const responseData = await response.json();
-    //   this.items = responseData;
-
-    //   if (!response.ok) {
-    //     const error = new Error(responseData.message || "Failed to fetch!");
-    //     throw error;
-    //   }
-
-    //   const itemsList = [];
-
-    //   for (const key in this.items) {
-    //     const newItem = {
-    //       _id: key,
-    //       ...this.items[key],
-    //     };
-    //     expensesList.push(newItem);
-    //   }
-    //   this.expenses = itemsList;
-    // },
-
     // async updateEvent(cityID, payload) {
     //   const url = `https://travel-planning-app-44a08-default-rtdb.firebaseio.com/cities/${cityID}.json`;
     //   const options = {

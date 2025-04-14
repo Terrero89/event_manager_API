@@ -1,28 +1,30 @@
 <script setup>
 const props = defineProps([
-    "id",
-"sprintID",
-"relatedStoryId",
-"startDate",
-"dueDate",
-"summary",
-"piNotes",
-"storiesUnderSprint",
-])
+  "id",
+  "sprintID",
+  "relatedStoryId",
+  "startDate",
+  "dueDate",
+  "summary",
+  "piNotes",
+  "storiesUnderSprint",
+]);
+
+console.log("From Details:", props.id);
 </script>
 
 <template>
   <div class="details-card">
     <h2 class="details-title">Note Details</h2>
+    {{ id }}
     <ul class="details-list">
-        <li><strong>Sprint ID:</strong> {{ sprintID }}</li>
-      <li><strong>ID:</strong> {{ id }}</li>
+      <li><strong>Sprint ID:</strong> {{ sprintID }}</li>
+      <li><strong>ID:</strong> {{ props.id }}</li>
       <li><strong>Related Stories:</strong> {{ relatedStoryId }}</li>
       <li><strong>Date:</strong> {{ formatDate(startDate) }}</li>
       <li><strong>Due Date</strong> {{ formatDate(dueDate) }}</li>
-      <li><strong>Notes: </strong> {{ piNotes}}</li>
+      <li><strong>Notes: </strong> {{ piNotes }}</li>
       <li><strong>Summary</strong> {{ summary }}</li>
-      
     </ul>
   </div>
 </template>

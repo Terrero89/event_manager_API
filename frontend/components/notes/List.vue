@@ -33,7 +33,7 @@ const isOpen = ref(false);
       </div>
   
         <NotesItem
-            :id="_id"
+            :id="props.id"
             :title="props.title"
             :description="props.description"
             :date="props.date"

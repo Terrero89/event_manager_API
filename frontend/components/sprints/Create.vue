@@ -1,92 +1,93 @@
 <script setup>
-import {ref, computed} from 'vue'
-import {CONFIG} from "~/config/globalVariables";
-import {onMounted } from 'vue'
+import { ref, computed } from "vue";
+import { CONFIG } from "~/config/globalVariables";
+import { onMounted } from "vue";
 const sprintsStore = useSprintStore();
 import { storeToRefs } from "pinia";
 
 const {
   addSprint,
 
- saveToLocalStorage,
+  saveToLocalStorage,
 } = sprintsStore;
 const { sprintList, currentSprint } = storeToRefs(sprintsStore);
 
-
 const sprint = ref({
-  sprintID: 'PI-00111',
-  relatedStoryId: 'DMR-001',
-  startDate: '2025-01-22',
-  dueDate: '2025-01-29',
-  summary: ['summary1', 'summary2', 'summary3'],
-  piNotes: ['note1', 'note2', 'note3'],
-  storiesUnderSprint: ['DMR-001', 'DMR-002', 'DMR-003'],
-})
+  sprintID: "PI-00111",
+  relatedStoryId: "DMR-001",
+  startDate: "2025-01-22",
+  dueDate: "2025-01-29",
+  summary: ["summary1", "summary2", "summary3"],
+  piNotes: ["note1", "note2", "note3"],
+  storiesUnderSprint: ["DMR-001", "DMR-002", "DMR-003"],
+});
 
 // Calculate duration between startDate and dueDate
 const sprintDuration = computed(() => {
   if (sprint.value.startDate && sprint.value.dueDate) {
-    const start = new Date(sprint.value.startDate)
-    const due = new Date(sprint.value.dueDate)
-    return Math.floor((due - start) / (1000 * 60 * 60 * 24)) || 0
+    const start = new Date(sprint.value.startDate);
+    const due = new Date(sprint.value.dueDate);
+    return Math.floor((due - start) / (1000 * 60 * 60 * 24)) || 0;
   }
-  return 0
-})
-
+  return 0;
+});
 
 const handleSubmit = async () => {
-const newSprint = {
-sprintID: sprint.value.sprintID,
-relatedStoryId: sprint.value.relatedStoryId,
-startDate: sprint.value.startDate,
-dueDate: sprint.value.dueDate,
-summary: sprint.value.summary,
-piNotes: sprint.value.piNotes,
-storiesUnderSprint: sprint.value.storiesUnderSprint
-}
- sprintsStore.saveCurrentSprintToLocalStorage(newSprint.sprintID) 
+  const newSprint = {
+    sprintID: sprint.value.sprintID,
+    relatedStoryId: sprint.value.relatedStoryId,
+    startDate: sprint.value.startDate,
+    dueDate: sprint.value.dueDate,
+    summary: sprint.value.summary,
+    piNotes: sprint.value.piNotes,
+    storiesUnderSprint: sprint.value.storiesUnderSprint,
+  };
+  sprintsStore.saveCurrentSprintToLocalStorage(newSprint.sprintID);
 
   if (sprintDuration < 0) return;
- await addSprint(newSprint)
+  await addSprint(newSprint);
 
+  console.log(newSprint);
 };
 
 //  sprintsStore.loadFromLocalStorage('currentSprint', '') retrieving current sprint
 // sprintsStore.loadFromLocalStorage('sprintList', [])
- // sprintsStore.sprintList = sprintsStore.loadFromLocalStorage('sprintList', [])
-
-
+// sprintsStore.sprintList = sprintsStore.loadFromLocalStorage('sprintList', [])
 </script>
 
 <template>
   <div>
-    <div>{{sprintList}}</div>
+    <div>{{ sprintList }}</div>
     <!-- {{currentSprint}}mmmmmm
  xxx {{sprintsStore.loadSprintListFromLocalStorage()}}fffffff---{{sprintsStore.loadFromLocalStorage('sprintList', [])}} -->
-    <form @submit.prevent="handleSubmit" class="sprint-details  form-container ">
+    <form @submit.prevent="handleSubmit" class="sprint-details form-container">
       <h1>Add new Sprint</h1>
       <!-- Sprint ID -->
       <div>
         <label for="sprintID">Sprint ID:</label>
-        <input v-model="sprint.sprintID" type="text" id="sprintID"/>
+        <input v-model="sprint.sprintID" type="text" id="sprintID" />
       </div>
 
       <!-- Related Story ID -->
       <div>
         <label for="relatedStoryId">Related Story ID:</label>
-        <input v-model="sprint.relatedStoryId" type="text" id="relatedStoryId"/>
+        <input
+          v-model="sprint.relatedStoryId"
+          type="text"
+          id="relatedStoryId"
+        />
       </div>
 
       <!-- Start Date -->
       <div>
         <label for="startDate">Start Date:</label>
-        <input v-model="sprint.startDate" type="date" id="startDate"/>
+        <input v-model="sprint.startDate" type="date" id="startDate" />
       </div>
 
       <!-- Due Date -->
       <div>
         <label for="dueDate">Due Date:</label>
-        <input v-model="sprint.dueDate" type="date" id="dueDate"/>
+        <input v-model="sprint.dueDate" type="date" id="dueDate" />
       </div>
 
       <!-- Summary -->
@@ -104,16 +105,18 @@ storiesUnderSprint: sprint.value.storiesUnderSprint
       <!-- Stories Under Sprint -->
       <div>
         <label for="storiesUnderSprint">Stories Under Sprint:</label>
-        <textarea v-model.trim="sprint.storiesUnderSprint" type="textarea" id="storiesUnderSprint"/>
+        <textarea
+          v-model.trim="sprint.storiesUnderSprint"
+          type="textarea"
+          id="storiesUnderSprint"
+        />
       </div>
       <button type="submit" class="submit-button">Submit</button>
       <!-- Calculated Duration -->
       <!--    <p><strong>Sprint Duration:</strong> {{ sprintDuration }} days</p>-->
     </form>
-
   </div>
 </template>
-
 
 <style scoped>
 h1 {

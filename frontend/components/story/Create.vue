@@ -118,7 +118,7 @@ console.log(await addStory(newStory))
         <select v-model="form.sprintId" id="assignedSprint">
           <option value="" disabled>Select sprint</option>
           
-          <option :value="item" v-for="item in sprintList" :key="item._id">{{item}}</option>
+          <option :value="item" v-for="item in sprintList" :key="item.id">{{item}}</option>
 
         </select>
 <!--        <span v-if="errors.workType" class="error">{{ errors.workType }}</span>-->
