@@ -44,7 +44,7 @@ const isOpen = ref(false);
         <UButton v-if="props.status === 'In Progress'" color="yellow" variant="outline"  class="b mx-2">{{props.status}}</UButton>
         <UButton class="b" @click="isOpen = true" >Details</UButton>
         <!-- <NuxtLink :to="noteIdRoute">About page</NuxtLink> -->
-        <UModal v-model="isOpen" fullscreen >
+        <UModal v-model="isOpen"  >
     
         
             <MeetingsDetails

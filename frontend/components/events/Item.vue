@@ -45,7 +45,7 @@ const isOpen = ref(false);
         <UButton v-if="props.status === 'Completed'" variant="outline"  class="b mx-2">{{props.status}}</UButton>
         <UButton v-if="props.status === 'In Progress'"  variant="outline"  class="b mx-2">{{props.status}}</UButton>
         <UButton class="b" @click="isOpen = true" >Details</UButton>
-        <UModal v-model="isOpen" fullscreen >
+        <UModal v-model="isOpen"  >
     
         
             <EventsDetails

@@ -13,126 +13,136 @@ const props = defineProps([
 </script>
 
 <template>
-  <div class="details-card">
+  <div class="modal-details">
     <h2 class="details-title">Meeting Details</h2>
-    <ul class="details-list">
-      <li><strong>ID:</strong> {{ id }}</li>
-      <li><strong>Title:</strong> {{ title }}</li>
-      <li><strong>Description:</strong> {{ description }}</li>
-      <li><strong>Date:</strong> {{formatDate(date) || date }}</li>
-      <li><strong>Note Type:</strong> {{ meetingType }}</li>
-      <li><strong>Note Name:</strong> {{ meetingName }}</li>
-      <li><strong>Status</strong> {{ status }}</li>
-      <li><strong>Sprint ID:</strong> {{ sprintId }}</li>
-    </ul>
+    <div class="details-row">
+      <span class="detail-label">ID:</span>
+      <span class="detail-value space">{{ props.id}}</span>
+    </div> <div class="details-row">
+      <span class="detail-label">Sprint ID:</span>
+      <span class="detail-value space">{{ props.sprintId}}</span>
+    </div>
+   
+    <div class="details-row">
+      <span class="detail-label">Related Story ID:</span>
+      <span class="detail-value space"> {{ props.title}}</span>
+    </div>
+    <div class="details-row">
+      <span class="detail-label">Event Name: </span>
+      <span class="detail-value space">{{ props.meetingName}}</span>
+    </div>
+    <div class="details-row">
+      <span class="detail-label">Start Date: </span>
+      <span class="detail-value space">{{ props.date}}</span>
+    </div>
+    <div class="details-row">
+      <span class="detail-label">Event Type: </span>
+      <span class="detail-value space">{{ props.meetingType}}</span>
+    </div>
+    <div class="details-row">
+      <span class="detail-label">Status: </span>
+      <span class="detail-value space">{{ props.status}}</span>
+    </div>
+    <div class="details-row">
+      <span class="detail-label">Duration:</span>
+      <span class="detail-value space">{{ props.duration}}</span>
+   
+    </div>
+ 
+    <div class="details-row">
+      <span class="detail-label">Description: </span>
+      <span class="detail-value space">{{ props.description}}</span>
+    </div>
+    <div class="modal-actions">
+      <UButton color="red" @click="removeItem(props.destinationID)">Delete</UButton>
+      <UButton to="/notes/update">Update</UButton>
+    </div>
+    
   </div>
 </template>
-
-
 <style scoped>
 
-.buttons{
-  margin-top:15px;
+.details-button {
+  color: black;
+  border: #b0b0b0 solid 1px;
+  padding: 5px 10px;
+  border-radius: 8px;
 }
 
-.update-btn {
-  background: linear-gradient(135deg, #6366f1, #3b82f6); /* Indigo to blue gradient */
-  color: white;
-  padding: 0.75rem 1.5rem;
-  border: none;
-  border-radius: 15px;
-  font-size: 1rem;
-  font-weight: 600;
+.details-button:hover {
+  background-color: #dadada;
+  transition: 0.3s ease-in-out;
+
+
+}
+
+.comment {
+  border: solid rgb(180, 180, 180) 1px;
+  min-height: 5rem;
+  border-radius: 5px;
+  margin-top: 1rem;
+}
+
+/* for highlighting titles : color: gray; */
+/* for highlighting values :  color: rgb(43, 41, 41);
+  font-weight: 500;*/
+.title {
+  font-weight: bold;
+  color: rgb(110, 110, 110);
+}
+
+.highlight {
+  font-weight: 800;
+  color: rgb(139, 139, 139) !important;
+}
+
+.dr-button {
+  padding: 3px 13px;
+  border-radius: 5px;
+  background: rgb(223, 222, 222);
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 14px rgba(59, 130, 246, 0.4);
-  margin-right:10px;
- 
 }
 
-.delete-btn {
-  background: red;
-  color: white;
-  padding: 0.75rem 1.5rem;
-  border: none;
-  border-radius: 15px;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 14px rgba(59, 130, 246, 0.4);
-}
-.fancy-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.5);
+.dr-button:hover {
+  background-color: rgb(136, 134, 134);
 }
 
-.fancy-btn:active {
-  transform: translateY(1px);
-  box-shadow: 0 3px 10px rgba(59, 130, 246, 0.3);
+.space {
+  margin: 0 0.5rem;
 }
 
-.fancy-btn:focus {
-  outline: 3px solid rgba(99, 102, 241, 0.5);
-  outline-offset: 2px;
-}
+.modal-details {
+  padding: 20px;
+  border-radius: 5px;
 
-.details-card {
-  min-width: 40%;
-  background-color: #1f242a;
-  color: #ffffff;
-  padding: 1rem;
-  border-radius: 0.75rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  margin: auto;
-}
-.details-card {
-  width: 300px; /* default width */
-  /* other styles... */
-}
-
-.details-card {
-  width: 300px; /* default width */
-  /* other styles... */
-}
-
-/* Shrink the card as the screen size decreases */
-@media (max-width: 1200px) {
-  .details-card {
-    width: 80%;
-  }
-}
-
-
-
-
-.details-title {
-  font-size: 1.25rem;
-  margin-bottom: 1rem;
-  font-weight: 600;
-  text-align: center;
-  border-bottom: 1px solid #3b4047;
-  padding-bottom: 0.5rem;
-}
-
-.details-list {
-  display:flex;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
   flex-direction: column;
-  list-style: none;
-  padding: 0;
+  gap: 10px;
 }
 
-li{
-  margin:1rem 0;
+.modal-details h2 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
 }
 
-strong{
-  font-size: 1rem;
-  margin-right:15px;
+.details-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.details-list li {
-  margin-bottom: 0.5rem;
-  font-size: 0.95rem;
+.detail-label {
+  font-weight: bold;
+}
+
+.detail-value {
+  flex-grow: 1;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
 }
 </style>
