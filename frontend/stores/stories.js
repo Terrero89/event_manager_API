@@ -6,11 +6,12 @@ export const useStoryStore = defineStore({
     items: [],
     double: [],
     URL: "http://localhost:8080/api/v1/stories",
+    URL_2: "https://project-manager-app-f9829-default-rtdb.firebaseio.com/stories.json",
   }),
   actions: {
 
     async fetchStories() {
-      const response = await fetch(this.URL);
+      const response = await fetch(this.URL_2);
       const responseData = await response.json();
       this.items = responseData;
 
@@ -25,7 +26,7 @@ export const useStoryStore = defineStore({
         if (this.items[key]) {
           // Check if city data exists
           const newItem = {
-            ...this.notes[key],
+            ...this.items[key],
           };
           itemsList.push(newItem);
         }
@@ -35,12 +36,12 @@ export const useStoryStore = defineStore({
     },
     async addStory(data) {
       try {
-        const response = await fetch(this.URL, {
+        const response = await fetch(this.URL_2, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(data),
+          body: JSON.stringify({ ...data }),
         });
         if (!response.ok) {
           throw new Error("Failed to add event");

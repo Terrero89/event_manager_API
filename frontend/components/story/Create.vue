@@ -100,8 +100,6 @@ const handleSubmit = async () => {
 
 
 await addStory(newStory);
-
-console.log(await addStory(newStory))
  
 };
 </script>

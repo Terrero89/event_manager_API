@@ -63,7 +63,7 @@ const handleSubmit = async () => {
   if (!validateFields()) return;
 
   const newEvent = {
-    sprintId: form.sprintId,
+    sprintId: currSprint,
     title: form.title,
     eventName: form.eventName,
     eventType: form.eventType,
@@ -76,12 +76,12 @@ const handleSubmit = async () => {
   };
 
   await addEvent(newEvent); // Add the new event to the store
+  console.log( await addEvent(newEvent))
 };
 </script>
 <template>
-  
   <div class="form-container">
-    <h1 class="title">Create a New Story</h1>
+    <h1 class="title">Create a New Event</h1>
     <form @submit.prevent="handleSubmit">
       <!-- Sprint -->
       <div class="form-group">

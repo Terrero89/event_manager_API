@@ -74,8 +74,8 @@ const isOpen = ref(false);
   
     <EventsList  
     v-for="item in events"
-    :key="item._id"
-    :id="item._id"
+    :key="item.id"
+    :id="item.id"
     :description="item.description"
     :title="item.title"
     :date="item.date"

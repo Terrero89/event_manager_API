@@ -4,20 +4,43 @@ export const useEventStore = defineStore({
   id: "events",
   state: () => ({
     URL: "http://localhost:8080/api/v1/events",
+    URL_2: `https://project-manager-app-f9829-default-rtdb.firebaseio.com/events.json`,
     events: [],
    
   }),
   actions: {
+    async fetchEvents() {
+      const response = await fetch(this.URL_2);
+      const responseData = await response.json();
+      this.events = responseData;
+
+      if (!response.ok) {
+        const error = new Error(responseData.message || "Failed to fetch!");
+        throw error;
+      }
+
+      const eventList = [];
+
+      for (const key in this.events) {
+        if (this.events[key]) {
+          // Check if city data exists
+          const newEvent = {
+            id: key,
+            ...this.events[key],
+          };
+          eventList.push(newEvent);
+        }
+      }
+      this.events = eventList;
+    },
     async addEvent(data) {
-      this.isLoading = true; // Start loading
-      console.log("DATA:", data)
       try {
-        const response = await fetch(this.URL, {
+        const response = await fetch(this.URL_2, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(data),
+          body: JSON.stringify({ ...data }),
         });
         if (!response.ok) {
           throw new Error("Failed to add event");
@@ -25,9 +48,8 @@ export const useEventStore = defineStore({
 
         // No need to generate a unique ID here, data is stored directly
       } catch (error) {
-        console.error("Failed to add city:", error);
+        console.error("Failed to add Event:", error);
       } finally {
-        this.isLoading = false; // Stop loading
       }
     },
     // async deleteEvent(itemID) {
@@ -44,29 +66,7 @@ export const useEventStore = defineStore({
 
    
     // },
-    async fetchEvents() {
-      const response = await fetch(this.URL);
-      const responseData = await response.json();
-      this.events = responseData;
-
-      if (!response.ok) {
-        const error = new Error(responseData.message || "Failed to fetch!");
-        throw error;
-      }
-
-      const eventList = [];
-
-      for (const key in this.cities) {
-        if (this.cities[key]) {
-          // Check if city data exists
-          const newEvent = {
-            ...this.cities[key],
-          };
-          eventList.push(newEvent          );
-        }
-      }
-      this.cities = eventList;
-    },
+    
 
     // async updateEvent(cityID, payload) {
     //   const url = `https://travel-planning-app-44a08-default-rtdb.firebaseio.com/cities/${cityID}.json`;

@@ -32,7 +32,7 @@ const isOpen = ref(false);
             </UModal>
         
       </div>
-  
+   
         <EventsItem
             :id="id"
             :title="props.title"

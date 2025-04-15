@@ -12,14 +12,16 @@ const {  addSprint} = sprintsStore;
 const {  loadCurrentSprintFromLocalStorage } = storeToRefs(sprintsStore);
 const {
   addMeeting,
+  fetchMeetings
 
 } = meetingStore;
-const {  } = storeToRefs(Store);
+const {  meetings } = storeToRefs(meetingStore);
 // for later use
 // const route = useRoute(); //route object
 // const destId = route.params.destinationID;
 
 onMounted(async() => {
+await fetchMeetings()
 });
 
 const sprintList = sprintsStore.loadFromLocalStorage('sprintList', []).slice(0, 5);
@@ -166,12 +168,12 @@ await addMeeting(newMeeting)
 
       <!-- Priority Level -->
       <div class="form-group">
-        <label for="priorityLevel">Description</label>
+        <label for="description">Description</label>
         <input
           v-model="form.description"
           type="text"
           id="priorityLevel"
-          placeholder="Enter Priority (e.g., High)"
+          placeholder="Enter Description"
         />
         <span v-if="errors.description" class="error">{{ errors.description}}</span>
       </div>
