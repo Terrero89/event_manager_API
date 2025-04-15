@@ -73,12 +73,12 @@ const isOpen = ref(false);
   
   <div  
     v-for="note in notes" :key="note.id">
-    {{note.description}} ID: {{note.id}}
+
     </div>
   
     <NotesList  
     v-for="note in notes" :key="note.id"
-    :id="note._id"
+    :id="note.id"
     :description="note.description"
     :title="note.title"
     :date="note.date"

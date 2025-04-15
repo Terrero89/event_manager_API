@@ -40,7 +40,7 @@ const isOpen = ref(false);
       <div class="item-buttons my-2">
         <UButton class="b" @click="isOpen = true" >Details</UButton>
         <!-- <NuxtLink :to="noteIdRoute">About page</NuxtLink> -->
-        <UModal v-model="isOpen">
+        <UModal v-model="isOpen" fullscreen >
     
          <NotesDetails
              :id="props.id"
@@ -53,6 +53,7 @@ const isOpen = ref(false);
             :sprintId="props.sprintId"
          
          />
+        
         
         </UModal>
       </div>

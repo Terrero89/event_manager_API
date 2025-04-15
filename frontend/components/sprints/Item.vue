@@ -55,7 +55,7 @@ const isOpen = ref(false);
         >
         <UButton class="b" @click="isOpen = true">Details</UButton>
         <!-- <NuxtLink :to="noteIdRoute">About page</NuxtLink> -->
-        <UModal v-model="isOpen">
+        <UModal v-model="isOpen" fullscreen >
           <SprintsDetails
             :id="props.id"
             :sprintID="props.sprintID"
