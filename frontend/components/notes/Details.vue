@@ -30,48 +30,18 @@ const by = computed(()=> {{
 onMounted(async () => {
  
 });
-// fetchNoteById(id)
 </script>
 
 <template>
   <div class="modal-details">
-
     <NotesUpdateForm :noteById="by"/>
-
-
-    <!-- {{by}}
-    <h2 class="details-title">Note Details</h2>
-    <div class="details-row">
-      <span class="detail-label">Title:</span>
-      <span class="detail-value space">{{ props.title}}</span>
-    </div>
-    <div class="details-row">
-      <span class="detail-label">Note Type:</span>
-      <span class="detail-value space"> {{ props.noteType}}</span>
-    </div>
-    <div class="details-row">
-      <span class="detail-label">Note Name:</span>
-      <span class="detail-value space">{{ props.noteName}}</span>
-    </div>
-    <div class="details-row">
-      <span class="detail-label">Priority: </span>
-      <span class="detail-value space">{{ props.priorityLevel}}</span>
-    </div>
-    <div class="details-row">
-      <span class="detail-label">Description: </span>
-      <span class="detail-value space">{{ props.priorityLevel}}</span>
-    </div>
-    <div class="modal-actions">
-      <UButton color="red" @click="removeItem(props.destinationID)">Delete</UButton>
-      <UButton to="/notes/update">Update</UButton>
-    </div>
-     -->
   </div>
 </template>
 
 <style scoped>
 /* Reusing styles from modal-details in previous component */
 .modal-details {
+  background-color:rgb(15, 15, 15) !important;
   padding: 20px;
   border-radius: 5px;
    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);

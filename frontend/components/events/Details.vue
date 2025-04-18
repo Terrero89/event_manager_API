@@ -120,6 +120,7 @@ const props = defineProps([
 }
 
 .modal-details {
+  background-color:rgb(15, 15, 15) !important;
   padding: 20px;
   border-radius: 5px;
 

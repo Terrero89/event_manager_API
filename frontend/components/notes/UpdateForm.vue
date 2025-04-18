@@ -90,9 +90,9 @@ const removeItem = async (id) => {
     <!-- {{sprintList}}xxx{{currSprint }} -->
 <!--    {{sprints}}-->
  <div>
-  {{form }}----{{props.noteById.id}}
+  <!-- {{form }}----{{props.noteById.id}} -->
 </div>
-    <h1 class="title">Create a New Note</h1>
+    <h1 class="title">Modify Note</h1>
     <form @submit.prevent="handleSubmit">
       <!-- Header Fields -->
       <div class="form-group">
@@ -176,8 +176,8 @@ body {
 
 /* Form Container */
 .form-container {
-  max-width: 600px;
-  margin: 50px auto;
+
+
   padding: 20px;
   background: #2c2c2c;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -270,9 +270,9 @@ select:focus {
 }
 /* Responsive Design */
 @media (max-width: 768px) {
-  .form-container {
+  /* .form-container {
     padding: 15px;
-  }
+  } */
 
   h1 {
     font-size: 1.5rem;

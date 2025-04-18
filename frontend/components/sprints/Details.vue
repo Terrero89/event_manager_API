@@ -114,6 +114,7 @@ console.log("From Details:", props.id);
 }
 
 .modal-details {
+  background-color:rgb(15, 15, 15) !important;
   padding: 20px;
   border-radius: 5px;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
