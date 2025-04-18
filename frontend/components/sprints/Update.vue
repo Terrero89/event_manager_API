@@ -9,6 +9,7 @@ import { storeToRefs } from "pinia";
 const {
   addSprint,
   updateSprint,
+  deleteSprint
 } = sprintsStore;
 const { sprintList, currentSprint } = storeToRefs(sprintsStore);
 
@@ -57,6 +58,16 @@ const handleSubmit = async () => {
   console.log({ ...sprint.value });
   await updateSprint(props.sprintById.id, { ...sprint.value });
 
+};
+
+
+const removeItem = async (id) => {
+  if (confirm("Are you sure you want to delete this city? This action cannot be undone.")) {
+    await deleteSprint(id); // Proceed with the deletion if confirmed
+    console.log(deleteSprint(id))
+    // Optionally navigate or refresh the page after deletion
+    navigateTo(`/`);
+  }
 };
 
 //  sprintsStore.loadFromLocalStorage('currentSprint', '') retrieving current sprint
@@ -119,7 +130,12 @@ const handleSubmit = async () => {
           id="storiesUnderSprint"
         />
       </div>
-      <button type="submit" class="submit-button">Submit</button>
+      <div class="modal-actions">
+      <!-- <UButton color="red" @click="removeItem(props.destinationID)">Delete</UButton>
+      <UButton to="">Update</UButton> -->
+      <button class="delete-button" @click="removeItem(props.sprintById.id)">Delete</button>
+      <button type="submit" class="submit-button">Update</button>
+    </div>
       <!-- Calculated Duration -->
       <!--    <p><strong>Sprint Duration:</strong> {{ sprintDuration }} days</p>-->
     </form>
@@ -127,34 +143,38 @@ const handleSubmit = async () => {
 </template>
 
 <style scoped>
-h1 {
-  text-align: center;
-  color: #616060;
-  font-size: 1.8rem;
-  margin-bottom: 20px;
+/* General Styles */
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f9f9f9;
 }
 
+.title{
+  color: #bababa;
+}
+
+/* Form Container */
 .form-container {
-  max-width: 600px;
-  margin: 50px auto;
+
+
   padding: 20px;
   background: #2c2c2c;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
 }
 
-.sprint-details {
-  max-width: 600px;
-  margin: 4rem auto;
+h1 {
+  text-align: center;
+  color: #333;
+  font-size: 1.8rem;
+  margin-bottom: 20px;
 }
 
-label {
-  display: block;
-  margin-top: 10px;
-}
-
+/* Form Group */
 .form-group {
-  margin-bottom: 15px;
+  margin-bottom: 1rem;
 }
 
 label {
@@ -188,8 +208,16 @@ select:focus {
   outline: none;
 }
 
+/* Error Messages */
+.error {
+  color: #d9534f;
+  font-size: 0.9rem;
+  margin-top: 5px;
+  display: block;
+}
+
+/* Button */
 .submit-button {
-  margin: 1rem 0;
   width: 100%;
   padding: 12px;
   font-size: 1rem;
@@ -201,8 +229,60 @@ select:focus {
   transition: background-color 0.3s;
 }
 
-p {
+.submit-button:hover {
+  background-color: #0056b3;
+}
+
+/* Button */
+.delete-button {
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  color: #fff;
+  background-color: red;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.delete-button:hover {
+  background-color: rgb(197, 1, 1);
+}
+/* Responsive Design */
+@media (max-width: 768px) {
+  /* .form-container {
+    padding: 15px;
+  } */
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  .submit-button {
+    font-size: 0.9rem;
+  }
+}
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
   margin-top: 15px;
-  font-weight: bold;
+}
+
+.details-button:hover {
+  background-color: #dadada;
+}
+
+/* Optional red delete button override */
+.delete-btn {
+  border-color: red;
+  color: white;
+  background-color: red;
+}
+
+.delete-btn:hover {
+  background-color: darkred;
 }
 </style>
+

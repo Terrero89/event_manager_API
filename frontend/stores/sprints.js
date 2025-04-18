@@ -135,17 +135,20 @@ async saveCurrentSprintToLocalStorage(current) {
         }
       },
 
-    // async deleteEvent(itemID) {
-    //   let response = await fetch(
-    //     `https://travel-planning-app-44a08-default-rtdb.firebaseio.com/cities/${itemID}.json`,
-    //     {
-    //       method: "DELETE",
-    //       "Content-type": "application/json",
-    //     }
-    //   );
-    //   if (!response.ok) {
-    //     console.log("Error, request failed");
-    //   }
+      async deleteSprint(itemID) {
+        const url = `https://project-manager-app-f9829-default-rtdb.firebaseio.com/sprints/${itemID}.json`
+        let response = await fetch(url,
+          {
+            method: "DELETE",
+            "Content-type": "application/json",
+          }
+        );
+        if (!response.ok) {
+          console.log("Error, request failed");
+        }
+  
+      },
+  
 
     async updateSprint(cityID, payload) {
       const url = `https://project-manager-app-f9829-default-rtdb.firebaseio.com/sprints/${cityID}.json`;
