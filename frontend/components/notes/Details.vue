@@ -15,7 +15,7 @@ const props = defineProps([
   'noteName',
   'priorityLevel',
   'sprintId',
-  ""
+  
 ])
 
 const by = computed(()=> {{

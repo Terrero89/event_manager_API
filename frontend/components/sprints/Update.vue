@@ -5,22 +5,29 @@ import { onMounted } from "vue";
 const sprintsStore = useSprintStore();
 import { storeToRefs } from "pinia";
 
+
 const {
   addSprint,
-
-  saveToLocalStorage,
+  updateSprint,
 } = sprintsStore;
 const { sprintList, currentSprint } = storeToRefs(sprintsStore);
 
+const props = defineProps([
+ 
+  "sprintById"
+])
+
+const currSprint = sprintsStore.loadFromLocalStorage('currentSprint', '')
 const sprint = ref({
-  sprintID: "PI-00111",
-  relatedStoryId: "DMR-001",
-  startDate: "2025-01-22",
-  dueDate: "2025-01-29",
-  summary: ["summary1", "summary2", "summary3"],
-  piNotes: ["note1", "note2", "note3"],
-  storiesUnderSprint: ["DMR-001", "DMR-002", "DMR-003"],
+  sprintID:  currSprint,
+  relatedStoryId: props.sprintById.relatedStoryId,
+  startDate: props.sprintById.startDate,
+  dueDate: props.sprintById.dueDate,
+  summary: props.sprintById.summary,
+  piNotes: props.sprintById.piNotes,
+  storiesUnderSprint: props.sprintById.storiesUnderSprint,
 });
+
 
 // Calculate duration between startDate and dueDate
 const sprintDuration = computed(() => {
@@ -42,12 +49,14 @@ const handleSubmit = async () => {
     piNotes: sprint.value.piNotes,
     storiesUnderSprint: sprint.value.storiesUnderSprint,
   };
+  //saving newly created sprintId in localStorage
   sprintsStore.saveCurrentSprintToLocalStorage(newSprint.sprintID);
 
   if (sprintDuration < 0) return;
-  await addSprint(newSprint);
 
-  console.log(newSprint);
+  console.log({ ...sprint.value });
+  await updateSprint(props.sprintById.id, { ...sprint.value });
+
 };
 
 //  sprintsStore.loadFromLocalStorage('currentSprint', '') retrieving current sprint
@@ -57,11 +66,10 @@ const handleSubmit = async () => {
 
 <template>
   <div>
-    <div>{{ sprintList }}</div>
-    <!-- {{currentSprint}}mmmmmm
- xxx {{sprintsStore.loadSprintListFromLocalStorage()}}fffffff---{{sprintsStore.loadFromLocalStorage('sprintList', [])}} -->
+    <div>{{props.sprintById}}</div>
+
     <form @submit.prevent="handleSubmit" class="sprint-details form-container">
-      <h1>Add new Sprint</h1>
+      <h1>Modify Sprint</h1>
       <!-- Sprint ID -->
       <div>
         <label for="sprintID">Sprint ID:</label>

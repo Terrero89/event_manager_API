@@ -9,57 +9,36 @@ const props = defineProps([
   "piNotes",
   "storiesUnderSprint",
 ]);
+const sprintsStore = useSprintStore();
+import { storeToRefs } from "pinia";
+
+const {
+
+  deleteSprint,
+  updateSprint,
+  filterItemById,
+
+
+  saveToLocalStorage,
+} = sprintsStore;
+const { } = storeToRefs(sprintsStore);
 
 console.log("From Details:", props.id);
+
+const by = computed(()=> {{
+  for(let i=0; i<filterItemById(props.id).length; i++){
+    return filterItemById(props.id)[i]
+  }
+}})
+
 </script>
 
 
 
 <template>
   <div class="modal-details">
-    <h2 class="details-title">Sprint Details</h2>
-    <div class="details-row">
-      <span class="detail-label">Sprint ID:</span>
-      <span class="detail-value space">{{ props.id}}</span>
-    </div>
-    <div class="details-row">
-      <span class="detail-label">Sprint ID:</span>
-      <span class="detail-value space">{{ props.sprintID}}</span>
-    </div>
-    <div class="details-row">
-      <span class="detail-label">Related Story ID:</span>
-      <span class="detail-value space"> {{ props.relateStoryId}}</span>
-    </div>
-    <div class="details-row">
-      <span class="detail-label">Start Date: </span>
-      <span class="detail-value space">{{ props.startDate}}</span>
-    </div>
-    <div class="details-row">
-      <span class="detail-label">Due Date: </span>
-      <span class="detail-value space">{{ props.dueDate}}</span>
-    </div>
-    <div class="details-row">
-      <span class="detail-label">Notes:</span>
-      <div v-for=" item in props.piNotes" :key="item">
-        <span class="detail-value space">{{item}}</span>
-      </div>
-    </div>
-    <div class="details-row">
-      <span class="detail-label">Summary</span>
-      <div v-for=" item in props.summary" :key="item">
-        <span class="detail-value space">{{item}}</span>
-      </div>
-    </div>
-    <div class="details-row">
-      <span class="detail-label">Description: </span>
-      <span class="detail-value space">{{ props.priorityLevel}}</span>
-    </div>
-    <div class="modal-actions">
-      <UButton color="red" @click="removeItem(props.destinationID)">Delete</UButton>
-      <UButton to="/notes/update">Update</UButton>
-    </div>
-    
-  </div>
+<SprintsUpdate :sprintById="by"/>
+</div>
 </template>
 
 <style scoped>

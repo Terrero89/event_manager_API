@@ -147,34 +147,44 @@ async saveCurrentSprintToLocalStorage(current) {
     //     console.log("Error, request failed");
     //   }
 
-    // },
-    // async updateEvent(cityID, payload) {
-    //   const url = `https://travel-planning-app-44a08-default-rtdb.firebaseio.com/cities/${cityID}.json`;
-    //   const options = {
-    //     method: "PATCH",
-    //     headers: { "Content-type": "application/json" },
-    //     body: JSON.stringify(payload),
-    //   };
+    async updateSprint(cityID, payload) {
+      const url = `https://project-manager-app-f9829-default-rtdb.firebaseio.com/sprints/${cityID}.json`;
+      const options = {
+        method: "PATCH",
+        headers: { "Content-type": "application/json" },
+        body: JSON.stringify(payload),
+      };
 
-    //   try {
-    //     const response = await fetch(url, options);
-    //     if (!response.ok) {
-    //       throw new Error("Failed to update city");
-    //     }
+      try {
+        const response = await fetch(url, options);
+        if (!response.ok) {
+          throw new Error("Failed to update city");
+        }
 
-    //     // Ensure the response contains the updated data
-    //     const updatedCity = await response.json();
+        // Ensure the response contains the updated data
+        const updatedCity = await response.json();
 
-    //     // Update the local state after a successful update
-    //     const index = this.cities.findIndex((city) => city.cityID === cityID);
-    //     if (index !== -1) {
-    //       // Use the returned data from Firebase to ensure consistency
-    //       this.cities[index] = { cityID, ...updatedCity };
-    //     }
-    //   } catch (error) {
-    //     console.error("Error updating city:", error);
-    //   }
-    // },
+        // Update the local state after a successful update
+        const index = this.items.findIndex((city) => city.id === cityID);
+        if (index !== -1) {
+          // Use the returned data from Firebase to ensure consistency
+          this.items[index] = { id: cityID, ...updatedCity };
+        }
+      } catch (error) {
+        console.error("Error updating city:", error);
+      }
+    },
   },
-  getters: {},
+  getters: {
+
+    itemsAsArray: (state) => {
+      return state.items;
+    },
+
+    //finds item based on parentDestinationID
+    filterItemById(state) {
+      const note = this.itemsAsArray.filter((item) => item.id);
+      return (id) => note.filter((data) => data.id === id);
+    },
+  },
 });
