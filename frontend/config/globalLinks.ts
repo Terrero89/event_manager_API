@@ -56,6 +56,27 @@ export const CONFIG = {
       },
     ],
   ],
+ footer: [
+  
+    [
+      {
+        label: "Stories",
+        icon: "i-heroicons-puzzle-piece",
+        to: "/stories",
+      },      
+              {
+                        label: "Dashboard",
+          icon: "i-heroicons-chart-bar",
+          to: "/dashboard",
+        },
+    
+      {
+        label: "Sign In",
+        icon: "i-heroicons-user-solid",
+        to: "/login",
+      },
+    ],
+  ],
 
  },
 

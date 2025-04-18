@@ -16,7 +16,7 @@ import { CONFIG } from "../config/globalLinks";
     <div class="main-content">
       <!-- Vertical Navigation -->
       <aside
-        class="vertical-navigation border-b border-l border-r border-gray-200 dark:border-gray-800"
+        class="vertical-navigation border-b border-l border-r border-gray-200 dark:border-gray-800 hide"
       >
         <UVerticalNavigation :links="CONFIG.vertical.default" />
       </aside>
@@ -25,11 +25,25 @@ import { CONFIG } from "../config/globalLinks";
       <main class="content-area">
         <slot />
       </main>
+  
     </div>
+    <UIFooter class="show"/>
   </div>
 </template>
 
 <style scoped>
+
+
+@media (max-width: 600px) {
+  .hide{
+    display:none;
+  }
+}
+@media (min-width: 600px) {
+  .show{
+    display:none;
+  }
+}
 /* Main container for the layout */
 .layout-container {
   display: flex;
