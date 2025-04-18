@@ -12,7 +12,8 @@ const {  loadFromLocalStorage } = storeToRefs(sprintsStore);
 
 // update note here
 const {
-  updateNote
+  updateNote,
+  deleteNote
 
 } = noteStore;
 const { notes } = storeToRefs(noteStore);
@@ -74,7 +75,14 @@ const handleSubmit = async () => {
 
 
 
-console.log(props.noteById)
+const removeItem = async (id) => {
+  if (confirm("Are you sure you want to delete this city? This action cannot be undone.")) {
+    await deleteNote(id); // Proceed with the deletion if confirmed
+    console.log(deleteNote(id))
+    // Optionally navigate or refresh the page after deletion
+    navigateTo(`/`);
+  }
+};
 </script>
 
 <template>
@@ -142,12 +150,13 @@ console.log(props.noteById)
       </div>
      
 
-      <!-- <div class="modal-actions">
-      <UButton color="red" @click="removeItem(props.destinationID)">Delete</UButton>
-      <UButton to="">Update</UButton>
-    </div> -->
-
-      <button type="submit" class="submit-button">Submit</button>
+      <div class="modal-actions">
+      <!-- <UButton color="red" @click="removeItem(props.destinationID)">Delete</UButton>
+      <UButton to="">Update</UButton> -->
+      <button class="delete-button" @click="removeItem(props.noteById.id)">Delete</button>
+      <button type="submit" class="submit-button">Update</button>
+    </div>
+   
     </form>
   </div>
 </template>
@@ -243,6 +252,22 @@ select:focus {
   background-color: #0056b3;
 }
 
+/* Button */
+.delete-button {
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  color: #fff;
+  background-color: red;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.delete-button:hover {
+  background-color: rgb(197, 1, 1);
+}
 /* Responsive Design */
 @media (max-width: 768px) {
   .form-container {

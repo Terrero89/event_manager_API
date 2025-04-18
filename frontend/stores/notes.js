@@ -56,23 +56,23 @@ export const useNoteStore = defineStore({
         this.isLoading = false; // Stop loading
       }
     },
-    // async deleteEvent(itemID) {
-    //   let response = await fetch(
-    //     `https://travel-planning-app-44a08-default-rtdb.firebaseio.com/cities/${itemID}.json`,
-    //     {
-    //       method: "DELETE",
-    //       "Content-type": "application/json",
-    //     }
-    //   );
-    //   if (!response.ok) {
-    //     console.log("Error, request failed");
-    //   }
+    async deleteNote(itemID) {
+      const url = `https://project-manager-app-f9829-default-rtdb.firebaseio.com/notes/${itemID}.json`
+      let response = await fetch(url,
+        {
+          method: "DELETE",
+          "Content-type": "application/json",
+        }
+      );
+      if (!response.ok) {
+        console.log("Error, request failed");
+      }
 
-    // },
+    },
 
 
-    async updateNote(cityID, payload) {
-      const url = `https://project-manager-app-f9829-default-rtdb.firebaseio.com/notes/${cityID}.json`;
+    async updateNote(itemID, payload) {
+      const url = `https://project-manager-app-f9829-default-rtdb.firebaseio.com/notes/${itemID}.json`;
       const options = {
         method: "PATCH",
         headers: { "Content-type": "application/json" },
