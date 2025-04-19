@@ -1,4 +1,9 @@
 <script setup>
+const eventsStore = useEventStore();
+import { storeToRefs } from "pinia";
+
+const {  itemsAsArray, filterItemById } = eventsStore
+const {events} = storeToRefs(eventsStore)
 const props = defineProps([
   "id",
   "title",
@@ -10,148 +15,160 @@ const props = defineProps([
   "sprintId",
   "status"
 ])
+const by = computed(()=> {{
+  for(let i=0; i<filterItemById(props.id).length; i++){
+    return filterItemById(props.id)[i]
+  }
+}})
 </script>
 
 <template>
   <div class="modal-details">
-    <h2 class="details-title">Note Details</h2>
-    <div class="details-row">
-      <span class="detail-label">ID:</span>
-      <span class="detail-value space">{{ props.id}}</span>
-    </div> <div class="details-row">
-      <span class="detail-label">Sprint ID:</span>
-      <span class="detail-value space">{{ props.sprintId}}</span>
-    </div>
-   
-    <div class="details-row">
-      <span class="detail-label">Related Story ID:</span>
-      <span class="detail-value space"> {{ props.title}}</span>
-    </div>
-    <div class="details-row">
-      <span class="detail-label">Event Name: </span>
-      <span class="detail-value space">{{ props.eventName}}</span>
-    </div>
-    <div class="details-row">
-      <span class="detail-label">Start Date: </span>
-      <span class="detail-value space">{{ props.date}}</span>
-    </div>
-    <div class="details-row">
-      <span class="detail-label">Event Type: </span>
-      <span class="detail-value space">{{ props.eventType}}</span>
-    </div>
-    <div class="details-row">
-      <span class="detail-label">Status: </span>
-      <span class="detail-value space">{{ props.status}}</span>
-    </div>
-    <div class="details-row">
-      <span class="detail-label">Notes:</span>
-      <div v-for=" item in props.piNotes" :key="item">
-        <span class="detail-value space">{{item}}</span>
-      </div>
-   
-    </div>
- 
-    <div class="details-row">
-      <span class="detail-label">Summary</span>
-      <div v-for=" item in props.summary" :key="item">
-        <span class="detail-value space">{{item}}</span>
-      </div>
-    </div>
-    <div class="details-row">
-      <span class="detail-label">Description: </span>
-      <span class="detail-value space">{{ props.description}}</span>
-    </div>
-    <div class="modal-actions">
-      <UButton color="red" @click="removeItem(props.destinationID)">Delete</UButton>
-      <UButton to="/notes/update">Update</UButton>
-    </div>
-    
+   <EventsUpdateForm :eventById="by"/>
   </div>
 </template>
+
 <style scoped>
-
-.details-button {
-  color: black;
-  border: #b0b0b0 solid 1px;
-  padding: 5px 10px;
-  border-radius: 8px;
+/* General Styles */
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f9f9f9;
+}
+e
+.title{
+  color: #bababa;
 }
 
-.details-button:hover {
-  background-color: #dadada;
-  transition: 0.3s ease-in-out;
+/* Form Container */
+.form-container {
 
 
-}
-
-.comment {
-  border: solid rgb(180, 180, 180) 1px;
-  min-height: 5rem;
-  border-radius: 5px;
-  margin-top: 1rem;
-}
-
-/* for highlighting titles : color: gray; */
-/* for highlighting values :  color: rgb(43, 41, 41);
-  font-weight: 500;*/
-.title {
-  font-weight: bold;
-  color: rgb(110, 110, 110);
-}
-
-.highlight {
-  font-weight: 800;
-  color: rgb(139, 139, 139) !important;
-}
-
-.dr-button {
-  padding: 3px 13px;
-  border-radius: 5px;
-  background: rgb(223, 222, 222);
-  cursor: pointer;
-}
-
-.dr-button:hover {
-  background-color: rgb(136, 134, 134);
-}
-
-.space {
-  margin: 0 0.5rem;
-}
-
-.modal-details {
-  background-color:rgb(15, 15, 15) !important;
   padding: 20px;
-  border-radius: 5px;
-
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+  background: #2c2c2c;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
 }
 
-.modal-details h2 {
-  font-size: 1.2rem;
-  margin-bottom: 10px;
+h1 {
+  text-align: center;
+  color: #333;
+  font-size: 1.8rem;
+  margin-bottom: 20px;
 }
 
-.details-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+/* Form Group */
+.form-group {
+  margin-bottom: 1rem;
 }
 
-.detail-label {
+label {
+  display: block;
+  margin-bottom: 5px;
   font-weight: bold;
+  color: #616060;
 }
 
-.detail-value {
-  flex-grow: 1;
+input,
+textarea,
+select {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #3c3c3c;
+  border-radius: 5px;
+  background: #373737;
+  transition: border-color 0.3s;
 }
 
+textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/* Error Messages */
+.error {
+  color: #d9534f;
+  font-size: 0.9rem;
+  margin-top: 5px;
+  display: block;
+}
+
+/* Button */
+.submit-button {
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.submit-button:hover {
+  background-color: #0056b3;
+}
+
+/* Button */
+.delete-button {
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  color: #fff;
+  background-color: red;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.delete-button:hover {
+  background-color: rgb(197, 1, 1);
+}
+/* Responsive Design */
+@media (max-width: 768px) {
+  /* .form-container {
+    padding: 15px;
+  } */
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  .submit-button {
+    font-size: 0.9rem;
+  }
+}
 .modal-actions {
   display: flex;
   justify-content: flex-end;
   gap: 10px;
+  margin-top: 15px;
+}
+
+.details-button:hover {
+  background-color: #dadada;
+}
+
+/* Optional red delete button override */
+.delete-btn {
+  border-color: red;
+  color: white;
+  background-color: red;
+}
+
+.delete-btn:hover {
+  background-color: darkred;
 }
 </style>
+
