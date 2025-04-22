@@ -72,9 +72,11 @@ const isOpen = ref(false);
         >Insights</UButton
       >
     </div>
-      <div>Meetings Page</div>
+      
+      <UIEmptyMessage v-if="meetings.length < 1" title="meetings" />
 
       <MeetingsList  
+      v-else
     v-for="item in meetings"
     :key="item._id"
     :id="item._id"

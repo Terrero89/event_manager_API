@@ -22,7 +22,7 @@ let calc = ref(Math.abs(sprint - maxValue.value))
     <!--PROGRESS IN PERCENTAGE FOR SPRINT-->
     <div class="header">
       <div class="header-title">
-        <span class="sprint">{{ currSprint }} </span>
+        <span class="sprint">{{ currSprint ? currSprint : 'No Current Sprint'}} </span>
        
       </div>
       <div class="my-2 progress-bar">
@@ -37,7 +37,7 @@ let calc = ref(Math.abs(sprint - maxValue.value))
 <style scoped>
 
 .sprint{
-  color:teal;
+  color:rgb(16, 163, 173);
   font-weight: 700;
 
 }

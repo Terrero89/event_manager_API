@@ -23,7 +23,6 @@ export const useEventStore = defineStore({
 
       for (const key in this.events) {
         if (this.events[key]) {
-          // Check if city data exists
           const newEvent = {
             id: key,
             ...this.events[key],

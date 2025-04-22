@@ -93,8 +93,9 @@ const links = [
             </UModal>
         
       </div>
-
+      <UIEmptyMessage v-if="items.length < 1" title="stories" />
       <StoryList
+      v-else
       v-for="item in items"
       :key="item._id"
       :id="item._id"

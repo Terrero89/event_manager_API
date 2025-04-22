@@ -61,8 +61,9 @@ const isOpen = ref(false);
       >Insights</UButton
     >
   </div>
-  <div>NOTES</div>
+  <UIEmptyMessage v-if="items.length < 1" title="sprints" />
   <SprintsList  
+  v-else
   v-for="item in items"
   :key="item.id"
   :id="item.id"

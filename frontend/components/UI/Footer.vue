@@ -3,33 +3,33 @@ const items = ref([
   
     {
  
-      icon: 'i-lucide-book-open',
-      to: '/getting-started'
+      icon: "heroicons:chevron-double-right-solid",
+      to: "/sprints",
     },
     {
  
-      icon: 'i-lucide-database',
-      to: '/composables'
+      icon: "heroicons:book-open-16-solid",
+      to: "/notes",
     },
     {
      
-      icon: 'i-lucide-box',
-      to: '/components',
-      active: true
+      icon: "heroicons:calendar-date-range-20-solid",
+      to: "/events",
+      
     }
 ,
 {
      
-     icon: 'i-lucide-box',
-     to: '/components',
-     active: true
+  icon: "heroicons:calendar-date-range-solid",
+  to: "/meetings",
+    
    },
-{
-     
-     icon: 'i-lucide-box',
-     to: '/components',
-     active: true
-   }
+   {
+          
+          icon: "i-heroicons-chart-bar",
+          to: "/dashboard",
+        },
+
 
 ])
 
@@ -40,10 +40,10 @@ const items = ref([
    
    
         <div>
-      <!-- <UHorizontalNavigation
+      <UHorizontalNavigation
         :links="items"
         class="border-b border-gray-200 dark:border-gray-800 mx-auto header" 
-      /> -->
+      />
     </div>
 
    

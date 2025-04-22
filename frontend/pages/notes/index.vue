@@ -48,6 +48,8 @@ const navLinks = [
     },
   ],
 ];
+
+
 const isOpen = ref(false);
 </script>
 
@@ -69,29 +71,22 @@ const isOpen = ref(false);
         >Insights</UButton
       >
     </div>
-    <div>NOTES</div>
-  
-  <div  
-    v-for="note in notes" :key="note.id">
+   <UIEmptyMessage v-if="notes.length < 1" title="notes" />
 
-    </div>
-  
-    <NotesList  
-    v-for="note in notes" :key="note.id"
-    :id="note.id"
-    :description="note.description"
-    :title="note.title"
-    :date="note.date"
-    :noteName="note.noteName"
-    :noteType="note.noteType"
-    :priorityLevel="note.priorityLevel"
-    :sprintId="note.sprintId"
-
-
-      />
-
+    <NotesList
+      v-else
+      v-for="note in notes"
+      :key="note.id"
+      :id="note.id"
+      :description="note.description"
+      :title="note.title"
+      :date="note.date"
+      :noteName="note.noteName"
+      :noteType="note.noteType"
+      :priorityLevel="note.priorityLevel"
+      :sprintId="note.sprintId"
+    />
   </div>
-
 </template>
 
 <style scoped>
@@ -99,8 +94,5 @@ const isOpen = ref(false);
   display: flex;
   justify-content: flex-end;
 }
-/* .progress {
-  background-color: #1f242a;
-  padding: 0.2rem;
-} */
+
 </style>

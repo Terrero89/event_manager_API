@@ -1,0 +1,320 @@
+import { defineStore } from "pinia";
+
+export const useConfigStore = defineStore({
+  id: "sprint",
+  state: () => ({
+    URL_2: "https://project-manager-app-f9829-default-rtdb.firebaseio.com/sprints.json",
+    URL: "http://localhost:8080/api/v1/sprints",
+    items: [],
+    currentSprint:'',
+    sprintList: [],
+    config: [], 
+  }),
+  actions: {
+    async fetchSprints() {
+      const response = await fetch(this.URL_2);
+      const responseData = await response.json();
+      this.items = responseData;
+
+      if (!response.ok) {
+        const error = new Error(responseData.message || "Failed to fetch!");
+        throw error;
+      }
+
+      const itemsList = [];
+
+      for (const key in this.items) {
+        if (this.items[key]) {
+          // Check if city data exists
+          const newItem = {
+             id: key,
+            ...this.items[key],
+          };
+          itemsList.push(newItem);
+        }
+      }
+      this.items = itemsList;
+      this.sprintList = itemsList.map((item) => item.sprintID);
+      this.currentSprint = itemsList[0].sprintID;
+     },
+
+     async addSprint(data) {
+      this.isLoading = true; // Start loading
+
+      try {
+        const response = await fetch(
+          this.URL_2,
+          {
+            method: "POST",
+            body: JSON.stringify({ ...data }),
+          }
+        );
+        if (!response.ok) {
+          throw new Error("Failed to add event");
+        }
+
+        // No need to generate a unique ID here, data is stored directly
+      } catch (error) {
+        console.error("Failed to add city:", error);
+      } finally {
+        this.isLoading = false; // Stop loading
+      }
+    },
+// REFACTOR FOR LATER
+async saveCurrentSprintToLocalStorage(current) {
+    try {
+      // Update Pinia state
+      this.currentSprint = current;
+  
+      // Retrieve sprint list from localStorage or initialize it
+      let existingSprints = [];
+  
+      const stored = localStorage.getItem("sprintList");
+      if (stored) {
+        existingSprints = JSON.parse(stored);
+      }
+  
+      // Only add if not already included
+      if (!existingSprints.includes(current)) {
+        existingSprints.push(current);
+      }
+  
+      // Save both    variables: {
+        reporters: ["Sergio Terrero", "Pedro Martinez", "Eugenia Derbez", "Jackie Perex", "Pamela Alvarez"],
+        difficultyLevels: ["Low", "Medium", "High", "Critical"],
+        workTypes: [, "Story", "Bug", "Non-prod", "Tasks", "Tech Debt", "Spike", "Feature", "Epic"],
+        developmentTypes: ["Frontend", "Backend", "Fullstack", "AWS"],
+        status: ["Backlog", "To Do", "In Progress", "Demo Ready", "Completed", "Released"],
+        statusLevel: ["In Progress", "Completed", "Pending"],
+        repoNames: ["example1", "example2", "example3", "example4", "example5"],
+        sprints: ['PL-001','P:-002'],
+        activityType: ["1x1", "Standup", "Mentor Meeting", "Retrospective", "Planning", "Review", "Other", "Collaboration", "Training", "Feedback Session", "Brainstorming",  "Problem Solving","Team Building", "Workshops"],
+        eventTypes: ["ERG Meeting", "Volunteering Event", "Company Event","Networking Event", "Professional Development", "Mentorship Program", ],
+    }, to localStorage
+      localStorage.setItem("currentSprint", current);
+      localStorage.setItem("sprintList", JSON.stringify(existingSprints));
+  
+      // (Optional) Update in-store sprintList too if you're using it
+      this.sprintList = existingSprints;
+  
+      console.log("✅ currentSprint saved:", current);
+      console.log("✅ sprintList in localStorage:", existingSprints);
+  
+    } catch (error) {
+      console.error("❌ Failed to save to localStorage:", error);
+    }
+  },
+      loadCurrentSprintFromLocalStorage() {
+        try {
+          const savedSprint = localStorage.getItem("currentSprint");
+          if (savedSprint) {
+            this.currentSprint = savedSprint;
+            console.log("Loaded currentSprint from localStorage:", savedSprint);
+            return savedSprint;
+           
+          }
+        } catch (error) {
+          console.error("Failed to load from localStorage:", error);
+        }
+      },
+      loadSprintListFromLocalStorage() {
+        try {
+          const savedSprint = localStorage.getItem("sprintList");
+          if (savedSprint) {
+            this.currentSprint = savedSprint;
+            console.log("Loaded currentSprint from localStorage:", savedSprint);
+            return savedSprint;
+           
+          }
+        } catch (error) {
+          console.error("Failed to load from localStorage:", error);
+        }
+      },
+      loadFromLocalStorage(key, fallback) {
+        try {
+          const item = localStorage.getItem(key);
+          if (!item) return fallback;
+      
+          try {
+            return JSON.parse(item);
+          } catch {
+            // If it's not JSON, return it as a plain string
+            return item;
+          }
+        } catch (error) {
+          console.error(`❌ Failed to load "${key}" from localStorage:`, error);
+          return fallback;
+        }
+      },
+
+      async deleteSprint(itemID) {import { defineStore } from "pinia";
+
+      export const useNoteStore = defineStore({
+        id: "notes",
+        state: () => ({
+          URL: "http://localhost:8080/api/v1/notes",
+          URL_2: "https://project-manager-app-f9829-default-rtdb.firebaseio.com/notes.json",
+          notes: [],
+        }),
+        actions: {
+          async fetchNotes() {
+            const response = await fetch(this.URL_2);
+            const responseData = await response.json();
+            this.notes = responseData;
+      
+            if (!response.ok) {
+              const error = new Error(responseData.message || "Failed to fetch!");
+              throw error;
+            }
+      
+            const notesList = [];
+      
+            for (const key in this.notes) {
+              if (this.notes[key]) {
+                // Check if city data exists
+                const newItem = {
+                   id: key,
+                  ...this.notes[key],
+                };
+                notesList.push(newItem);
+              }
+            }
+            this.notes = notesList;
+            // this.sprintList = itemsList.map((item) => item.sprintID);
+            // this.currentSprint = itemsList[0].sprintID;
+           },
+           async addNote(data) {
+            this.isLoading = true; // Start loading
+      
+            try {
+              const response = await fetch(
+                this.URL_2,
+                {
+                  method: "POST",
+                  body: JSON.stringify({ ...data }),
+                }
+              );
+              if (!response.ok) {
+                throw new Error("Failed to add event");
+              }
+      
+              // No need to generate a unique ID here, data is stored directly
+            } catch (error) {
+              console.error("Failed to add notes:", error);
+            } finally {
+              this.isLoading = false; // Stop loading
+            }
+          },
+          async deleteNote(itemID) {
+            const url = `https://project-manager-app-f9829-default-rtdb.firebaseio.com/notes/${itemID}.json`
+            let response = await fetch(url,
+              {
+                method: "DELETE",
+                "Content-type": "application/json",
+              }
+            );
+            if (!response.ok) {
+              console.log("Error, request failed");
+            }
+      
+          },
+      
+      
+          async updateNote(itemID, payload) {
+            const url = `https://project-manager-app-f9829-default-rtdb.firebaseio.com/notes/${itemID}.json`;
+            const options = {
+              method: "PATCH",
+              headers: { "Content-type": "application/json" },
+              body: JSON.stringify(payload),
+            };
+      
+            try {
+              const response = await fetch(url, options);
+              if (!response.ok) {
+                throw new Error("Failed to update city");
+              }
+      
+              // Ensure the response contains the updated data
+              const updatedCity = await response.json();
+      
+              // Update the local state after a successful update
+              const index = this.notes.findIndex((city) => city.id === cityID);
+              if (index !== -1) {
+                // Use the returned data from Firebase to ensure consistency
+                this.notes[index] = { id: cityID, ...updatedCity };
+              }
+            } catch (error) {
+              console.error("Error updating city:", error);
+            }
+          },
+        },
+        getters: {
+      
+         itemsAsArray: (state) => {
+            return state.notes;
+          },
+      
+          //finds item based on parentDestinationID
+          filterItemById(state) {
+            const note = this.itemsAsArray.filter((item) => item.id);
+            return (id) => note.filter((data) => data.id === id);
+          },
+      
+        },
+      });
+      
+        const url = `https://project-manager-app-f9829-default-rtdb.firebaseio.com/sprints/${itemID}.json`
+        let response = await fetch(url,
+          {
+            method: "DELETE",
+            "Content-type": "application/json",
+          }
+        );
+        if (!response.ok) {
+          console.log("Error, request failed");
+        }
+  
+      },
+  
+
+    async updateSprint(cityID, payload) {
+      const url = `https://project-manager-app-f9829-default-rtdb.firebaseio.com/sprints/${cityID}.json`;
+      const options = {
+        method: "PATCH",
+        headers: { "Content-type": "application/json" },
+        body: JSON.stringify(payload),
+      };
+
+      try {
+        const response = await fetch(url, options);
+        if (!response.ok) {
+          throw new Error("Failed to update city");
+        }
+
+        // Ensure the response contains the updated data
+        const updatedCity = await response.json();
+
+        // Update the local state after a successful update
+        const index = this.items.findIndex((city) => city.id === cityID);
+        if (index !== -1) {
+          // Use the returned data from Firebase to ensure consistency
+          this.items[index] = { id: cityID, ...updatedCity };
+        }
+      } catch (error) {
+        console.error("Error updating city:", error);
+      }
+    },
+  },
+  getters: {
+
+    itemsAsArray: (state) => {
+      return state.items;
+    },
+
+    //finds item based on parentDestinationID
+    filterItemById(state) {
+      const note = this.itemsAsArray.filter((item) => item.id);
+      return (id) => note.filter((data) => data.id === id);
+    },
+  },
+});

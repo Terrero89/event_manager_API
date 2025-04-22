@@ -43,11 +43,12 @@ export const CONFIG = {
         icon: "i-heroicons-puzzle-piece",
         to: "/stories",
       },      
-              {
-                        label: "Dashboard",
-          icon: "i-heroicons-chart-bar",
-          to: "/dashboard",
-        },
+      {
+        label: "Config",
+        icon: "heroicons:cog-8-tooth-20-solid",
+        to: "/config",
+      },
+    
     
       {
         label: "Sign In",
@@ -64,11 +65,11 @@ export const CONFIG = {
         icon: "i-heroicons-puzzle-piece",
         to: "/stories",
       },      
-              {
-                        label: "Dashboard",
-          icon: "i-heroicons-chart-bar",
-          to: "/dashboard",
-        },
+      {
+        label: "Config",
+        icon: "heroicons:cog-8-tooth-20-solid",
+        to: "/config",
+      },
     
       {
         label: "Sign In",
@@ -105,29 +106,29 @@ export const CONFIG = {
      
         {
           label: "Sprints",
-          icon: "i-heroicons-home",
+          icon: "heroicons:chevron-double-right-solid",
           to: "/sprints",
         },
         
      
         {
           label: "Notes",
-          icon: "i-heroicons-chart-bar",
+          icon: "heroicons:book-open-16-solid",
           to: "/notes",
         },
         {
           label: "Events",
-          icon: "i-heroicons-chart-bar",
+          icon: "heroicons:calendar-date-range-20-solid",
           to: "/events",
         },
        
         {
           label: "Meetings",
-          icon: "i-heroicons-chart-bar",
+          icon: "heroicons:calendar-date-range-solid",
           to: "/meetings",
         },
       
-   
+    
         {
           label: "Dashboard",
           icon: "i-heroicons-chart-bar",

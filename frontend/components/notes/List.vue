@@ -32,7 +32,7 @@ const isOpen = ref(false);
         
       </div>
   
-        <NotesItem
+        <NotesItem 
             :id="props.id"
             :title="props.title"
             :description="props.description"
