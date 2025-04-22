@@ -41,7 +41,7 @@ const form = ref({
   priorityLevel: "N/A",  // Unused but included for validation
   status: "",       // Note Name
  statusLevel:"",       // Note Type
- repoNames: ''+
+ repoNames: '',
  ,
  sprints: [],
  activityType:[],
