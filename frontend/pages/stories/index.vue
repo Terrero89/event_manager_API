@@ -51,22 +51,9 @@ const links = [
     badge: {
       label: 'Add Story',
       color: 'blue',
-      size: "sm"
+      size: "md"
     }
-  }, {
-
-    icon: 'i-heroicons-plus',
-    to: '/sprints/create',
-    badge: {
-      label: 'Add sprint',
-      color: 'green',
-      size: "sm"
-    }
-  }, {
-    label: 'Insights',
-    icon: 'i-heroicons-command-line',
-    to: '/'
-  }],
+  },  ],
 ]
 
 
@@ -81,6 +68,15 @@ const links = [
       <div class="nav-flex my-2 border-b border-gray-200 dark:border-gray-800">
         <UIDropdown/>
        <UHorizontalNavigation :links="links" class=""/>
+       <UButton
+        class="my-3"
+        color="blue"
+      
+        variant="soft"
+        label="Add"
+        @Click="isOpen = true"
+        >Insights</UButton
+      >
       </div>
 
       <div class="progress">

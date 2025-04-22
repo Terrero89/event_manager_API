@@ -33,19 +33,10 @@ const navLinks = [
       badge: {
         label: "Note",
         color: "blue",
-        size: "sm",
+        size: "md",
       },
     },
-    {
-      label: "",
-      icon: "i-heroicons-plus",
-      to: "/notes/create",
-      badge: {
-        label: "Add",
-        color: "green",
-        size: "sm",
-      },
-    },
+ 
   ],
 ];
 
@@ -62,9 +53,8 @@ const isOpen = ref(false);
       </UModal>
 
       <UButton
-        class="my-2"
+        class="my-3"
         color="blue"
-        size="xs"
         variant="soft"
         label="Add"
         @Click="isOpen = true"

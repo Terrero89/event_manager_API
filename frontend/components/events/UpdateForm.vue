@@ -81,8 +81,8 @@ const removeItem = async (id) => {
 </script>
 <template>
   <div class="form-container">
-    {{currSprint}}-{{form}}
-    <h1 class="title">Create a New Event</h1>
+  
+    <h1 class="title">Modify Event</h1>
     <form @submit.prevent="handleSubmit">
       <!-- Sprint -->
       <div class="form-group">

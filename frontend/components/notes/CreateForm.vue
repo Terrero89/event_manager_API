@@ -81,8 +81,6 @@ const handleSubmit = async () => {
 
 <template>
   <div class="form-container">
-    {{sprintList}}xxx{{currSprint }}
-<!--    {{sprints}}-->
     <h1 class="title">Create a New Note</h1>
     <form @submit.prevent="handleSubmit">
       <!-- Header Fields -->
