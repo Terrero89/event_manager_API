@@ -42,7 +42,6 @@ const form = ref({
   status: "",       // Note Name
  statusLevel:"",       // Note Type
  repoNames: '',
- ,
  sprints: [],
  activityType:[],
  eventTypes: []
