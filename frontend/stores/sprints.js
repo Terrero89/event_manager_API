@@ -34,7 +34,7 @@ export const useSprintStore = defineStore({
       }
       this.items = itemsList;
       this.sprintList = itemsList.map((item) => item.sprintID);
-      this.currentSprint = itemsList[0].sprintID;
+      this.currentSprint = this.sprintList.reverse()[0];
      },
 
      async addSprint(data) {
@@ -189,5 +189,10 @@ async saveCurrentSprintToLocalStorage(current) {
       const note = this.itemsAsArray.filter((item) => item.id);
       return (id) => note.filter((data) => data.id === id);
     },
+    // listOfId(state) {
+    //   const note = this.itemsAsArray.map((item) => item.id);
+    //   this.sprintList = note;
+    //   return note
+    // },
   },
 });

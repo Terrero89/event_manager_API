@@ -8,8 +8,8 @@ import { storeToRefs } from "pinia";
 const sprintsStore = useSprintStore();
 
 
-const {  addSprint} = sprintsStore;
-const {  loadCurrentSprintFromLocalStorage } = storeToRefs(sprintsStore);
+const {  addSprint, fetchSprints} = sprintsStore;
+const {  sprintList, currentSprint } = storeToRefs(sprintsStore);
 const {
   addMeeting,
   fetchMeetings
@@ -24,12 +24,10 @@ onMounted(async() => {
 await fetchMeetings()
 });
 
-const sprintList = sprintsStore.loadFromLocalStorage('sprintList', []).slice(0, 5);
-const currSprint = sprintsStore.loadFromLocalStorage('currentSprint', '')
 
 // Main form state
 const form = reactive({
-  sprintId: currSprint,
+  sprintId: currentSprint,
   title: "Title",           // Note Title
   meetingName: "",            // Event Name
   meetingType: "",            // Event Type
@@ -59,9 +57,6 @@ const validateFields = () => {
   return Object.values(errors).every((err) => !err);
 };
 
-//  sprintsStore.loadFromLocalStorage('currentSprint', '') retrieving current sprint
-
- // sprintsStore.sprintList = sprintsStore.loadFromLocalStorage('sprintList', [])
 
 // Submit handler
 const handleSubmit = async () => {
@@ -82,12 +77,12 @@ const handleSubmit = async () => {
 
   console.log("Before submission", newMeeting);
 await addMeeting(newMeeting)
+navigateTo(`/`);
 
 };
 </script>
 <template>
-  hell
-  <div class="form-container">
+    <div class="form-container">
     <h1 class="title">Create a Meeting </h1>
     <form @submit.prevent="handleSubmit">
       <!-- Sprint -->

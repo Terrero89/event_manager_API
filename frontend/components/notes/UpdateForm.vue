@@ -67,10 +67,11 @@ const validateFields = () => {
 const handleSubmit = async () => {
   if (!validateFields()) return;
 
-  // const newNote = { ...form.value };
+
 
   console.log({ ...form.value });
   await updateNote(props.noteById.id, { ...form.value });
+  navigateTo(`/`);
 };
 
 

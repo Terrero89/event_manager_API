@@ -8,7 +8,7 @@ const sprintsStore = useSprintStore();
 import { storeToRefs } from "pinia";
 
 const {  addSprint} = sprintsStore;
-const {  loadFromLocalStorage } = storeToRefs(sprintsStore);
+const { } = storeToRefs(sprintsStore);
 
 
 const {
@@ -27,10 +27,6 @@ onMounted(async() => {
 
 });
 
-// sprintsStore.loadFromLocalStorage('currentSprint', '') 
-const sprintList = sprintsStore.loadFromLocalStorage('sprintList', []).slice(0, 5);
-const currSprint = sprintsStore.loadFromLocalStorage('currentSprint', '')
- // sprintsStore.sprintList = sprintsStore.loadFromLocalStorage('sprintList', [])
 
 
 const form = ref({

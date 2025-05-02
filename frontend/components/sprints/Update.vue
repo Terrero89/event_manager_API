@@ -57,7 +57,7 @@ const handleSubmit = async () => {
 
   console.log({ ...sprint.value });
   await updateSprint(props.sprintById.id, { ...sprint.value });
-
+  navigateTo(`/`);
 };
 
 
@@ -77,7 +77,7 @@ const removeItem = async (id) => {
 
 <template>
   <div>
-    <div>{{props.sprintById}}</div>
+    <!-- <div>{{props.sprintById}}</div> -->
 
     <form @submit.prevent="handleSubmit" class="sprint-details form-container">
       <h1>Modify Sprint</h1>

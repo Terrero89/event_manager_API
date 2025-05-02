@@ -11,17 +11,15 @@ import { storeToRefs } from "pinia";
 
 const {  addSprint} = sprintsStore;
 const {  addStory } = storyStore;
-const {  } = storeToRefs(sprintsStore);
+const {  sprintList, currentSprint } = storeToRefs(sprintsStore);
 const {  } = storeToRefs(storyStore);
 
 // LINE FROM HERE
 
-const sprintList = sprintsStore.loadFromLocalStorage('sprintList', []).slice(0, 5);
-const currSprint = sprintsStore.loadFromLocalStorage('currentSprint', '')
 
 const form = reactive({
 
- sprintId: currSprint,
+ sprintId: currentSprint,
   storyTitle: "c2t please",
   storyNumber: "dm123",
   storyName: "storyName",

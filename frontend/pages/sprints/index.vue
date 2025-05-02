@@ -5,7 +5,7 @@ import { storeToRefs } from "pinia";
 
 const {
   fetchSprints,
-
+  
 } = sprintsStore;
 const { items } = storeToRefs(sprintsStore);
 const navLinks = [

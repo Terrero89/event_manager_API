@@ -67,6 +67,7 @@ const handleSubmit = async () => {
 
 console.log({...form.value})
   await updateEvent(props.eventById.id,{...form.value});
+  navigateTo(`/`);
 
 };
 
@@ -75,7 +76,7 @@ const removeItem = async (id) => {
     await deleteEvent(id); // Proceed with the deletion if confirmed
     console.log(deleteEvent(id))
     // Optionally navigate or refresh the page after deletion
-    // navigateTo(`/`);
+    navigateTo(`/`);
   }
 };
 </script>

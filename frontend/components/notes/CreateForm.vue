@@ -7,8 +7,8 @@ const noteStore = useNoteStore();
 const sprintsStore = useSprintStore();
 import { storeToRefs } from "pinia";
 
-const {  addSprint} = sprintsStore;
-const {  loadFromLocalStorage } = storeToRefs(sprintsStore);
+const { fetchSprints, addSprint} = sprintsStore;
+const {  sprintList, currentSprint } = storeToRefs(sprintsStore);
 
 
 const {
@@ -24,17 +24,12 @@ onMounted(async() => {
 
   // await addEvent()
 
-
+  await fetchSprints()
 });
-
-// sprintsStore.loadFromLocalStorage('currentSprint', '') 
-const sprintList = sprintsStore.loadFromLocalStorage('sprintList', []).slice(0, 5);
-const currSprint = sprintsStore.loadFromLocalStorage('currentSprint', '')
- // sprintsStore.sprintList = sprintsStore.loadFromLocalStorage('sprintList', [])
 
 
 const form = reactive({
-  sprintId:  currSprint ,
+  sprintId:  currentSprint ,
   title: "",          // Note Title
   description: "",    // Note Description
   date: "",           // Start Date
@@ -53,7 +48,6 @@ const validateFields = () => {
   errors.noteName = !form.noteName ? "Note Name is required" : "";
   errors.date = !form.date ? "Date is required" : "";
   errors.description = !form.description ? "Note Description is required" : "";
-  currSprint 
   return Object.values(errors).every((err) => !err);
 };
 
@@ -61,7 +55,7 @@ const handleSubmit = async () => {
   if (!validateFields()) return;
 
   const newNote = {
-    sprintId: form.sprintId,
+    sprintId: currentSprint,
     title: form.title,
     noteType: form.noteType,
     description: form.description,
@@ -71,6 +65,7 @@ const handleSubmit = async () => {
   };
 
   await addNote(newNote);
+
 
 };
 

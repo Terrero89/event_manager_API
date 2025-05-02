@@ -1,6 +1,5 @@
 
 <script setup lang="ts">
-import {useRouter, useRoute} from 'vue'
 import { ref } from 'vue'
 
 const form = ref({
@@ -23,7 +22,7 @@ const onSubmit = async () => {
     const meeting = await response.json()
     // const route = useRoute()
     // const router = useRouter()
-    // router.push(`/notes/${meeting.id}`)
+    router.push(`/notes/${meeting.id}`)
   } else {
     // Handle the error
     const error = await response.json()

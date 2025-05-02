@@ -8,8 +8,8 @@ import { storeToRefs } from "pinia";
 const sprintsStore = useSprintStore();
 
 
-const {  addSprint} = sprintsStore;
-const {  loadCurrentSprintFromLocalStorage } = storeToRefs(sprintsStore);
+const {  addSprint, fetchSprints} = sprintsStore;
+const {  sprintList, currentSprint } = storeToRefs(sprintsStore);
 const {  addEvent } = eventsStore;
 const { events } = storeToRefs(eventsStore);
 // for later use
@@ -18,17 +18,12 @@ const { events } = storeToRefs(eventsStore);
 
 onMounted(async() => {
 
-  // await addEvent()
-
-
+  await fetchSprints()
 });
-
-const sprintList = sprintsStore.loadFromLocalStorage('sprintList', []).slice(0, 5);
-const currSprint = sprintsStore.loadFromLocalStorage('currentSprint', '')
 
 // Main form state
 const form = reactive({
-  sprintId: currSprint,
+  sprintId: currentSprint,
   title: "Title",           // Note Title
   eventName: "dddd",            // Event Name
   eventType: "dddd",            // Event Type

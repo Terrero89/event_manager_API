@@ -13,7 +13,7 @@ const {
 const { sprintList, currentSprint } = storeToRefs(sprintsStore);
 
 const sprint = ref({
-  sprintID: "PI-00111",
+  sprintID: "SP-",
   relatedStoryId: "DMR-001",
   startDate: "2025-01-22",
   dueDate: "2025-01-29",
@@ -50,14 +50,11 @@ const handleSubmit = async () => {
   console.log(newSprint);
 };
 
-//  sprintsStore.loadFromLocalStorage('currentSprint', '') retrieving current sprint
-// sprintsStore.loadFromLocalStorage('sprintList', [])
-// sprintsStore.sprintList = sprintsStore.loadFromLocalStorage('sprintList', [])
 </script>
 
 <template>
   <div>
-    <div>{{ sprintList }}</div>
+    <!-- <div>{{ sprintList }}</div> -->
     <!-- {{currentSprint}}mmmmmm
  xxx {{sprintsStore.loadSprintListFromLocalStorage()}}fffffff---{{sprintsStore.loadFromLocalStorage('sprintList', [])}} -->
     <form @submit.prevent="handleSubmit" class="sprint-details form-container">

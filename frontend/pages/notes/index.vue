@@ -47,7 +47,7 @@ const isOpen = ref(false);
 <template>
   <div>
     <div class="nav-flex my-2 border-b border-gray-200 dark:border-gray-800">
-      <UHorizontalNavigation :links="navLinks" class="" />
+      <UHorizontalNavigation :links="navLinks" />
       <UModal v-model="isOpen">
         <div class="p-4">IS HERE</div>
       </UModal>
