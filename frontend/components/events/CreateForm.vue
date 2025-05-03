@@ -71,7 +71,8 @@ const handleSubmit = async () => {
   };
 
   await addEvent(newEvent); // Add the new event to the store
-  console.log( await addEvent(newEvent))
+  navigateTo(`/`);
+
 };
 </script>
 <template>

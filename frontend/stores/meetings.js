@@ -54,47 +54,53 @@ export const useMeetingStore = defineStore({
         this.isLoading = false; // Stop loading
       }
     },
-    // async deleteEvent(itemID) {
-    //   let response = await fetch(
-    //     `https://travel-planning-app-44a08-default-rtdb.firebaseio.com/cities/${itemID}.json`,
-    //     {
-    //       method: "DELETE",
-    //       "Content-type": "application/json",
-    //     }
-    //   );
-    //   if (!response.ok) {
-    //     console.log("Error, request failed");
-    //   }
+    async deleteMeeting(itemID) {
+      const url = `https://project-manager-app-f9829-default-rtdb.firebaseio.com/meetings/${itemID}.json`;
+      let response = await fetch(url, {
+        method: "DELETE",
+        "Content-type": "application/json",
+      });
+      if (!response.ok) {
+        console.log("Error, request failed");
+      }
+    },
 
-    // },
+    async updateMeeting(itemID, payload) {
+      const url = `https://project-manager-app-f9829-default-rtdb.firebaseio.com/meetings/${itemID}.json`;
 
-    // async updateEvent(cityID, payload) {
-    //   const url = `https://travel-planning-app-44a08-default-rtdb.firebaseio.com/cities/${cityID}.json`;
-    //   const options = {
-    //     method: "PATCH",
-    //     headers: { "Content-type": "application/json" },
-    //     body: JSON.stringify(payload),
-    //   };
+      try {
+        const response = await fetch(url, {
+          method: "PATCH",
+          headers: { "Content-type": "application/json" },
+          body: JSON.stringify({ ...payload }),
+        });
 
-    //   try {
-    //     const response = await fetch(url, options);
-    //     if (!response.ok) {
-    //       throw new Error("Failed to update city");
-    //     }
+        if (!response.ok) {
+          throw new Error("Failed to update meeting");
+        }
 
-    //     // Ensure the response contains the updated data
-    //     const updatedCity = await response.json();
+        // Ensure the response contains the updated data
+        const updatedMeeting = await response.json();
 
-    //     // Update the local state after a successful update
-    //     const index = this.cities.findIndex((city) => city.cityID === cityID);
-    //     if (index !== -1) {
-    //       // Use the returned data from Firebase to ensure consistency
-    //       this.cities[index] = { cityID, ...updatedCity };
-    //     }
-    //   } catch (error) {
-    //     console.error("Error updating city:", error);
-    //   }
-    // },
+        // Update the local state after a successful update
+        const index = this.meetings.findIndex((meeting) => meeting.id === itemID);
+        if (index !== -1) {
+          this.meetings[index] = { id: itemID, ...updatedMeeting };
+        }
+      } catch (error) {
+        console.error("Error updating meeting:", error);
+      }
+    },
   },
-  getters: {},
+  getters: {
+    itemsAsArray: (state) => {
+      return state.meetings;
+    },
+
+    //finds item based on parentDestinationID
+    filterItemById(state) {
+      const note = this.itemsAsArray.filter((item) => item.id);
+      return (id) => note.filter((data) => data.id === id);
+    },
+  },
 });

@@ -3,81 +3,80 @@ import { reactive, computed } from "vue";
 import { useRouter } from "vue-router";
 import { CONFIG } from "~/config/globalVariables";
 import {onMounted } from 'vue'
-const noteStore = useNoteStore();
+
+const meetingStore = useMeetingStore();
 const sprintsStore = useSprintStore();
 import { storeToRefs } from "pinia";
 
-const { fetchSprints, addSprint} = sprintsStore;
-const {  sprintList, currentSprint } = storeToRefs(sprintsStore);
+const {  addSprint, fetchSprints } = sprintsStore;
+const {currentSprint, sprintList  } = storeToRefs(sprintsStore);
+
+const {   updateMeeting, deleteMeeting } = meetingStore;
+const { } = storeToRefs(meetingStore);
 
 
-const {
-  addNote,
 
-} = noteStore;
-const { notes} = storeToRefs(noteStore);
-// for later use
-// const route = useRoute(); //route object
-// const destId = route.params.destinationID;
+const props = defineProps([
+ 
+  "meetingById"
+])
 
 onMounted(async() => {
 
-  // await addEvent()
 
-  await fetchSprints()
+await fetchSprints()
 });
 
+// Replace reactive with ref
+const form = ref({
+  sprintId:  props.meetingById.sprintId,
+  title: props.meetingById.title,
+  description: props.meetingById.description,
+  meetingName: props.meetingById.meetingName,
+  meetingType: props.meetingById.meetingType,
+  duration: props.meetingById.duration,
+  status: props.meetingById.status,
+  date: props.meetingById.date
 
-const form = reactive({
-  sprintId:  currentSprint ,
-  title: "",          // Note Title
-  description: "",    // Note Description
-  date: "",           // Start Date
-  priorityLevel: "N/A",  // Unused but included for validation
-  noteName: "",       // Note Name
-  noteType: "",       // Note Type
 });
 
 const errors = reactive({});
 const router = useRouter();
-
 const validateFields = () => {
-  errors.sprintId = !form.sprintId ? "Sprint is required" : "";
-  errors.noteType = !form.noteType ? "Note Type is required" : "";
-  errors.title = !form.title ? "Note Title is required" : "";
-  errors.noteName = !form.noteName ? "Note Name is required" : "";
-  errors.date = !form.date ? "Date is required" : "";
-  errors.description = !form.description ? "Note Description is required" : "";
+  const f = form.value;
+  errors.sprintId = !f.sprintId ? "Sprint is required" : "";
+  errors.meetingType = !f.meetingType ? "Note Type is required" : "";
+  errors.title = !f.title ? "Meeting Title is required" : "";
+  errors.meetingName = !f.meetingName ? "Meeting Name is required" : "";
+  errors.date = !f.date ? "Date is required" : "";
+  errors.description = !f.description ? "Meeting Description is required" : "";
+  errors.duration = !f.duration ? "Meeting Description is required" : "";
   return Object.values(errors).every((err) => !err);
 };
 
 const handleSubmit = async () => {
   if (!validateFields()) return;
 
-  const newNote = {
-    sprintId: currentSprint,
-    title: form.title,
-    noteType: form.noteType,
-    description: form.description,
-    date: form.date,
-    noteName: form.noteName,
-    priorityLevel: form.priorityLevel,
-  };
-
-  await addNote(newNote);
+  await  updateMeeting(props.meetingById.id, { ...form.value });
   navigateTo(`/`);
-
-
 };
 
 
-
-
+const removeItem = async (id) => {
+  if (confirm("Are you sure you want to delete this city? This action cannot be undone.")) {
+    await deleteMeeting(id); // Proceed with the deletion if confirmed
+    // Optionally navigate or refresh the page after deletion
+    // navigateTo(`/`);
+  }
+};
 </script>
 
 <template>
   <div class="form-container">
-    <h1 class="title">Create a New Note</h1>
+ <div>
+  {{props.meetingById.id}}
+</div>
+    <h1 class="title">Modify Meeting</h1>
     <form @submit.prevent="handleSubmit">
       <!-- Header Fields -->
       <div class="form-group">
@@ -90,15 +89,15 @@ const handleSubmit = async () => {
        <span v-if="errors.sprintId" class="error">{{ errors.sprintId}}</span>
       </div>
       <div class="form-group">
-        <label for="reporters">Note Type</label>
-        <select v-model="form.noteType" id="status">
+        <label for="reporters">Meeting Type</label>
+        <select v-model="form.meetingType" id="status">
           <option value="" disabled>Select Type</option>
           <option v-for="activity in CONFIG.variables.activityType" :key="activity" :value="activity">{{ activity }}</option>
         </select>
         <span v-if="errors.noteType" class="error">{{ errors.noteType }}</span>
       </div>
       <div class="form-group">
-        <label for="storyName">Note Title</label>
+        <label for="storyName">Meeting Title</label>
         <input
             v-model="form.title"
             type="text"
@@ -109,9 +108,9 @@ const handleSubmit = async () => {
       </div>
 
       <div class="form-group">
-        <label for="storyName">Note Name</label>
+        <label for="storyName">Meeting Name</label>
         <input
-            v-model="form.noteName"
+            v-model="form.meetingName"
             type="text"
             id="story Name"
             placeholder="Enter Story Name"
@@ -123,11 +122,24 @@ const handleSubmit = async () => {
         <label for="startDate">Start Date:</label>
         <input v-model="form.date" type="date" id="date"/>
       </div>
+      <div  class="form-group">
+        <label for="duration">Duration</label>
+        <input v-model="form.duration" type="number" id="duration"/>
+      </div>
+      <div class="form-group">
+        <label for="assignedSprint">Status</label>
+        <select v-model="form.status" id="Status">
+          <option value="" disabled>Select sprint</option>
+          <option v-for="activity in CONFIG.variables.statusLevel" :key="activity" :value="activity">{{ activity }}</option>
+
+        </select>
+       <span v-if="errors.sprintId" class="error">{{ errors.sprintId}}</span>
+      </div>
       <div class="form-group ">
-        <label for="storyName">Note Descriptiopn</label>
+        <label for="storyName">Description</label>
         <input
             v-model="form.description"
-            type="text"
+            type="textarea"
             id="story Name"
             placeholder="Enter Story Name"
         />
@@ -135,9 +147,11 @@ const handleSubmit = async () => {
       </div>
      
 
-    
-
-      <button type="submit" class="submit-button">Submit</button>
+      <div class="modal-actions">
+      <button class="delete-button" @click="removeItem(props.meetingById.id)">Delete</button>
+      <button type="submit" class="submit-button">Update</button>
+    </div>
+   
     </form>
   </div>
 </template>
@@ -157,8 +171,8 @@ body {
 
 /* Form Container */
 .form-container {
-  max-width: 600px;
-  margin: 50px auto;
+
+
   padding: 20px;
   background: #2c2c2c;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -233,11 +247,27 @@ select:focus {
   background-color: #0056b3;
 }
 
+/* Button */
+.delete-button {
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  color: #fff;
+  background-color: red;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.delete-button:hover {
+  background-color: rgb(197, 1, 1);
+}
 /* Responsive Design */
 @media (max-width: 768px) {
-  .form-container {
+  /* .form-container {
     padding: 15px;
-  }
+  } */
 
   h1 {
     font-size: 1.5rem;
@@ -246,6 +276,27 @@ select:focus {
   .submit-button {
     font-size: 0.9rem;
   }
+}
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.details-button:hover {
+  background-color: #dadada;
+}
+
+/* Optional red delete button override */
+.delete-btn {
+  border-color: red;
+  color: white;
+  background-color: red;
+}
+
+.delete-btn:hover {
+  background-color: darkred;
 }
 </style>
 

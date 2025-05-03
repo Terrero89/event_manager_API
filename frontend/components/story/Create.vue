@@ -98,6 +98,7 @@ const handleSubmit = async () => {
 
 
 await addStory(newStory);
+navigateTo(`/`);
  
 };
 </script>

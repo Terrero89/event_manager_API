@@ -47,7 +47,7 @@ const handleSubmit = async () => {
   if (sprintDuration < 0) return;
   await addSprint(newSprint);
 
-  console.log(newSprint);
+  navigateTo(`/`);
 };
 
 </script>

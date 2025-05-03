@@ -19,6 +19,7 @@ const isOpen = ref(false);
     <!-- <h3>ITEM COMPONENT</h3> -->
     <UIRenderer>
       <div class="item">
+        {{ props.id }}
         <p><strong>Title: </strong> {{ title }}</p>
         <!-- <h1>{{id}}</h1> -->
 
@@ -48,7 +49,7 @@ const isOpen = ref(false);
     
         
             <MeetingsDetails
-            :id="id"
+            :id=" props.id"
             :title="props.title"
             :description="props.description"
             :date="props.date"
@@ -65,7 +66,6 @@ const isOpen = ref(false);
     </UIRenderer>
   </div>
 </template>
-
 <style scoped>
 .item {
   margin: 0.9rem 0;

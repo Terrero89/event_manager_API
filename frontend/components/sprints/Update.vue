@@ -70,9 +70,7 @@ const removeItem = async (id) => {
   }
 };
 
-//  sprintsStore.loadFromLocalStorage('currentSprint', '') retrieving current sprint
-// sprintsStore.loadFromLocalStorage('sprintList', [])
-// sprintsStore.sprintList = sprintsStore.loadFromLocalStorage('sprintList', [])
+
 </script>
 
 <template>

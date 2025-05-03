@@ -33,12 +33,6 @@ const navLinks = [
         size: "md"
       }
     },
-  
-    // {
-    //   label: 'Insights',
-    //   icon: 'i-heroicons-command-line',
-    //   to: '/'
-    // }
   ]
 ];
 const isOpen = ref(false);
@@ -56,7 +50,7 @@ const isOpen = ref(false);
       <UButton
         class="m-3"
         color="blue"
-        
+
         variant="soft"
         label="Add"
         @Click="isOpen = true"
@@ -69,8 +63,8 @@ const isOpen = ref(false);
       <MeetingsList  
       v-else
     v-for="item in meetings"
-    :key="item._id"
-    :id="item._id"
+    :key="item.id"
+    :id="item.id"
     :description="item.description"
     :title="item.title"
     :date="item.date"

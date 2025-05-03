@@ -34,7 +34,7 @@ const isOpen = ref(false);
       </div>
   
         <MeetingsItem
-            :id="id"
+            :id="props.id"
             :title="props.title"
             :description="props.description"
             :date="props.date"
