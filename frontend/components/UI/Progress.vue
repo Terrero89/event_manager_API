@@ -11,6 +11,11 @@ const sprint = Math.abs(calculateSprintDays(new Date("2025-01-9"), "2025-01-22")
 let maxValue = ref(14)
 let calc = ref(Math.abs(sprint - maxValue.value))
 
+onMounted(async() => {
+
+await fetchSprints()
+});
+
 </script>
 
 <template>
@@ -19,7 +24,8 @@ let calc = ref(Math.abs(sprint - maxValue.value))
     <!--PROGRESS IN PERCENTAGE FOR SPRINT-->
     <div class="header">
       <div class="header-title">
-        <span class="sprint">{{ currentSprint ? currentSprint : 'No Current Sprint'}} </span>
+        <span>Sprint: </span>
+        <span class="sprint">  {{ currentSprint ? currentSprint : 'No Current Sprint'}} </span>
        
       </div>
       <div class="my-2 progress-bar">

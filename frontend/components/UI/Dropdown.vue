@@ -1,5 +1,15 @@
 <script setup lang="ts">
+import { storeToRefs } from "pinia";
+const sprintsStore = useSprintStore();
 
+
+const {  addSprint, fetchSprints} = sprintsStore;
+const {  sprintList, currentSprint } = storeToRefs(sprintsStore);
+
+onMounted(async() => {
+
+  await fetchSprints()
+});
 
 </script>
 
@@ -13,7 +23,7 @@
         trailing-icon="i-heroicons-chevron-down"
         class="w-full lg:w-48 test"
         placeholder="Select a sprint"
-        :options="['PL-001', 'PL-002', 'PL-003']"
+        :options="sprintList"
         model-value=""
     />
 

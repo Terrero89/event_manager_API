@@ -22,7 +22,7 @@ onMounted(async () => {
 const loadMessage = ref(false);
 
 const form = reactive({
-  sprintId: currentSprint.value,
+  // sprintId: currentSprint.value,
   title: "", // Note Title
   description: "", // Note Description
   date: "", // Start Date
@@ -35,7 +35,7 @@ const errors = reactive({});
 const router = useRouter();
 
 const validateFields = () => {
-  errors.sprintId = !form.sprintId ? "Sprint is required" : "";
+  // errors.sprintId = !form.sprintId ? "Sprint is required" : "";
   errors.noteType = !form.noteType ? "Note Type is required" : "";
   errors.title = !form.title ? "Note Title is required" : "";
   errors.noteName = !form.noteName ? "Note Name is required" : "";
@@ -48,7 +48,7 @@ const handleSubmit = async () => {
   if (!validateFields()) return;
 
   const newNote = {
-    sprintId: currentSprint.value,
+    // sprintId: currentSprint.value,
     title: form.title,
     noteType: form.noteType,
     description: form.description,
@@ -73,7 +73,7 @@ const handleSubmit = async () => {
     <form @submit.prevent="handleSubmit">
       <!-- Header Fields -->
 
-      <div class="form-group">
+      <!-- <div class="form-group">
         <label for="assignedSprint">Sprint ID</label>
         <select v-model="form.sprintId" id="Sprint">
           <option value="" disabled>Select sprint</option>
@@ -82,7 +82,7 @@ const handleSubmit = async () => {
           </option>
         </select>
         <span v-if="errors.sprintId" class="error">{{ errors.sprintId }}</span>
-      </div>
+      </div> -->
 
       <div class="form-group">
         <label for="reporters">Note Type</label>

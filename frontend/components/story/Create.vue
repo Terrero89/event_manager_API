@@ -19,7 +19,7 @@ const {  } = storeToRefs(storyStore);
 const loadMessage = ref(false);
 const form = reactive({
 
- sprintId: currentSprint.value,
+ sprintId: currentSprint.value || '',
   storyTitle: "c2t please",
   storyNumber: "dm123",
   storyName: "storyName",
@@ -76,7 +76,7 @@ const handleSubmit = async () => {
   if (!validateFields()) return;
 
   const newStory = {
-    sprintId: form.sprintId,
+    sprintId: form.sprintId || '',
     storyTitle:form.storyTitle,
     storyName: form.storyName,
     storyNumber: form.storyNumber,

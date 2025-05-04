@@ -23,7 +23,7 @@ onMounted(async() => {
 
 // Main form state
 const form = reactive({
-  sprintId: currentSprint.value,
+  // sprintId: currentSprint.value,
   title: "Title",           // Note Title
   eventName: "dddd",            // Event Name
   eventType: "dddd",            // Event Type
@@ -41,7 +41,7 @@ const router = useRouter();
 
 // Form field validation
 const validateFields = () => {
-  errors.sprintId = !form.sprintId ? "Sprint is required" : "";
+  // errors.sprintId = !form.sprintId ? "Sprint is required" : "";
   errors.eventType = !form.eventType ? "Note Type is required" : "";
   errors.title = !form.title ? "Note Title is required" : "";
   errors.eventName = !form.eventName ? "Note Name is required" : "";
@@ -58,7 +58,7 @@ const handleSubmit = async () => {
   if (!validateFields()) return;
 
   const newEvent = {
-    sprintId: currentSprint.value,
+    // sprintId: currentSprint.value,
     title: form.title,
     eventName: form.eventName,
     eventType: form.eventType,
@@ -85,14 +85,14 @@ const handleSubmit = async () => {
     <h1 class="title">Create a New Event</h1>
     <form @submit.prevent="handleSubmit">
       <!-- Sprint -->
-      <div class="form-group">
+      <!-- <div class="form-group">
         <label for="sprint">Sprint</label>
         <select v-model="form.sprintId" id="sprint">
           <option value="" disabled>Select sprint</option>
           <option :value="item" v-for="item in sprintList" :key="item">{{ item }}</option>
         </select>
         <span v-if="errors.sprintId" class="error">{{ errors.sprintId }}</span>
-      </div>
+      </div> -->
 
 
    <!-- Event Type -->
