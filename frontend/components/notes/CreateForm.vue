@@ -2,40 +2,33 @@
 import { reactive, computed } from "vue";
 import { useRouter } from "vue-router";
 import { CONFIG } from "~/config/globalVariables";
-import {onMounted } from 'vue'
+import { onMounted } from "vue";
 const noteStore = useNoteStore();
 const sprintsStore = useSprintStore();
 import { storeToRefs } from "pinia";
 
-const { fetchSprints, addSprint} = sprintsStore;
-const {  sprintList, currentSprint } = storeToRefs(sprintsStore);
+const { fetchSprints, addSprint } = sprintsStore;
+const { sprintList, currentSprint } = storeToRefs(sprintsStore);
 
+const { addNote } = noteStore;
+const { notes } = storeToRefs(noteStore);
 
-const {
-  addNote,
-
-} = noteStore;
-const { notes} = storeToRefs(noteStore);
-// for later use
-// const route = useRoute(); //route object
-// const destId = route.params.destinationID;
-
-onMounted(async() => {
-
+onMounted(async () => {
   // await addEvent()
 
-  await fetchSprints()
+  await fetchSprints();
 });
 
+const loadMessage = ref(false);
 
 const form = reactive({
-  sprintId:  currentSprint ,
-  title: "",          // Note Title
-  description: "",    // Note Description
-  date: "",           // Start Date
-  priorityLevel: "N/A",  // Unused but included for validation
-  noteName: "",       // Note Name
-  noteType: "",       // Note Type
+  sprintId: currentSprint.value,
+  title: "", // Note Title
+  description: "", // Note Description
+  date: "", // Start Date
+  priorityLevel: "N/A", // Unused but included for validation
+  noteName: "", // Note Name
+  noteType: "", // Note Type
 });
 
 const errors = reactive({});
@@ -55,7 +48,7 @@ const handleSubmit = async () => {
   if (!validateFields()) return;
 
   const newNote = {
-    sprintId: currentSprint,
+    sprintId: currentSprint.value,
     title: form.title,
     noteType: form.noteType,
     description: form.description,
@@ -63,16 +56,15 @@ const handleSubmit = async () => {
     noteName: form.noteName,
     priorityLevel: form.priorityLevel,
   };
-
+  console.log(newNote);
   await addNote(newNote);
-  navigateTo(`/`);
 
-
+  loadMessage.value = true;
+  setTimeout(() => {
+    loadMessage.value = false;
+    navigateTo(`/`);
+  }, 1700);
 };
-
-
-
-
 </script>
 
 <template>
@@ -80,78 +72,89 @@ const handleSubmit = async () => {
     <h1 class="title">Create a New Note</h1>
     <form @submit.prevent="handleSubmit">
       <!-- Header Fields -->
+
       <div class="form-group">
         <label for="assignedSprint">Sprint ID</label>
         <select v-model="form.sprintId" id="Sprint">
           <option value="" disabled>Select sprint</option>
-          <option :value="item" v-for="item in sprintList" :key="item">{{item}}</option>
-
+          <option :value="item" v-for="item in sprintList" :key="item">
+            {{ item }}
+          </option>
         </select>
-       <span v-if="errors.sprintId" class="error">{{ errors.sprintId}}</span>
+        <span v-if="errors.sprintId" class="error">{{ errors.sprintId }}</span>
       </div>
+
       <div class="form-group">
         <label for="reporters">Note Type</label>
         <select v-model="form.noteType" id="status">
           <option value="" disabled>Select Type</option>
-          <option v-for="activity in CONFIG.variables.activityType" :key="activity" :value="activity">{{ activity }}</option>
+          <option
+            v-for="activity in CONFIG.variables.activityType"
+            :key="activity"
+            :value="activity"
+          >
+            {{ activity }}
+          </option>
         </select>
         <span v-if="errors.noteType" class="error">{{ errors.noteType }}</span>
       </div>
       <div class="form-group">
         <label for="storyName">Note Title</label>
         <input
-            v-model="form.title"
-            type="text"
-            id="story Name"
-            placeholder="Enter Story Name"
+          v-model="form.title"
+          type="text"
+          id="story Name"
+          placeholder="Enter Story Name"
         />
-        <span v-if="errors.title" class="error">{{ errors.title}}</span>
+        <span v-if="errors.title" class="error">{{ errors.title }}</span>
       </div>
 
       <div class="form-group">
         <label for="storyName">Note Name</label>
         <input
-            v-model="form.noteName"
-            type="text"
-            id="story Name"
-            placeholder="Enter Story Name"
+          v-model="form.noteName"
+          type="text"
+          id="story Name"
+          placeholder="Enter Story Name"
         />
-        <span v-if="errors.noteName" class="error">{{ errors.noteName}}</span>
+        <span v-if="errors.noteName" class="error">{{ errors.noteName }}</span>
       </div>
 
-      <div  class="form-group">
+      <div class="form-group">
         <label for="startDate">Start Date:</label>
-        <input v-model="form.date" type="date" id="date"/>
+        <input v-model="form.date" type="date" id="date" />
       </div>
-      <div class="form-group ">
+      <div class="form-group">
         <label for="storyName">Note Descriptiopn</label>
         <input
-            v-model="form.description"
-            type="text"
-            id="story Name"
-            placeholder="Enter Story Name"
+          v-model="form.description"
+          type="text"
+          id="story Name"
+          placeholder="Enter Story Name"
         />
-        <span v-if="errors.noteName" class="error">{{ errors.description}}</span>
+        <span v-if="errors.noteName" class="error">{{
+          errors.description
+        }}</span>
       </div>
-     
-
-    
 
       <button type="submit" class="submit-button">Submit</button>
+      <div class="temp my-4" v-if="loadMessage">Adding Note...</div>
     </form>
   </div>
 </template>
 
 <style scoped>
+.temp {
+  color: rgb(6, 170, 135);
+}
 /* General Styles */
 body {
-  font-family: 'Arial', sans-serif;
+  font-family: "Arial", sans-serif;
   margin: 0;
   padding: 0;
   background-color: #f9f9f9;
 }
-
-.title{
+.title {
   color: #bababa;
 }
 
@@ -248,4 +251,3 @@ select:focus {
   }
 }
 </style>
-

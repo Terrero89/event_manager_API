@@ -15,7 +15,7 @@ const { events } = storeToRefs(eventsStore);
 // for later use
 // const route = useRoute(); //route object
 // const destId = route.params.destinationID;
-
+const loadMessage = ref(false);
 onMounted(async() => {
 
   await fetchSprints()
@@ -23,7 +23,7 @@ onMounted(async() => {
 
 // Main form state
 const form = reactive({
-  sprintId: currentSprint,
+  sprintId: currentSprint.value,
   title: "Title",           // Note Title
   eventName: "dddd",            // Event Name
   eventType: "dddd",            // Event Type
@@ -58,7 +58,7 @@ const handleSubmit = async () => {
   if (!validateFields()) return;
 
   const newEvent = {
-    sprintId: currSprint,
+    sprintId: currentSprint.value,
     title: form.title,
     eventName: form.eventName,
     eventType: form.eventType,
@@ -71,9 +71,14 @@ const handleSubmit = async () => {
   };
 
   await addEvent(newEvent); // Add the new event to the store
-  navigateTo(`/`);
 
+  loadMessage.value = true;
+  setTimeout(() => {
+    loadMessage.value = false;
+    navigateTo(`/`);
+  }, 1700);
 };
+
 </script>
 <template>
   <div class="form-container">
@@ -167,12 +172,16 @@ const handleSubmit = async () => {
 
       <!-- Submit Button -->
       <button type="submit" class="submit-button">Submit</button>
+      <div class="temp my-4" v-if="loadMessage">Adding Event...</div>
     </form>
   </div>
 </template>
 
 
 <style scoped>
+.temp {
+  color: rgb(6, 170, 135);
+}
 /* General Styles */
 body {
   font-family: 'Arial', sans-serif;

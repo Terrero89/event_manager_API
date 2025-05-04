@@ -1,34 +1,5 @@
 
 <script setup lang="ts">
-import { ref } from 'vue'
-
-const form = ref({
-  eventName: '',
-  eventDescription: '',
-})
-
-const onSubmit = async () => {
-  // Call the API to create the event
-  const response = await fetch('/api/v1/notes', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(form.value),
-  })
-
-  if (response.ok) {
-    // Navigate to the event page
-    const meeting = await response.json()
-    // const route = useRoute()
-    // const router = useRouter()
-    router.push(`/notes/${meeting.id}`)
-  } else {
-    // Handle the error
-    const error = await response.json()
-    console.error(error)
-  }
-}
 </script>
 
 <template>

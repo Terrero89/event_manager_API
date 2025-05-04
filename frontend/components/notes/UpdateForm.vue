@@ -7,8 +7,8 @@ const noteStore = useNoteStore();
 const sprintsStore = useSprintStore();
 import { storeToRefs } from "pinia";
 
-const {  addSprint} = sprintsStore;
-const {  loadFromLocalStorage } = storeToRefs(sprintsStore);
+const {  addSprint, fetchSprints} = sprintsStore;
+const {currentSprint, sprintList  } = storeToRefs(sprintsStore);
 
 // update note here
 const {
@@ -23,21 +23,9 @@ const props = defineProps([
   "noteById"
 ])
 
-// for later use
-// const route = useRoute(); //route object
-// const destId = route.params.destinationID;
-
 onMounted(async() => {
-
-  // await addEvent()
-
-
+await fetchSprints()
 });
-
-// sprintsStore.loadFromLocalStorage('currentSprint', '') 
-const sprintList = sprintsStore.loadFromLocalStorage('sprintList', []).slice(0, 5);
-const currSprint = sprintsStore.loadFromLocalStorage('currentSprint', '')
- // sprintsStore.sprintList = sprintsStore.loadFromLocalStorage('sprintList', [])
 
 
 // Replace reactive with ref

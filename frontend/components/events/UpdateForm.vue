@@ -8,33 +8,32 @@ import { storeToRefs } from "pinia";
 const sprintsStore = useSprintStore();
 
 
-const {  addSprint} = sprintsStore;
-const {  loadCurrentSprintFromLocalStorage } = storeToRefs(sprintsStore);
+const {  addSprint, fetchSprints} = sprintsStore;
+const { sprintList, currentSprint } = storeToRefs(sprintsStore);
 const {  addEvent, updateEvent, deleteEvent } = eventsStore;
 const { events } = storeToRefs(eventsStore);
 // for later use
 // const route = useRoute(); //route object
 // const destId = route.params.destinationID;
 
+
 onMounted(async() => {
 
-  // await addEvent()
 
-
+await fetchSprints()
 });
+
 
 const props = defineProps([
  
   "eventById"
 ])
 
-const sprintList = sprintsStore.loadFromLocalStorage('sprintList', []).slice(0, 5);
-const currSprint = sprintsStore.loadFromLocalStorage('currentSprint', '')
 
 
 // Main form state using ref
 const form = ref({
-  sprintId:currSprint,
+  sprintId:currentSprint.value,
   title: props.eventById.title,
   eventName: props.eventById.eventName,
   eventType: props.eventById.eventType,

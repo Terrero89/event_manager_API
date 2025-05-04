@@ -18,9 +18,8 @@ const props = defineProps([
   "sprintById"
 ])
 
-const currSprint = sprintsStore.loadFromLocalStorage('currentSprint', '')
 const sprint = ref({
-  sprintID:  currSprint,
+  sprintID: currentSprint.value ,
   relatedStoryId: props.sprintById.relatedStoryId,
   startDate: props.sprintById.startDate,
   dueDate: props.sprintById.dueDate,
@@ -50,8 +49,7 @@ const handleSubmit = async () => {
     piNotes: sprint.value.piNotes,
     storiesUnderSprint: sprint.value.storiesUnderSprint,
   };
-  //saving newly created sprintId in localStorage
-  sprintsStore.saveCurrentSprintToLocalStorage(newSprint.sprintID);
+ 
 
   if (sprintDuration < 0) return;
 

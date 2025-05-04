@@ -19,7 +19,6 @@ const isOpen = ref(false);
     <!-- <h3>ITEM COMPONENT</h3> -->
     <UIRenderer>
       <div class="item">
-        {{ props.id }}
         <p><strong>Title: </strong> {{ title }}</p>
         <!-- <h1>{{id}}</h1> -->
 

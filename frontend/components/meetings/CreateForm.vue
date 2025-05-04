@@ -2,39 +2,34 @@
 import { reactive, computed } from "vue";
 import { useRouter } from "vue-router";
 import { CONFIG } from "~/config/globalVariables";
-import {onMounted } from 'vue'
+import { onMounted } from "vue";
 const meetingStore = useMeetingStore();
 import { storeToRefs } from "pinia";
 const sprintsStore = useSprintStore();
 
-
-const {  addSprint, fetchSprints} = sprintsStore;
-const {  sprintList, currentSprint } = storeToRefs(sprintsStore);
-const {
-  addMeeting,
-  fetchMeetings
-
-} = meetingStore;
-const {  meetings } = storeToRefs(meetingStore);
+const { addSprint, fetchSprints } = sprintsStore;
+const { sprintList, currentSprint } = storeToRefs(sprintsStore);
+const { addMeeting, fetchMeetings } = meetingStore;
+const { meetings } = storeToRefs(meetingStore);
 // for later use
 // const route = useRoute(); //route object
 // const destId = route.params.destinationID;
 
-onMounted(async() => {
-await fetchMeetings()
+onMounted(async () => {
+  await fetchMeetings();
 });
-
+const loadMessage = ref(false);
 
 // Main form state
 const form = reactive({
-  sprintId: currentSprint,
-  title: "Title",           // Note Title
-  meetingName: "",            // Event Name
-  meetingType: "",            // Event Type
-  date: "",                 // Date
-  description: "",          // Description
-  status: "Completed",      // Status
-  duration: "",             // Duration
+  sprintId: currentSprint.value,
+  title: "Title", // Note Title
+  meetingName: "", // Event Name
+  meetingType: "", // Event Type
+  date: "", // Date
+  description: "", // Description
+  status: "Completed", // Status
+  duration: "", // Duration
 });
 
 // Error messages
@@ -48,15 +43,16 @@ const validateFields = () => {
   errors.sprintId = !form.sprintId ? "Sprint is required" : "";
   errors.meetingType = !form.meetingType ? "Meeting Type is required" : "";
   errors.title = !form.title ? "Meeting Title is required" : "";
-  errors.meetingName = !form.meetingName? "Meeting Name is required" : "";
+  errors.meetingName = !form.meetingName ? "Meeting Name is required" : "";
   errors.date = !form.date ? "Date is required" : "";
   errors.duration = !form.duration ? "Duration is required" : "";
-  errors.description = !form.description ? "Meeting Description is required" : "";
-  errors.status = !form.status ? "Status is required": ""
+  errors.description = !form.description
+    ? "Meeting Description is required"
+    : "";
+  errors.status = !form.status ? "Status is required" : "";
 
   return Object.values(errors).every((err) => !err);
 };
-
 
 // Submit handler
 const handleSubmit = async () => {
@@ -71,42 +67,52 @@ const handleSubmit = async () => {
     description: form.description,
     status: form.status,
     duration: form.duration,
- 
-
   };
 
   console.log("Before submission", newMeeting);
-await addMeeting(newMeeting)
-navigateTo(`/`);
-
+  await addMeeting(newMeeting);
+  loadMessage.value = true;
+  setTimeout(() => {
+    loadMessage.value = false;
+    navigateTo(`/`);
+  }, 1700);
 };
 </script>
 <template>
-    <div class="form-container">
-    <h1 class="title">Create a Meeting </h1>
+  <div class="form-container">
+    <h1 class="title">Create a Meeting</h1>
     <form @submit.prevent="handleSubmit">
       <!-- Sprint -->
       <div class="form-group">
         <label for="sprint">Sprint</label>
         <select v-model="form.sprintId" id="sprint">
           <option value="" disabled>Select sprint</option>
-          <option :value="item" v-for="item in sprintList" :key="item">{{ item }}</option>
+          <option :value="item" v-for="item in sprintList" :key="item">
+            {{ item }}
+          </option>
         </select>
         <span v-if="errors.sprintId" class="error">{{ errors.sprintId }}</span>
       </div>
 
-
-   <!-- Event Type -->
-   <div class="form-group">
+      <!-- Event Type -->
+      <div class="form-group">
         <label for="meetings">Meeting Type</label>
         <select v-model="form.meetingType" id="status">
           <option value="" disabled>Select Type</option>
-          <option v-for="activity in CONFIG.variables.activityType" :key="activity" :value="activity">{{ activity }}</option>
+          <option
+            v-for="activity in CONFIG.variables.activityType"
+            :key="activity"
+            :value="activity"
+          >
+            {{ activity }}
+          </option>
         </select>
-        <span v-if="errors.meetingType" class="error">{{ errors.meetingType }}</span>
+        <span v-if="errors.meetingType" class="error">{{
+          errors.meetingType
+        }}</span>
       </div>
-     <!-- Event Title -->
-     <div class="form-group">
+      <!-- Event Title -->
+      <div class="form-group">
         <label for="eventName"> Meeting Title</label>
         <input
           v-model="form.title"
@@ -114,7 +120,7 @@ navigateTo(`/`);
           id="eventName"
           placeholder="Enter Meeting Name"
         />
-        <span v-if="errors.title" class="error">{{ errors.title}}</span>
+        <span v-if="errors.title" class="error">{{ errors.title }}</span>
       </div>
       <!-- Event Name -->
       <div class="form-group">
@@ -125,28 +131,32 @@ navigateTo(`/`);
           id="eventName"
           placeholder="Enter Meeting Name"
         />
-        <span v-if="errors.meetingName" class="error">{{ errors.meetingName }}</span>
+        <span v-if="errors.meetingName" class="error">{{
+          errors.meetingName
+        }}</span>
       </div>
-
-   
 
       <!-- Date -->
       <div class="form-group">
         <label for="date">Date</label>
         <input v-model="form.date" type="date" id="date" />
         <span v-if="errors.date" class="error">{{ errors.date }}</span>
-        
       </div>
-
 
       <!-- Status -->
       <div class="form-group">
         <label for="status">Status</label>
         <select v-model="form.eventType" id="status">
           <option value="" disabled>Select Type</option>
-          <option v-for="activity in CONFIG.variables.statusLevel" :key="activity" :value="activity">{{ activity }}</option>
+          <option
+            v-for="activity in CONFIG.variables.statusLevel"
+            :key="activity"
+            :value="activity"
+          >
+            {{ activity }}
+          </option>
         </select>
-        <span v-if="errors.status" class="error">{{ errors.status}}</span>
+        <span v-if="errors.status" class="error">{{ errors.status }}</span>
       </div>
 
       <!-- Duration -->
@@ -158,7 +168,7 @@ navigateTo(`/`);
           id="duration"
           placeholder="Enter Duration (e.g., 2h)"
         />
-        <span v-if="errors.duration" class="error">{{ errors.duration}}</span>
+        <span v-if="errors.duration" class="error">{{ errors.duration }}</span>
       </div>
 
       <!-- Priority Level -->
@@ -170,26 +180,31 @@ navigateTo(`/`);
           id="priorityLevel"
           placeholder="Enter Description"
         />
-        <span v-if="errors.description" class="error">{{ errors.description}}</span>
+        <span v-if="errors.description" class="error">{{
+          errors.description
+        }}</span>
       </div>
 
       <!-- Submit Button -->
       <button type="submit" class="submit-button">Submit</button>
+      <div class="temp my-4" v-if="loadMessage">Adding Meeting...</div>
     </form>
   </div>
 </template>
 
-
 <style scoped>
+.temp {
+  color: rgb(6, 170, 135);
+}
 /* General Styles */
 body {
-  font-family: 'Arial', sans-serif;
+  font-family: "Arial", sans-serif;
   margin: 0;
   padding: 0;
   background-color: #f9f9f9;
 }
 
-.title{
+.title {
   color: #bababa;
 }
 
@@ -286,4 +301,3 @@ select:focus {
   }
 }
 </style>
-

@@ -11,7 +11,7 @@ import { storeToRefs } from "pinia";
 const {  addSprint, fetchSprints } = sprintsStore;
 const {currentSprint, sprintList  } = storeToRefs(sprintsStore);
 
-const {   updateMeeting, deleteMeeting } = meetingStore;
+const {   updateMeeting, deleteMeeting, fetchMeetings } = meetingStore;
 const { } = storeToRefs(meetingStore);
 
 
@@ -23,7 +23,7 @@ const props = defineProps([
 
 onMounted(async() => {
 
-
+  await fetchMeetings()
 await fetchSprints()
 });
 

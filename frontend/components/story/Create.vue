@@ -9,17 +9,17 @@ import { storeToRefs } from "pinia";
 
 
 
-const {  addSprint} = sprintsStore;
+const {  addSprint, fetchSprints} = sprintsStore;
 const {  addStory } = storyStore;
 const {  sprintList, currentSprint } = storeToRefs(sprintsStore);
 const {  } = storeToRefs(storyStore);
 
 // LINE FROM HERE
 
-
+const loadMessage = ref(false);
 const form = reactive({
 
- sprintId: currentSprint,
+ sprintId: currentSprint.value,
   storyTitle: "c2t please",
   storyNumber: "dm123",
   storyName: "storyName",
@@ -98,15 +98,25 @@ const handleSubmit = async () => {
 
 
 await addStory(newStory);
-navigateTo(`/`);
+loadMessage.value = true;
+  setTimeout(() => {
+    loadMessage.value = false;
+    navigateTo(`/`);
+  }, 1700);
  
 };
+
+onMounted(async() => {
+
+await fetchSprints()
+});
 </script>
 
 
 
 <template>
   <div class="form-container">
+    
     <h1 class="title">Create a New Story</h1>
     <form @submit.prevent="handleSubmit">
       <!-- Header Fields -->
@@ -257,11 +267,15 @@ navigateTo(`/`);
         <span v-if="errors.storyDescription" class="error">{{ errors.storyDescription }}</span>
       </div>
       <button type="submit" class="submit-button">Submit</button>
+      <div class="temp my-4" v-if="loadMessage">Adding Story...</div>
     </form>
   </div>
 </template>
 
 <style scoped>
+.temp {
+  color: rgb(6, 170, 135);
+}
 /* General Styles */
 body {
   font-family: 'Arial', sans-serif;

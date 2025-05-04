@@ -3,12 +3,9 @@ import {calculateSprintDays} from "~/utils/date-time";
 const sprintsStore = useSprintStore();
 
 
-const {  addSprint} = sprintsStore;
-const {  loadCurrentSprintFromLocalStorage } = storeToRefs(sprintsStore);
+const {  addSprint, fetchSprints } = sprintsStore;
+const {currentSprint, sprintList  } = storeToRefs(sprintsStore);
 
-// Replace with actual data key if needed (was using eventTypes vs sprints earlier)
-const sprintList = computed(() => sprintsStore.loadFromLocalStorage('sprintList', []).slice(0, 5));
-const currSprint = sprintsStore.loadFromLocalStorage('currentSprint', '')
 
 const sprint = Math.abs(calculateSprintDays(new Date("2025-01-9"), "2025-01-22"))
 let maxValue = ref(14)
@@ -22,7 +19,7 @@ let calc = ref(Math.abs(sprint - maxValue.value))
     <!--PROGRESS IN PERCENTAGE FOR SPRINT-->
     <div class="header">
       <div class="header-title">
-        <span class="sprint">{{ currSprint ? currSprint : 'No Current Sprint'}} </span>
+        <span class="sprint">{{ currentSprint ? currentSprint : 'No Current Sprint'}} </span>
        
       </div>
       <div class="my-2 progress-bar">

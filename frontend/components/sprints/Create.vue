@@ -8,10 +8,11 @@ import { storeToRefs } from "pinia";
 const {
   addSprint,
 
-  saveToLocalStorage,
+
 } = sprintsStore;
 const { sprintList, currentSprint } = storeToRefs(sprintsStore);
 
+const loadMessage = ref(false);
 const sprint = ref({
   sprintID: "SP-",
   relatedStoryId: "DMR-001",
@@ -42,21 +43,22 @@ const handleSubmit = async () => {
     piNotes: sprint.value.piNotes,
     storiesUnderSprint: sprint.value.storiesUnderSprint,
   };
-  sprintsStore.saveCurrentSprintToLocalStorage(newSprint.sprintID);
+
 
   if (sprintDuration < 0) return;
   await addSprint(newSprint);
 
-  navigateTo(`/`);
+  loadMessage.value = true;
+  setTimeout(() => {
+    loadMessage.value = false;
+    navigateTo(`/`);
+  }, 1700);
 };
 
 </script>
 
 <template>
   <div>
-    <!-- <div>{{ sprintList }}</div> -->
-    <!-- {{currentSprint}}mmmmmm
- xxx {{sprintsStore.loadSprintListFromLocalStorage()}}fffffff---{{sprintsStore.loadFromLocalStorage('sprintList', [])}} -->
     <form @submit.prevent="handleSubmit" class="sprint-details form-container">
       <h1>Add new Sprint</h1>
       <!-- Sprint ID -->
@@ -109,13 +111,15 @@ const handleSubmit = async () => {
         />
       </div>
       <button type="submit" class="submit-button">Submit</button>
-      <!-- Calculated Duration -->
-      <!--    <p><strong>Sprint Duration:</strong> {{ sprintDuration }} days</p>-->
+      <div class="temp my-4" v-if="loadMessage">Adding Sprint...</div>
     </form>
   </div>
 </template>
 
 <style scoped>
+.temp {
+  color: rgb(6, 170, 135);
+}
 h1 {
   text-align: center;
   color: #616060;

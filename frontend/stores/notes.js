@@ -35,8 +35,6 @@ export const useNoteStore = defineStore({
       // this.currentSprint = itemsList[0].sprintID;
      },
      async addNote(data) {
-      this.isLoading = true; // Start loading
-
       try {
         const response = await fetch(
           this.URL_2,
@@ -47,14 +45,10 @@ export const useNoteStore = defineStore({
         );
         if (!response.ok) {
           throw new Error("Failed to add event");
-        }
-
-        // No need to generate a unique ID here, data is stored directly
+        }   
       } catch (error) {
         console.error("Failed to add notes:", error);
-      } finally {
-        this.isLoading = false; // Stop loading
-      }
+      } 
     },
     async deleteNote(itemID) {
       const url = `https://project-manager-app-f9829-default-rtdb.firebaseio.com/notes/${itemID}.json`
