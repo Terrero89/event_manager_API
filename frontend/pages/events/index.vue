@@ -60,7 +60,41 @@ const isOpen = ref(false);
       >
     </div>
   
-
+    <div class="nav-flex wrapit">
+      <UInputMenu
+        
+        color="gray" 
+        variant="outline"
+        trailing-icon="i-heroicons-chevron-down"
+        class="w-full lg:w-48  my-3 mr-2"
+        placeholder="Select a sprint"
+        :options="sprintList"
+        model-value=""
+    />
+    <UInputMenu
+        
+        color="gray" 
+        variant="outline"
+   
+        trailing-icon="i-heroicons-chevron-down"
+        class="w-full lg:w-48  my-3 mr-2"
+        placeholder="Select a sprint"
+        :options="sprintList"
+        model-value=""
+    />
+    <UInputMenu
+        
+        color="gray" 
+        variant="outline"
+   
+        trailing-icon="i-heroicons-chevron-down"
+        class="w-full lg:w-48  my-3 mr-2"
+        placeholder="Select a sprint"
+        :options="sprintList"
+        model-value=""
+    />
+ </div>
+ 
     <UIEmptyMessage v-if="events.length < 1" title="events" />
    
     <EventsList  
@@ -85,12 +119,16 @@ const isOpen = ref(false);
 </template>
 
 <style scoped>
+.wrapit{
+  flex-wrap: wrap;
+}
 .nav-flex {
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-start;
+ 
+
 }
-/* .progress {
-  background-color: #1f242a;
-  padding: 0.2rem;
-} */
+.drop {
+  margin-right:5rem;
+}
 </style>

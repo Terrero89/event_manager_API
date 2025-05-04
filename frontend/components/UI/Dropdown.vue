@@ -21,7 +21,7 @@ onMounted(async() => {
         variant="outline"
         color="primary"
         trailing-icon="i-heroicons-chevron-down"
-        class="w-full lg:w-48 test"
+        class="w-full lg:w-48 "
         placeholder="Select a sprint"
         :options="sprintList"
         model-value=""
@@ -41,5 +41,9 @@ onMounted(async() => {
 .test, label {
   color: black;
   background-color: #ff0808;
+}
+
+.nah{
+  margin: 10rem;
 }
 </style>

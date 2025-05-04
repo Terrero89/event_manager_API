@@ -7,7 +7,7 @@ const {
   fetchSprints,
   
 } = sprintsStore;
-const { items } = storeToRefs(sprintsStore);
+const { items, sprintList,currentSprint } = storeToRefs(sprintsStore);
 const navLinks = [
   [],
   [
@@ -37,9 +37,10 @@ const isOpen = ref(false);
 <template>
 <div>
   <div class="nav-flex my-2 border-b border-gray-200 dark:border-gray-800 ">
+
     <UHorizontalNavigation :links="navLinks" />
     <UModal v-model="isOpen">
-      <div class="p-4">IS HERE</div>
+      <div class="p-4">IS HERE from another component</div>
     </UModal>
 
     <UButton
@@ -52,6 +53,40 @@ const isOpen = ref(false);
       >Insights</UButton
     >
   </div>
+ <div class="nav-flex wrapit">
+  <UInputMenu
+        
+        color="gray" 
+        variant="outline"
+        trailing-icon="i-heroicons-chevron-down"
+        class="w-full lg:w-48  my-3 mr-2"
+        placeholder="Select a sprint"
+        :options="sprintList"
+        model-value=""
+    />
+    <UInputMenu
+        
+        color="gray" 
+        variant="outline"
+   
+        trailing-icon="i-heroicons-chevron-down"
+        class="w-full lg:w-48  my-3 mr-2"
+        placeholder="Select a sprint"
+        :options="sprintList"
+        model-value=""
+    />
+    <UInputMenu
+        
+        color="gray" 
+        variant="outline"
+   
+        trailing-icon="i-heroicons-chevron-down"
+        class="w-full lg:w-48  my-3 mr-2"
+        placeholder="Select a sprint"
+        :options="sprintList"
+        model-value=""
+    />
+ </div>
   <UIEmptyMessage v-if="items.length < 1" title="sprints" />
   <SprintsList  
   v-else
@@ -76,10 +111,17 @@ const isOpen = ref(false);
 
 
 <style scoped>
+
+.wrapit{
+  flex-wrap: wrap;
+}
 .nav-flex {
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-start;
+ 
 
 }
-
+.drop {
+  margin-right:5rem;
+}
   </style>
