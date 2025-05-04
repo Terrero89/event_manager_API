@@ -25,15 +25,16 @@ const isOpen = ref(false);
         <div class="item-header">
           <p><strong>Meeting Type:</strong> {{ meetingType }}</p>
           <p><strong>Meeting Name: </strong> {{ meetingName }}</p>
-          <p><strong>Description: </strong> {{ description }}</p>
+         
         </div>
         <div class="item-content">
           <div>
+            <p><strong>Description: </strong> {{ description.length > 15 ? description.slice(0,15) + '...': description }}</p>
             <p><strong>Date: </strong> {{formatDate(date) }}</p>
 
             <p><strong>Duration:</strong> {{ duration}} hours</p>
             <p><strong>Sprint ID:</strong> {{ sprintId }}</p>
-            <p><strong>Sprint ID:</strong> {{ sprintId }}</p>
+           
           </div>
         </div>
       </div>

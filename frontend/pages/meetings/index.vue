@@ -35,6 +35,12 @@ const navLinks = [
     },
   ]
 ];
+const show = computed(()=> {
+  if(meetings.value.length < 1){
+  return false
+}
+return true
+});
 const isOpen = ref(false);
 </script>
 
@@ -57,7 +63,7 @@ const isOpen = ref(false);
         >Insights</UButton
       >
     </div>
-    <div class="nav-flex wrapit">
+    <div class="nav-flex wrapit" v-if="show">
       <UInputMenu
         
         color="gray" 

@@ -36,9 +36,16 @@ const navLinks = [
         size: "md",
       },
     },
- 
+
   ],
 ];
+
+const show = computed(()=> {
+  if(notes.value.length < 1){
+  return false
+}
+return true
+});
 
 
 const isOpen = ref(false);
@@ -61,41 +68,36 @@ const isOpen = ref(false);
         >Insights</UButton
       >
     </div>
-    <div class="nav-flex wrapit">
+    <div class="nav-flex wrapit" v-if="show">
       <UInputMenu
-        
-        color="gray" 
+        color="gray"
         variant="outline"
         trailing-icon="i-heroicons-chevron-down"
-        class="w-full lg:w-48  my-3 mr-2"
+        class="w-full lg:w-48 my-3 mr-2"
         placeholder="Select a sprint"
         :options="sprintList"
         model-value=""
-    />
-    <UInputMenu
-        
-        color="gray" 
+      />
+      <UInputMenu
+        color="gray"
         variant="outline"
-   
         trailing-icon="i-heroicons-chevron-down"
-        class="w-full lg:w-48  my-3 mr-2"
+        class="w-full lg:w-48 my-3 mr-2"
         placeholder="Select a sprint"
         :options="sprintList"
         model-value=""
-    />
-    <UInputMenu
-        
-        color="gray" 
+      />
+      <UInputMenu
+        color="gray"
         variant="outline"
-   
         trailing-icon="i-heroicons-chevron-down"
-        class="w-full lg:w-48  my-3 mr-2"
+        class="w-full lg:w-48 my-3 mr-2"
         placeholder="Select a sprint"
         :options="sprintList"
         model-value=""
-    />
- </div>
-   <UIEmptyMessage v-if="notes.length < 1" title="notes" />
+      />
+    </div>
+    <UIEmptyMessage v-if="notes.length < 1" title="notes" />
 
     <NotesList
       v-else
@@ -114,16 +116,14 @@ const isOpen = ref(false);
 </template>
 
 <style scoped>
-.wrapit{
+.wrapit {
   flex-wrap: wrap;
 }
 .nav-flex {
   display: flex;
   justify-content: flex-start;
- 
-
 }
 .drop {
-  margin-right:5rem;
+  margin-right: 5rem;
 }
 </style>

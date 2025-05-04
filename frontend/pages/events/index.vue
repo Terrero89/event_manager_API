@@ -39,6 +39,12 @@ const navLinks = [
     // }
   ],
 ];
+const show = computed(()=> {
+  if(events.value.length < 1){
+  return false
+}
+return true
+});
 const isOpen = ref(false);
 </script>
 <template>
@@ -60,7 +66,7 @@ const isOpen = ref(false);
       >
     </div>
   
-    <div class="nav-flex wrapit">
+    <div class="nav-flex wrapit" v-if="show">
       <UInputMenu
         
         color="gray" 
