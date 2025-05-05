@@ -1,7 +1,6 @@
 <script setup>
 const props = defineProps([
   "id",
-  "title",
   "description",
   "date",
   "noteType",
@@ -18,12 +17,12 @@ const isOpen = ref(false);
     <!-- <h3>ITEM COMPONENT</h3> -->
     <UIRenderer>
       <div class="item">
-        <p><strong>Title: </strong> {{ title }}</p>
-        <!-- <h1>{{id}}</h1> -->
+        <p><strong>Name: </strong> {{ noteName }}</p>
+     
 
         <div class="item-header">
           
-          <p><strong>Name: </strong> {{ noteName }}</p>
+         
           <p><strong>Type:</strong> {{ noteType }}</p>
           <p><strong>Description: </strong> {{ description }}</p>
         </div>
@@ -48,7 +47,7 @@ const isOpen = ref(false);
             :description="props.description"
             :date="props.date"
             :noteType="props.noteType"
-            :noteName="props.noteType"
+            :noteName="props.noteName"
             :priorityLevel="props.priorityLevel"
             :sprintId="props.sprintId"
          

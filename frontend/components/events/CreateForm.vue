@@ -24,7 +24,7 @@ onMounted(async() => {
 // Main form state
 const form = reactive({
   // sprintId: currentSprint.value,
-  title: "Title",           // Note Title
+  // title: "Title",           // Note Title
   eventName: "dddd",            // Event Name
   eventType: "dddd",            // Event Type
   date: "",                 // Date
@@ -43,7 +43,7 @@ const router = useRouter();
 const validateFields = () => {
   // errors.sprintId = !form.sprintId ? "Sprint is required" : "";
   errors.eventType = !form.eventType ? "Note Type is required" : "";
-  errors.title = !form.title ? "Note Title is required" : "";
+  // errors.title = !form.title ? "Note Title is required" : "";
   errors.eventName = !form.eventName ? "Note Name is required" : "";
   errors.date = !form.date ? "Date is required" : "";
   errors.duration = !form.duration ? "Duration is required" : "";
@@ -59,7 +59,7 @@ const handleSubmit = async () => {
 
   const newEvent = {
     // sprintId: currentSprint.value,
-    title: form.title,
+    // title: form.title,
     eventName: form.eventName,
     eventType: form.eventType,
     date: form.date,
@@ -105,7 +105,7 @@ const handleSubmit = async () => {
         <span v-if="errors.eventType" class="error">{{ errors.eventType }}</span>
       </div>
      <!-- Event Name -->
-     <div class="form-group">
+     <!-- <div class="form-group">
         <label for="eventName">Event Title</label>
         <input
           v-model="form.title"
@@ -114,7 +114,7 @@ const handleSubmit = async () => {
           placeholder="Enter Event Name"
         />
         <span v-if="errors.title" class="error">{{ errors.title}}</span>
-      </div>
+      </div> -->
       <!-- Event Name -->
       <div class="form-group">
         <label for="eventName">Event Name</label>

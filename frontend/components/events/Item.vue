@@ -1,7 +1,6 @@
 <script setup>
 const props = defineProps([
   "id",
-  "title",
   "description",
   "date",
   "eventType",
@@ -19,7 +18,8 @@ const isOpen = ref(false);
     <!-- <h3>ITEM COMPONENT</h3> -->
     <UIRenderer>
       <div class="item">
-        <p><strong>Title: </strong> {{ title }}</p>
+        
+        <p><strong>Event Name: </strong> {{ eventName }}</p>
         <!-- <h1>{{id}}</h1> -->
 
         <div class="item-header">

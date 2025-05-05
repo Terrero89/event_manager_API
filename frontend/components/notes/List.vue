@@ -4,7 +4,6 @@
 
 const props = defineProps([
     "id",
-"title",
 "description",
 "date",
 "noteType",
@@ -34,11 +33,10 @@ const isOpen = ref(false);
   
         <NotesItem 
             :id="props.id"
-            :title="props.title"
             :description="props.description"
             :date="props.date"
             :noteType="props.noteType"
-            :noteName="props.noteType"
+            :noteName="props.noteName"
             :priorityLevel="props.priorityLevel"
             :sprintId="props.sprintId"
             

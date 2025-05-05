@@ -4,7 +4,6 @@
 
 const props = defineProps([
     "id",
-"title",
 "description",
 "date",
 "meetingType",
@@ -35,7 +34,6 @@ const isOpen = ref(false);
   
         <MeetingsItem
             :id="props.id"
-            :title="props.title"
             :description="props.description"
             :date="props.date"
             :meetingName="props.meetingName"

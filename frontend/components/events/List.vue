@@ -3,7 +3,6 @@
 
 const props = defineProps([
     "id",
-"title",
 "description",
 "date",
 "eventType",
@@ -39,7 +38,7 @@ const isOpen = ref(false);
             :description="props.description"
             :date="props.date"
             :eventType="props.eventType"
-            :eventName="props.eventType"
+            :eventName="props.eventName"
             :duration="props.duration"
             :sprintId="props.sprintId"
             :status="props.status"

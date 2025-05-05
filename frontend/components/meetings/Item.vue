@@ -19,12 +19,12 @@ const isOpen = ref(false);
     <!-- <h3>ITEM COMPONENT</h3> -->
     <UIRenderer>
       <div class="item">
-        <p><strong>Title: </strong> {{ title }}</p>
+        <p><strong>Meeting Name: </strong> {{ meetingName }}</p>
         <!-- <h1>{{id}}</h1> -->
 
         <div class="item-header">
           <p><strong>Meeting Type:</strong> {{ meetingType }}</p>
-          <p><strong>Meeting Name: </strong> {{ meetingName }}</p>
+          
          
         </div>
         <div class="item-content">
@@ -50,7 +50,6 @@ const isOpen = ref(false);
         
             <MeetingsDetails
             :id=" props.id"
-            :title="props.title"
             :description="props.description"
             :date="props.date"
             :meetingName="props.meetingName"

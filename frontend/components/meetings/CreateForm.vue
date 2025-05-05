@@ -42,7 +42,7 @@ const router = useRouter();
 const validateFields = () => {
   // errors.sprintId = !form.sprintId ? "Sprint is required" : "";
   errors.meetingType = !form.meetingType ? "Meeting Type is required" : "";
-  errors.title = !form.title ? "Meeting Title is required" : "";
+  // errors.title = !form.title ? "Meeting Title is required" : "";
   errors.meetingName = !form.meetingName ? "Meeting Name is required" : "";
   errors.date = !form.date ? "Date is required" : "";
   errors.duration = !form.duration ? "Duration is required" : "";
@@ -112,7 +112,7 @@ const handleSubmit = async () => {
         }}</span>
       </div>
       <!-- Event Title -->
-      <div class="form-group">
+      <!-- <div class="form-group">
         <label for="eventName"> Meeting Title</label>
         <input
           v-model="form.title"
@@ -121,7 +121,7 @@ const handleSubmit = async () => {
           placeholder="Enter Meeting Name"
         />
         <span v-if="errors.title" class="error">{{ errors.title }}</span>
-      </div>
+      </div> -->
       <!-- Event Name -->
       <div class="form-group">
         <label for="eventName">Meeting Name</label>

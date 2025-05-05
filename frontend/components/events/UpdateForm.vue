@@ -34,7 +34,7 @@ const props = defineProps([
 // Main form state using ref
 const form = ref({
   sprintId:currentSprint.value,
-  title: props.eventById.title,
+  // title: props.eventById.title,
   eventName: props.eventById.eventName,
   eventType: props.eventById.eventType,
   date: props.eventById.date,
@@ -49,9 +49,9 @@ const router = useRouter();
 
 
 const validateFields = () => {
-  errors.value.sprintId = !form.value.sprintId ? "Sprint is required" : "";
+  // errors.value.sprintId = !form.value.sprintId ? "Sprint is required" : "";
   errors.value.eventType = !form.value.eventType ? "Note Type is required" : "";
-  errors.value.title = !form.value.title ? "Note Title is required" : "";
+  // errors.value.title = !form.value.title ? "Note Title is required" : "";
   errors.value.eventName = !form.value.eventName ? "Note Name is required" : "";
   errors.value.date = !form.value.date ? "Date is required" : "";
   errors.value.duration = !form.value.duration ? "Duration is required" : "";
@@ -85,14 +85,14 @@ const removeItem = async (id) => {
     <h1 class="title">Modify Event</h1>
     <form @submit.prevent="handleSubmit">
       <!-- Sprint -->
-      <div class="form-group">
+      <!-- <div class="form-group">
         <label for="sprint">Sprint Id {{form.sprintId}}</label>
         <select v-model="form.sprintId" id="Event">
           <option value="" disabled>Select sprint</option>
           <option :value="item" v-for="item in sprintList"  :key="item" >{{ item }}</option>
         </select>
         <span v-if="errors.sprintId" class="error">{{ errors.sprintId }}</span>
-      </div>
+      </div> -->
 
 
    <!-- Event Type -->
@@ -105,7 +105,7 @@ const removeItem = async (id) => {
         <span v-if="errors.eventType" class="error">{{ errors.eventType }}</span>
       </div>
      <!-- Event Name -->
-     <div class="form-group">
+     <!-- <div class="form-group">
         <label for="eventName">Event Title</label>
         <input
           v-model="form.title"
@@ -114,7 +114,7 @@ const removeItem = async (id) => {
           placeholder="Enter Event Name"
         />
         <span v-if="errors.title" class="error">{{ errors.title}}</span>
-      </div>
+      </div> -->
       <!-- Event Name -->
       <div class="form-group">
         <label for="eventName">Event Name</label>
@@ -139,7 +139,7 @@ const removeItem = async (id) => {
 
       <!-- Status -->
       <div class="form-group">
-        <label for="reporters">Event Type</label>
+        <label for="reporters">Status</label>
         <select v-model="form.status" id="status">
           <option value="" disabled>Select Type</option>
           <option v-for="activity in CONFIG.variables.statusLevel" :key="activity" :value="activity">{{ activity }}</option>

@@ -6,7 +6,6 @@ const {  itemsAsArray, filterItemById } = eventsStore
 const {events} = storeToRefs(eventsStore)
 const props = defineProps([
   "id",
-  "title",
   "description",
   "date",
   "eventType",

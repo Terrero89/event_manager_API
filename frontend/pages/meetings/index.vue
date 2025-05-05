@@ -105,7 +105,6 @@ const isOpen = ref(false);
     :key="item.id"
     :id="item.id"
     :description="item.description"
-    :title="item.title"
     :date="item.date"
     :meetingName="item.meetingName"
     :meetingType="item.meetingType"

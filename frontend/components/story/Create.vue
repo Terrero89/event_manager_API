@@ -77,7 +77,7 @@ const handleSubmit = async () => {
 
   const newStory = {
     sprintId: form.sprintId || '',
-    storyTitle:form.storyTitle,
+    // storyTitle:form.storyTitle,
     storyName: form.storyName,
     storyNumber: form.storyNumber,
     storyDescription: form.storyDescription,
@@ -134,7 +134,7 @@ await fetchSprints()
   
 
       <!-- Story Details -->
-      <div class="form-group">
+      <!-- <div class="form-group">
         <label for="storyTitle">Story Titlexx</label>
         <input
             v-model="form.storyTitle"
@@ -143,7 +143,7 @@ await fetchSprints()
             placeholder="Enter Story Title"
         />
         <span v-if="errors.storyTitle" class="error">{{ errors.storyTitle }}</span>
-      </div>
+      </div> -->
 
     <div class="form-group">
         <label for="storyNumber">Story Name </label>

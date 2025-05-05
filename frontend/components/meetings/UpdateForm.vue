@@ -29,8 +29,8 @@ await fetchSprints()
 
 // Replace reactive with ref
 const form = ref({
-  sprintId:  props.meetingById.sprintId,
-  title: props.meetingById.title,
+  // sprintId:  props.meetingById.sprintId,
+  // title: props.meetingById.title,
   description: props.meetingById.description,
   meetingName: props.meetingById.meetingName,
   meetingType: props.meetingById.meetingType,
@@ -44,9 +44,9 @@ const errors = reactive({});
 const router = useRouter();
 const validateFields = () => {
   const f = form.value;
-  errors.sprintId = !f.sprintId ? "Sprint is required" : "";
+  // errors.sprintId = !f.sprintId ? "Sprint is required" : "";
   errors.meetingType = !f.meetingType ? "Note Type is required" : "";
-  errors.title = !f.title ? "Meeting Title is required" : "";
+  // errors.title = !f.title ? "Meeting Title is required" : "";
   errors.meetingName = !f.meetingName ? "Meeting Name is required" : "";
   errors.date = !f.date ? "Date is required" : "";
   errors.description = !f.description ? "Meeting Description is required" : "";
@@ -74,12 +74,12 @@ const removeItem = async (id) => {
 <template>
   <div class="form-container">
  <div>
-  {{props.meetingById.id}}
+  <!-- {{props.meetingById.id}} -->
 </div>
     <h1 class="title">Modify Meeting</h1>
     <form @submit.prevent="handleSubmit">
       <!-- Header Fields -->
-      <div class="form-group">
+      <!-- <div class="form-group">
         <label for="assignedSprint">Sprint ID</label>
         <select v-model="form.sprintId" id="Sprint">
           <option value="" disabled>Select sprint</option>
@@ -87,7 +87,7 @@ const removeItem = async (id) => {
 
         </select>
        <span v-if="errors.sprintId" class="error">{{ errors.sprintId}}</span>
-      </div>
+      </div> -->
       <div class="form-group">
         <label for="reporters">Meeting Type</label>
         <select v-model="form.meetingType" id="status">
@@ -96,7 +96,7 @@ const removeItem = async (id) => {
         </select>
         <span v-if="errors.noteType" class="error">{{ errors.noteType }}</span>
       </div>
-      <div class="form-group">
+      <!-- <div class="form-group">
         <label for="storyName">Meeting Title</label>
         <input
             v-model="form.title"
@@ -105,7 +105,7 @@ const removeItem = async (id) => {
             placeholder="Enter Story Name"
         />
         <span v-if="errors.title" class="error">{{ errors.title}}</span>
-      </div>
+      </div> -->
 
       <div class="form-group">
         <label for="storyName">Meeting Name</label>
