@@ -18,8 +18,6 @@ const {
   updateSprint,
   filterItemById,
   
-
-  saveToLocalStorage,
 } = sprintsStore;
 const { } = storeToRefs(sprintsStore);
 

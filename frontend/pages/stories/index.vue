@@ -8,9 +8,7 @@ const { items } = storeToRefs<{
   items: Array<{ progressType: string; [key: string]: any }>;
 }>(storyStore);
 
-onMounted(async () => {
-  await fetchStories();
-});
+
 
 const props = defineProps([
   //PROPS HERE
@@ -34,7 +32,7 @@ const props = defineProps([
   "dateCompleted",
   "sprint", // PL!, 2 etcc
   "learning", // comments on learning
-  "planningNotes", // planning for the spring
+
   "updatedAt",
 ]);
 const links = [
@@ -52,6 +50,8 @@ const links = [
   ],
 ];
 
+const sprintList = ['cool']
+
 const show = computed(()=> {
   if(items.value.length < 1){
   return false
@@ -59,9 +59,14 @@ const show = computed(()=> {
 return true
 });
 const isOpen = ref(false);
+
+onMounted(async () => {
+  await fetchStories();
+});
 </script>
 <template class="border-b border-gray-200">
   <div>
+  
     <div class="">
       <!--PROGRESS BAR -->
       <UIProgress />
@@ -117,12 +122,13 @@ const isOpen = ref(false);
             model-value=""
           />
         </div>
+        
         <UIEmptyMessage v-if="items.length < 1" title="stories" />
         <StoryList
           v-else
           v-for="item in items"
-          :key="item._id"
-          :id="item._id"
+          :key="item.id"
+          :id="item.id"
           :progressType="item.progressType"
           :storyTitle="item.storyTitle"
           :storyName="item.storyName"
@@ -136,10 +142,11 @@ const isOpen = ref(false);
           :date="item.date"
           :reporter="item.reporter"
           :repoNames="item.repoNames"
+          :dateAssigned="item.dateAssigned"
           :dateCompleted="item.dateCompleted"
-          :sprint="item.sprint"
+          :sprintId="item.sprintId"
           :learning="item.learning"
-          :planningNotes="item.planningNotes"
+          
         />
       </div>
     </div>

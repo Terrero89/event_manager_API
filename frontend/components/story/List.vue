@@ -17,16 +17,20 @@ const props = defineProps([
   "repoNames", // repo we are going to work on
   "dateAssigned",
   "dateCompleted",
-  "sprint", // PL!, 2 etcc
+  "sprintId", // PL!, 2 etcc
   "learning", // comments on learning
   "planningNotes", // planning for the spring
 
 ]);
+
 </script>
 
 <template>
   <div>
+
+  
     <div class="progress">
+      
       <StoryItem
       :id="props.id"
       :progressType="props.progressType"
@@ -42,10 +46,11 @@ const props = defineProps([
       :date="props.date"
       :reporter="props.reporter"
       :repoNames="props.repoNames"
+        :dateAssigned="props.dateAssigned"
       :dateCompleted="props.dateCompleted"
-      :sprint="props.sprint"
+      :sprintId="props.sprintId"
       :learning="props.learning"
-      :planningNotes="props.planningNotes"
+     
 
 
       />

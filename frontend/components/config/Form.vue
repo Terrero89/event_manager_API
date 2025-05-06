@@ -30,7 +30,7 @@ onMounted(async() => {
 
 
 const form = ref({
-  reporters:  currSprint ,
+  reporters:"" ,
   difficultyLevels:"",          // Note Title
   workTypes: '',  // Note Description
   developmentTypes: "",           // Start Date
