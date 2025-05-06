@@ -140,10 +140,8 @@ const removeItem = async (id) => {
      
 
       <div class="modal-actions">
-      <!-- <UButton color="red" @click="removeItem(props.destinationID)">Delete</UButton>
-      <UButton to="">Update</UButton> -->
-      <button class="delete-button" @click="removeItem(props.noteById.id)">Delete</button>
-      <button type="submit" class="submit-button">Update</button>
+        <UButton color="red" @click="removeItem(props.noteById.id)">Delete</UButton>
+        <UButton type="submit">Update</UButton> 
     </div>
    
     </form>

@@ -191,10 +191,10 @@ onMounted(async () => {
      
       </div>
       <div class="modal-actions">
-      <!-- <UButton color="red" @click="removeItem(props.destinationID)">Delete</UButton>
-      <UButton to="">Update</UButton> -->
-      <button class="delete-button" @click="removeItem(props.storyById.id)">Delete</button>
-      <button type="submit" class="submit-button">Update</button>
+        <UButton color="red" @click="removeItem(props.storyById.id)">Delete</UButton>
+        <UButton type="submit">Update</UButton> 
+      <!-- <button class="delete-button" @click="removeItem(props.storyById.id)">Delete</button>
+      <button type="submit" class="submit-button">Update</button> -->
     </div>
 
     </form>
