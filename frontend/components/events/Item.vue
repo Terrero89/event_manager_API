@@ -24,7 +24,7 @@ const isOpen = ref(false);
 
         <div class="item-header">
           <p><strong>Event Type:</strong> {{ eventType }}</p>
-          <p><strong>Event Name: </strong> {{ eventName }}</p>
+        
         
         </div>
         <div class="item-content">

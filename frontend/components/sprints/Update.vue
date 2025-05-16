@@ -108,19 +108,20 @@ const removeItem = async (id) => {
       <!-- Summary -->
       <div>
         <label for="summary">Summary:</label>
-        <textarea v-model="sprint.summary" id="summary"></textarea>
+        <textarea class="form-control-textarea" v-model="sprint.summary" id="summary"></textarea>
       </div>
 
       <!-- PI Notes -->
-      <div>
+      <div >
         <label for="piNotes">PI Notes:</label>
-        <textarea v-model="sprint.piNotes" id="piNotes"></textarea>
+        <textarea  class="form-control-textarea" v-model="sprint.piNotes" id="piNotes" ></textarea>
       </div>
 
       <!-- Stories Under Sprint -->
       <div>
         <label for="storiesUnderSprint">Stories Under Sprint:</label>
         <textarea
+        class="form-control-textarea"
           v-model.trim="sprint.storiesUnderSprint"
           type="textarea"
           id="storiesUnderSprint"
@@ -139,6 +140,10 @@ const removeItem = async (id) => {
 </template>
 
 <style scoped>
+.form-control-textarea{
+  border: solid 1px #3c3c3c;
+  min-height: 7rem;
+}
 /* General Styles */
 body {
   font-family: 'Arial', sans-serif;

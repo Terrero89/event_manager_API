@@ -137,7 +137,7 @@ const removeItem = async (id) => {
       </div>
       <div class="form-group ">
         <label for="storyName">Description</label>
-        <input
+        <textarea class="form-control-textarea"
             v-model="form.description"
             type="textarea"
             id="story Name"
@@ -158,6 +158,10 @@ const removeItem = async (id) => {
 
 <style scoped>
 /* General Styles */
+.form-control-textarea{
+  border: solid 1px #3c3c3c;
+  min-height: 11rem;
+}
 body {
   font-family: 'Arial', sans-serif;
   margin: 0;

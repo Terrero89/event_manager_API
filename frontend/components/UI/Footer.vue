@@ -1,34 +1,34 @@
 <script setup lang="ts">
 const items = ref([
-  
-    {
- 
-      icon: "heroicons:chevron-double-right-solid",
-      to: "/sprints",
-    },
-    {
- 
-      icon: "heroicons:book-open-16-solid",
-      to: "/notes",
-    },
-    {
-     
-      icon: "heroicons:calendar-date-range-20-solid",
-      to: "/events",
-      
-    }
-,
-{
-     
-  icon: "heroicons:calendar-date-range-solid",
-  to: "/meetings",
-    
-   },
-   {
-          
-          icon: "i-heroicons-chart-bar",
-          to: "/dashboard",
-        },
+
+  {
+
+    icon: "heroicons:chevron-double-right-solid",
+    to: "/sprints",
+  },
+  {
+
+    icon: "heroicons:book-open-16-solid",
+    to: "/notes",
+  },
+  {
+
+    icon: "heroicons:calendar-date-range-20-solid",
+    to: "/events",
+
+  }
+  ,
+  {
+
+    icon: "heroicons:calendar-date-range-solid",
+    to: "/meetings",
+
+  },
+  {
+
+    icon: "i-heroicons-chart-bar",
+    to: "/dashboard",
+  },
 
 
 ])
@@ -37,37 +37,44 @@ const items = ref([
 
 <template>
   <div>
-   
-   
-        <div>
-      <UHorizontalNavigation
-        :links="items"
-        class="border-b border-gray-200 dark:border-gray-800 mx-auto header" 
-      />
+
+
+    <div class="fix">
+      <UHorizontalNavigation :links="items" class="border-b border-gray-200 dark:border-gray-800 mx-auto header" />
     </div>
 
-   
-   
+
+
   </div>
 </template>
 
 <style scoped>
 
+.fix{
+  width: 100%;
+  position: fixed;
+  bottom: 15px;
+  left: 0;
+  z-index: 1000;
+  background-color: rgb(15, 15, 15);
+  
+}
 
 .nav-link {
   margin: 0 1.2rem;
 }
-.header{
-display:flex;
-justify-content:center;
+
+.header {
+  display: flex;
+  justify-content: center;
 }
-.icons {
-}
+
+
 .navbar {
-display:flex;
-justify-content:space-center;
+  display: flex;
+  justify-content: space-center;
   overflow: hidden;
-  background-color:rgb(15, 15, 15);
+  background-color: rgb(15, 15, 15);
   position: fixed;
   bottom: 0;
   width: 100%;
@@ -98,22 +105,24 @@ justify-content:space-center;
 .navbar .icon {
   display: none;
 }
+
 @media screen and (min-width: 600px) {
   .icons {
     display: none;
   }
-} 
+}
 
- @media screen and (max-width: 600px) {
+@media screen and (max-width: 600px) {
   .navbar.responsive .icon {
     position: absolute;
     right: 0;
     bottom: 0;
   }
+
   .navbar.responsive a {
     float: none;
     display: block;
     text-align: left;
   }
-} 
+}
 </style>

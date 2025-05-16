@@ -184,6 +184,7 @@ onMounted(async () => {
       <div class="form-group">
         <label for="storyDescription">Story Comments</label>
         <textarea
+        class="form-control-textarea"
             v-model="story.storyComments"
             id="storyComments"
             placeholder="Enter Story Comments"
@@ -203,6 +204,10 @@ onMounted(async () => {
 
 <style scoped>
 /* General Styles */
+.form-control-textarea{
+  border: solid 1px #3c3c3c;
+  min-height: 11rem;
+}
 body {
   font-family: 'Arial', sans-serif;
   margin: 0;

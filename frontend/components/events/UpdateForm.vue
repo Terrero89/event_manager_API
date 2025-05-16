@@ -157,11 +157,10 @@ const removeItem = async (id) => {
         />
         <span v-if="errors.duration" class="error">{{ errors.duration}}</span>
       </div>
-{{ form.status }}
       <!-- Priority Level -->
       <div class="form-group">
         <label for="priorityLevel">Description</label>
-        <input
+        <textarea class="form-control-textarea"
           v-model="form.description"
           type="text"
           id="priorityLevel"
@@ -182,6 +181,7 @@ const removeItem = async (id) => {
 
 <style scoped>
 /* General Styles */
+
 body {
   font-family: 'Arial', sans-serif;
   margin: 0;

@@ -128,11 +128,12 @@ const removeItem = async (id) => {
         <input v-model="form.date" type="date" id="date"/>
       </div>
       <div class="form-group ">
-        <label for="storyName">Note Descriptiopn</label>
-        <input
+        <label for="storyName">Note Description</label>
+        <textarea class="form-control-textarea"
             v-model="form.description"
-            type="text"
-            id="story Name"
+            type="textarea"
+
+            id="note desccription"
             placeholder="Enter Story Name"
         />
         <span v-if="errors.noteName" class="error">{{ errors.description}}</span>
@@ -149,6 +150,11 @@ const removeItem = async (id) => {
 </template>
 
 <style scoped>
+
+.form-control-textarea{
+  border: solid 1px #3c3c3c;
+  min-height: 15rem;
+}
 /* General Styles */
 body {
   font-family: 'Arial', sans-serif;
