@@ -112,6 +112,7 @@ const isOpen = ref(false);
       :priorityLevel="note.priorityLevel"
       :sprintId="note.sprintId"
     />
+    <div class="my-12"></div>
   </div>
 </template>
 

@@ -93,6 +93,7 @@ return true
       :storyUnderSprint="item.storyUnderSprint"
       :relatedStoryId="item.relatedStoryId"
     />
+    <div class="my-12"></div>
      </div>
 </template>
 

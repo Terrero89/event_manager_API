@@ -20,10 +20,10 @@ await fetchSprints()
 
 <template>
   <div>
-<!-- <div>{{items}}</div> -->
 
-<div>real list{{sprintList}}</div>
+<!-- <div>{{items}}</div>
 
+<div>real list{{sprintList}}</div> -->
 
   </div>
 </template>
