@@ -56,7 +56,7 @@ const items = ref([
 
 .fix{
   width: 100%;
-  height: 4rem;
+  height: 3rem;
   position: fixed;
   bottom: 0;
   left: 0;
