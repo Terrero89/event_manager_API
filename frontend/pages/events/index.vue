@@ -118,7 +118,7 @@ const isOpen = ref(false);
 
 
       />
-      <!-- {{ notes }} -->
+      <div class="my-12" ></div>
   </div>
 
 </template>

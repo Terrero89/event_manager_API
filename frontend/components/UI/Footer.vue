@@ -40,7 +40,9 @@ const items = ref([
 
 
     <div class="fix">
-      <UHorizontalNavigation :links="items" class="border-b border-gray-200 dark:border-gray-800 mx-auto header" />
+      <!-- <UNavigationMenu color="neutral" :items="items" class="w-full border-b border-gray-200 dark:border-gray-800 mx-auto header"  /> -->
+      <UHorizontalNavigation :links="items" class="border-t border-gray-200 dark:border-gray-800 mx-auto header" />
+
     </div>
 
 
@@ -52,8 +54,9 @@ const items = ref([
 
 .fix{
   width: 100%;
+  height: 5.5rem;
   position: fixed;
-  bottom: 15px;
+  bottom: 0;
   left: 0;
   z-index: 1000;
   background-color: rgb(15, 15, 15);
