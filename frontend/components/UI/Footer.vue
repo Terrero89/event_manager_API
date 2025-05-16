@@ -1,3 +1,4 @@
+import { _size } from '../../.nuxt/types/tailwind.config';
 <script setup lang="ts">
 const items = ref([
 
@@ -22,6 +23,7 @@ const items = ref([
 
     icon: "heroicons:calendar-date-range-solid",
     to: "/meetings",
+  
 
   },
   {
@@ -41,7 +43,7 @@ const items = ref([
 
     <div class="fix">
       <!-- <UNavigationMenu color="neutral" :items="items" class="w-full border-b border-gray-200 dark:border-gray-800 mx-auto header"  /> -->
-      <UHorizontalNavigation :links="items" class="border-t border-gray-200 dark:border-gray-800 mx-auto header" />
+      <UHorizontalNavigation :links="items" class="border-t border-gray-200 dark:border-gray-800 mx-auto header " />
 
     </div>
 
@@ -54,12 +56,13 @@ const items = ref([
 
 .fix{
   width: 100%;
-  height: 5.5rem;
+  height: 4rem;
   position: fixed;
   bottom: 0;
   left: 0;
   z-index: 1000;
   background-color: rgb(15, 15, 15);
+
   
 }
 
@@ -70,6 +73,7 @@ const items = ref([
 .header {
   display: flex;
   justify-content: center;
+ 
 }
 
 
