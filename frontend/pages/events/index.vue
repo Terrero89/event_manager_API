@@ -74,7 +74,7 @@ const isOpen = ref(false);
         trailing-icon="i-heroicons-chevron-down"
         class="w-full lg:w-48  my-3 mr-2"
         placeholder="Select a sprint"
-        :options="sprintList"
+        :options="events"
         model-value=""
     />
     <UInputMenu
@@ -85,7 +85,7 @@ const isOpen = ref(false);
         trailing-icon="i-heroicons-chevron-down"
         class="w-full lg:w-48  my-3 mr-2"
         placeholder="Select a sprint"
-        :options="sprintList"
+        :options="events"
         model-value=""
     />
     <UInputMenu
@@ -96,7 +96,7 @@ const isOpen = ref(false);
         trailing-icon="i-heroicons-chevron-down"
         class="w-full lg:w-48  my-3 mr-2"
         placeholder="Select a sprint"
-        :options="sprintList"
+        :options="events"
         model-value=""
     />
  </div>
