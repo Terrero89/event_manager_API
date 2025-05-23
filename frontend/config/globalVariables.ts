@@ -8,8 +8,10 @@ export const CONFIG = {
         statusLevel: ["Pending","In Progress", "Completed", ],
         repoNames: ["example1", "example2", "example3", "example4", "example5"],
         sprints: ['PL-001','P:-002'],
-        activityType: ["1x1", "Standup","Training", "Contribution", "Mentor Meeting","Mentee Meeting", "Retrospective", "Planning", "Workshops",  "Collaboration", "Feedback Session", "Brainstorming",  "Problem Solving","Team Building", "Other", "Pair Programming"],
-        eventTypes: ["ERG Meeting", "Volunteering", "Contribution","Training", "Company","Networking", "Personal Development", "Professional Development", "Mentorship Program", ],
+        activityType: ["1x1", "Standup","Training", "Contribution", "Mentor Meeting","Mentee Meeting", "Retrospective", "Planning", "Workshops",  "Collaboration", "Feedback Session", "Brainstorming","Presentation",  "Problem Solving","Team Building", "Other", "Pair Programming"],
+        eventTypes: ["ERG Meeting", "Volunteering", "Contribution","Training", "Company","Networking", "Personal Development", "Professional Development", "Mentorship Program", "Presentation" ],
+   
+        types: ["sprints","stories","events","notes","meetings"],
     },
 
 };

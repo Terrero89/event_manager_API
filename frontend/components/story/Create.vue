@@ -34,7 +34,7 @@ const form = reactive({
   learning: "changed perspective on this exe",
   repoNames: "repo1, repo2",
   dateAssigned: new Date(),
-  dateCompleted: new Date(),
+ 
 
   
  
@@ -91,7 +91,7 @@ const handleSubmit = async () => {
     repoNames: form.repoNames,
     learning: form.learning,
     dateAssigned: new Date(),
-    dateCompleted: new Date(),
+   
    
 
   };
@@ -130,20 +130,7 @@ await fetchSprints()
         </select>
 <!--        <span v-if="errors.workType" class="error">{{ errors.workType }}</span>-->
       </div>   
-    
-  
 
-      <!-- Story Details -->
-      <!-- <div class="form-group">
-        <label for="storyTitle">Story Titlexx</label>
-        <input
-            v-model="form.storyTitle"
-            type="text"
-            id="storyTitle"
-            placeholder="Enter Story Title"
-        />
-        <span v-if="errors.storyTitle" class="error">{{ errors.storyTitle }}</span>
-      </div> -->
 
     <div class="form-group">
         <label for="storyNumber">Story Name </label>
@@ -241,9 +228,10 @@ await fetchSprints()
         <span v-if="errors.repoNames" class="error">{{ errors.repoNames }}</span>
       </div>
       <div>
-        <label for="startDate">Start Date:</label>
+        <label for="startDate">Date Assigned:</label>
         <input v-model="form.dateAssigned" type="date" id="startDate"/>
       </div>
+      {{ form.dateAssigned }}
 
       <div class="form-group">
         <label for="storyDescription">Story Comments</label>

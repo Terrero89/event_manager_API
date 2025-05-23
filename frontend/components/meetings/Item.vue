@@ -10,6 +10,50 @@ const props = defineProps([
   "sprintId",
   "status"
 ]);
+const progressColor = computed(() => {
+  switch (props.status) {
+    case 'Completed':
+      return 'blue';
+    case 'In Progress':
+      return 'orange';
+    case 'Pending':
+      return 'purple';
+    case 'Backlog':
+      return 'teal';
+    case 'Review':
+      return 'green';
+    case 'Done':
+      return 'yellow';
+
+    case 'Epic':
+ 
+    default:
+      return 'gray';
+  }
+});
+const typeColor = computed(() => {
+  switch (props.meetingType) {
+    case '1x1':
+      return 'blue';
+    case 'Training':
+      return 'orange';
+    case 'Contribution':
+      return 'purple';
+    case 'Mentee Meeting':
+      return 'teal';
+    case 'Retrospective':
+      return 'green';
+    case 'Planning':
+      return 'yellow';
+    case 'Workshops':
+      return 'orange';
+    case 'Mentor Meeting':
+      return 'yellow';
+    default:
+      return 'gray';
+  }
+});
+// "1x1", "Standup","Training", "Contribution", "Mentor Meeting","Mentee Meeting", "Retrospective", "Planning", "Workshops",  "Collaboration", "Feedback Session", "Brainstorming",  "Problem Solving","Team Building", "Other", "Pair Programming"],
 const noteIdRoute = computed(()=> `/notes/${props.id}`)
 const isOpen = ref(false);
 </script>
@@ -23,8 +67,8 @@ const isOpen = ref(false);
         <!-- <h1>{{id}}</h1> -->
 
         <div class="item-header">
-          <p><strong>Meeting Type:</strong> {{ meetingType }}</p>
-          
+          <!-- <p><strong>Meeting Type:</strong> {{ meetingType }}</p> -->
+          <p><strong>Meeting Type</strong> <UBadge :color="typeColor" > {{ props.meetingType }}</UBadge></p>
          
         </div>
         <div class="item-content">
@@ -40,10 +84,15 @@ const isOpen = ref(false);
       </div>
      
       <div class="item-buttons my-2">
-        <UButton v-if="props.status === 'Pending'" color="neutral" variant="outline"  class="b mx-2">{{props.status}}</UButton>
-        <UButton v-if="props.status === 'Completed'" color="blue" variant="outline"  class="b mx-2">{{props.status}}</UButton>
-        <UButton v-if="props.status === 'In Progress'" color="yellow" variant="outline"  class="b mx-2">{{props.status}}</UButton>
-        <UButton class="b" @click="isOpen = true" >Details</UButton>
+                  <UButton
+      
+          :color="progressColor"
+          variant="outline"
+          class=" mx-2"
+          >{{ props.status }}</UButton
+        >
+   
+        <UButton class="b" @click="isOpen = true" >See Details</UButton>
         <!-- <NuxtLink :to="noteIdRoute">About page</NuxtLink> -->
         <UModal v-model="isOpen"  >
     
@@ -66,6 +115,19 @@ const isOpen = ref(false);
   </div>
 </template>
 <style scoped>
+.b{
+  margin-top:auto;
+}
+.item-buttons {
+
+
+
+  display: flex;
+  flex-direction: column;
+  
+
+}
+
 .item {
   margin: 0.9rem 0;
   display: flex;

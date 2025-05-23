@@ -7,9 +7,31 @@ const props = defineProps([
   "eventName",
   "duration",
   "sprintId",
-  "status"
+  "status",
 ]);
-const noteIdRoute = computed(()=> `/notes/${props.id}`)
+
+const progressColor = computed(() => {
+  switch (props.status) {
+    case "Completed":
+      return "blue";
+    case "In Progress":
+      return "orange";
+    case "Pending":
+      return "purple";
+    case "Backlog":
+      return "teal";
+    case "Review":
+      return "green";
+    case "Done":
+      return "yellow";
+
+    case "Epic":
+
+    default:
+      return "black";
+  }
+});
+const noteIdRoute = computed(() => `/notes/${props.id}`);
 const isOpen = ref(false);
 </script>
 
@@ -18,50 +40,39 @@ const isOpen = ref(false);
     <!-- <h3>ITEM COMPONENT</h3> -->
     <UIRenderer>
       <div class="item">
-        
         <p><strong>Event Name: </strong> {{ eventName }}</p>
         <!-- <h1>{{id}}</h1> -->
 
         <div class="item-header">
           <p><strong>Event Type:</strong> {{ eventType }}</p>
-        
-        
         </div>
         <div class="item-content">
           <div>
-            <p><strong>Description: </strong> {{ description.length > 15 ? description.slice(0,15) + '...': description }}</p>
-            <p><strong>Date: </strong> {{formatDate(date) }}</p>
+            <p>
+              <strong>Description: </strong>
+              {{
+                description.length > 15
+                  ? description.slice(0, 15) + "..."
+                  : description
+              }}
+            </p>
+            <p><strong>Date: </strong> {{ formatDate(date) }}</p>
 
-            <p><strong>Duration:</strong> {{ duration}} hours</p>
-            <!-- <p><strong>Sprint ID:</strong> {{ sprintId }}</p>
-            <p><strong>Sprint ID:</strong> {{ sprintId }}</p> -->
+            <p><strong>Duration:</strong> {{ duration }} hours</p>
           </div>
         </div>
       </div>
-     
+
       <div class="item-buttons my-2">
-        
-      
-        <UButton v-if="props.status === 'Pending'"   variant="outline"  class="b mx-2">{{props.status}}</UButton>
-        <UButton v-if="props.status === 'Completed'" variant="outline"  class="b mx-2">{{props.status}}</UButton>
-        <UButton v-if="props.status === 'In Progress'"  variant="outline"  class="b mx-2">{{props.status}}</UButton>
-        <UButton class="b" @click="isOpen = true" >Details</UButton>
-        <UModal v-model="isOpen"  >
-    
-        
-            <EventsDetails
-            :id="id"
-            :title="props.title"
-            :description="props.description"
-            :date="props.date"
-            :eventType="props.eventType"
-            :eventName="props.eventType"
-            :duration="props.duration"
-            :sprintId="props.sprintId"
-            :status="props.status"
-            
-        />
-        
+        <UButton :color="progressColor" variant="outline" class="mx-2">{{
+          props.status
+          }}</UButton>
+
+        <UButton class="b" @click="isOpen = true">See Details</UButton>
+        <UModal v-model="isOpen">
+          <EventsDetails :id="id" :title="props.title" :description="props.description" :date="props.date"
+            :eventType="props.eventType" :eventName="props.eventName" :duration="props.duration"
+            :sprintId="props.sprintId" :status="props.status" />
         </UModal>
       </div>
     </UIRenderer>
@@ -69,19 +80,28 @@ const isOpen = ref(false);
 </template>
 
 <style scoped>
+.b {
+  margin-top: auto;
+}
+
+.item-buttons {
+  display: flex;
+  flex-direction: column;
+}
+
 .item {
   margin: 0.9rem 0;
   display: flex;
 }
-.item-content div{
 
-  display:flex;
-  flex-wrap:wrap;
+.item-content div {
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .item .item-header {
-    display:flex;
-    flex-wrap:wrap;
+  display: flex;
+  flex-wrap: wrap;
 
   font-size: 0.9rem;
   /* border:solid red 1px; */
@@ -91,8 +111,8 @@ const isOpen = ref(false);
   margin: 0.2rem 0;
   font-size: 0.9rem;
   margin-right: 1rem;
-
 }
+
 .item-header strong {
   margin: 0.1rem 0;
   font-size: 0.9rem;
@@ -108,6 +128,7 @@ const isOpen = ref(false);
   margin-right: 1rem;
   flex-wrap: wrap;
 }
+
 .item-content strong {
   margin: 0.1rem 0;
   font-size: 0.9rem;

@@ -44,6 +44,7 @@ const story = ref({
     date:props.storyById.date,
     reporter: props.storyById.reporter,
     repoNames: props.storyById.repoNames,
+    dateAssigned:props.storyById.dateAssigned,
     dateCompleted:props.storyById.dateCompleted,
     sprintId: props.storyById.sprintId,
     learning: props.storyById.learning
@@ -51,6 +52,8 @@ const story = ref({
 
 
 });
+
+
 
 const handleSubmit = async () => {
 
@@ -178,8 +181,12 @@ onMounted(async () => {
         
       </div>
       <div>
-        <label for="startDate">Start Date:</label>
-        <input v-model="story.dateAssigned" type="date" id="startDate"/>
+        <label for="startDate">Date Assigned:</label>
+        <input v-model="story.dateAssigned" type="date" id="DateAssigned"/>
+      </div>
+       <div>
+        <label for="startDate">Date Completed:</label>
+        <input v-model="story.dateCompleted" type="date" id="DateAssigned"/>
       </div>
       <div class="form-group">
         <label for="storyDescription">Story Comments</label>

@@ -136,6 +136,7 @@ const removeItem = async (id) => {
       <!-- Calculated Duration -->
       <!--    <p><strong>Sprint Duration:</strong> {{ sprintDuration }} days</p>-->
     </form>
+    xxxxxxxxxxxxxxxx
   </div>
 </template>
 

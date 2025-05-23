@@ -24,11 +24,7 @@ const navLinks = [
         size: "sm"
       }
     },
-    // {
-    //   label: 'Insights',
-    //   icon: 'i-heroicons-command-line',
-    //   to: '/'
-    // }
+  
   ]
 ];
 </script>
@@ -40,8 +36,12 @@ const navLinks = [
       <UHorizontalNavigation :links="navLinks" class="" />
     </div>
     <div class="nav-flex wrapit">
+      
       <UInputMenu color="gray" variant="outline" trailing-icon="i-heroicons-chevron-down"
-        class="w-full lg:w-48 my-3 mr-2" placeholder="Select a type" :options="['Sprint 1', 'Sprint 2', 'Sprint 3']"
+        class="w-full lg:w-48 my-3 mr-2" placeholder="Select sprint" :options="['Sprint 1', 'Sprint 2', 'Sprint 3']"
+        model-value="" />
+         <UInputMenu color="gray" variant="outline" trailing-icon="i-heroicons-chevron-down"
+        class="w-full lg:w-48 my-3 mr-2" placeholder="Select type" :options="['Sprint 1', 'Sprint 2', 'Sprint 3']"
         model-value="" />
       <UInputMenu color="gray" variant="outline" trailing-icon="i-heroicons-chevron-down"
         class="w-full lg:w-48 my-3 mr-2" placeholder="Select a day" :options="days"
@@ -54,7 +54,7 @@ const navLinks = [
         model-value="" />
 
     </div>
-    <div>- filter per month</div>
+    <div>- filter start and end date</div>
     <div>- filter per month</div>
     <div>- filter per year</div>
     <div>- filter per type</div>

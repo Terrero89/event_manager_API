@@ -1,4 +1,6 @@
 <script setup lang="ts">
+// import CONFIG from '@/config'; // Adjust the path as needed
+
 const props = defineProps([
   //PROPS HERE
   "id",
@@ -23,59 +25,72 @@ const props = defineProps([
   "planningNotes",
   "updatedAt",
 ]);
-// const storyIdRoute = computed(() => `/story/${props.id}`);
+
+
+const developmentTypeColor = computed(() => {
+  switch (props.developmentType) {
+    case 'Frontend':
+      return 'blue';
+    case 'Backend':
+      return 'purple';
+    case 'Fullstack':
+      return 'teal';
+    default:
+      return 'black';
+  }
+});
+
+const workTypeColor = computed(() => {
+  switch (props.workType) {
+    case 'Story':
+      return 'blue';
+    case 'Spike':
+      return 'teal';
+    case 'Bug':
+      return 'purple';
+    case 'Feature':
+      return 'blue';
+    case 'non-prod':
+      return 'orange';
+    case 'Epic':
+      return 'green';
+    case 'Tech Debt':
+      return 'red';
+    case 'Epic':
+ 
+    default:
+      return 'black';
+  }
+});
+
+const progressColor = computed(() => {
+  switch (props.status) {
+    case 'Completed':
+      return 'blue';
+    case 'In Progress':
+      return 'orange';
+    case 'Pending':
+      return 'purple';
+    case 'Backlog':
+      return 'teal';
+    case 'Review':
+      return 'green';
+    case 'Done':
+      return 'yellow';
+
+    case 'Epic':
+ 
+    default:
+      return 'black';
+  }
+});
+
+
+
 const isOpen = ref(false);
 </script>
 
-<!-- <template>
-  <div>
-    <UIRenderer>
-    <div class="story-item">
-      <div>
-        <h1 class="">{{ storyTitle }}</h1>
-        <p class="">{{ storyDescription }}</p>
-        <p class="">{{ storyType }}</p>
-        <p class="">{{ storyPoints }}</p>
-        <p class="">{{ difficultyLevel }}</p>
-        <p class="">{{ workType }}</p>
-        <p class="">{{ developmentType }}</p>
-        <p class="">{{ status }}</p>
-        <p class="">{{ reporter }}</p>
-        <p class="">{{ repoNames }}</p>
-        <p class="">{{ dateAssigned }}</p>
-        <p class="">{{ dateCompleted }}</p>
-        <p class="">{{ sprint }}</p>
-        <p class="">{{ storyComments }}</p>
-        <p class="">{{ subtasks }}</p>
-        <div class="" v-for="item in learning" :key="item.id">
-
-          <h2 class="">{{item.id}}</h2>
-          <h2 class="">{{item.title}}</h2>
-
-        </div> -->  {{itemsAsArray}}
-
-<!-- <p class="">{{ planningNotes }}</p>
-        <p class="">{{ updatedAt }}</p>
-      </div> -->
-
-<!-- <UButton class="b" @click="isOpen = true">DetaistoryTitle ls</UButton>
-        <UModal v-model="isOpen"  >
-          <SprintsDetails
-            :id="props.id"
-            :sprintID="props.sprintID"
-            :relatedStoryId="props.relatedStoryId"
-            :startDate="props.startDate"
-            :dueDate="props.dueDate"
-            :summary="props.summary"
-            :piNotes="props.piNotes"
-            :storyUnderSprint="props.storyUnderSprint"
-          />
-        </UModal>
-    </div>
-    </UIRenderer>
-  </div>
-</template> -->
-
+ype: Training
 <template>
   <div>
    <!-- change color based on development, workType etc. -->
@@ -86,8 +101,11 @@ const isOpen = ref(false);
 
         <div class="item-header">
         
-          <p><strong>Development: </strong> {{ props.developmentType }}</p>
-          <p><strong>Work Type:</strong> {{ props.workType }}</p>
+          <p><strong>Development: </strong> <UBadge :color="developmentTypeColor" variant="outline"> {{ props.developmentType }}</UBadge></p>
+
+
+ 
+               <p><strong>Work Type:</strong> <UBadge :color="workTypeColor" > {{ props.workType }}</UBadge></p>
         </div>
         <div class="item-content">
           <div>
@@ -99,27 +117,14 @@ const isOpen = ref(false);
 
       <div class="item-buttons my-2">
         <UButton
-          v-if="props.status === 'Pending'"
-          color="neutral"
+      
+          :color="progressColor"
           variant="outline"
-          class="b mx-2"
+          class=" mx-2"
           >{{ props.status }}</UButton
         >
-        <UButton
-          v-if="props.status === 'Completed'"
-          color="blue"
-          variant="outline"
-          class="b mx-2"
-          >{{ props.status }}</UButton
-        >
-        <UButton
-          v-if="props.status === 'In Progress'"
-          color="yellow"
-          variant="outline"
-          class="b mx-2"
-          >{{ props.status }}</UButton
-        >
-        <UButton class="b" @click="isOpen = true">Details</UButton>
+  
+    
         <UModal v-model="isOpen">
           <div class="progress">
       
@@ -148,12 +153,26 @@ const isOpen = ref(false);
     </div>
 
         </UModal>
+        <UButton class="b mx-2 mb-2" @click="isOpen = true">See Details</UButton> 
       </div>
+    
     </UIRenderer>
+    
   </div>
 </template>
 
 <style scoped>
+.b{
+  margin-top:auto;
+}
+.item-buttons {
+
+
+
+  display: flex;
+  flex-direction: column;
+
+}
 .item {
   margin: 0.9rem 0;
   display: flex;
