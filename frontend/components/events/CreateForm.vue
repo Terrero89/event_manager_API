@@ -84,18 +84,7 @@ const handleSubmit = async () => {
   <div class="form-container">
     <h1 class="title">Create a New Event</h1>
     <form @submit.prevent="handleSubmit">
-      <!-- Sprint -->
-      <!-- <div class="form-group">
-        <label for="sprint">Sprint</label>
-        <select v-model="form.sprintId" id="sprint">
-          <option value="" disabled>Select sprint</option>
-          <option :value="item" v-for="item in sprintList" :key="item">{{ item }}</option>
-        </select>
-        <span v-if="errors.sprintId" class="error">{{ errors.sprintId }}</span>
-      </div> -->
-
-
-   <!-- Event Type -->
+  
    <div class="form-group">
         <label for="reporters">Event Type</label>
         <select v-model="form.eventType" id="status">
@@ -104,18 +93,7 @@ const handleSubmit = async () => {
         </select>
         <span v-if="errors.eventType" class="error">{{ errors.eventType }}</span>
       </div>
-     <!-- Event Name -->
-     <!-- <div class="form-group">
-        <label for="eventName">Event Title</label>
-        <input
-          v-model="form.title"
-          type="text"
-          id="eventName"
-          placeholder="Enter Event Name"
-        />
-        <span v-if="errors.title" class="error">{{ errors.title}}</span>
-      </div> -->
-      <!-- Event Name -->
+ 
       <div class="form-group">
         <label for="eventName">Event Name</label>
         <input
@@ -158,7 +136,7 @@ const handleSubmit = async () => {
         />
         <span v-if="errors.duration" class="error">{{ errors.duration}}</span>
       </div>
-{{ form.status }}
+
       <!-- Priority Level -->
       <div class="form-group">
         <label for="priorityLevel">Description</label>

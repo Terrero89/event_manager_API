@@ -31,6 +31,31 @@ const progressColor = computed(() => {
       return "black";
   }
 });
+
+const typeColor = computed(() => {
+  switch (props.eventType) {
+    case 'ERG Meeting':
+      return 'blue';
+    case 'Training':
+      return 'teal';
+    case 'Contribution':
+      return 'purple';
+    case 'Personal Development':
+      return 'green';
+    case 'Planning':
+      return 'yellow';
+    case 'Presentations':
+      return 'gray';
+    case 'Mentorship Program':
+      return 'yellow';
+    case 'Volunteering':
+      return 'purple';
+    case 'Networking':
+      return 'red';
+    default:
+      return 'gray';
+  }
+});
 const noteIdRoute = computed(() => `/notes/${props.id}`);
 const isOpen = ref(false);
 </script>
@@ -44,7 +69,8 @@ const isOpen = ref(false);
         <!-- <h1>{{id}}</h1> -->
 
         <div class="item-header">
-          <p><strong>Event Type:</strong> {{ eventType }}</p>
+                    <p><strong>Event Type</strong> <UBadge :color="typeColor" > {{ props.eventType }}</UBadge></p>
+
         </div>
         <div class="item-content">
           <div>
