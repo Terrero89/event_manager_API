@@ -68,7 +68,7 @@ const isOpen = ref(false);
 
         <div class="item-header">
           <!-- <p><strong>Meeting Type:</strong> {{ meetingType }}</p> -->
-          <p><strong>Meeting Type</strong> <UBadge :color="typeColor" > {{ props.meetingType }}</UBadge></p>
+          <p><strong>Meeting Type</strong> <UBadge :color="typeColor" > {{ props.eventType }}</UBadge></p>
          
         </div>
         <div class="item-content">
