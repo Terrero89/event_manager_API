@@ -65,8 +65,7 @@ const handleSubmit = async () => {
 const removeItem = async (id) => {
   if (confirm("Are you sure you want to delete this city? This action cannot be undone.")) {
     await deleteMeeting(id); // Proceed with the deletion if confirmed
-    // Optionally navigate or refresh the page after deletion
-    // navigateTo(`/`);
+ 
   }
 };
 </script>
@@ -78,16 +77,6 @@ const removeItem = async (id) => {
 </div>
     <h1 class="title">Modify Meeting</h1>
     <form @submit.prevent="handleSubmit">
-      <!-- Header Fields -->
-      <!-- <div class="form-group">
-        <label for="assignedSprint">Sprint ID</label>
-        <select v-model="form.sprintId" id="Sprint">
-          <option value="" disabled>Select sprint</option>
-          <option :value="item" v-for="item in sprintList" :key="item">{{item}}</option>
-
-        </select>
-       <span v-if="errors.sprintId" class="error">{{ errors.sprintId}}</span>
-      </div> -->
       <div class="form-group">
         <label for="reporters">Meeting Type</label>
         <select v-model="form.meetingType" id="status">
@@ -96,17 +85,7 @@ const removeItem = async (id) => {
         </select>
         <span v-if="errors.noteType" class="error">{{ errors.noteType }}</span>
       </div>
-      <!-- <div class="form-group">
-        <label for="storyName">Meeting Title</label>
-        <input
-            v-model="form.title"
-            type="text"
-            id="story Name"
-            placeholder="Enter Story Name"
-        />
-        <span v-if="errors.title" class="error">{{ errors.title}}</span>
-      </div> -->
-
+    
       <div class="form-group">
         <label for="storyName">Meeting Name</label>
         <input

@@ -186,7 +186,7 @@ onMounted(async () => {
       </div>
        <div>
         <label for="startDate">Date Completed:</label>
-        <input v-model="story.dateCompleted" type="date" id="DateAssigned"/>
+        <input v-model="story.dateCompleted" type="date" id="DateCompleted"/>
       </div>
       <div class="form-group">
         <label for="storyDescription">Story Comments</label>

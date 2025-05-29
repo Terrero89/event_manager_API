@@ -1,6 +1,8 @@
 <script setup lang="ts">
 // import CONFIG from '@/config'; // Adjust the path as needed
 
+import { computed, ref } from "vue";
+
 const props = defineProps([
   //PROPS HERE
   "id",
@@ -110,20 +112,17 @@ ype: Training
         <div class="item-content">
           <div>
             <p><strong>Start Date: </strong> {{ formatDate(props.dateAssigned) }}</p>
-            <p><strong>End Date: </strong> {{ formatDate(props.dateCompleted) }}</p>
+            <p><strong>End Date: </strong> {{ formatDate(props.dateCompleted) ? '' : 'Not Completed' }}</p>
           </div>
         </div>
       </div>
 
       <div class="item-buttons my-2">
-        <UButton
-      
-          :color="progressColor"
-          variant="outline"
-          class=" mx-2"
-          >{{ props.status }}</UButton
-        >
-  
+       
+    <UButton class="" @click="isOpen = true">See Details</UButton>
+        <UButton :color="progressColor" variant="outline" class=" b">{{
+          props.status
+          }}</UButton>
     
         <UModal v-model="isOpen">
           <div class="progress">
@@ -153,7 +152,7 @@ ype: Training
     </div>
 
         </UModal>
-        <UButton class="b mx-2 mb-2" @click="isOpen = true">See Details</UButton> 
+      
       </div>
     
     </UIRenderer>
@@ -162,17 +161,17 @@ ype: Training
 </template>
 
 <style scoped>
-.b{
-  margin-top:auto;
+.b {
+margin-top: auto;
+margin-left:auto;
+/* max-width: 6rem; */
 }
 .item-buttons {
-
-
-
   display: flex;
   flex-direction: column;
-
+  justify-content:start;
 }
+
 .item {
   margin: 0.9rem 0;
   display: flex;

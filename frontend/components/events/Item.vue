@@ -90,11 +90,12 @@ const isOpen = ref(false);
       </div>
 
       <div class="item-buttons my-2">
-        <UButton :color="progressColor" variant="outline" class="mx-2">{{
+        <UButton class="" @click="isOpen = true">See Details</UButton>
+        <UButton :color="progressColor" variant="outline" class=" b">{{
           props.status
           }}</UButton>
 
-        <UButton class="b" @click="isOpen = true">See Details</UButton>
+        
         <UModal v-model="isOpen">
           <EventsDetails :id="id" :title="props.title" :description="props.description" :date="props.date"
             :eventType="props.eventType" :eventName="props.eventName" :duration="props.duration"
@@ -107,12 +108,15 @@ const isOpen = ref(false);
 
 <style scoped>
 .b {
-  margin-top: auto;
+margin-top: auto;
+margin-left:auto;
+/* max-width: 6rem; */
 }
 
 .item-buttons {
   display: flex;
   flex-direction: column;
+  justify-content:start;
 }
 
 .item {

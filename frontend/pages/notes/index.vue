@@ -68,7 +68,7 @@ const isOpen = ref(false);
         >Insights</UButton
       >
     </div>
-    <div class="nav-flex wrapit" v-if="show">
+    <!-- <div class="nav-flex wrapit" v-if="show">
       <UInputMenu
         color="gray"
         variant="outline"
@@ -96,7 +96,7 @@ const isOpen = ref(false);
         :options="sprintList"
         model-value=""
       />
-    </div>
+    </div> -->
     <UIEmptyMessage v-if="notes.length < 1" title="notes" />
 
     <NotesList

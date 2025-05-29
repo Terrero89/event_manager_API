@@ -8,53 +8,53 @@ const props = defineProps([
   "meetingName",
   "duration",
   "sprintId",
-  "status"
+  "status",
 ]);
 const progressColor = computed(() => {
   switch (props.status) {
-    case 'Completed':
-      return 'blue';
-    case 'In Progress':
-      return 'orange';
-    case 'Pending':
-      return 'purple';
-    case 'Backlog':
-      return 'teal';
-    case 'Review':
-      return 'green';
-    case 'Done':
-      return 'yellow';
+    case "Completed":
+      return "blue";
+    case "In Progress":
+      return "orange";
+    case "Pending":
+      return "purple";
+    case "Backlog":
+      return "teal";
+    case "Review":
+      return "green";
+    case "Done":
+      return "yellow";
 
-    case 'Epic':
- 
+    case "Epic":
+
     default:
-      return 'gray';
+      return "gray";
   }
 });
 const typeColor = computed(() => {
   switch (props.meetingType) {
-    case '1x1':
-      return 'blue';
-    case 'Training':
-      return 'orange';
-    case 'Contribution':
-      return 'purple';
-    case 'Mentee Meeting':
-      return 'teal';
-    case 'Retrospective':
-      return 'green';
-    case 'Planning':
-      return 'yellow';
-    case 'Workshops':
-      return 'orange';
-    case 'Mentor Meeting':
-      return 'yellow';
+    case "1x1":
+      return "blue";
+    case "Training":
+      return "orange";
+    case "Contribution":
+      return "purple";
+    case "Mentee Meeting":
+      return "teal";
+    case "Retrospective":
+      return "green";
+    case "Planning":
+      return "yellow";
+    case "Workshops":
+      return "orange";
+    case "Mentor Meeting":
+      return "yellow";
     default:
-      return 'gray';
+      return "gray";
   }
 });
 // "1x1", "Standup","Training", "Contribution", "Mentor Meeting","Mentee Meeting", "Retrospective", "Planning", "Workshops",  "Collaboration", "Feedback Session", "Brainstorming",  "Problem Solving","Team Building", "Other", "Pair Programming"],
-const noteIdRoute = computed(()=> `/notes/${props.id}`)
+const noteIdRoute = computed(() => `/notes/${props.id}`);
 const isOpen = ref(false);
 </script>
 
@@ -68,37 +68,37 @@ const isOpen = ref(false);
 
         <div class="item-header">
           <!-- <p><strong>Meeting Type:</strong> {{ meetingType }}</p> -->
-          <p><strong>Meeting Type</strong> <UBadge :color="typeColor" > {{ props.eventType }}</UBadge></p>
-         
+          <p>
+            <strong>Meeting Type</strong>
+            <UBadge :color="typeColor"> {{ props.meetingType }}</UBadge>
+          </p>
         </div>
         <div class="item-content">
           <div>
-            <p><strong>Description: </strong> {{ description.length > 15 ? description.slice(0,15) + '...': description }}</p>
-            <p><strong>Date: </strong> {{formatDate(date) }}</p>
+            <p>
+              <strong>Description: </strong>
+              {{
+                description.length > 15
+                  ? description.slice(0, 15) + "..."
+                  : description
+              }}
+            </p>
+            <p><strong>Date: </strong> {{ formatDate(date) }}</p>
 
-            <p><strong>Duration:</strong> {{ duration}} hours</p>
+            <p><strong>Duration:</strong> {{ duration }} hours</p>
             <p><strong>Sprint ID:</strong> {{ sprintId }}</p>
-           
           </div>
         </div>
       </div>
-     
+
       <div class="item-buttons my-2">
-                  <UButton
-      
-          :color="progressColor"
-          variant="outline"
-          class=" mx-2"
-          >{{ props.status }}</UButton
-        >
-   
-        <UButton class="b" @click="isOpen = true" >See Details</UButton>
-        <!-- <NuxtLink :to="noteIdRoute">About page</NuxtLink> -->
-        <UModal v-model="isOpen"  >
-    
-        
-            <MeetingsDetails
-            :id=" props.id"
+        <UButton class="" @click="isOpen = true">See Details</UButton>
+        <UButton :color="progressColor" variant="outline" class="b">{{
+          props.meetingType
+        }}</UButton>
+        <UModal v-model="isOpen">
+          <MeetingsDetails
+            :id="props.id"
             :description="props.description"
             :date="props.date"
             :meetingName="props.meetingName"
@@ -106,41 +106,37 @@ const isOpen = ref(false);
             :duration="props.duration"
             :sprintId="props.sprintId"
             :status="props.status"
-            
-        />
-        
+          />
         </UModal>
       </div>
     </UIRenderer>
   </div>
 </template>
 <style scoped>
-.b{
-  margin-top:auto;
+.b {
+  margin-top: auto;
+  margin-left: auto;
+  /* max-width: 6rem; */
 }
+
 .item-buttons {
-
-
-
   display: flex;
   flex-direction: column;
-  
-
+  justify-content: start;
 }
 
 .item {
   margin: 0.9rem 0;
   display: flex;
 }
-.item-content div{
-
-  display:flex;
-  flex-wrap:wrap;
+.item-content div {
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .item .item-header {
-    display:flex;
-    flex-wrap:wrap;
+  display: flex;
+  flex-wrap: wrap;
 
   font-size: 0.9rem;
   /* border:solid red 1px; */
@@ -150,7 +146,6 @@ const isOpen = ref(false);
   margin: 0.2rem 0;
   font-size: 0.9rem;
   margin-right: 1rem;
-
 }
 .item-header strong {
   margin: 0.1rem 0;

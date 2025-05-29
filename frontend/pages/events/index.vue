@@ -1,20 +1,24 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import { onMounted } from "vue";
 const eventsStore = useEventStore();
 import { storeToRefs } from "pinia";
 
-const {
-  fetchEvents,
+interface Event {
+  id: number | string;
+  description: string;
+  date: string;
+  eventName: string;
+  eventType: string;
+  duration: string | number;
+  sprintId: number | string;
+  status: string;
+}
 
-} = eventsStore;
-const { events   } = storeToRefs(eventsStore);
-
+const { fetchEvents } = eventsStore;
+const { events } = storeToRefs(eventsStore) as { events: Ref<Event[]> };
 
 onMounted(async () => {
-
-  await fetchEvents()
-
-
+  await fetchEvents();
 });
 const navLinks = [
   [],
@@ -29,14 +33,13 @@ const navLinks = [
         size: "md",
       },
     },
-
   ],
 ];
 const show = computed(() => {
   if (events.value.length < 1) {
-    return false
+    return false;
   }
-  return true
+  return true;
 });
 const isOpen = ref(false);
 </script>
@@ -48,39 +51,72 @@ const isOpen = ref(false);
         <div class="p-4">IS HERE</div>
       </UModal>
 
-      <UButton class="my-3" color="blue" variant="soft" label="Add" @Click="isOpen = true">Insights</UButton>
+      <UButton
+        class="my-3"
+        color="blue"
+        variant="soft"
+        label="Add"
+        @Click="isOpen = true"
+        >Insights</UButton
+      >
     </div>
 
-    <div class="nav-flex wrapit" v-if="show">
-      <UInput class="w-full lg:w-48  my-3 mr-2" color="gray" highlight placeholder="Search..." />
-      <UInputMenu color="gray" variant="outline" trailing-icon="i-heroicons-chevron-down"
-        class="w-full lg:w-48  my-3 mr-2" placeholder="Select Category" :options="events" model-value="" />
-      <UInputMenu color="gray" variant="outline" trailing-icon="i-heroicons-chevron-down"
-        class="w-full lg:w-48  my-3 mr-2" placeholder="Select status" :options="events" model-value="" />
-    </div>
+    <!-- <div class="nav-flex wrapit" v-if="show">
+      <UInputMenu
+        color="gray"
+        variant="outline"
+        trailing-icon="i-heroicons-chevron-down"
+        class="w-full lg:w-48 my-3 mr-2"
+        placeholder="Select a sprint"
+        :options="sprintList"
+        model-value=""
+      />
+      <UInputMenu
+        color="gray"
+        variant="outline"
+        trailing-icon="i-heroicons-chevron-down"
+        class="w-full lg:w-48 my-3 mr-2"
+        placeholder="Select a sprint"
+        :options="sprintList"
+        model-value=""
+      />
+      <UInputMenu
+        color="gray"
+        variant="outline"
+        trailing-icon="i-heroicons-chevron-down"
+        class="w-full lg:w-48 my-3 mr-2"
+        placeholder="Select a sprint"
+        :options="sprintList"
+        model-value=""
+      />
+    </div> -->
 
     <UIEmptyMessage v-if="events.length < 1" title="events" />
 
-    <EventsList v-else v-for="item in events.reverse()" :key="item.id" :id="item.id" :description="item.description"
-      :date="item.date" :eventName="item.eventName" :eventType="item.eventType" :duration="item.duration"
-      :sprintId="item.sprintId" :status="item.status" />
-    <div class="my-12"></div>
-  </div>
-
+    <EventsList
+      v-else
+      v-for="item in events"
+      :key="item.id"
+      :id="item.id"
+      :description="item.description"
+      :date="item.date"
+      :eventName="item.eventName"
+      :eventType="item.eventType"
+      :duration="item.duration"
+      :sprintId="item.sprintId"
+      :status="item.status"
+    />
+ </div>
 </template>
 
 <style scoped>
 .wrapit {
   flex-wrap: wrap;
 }
-
 .nav-flex {
   display: flex;
   justify-content: flex-start;
-
-
 }
-
 .drop {
   margin-right: 5rem;
 }
