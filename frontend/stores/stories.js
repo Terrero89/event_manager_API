@@ -102,5 +102,8 @@ export const useStoryStore = defineStore({
       const story = this.items.filter((item) => item.id);
       return (id) => story.filter((data) => data.id === id);
     },
+
+
+    
   },
 });

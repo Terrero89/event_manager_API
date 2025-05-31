@@ -1,16 +1,22 @@
 <script setup lang="ts">
 import { onMounted } from "vue";
+import { CONFIG } from "~/config/globalVariables";
 const noteStore = useNoteStore();
+const sprintsStore = useSprintStore();
 import { storeToRefs } from "pinia";
 
-const { fetchNotes } = noteStore;
+const { fetchNotes,filteringTypes, filterItemsByInput, filterNotes} = noteStore;
 const { notes } = storeToRefs(noteStore);
+
+const { fetchSprints } = sprintsStore;
+const { currentSprint, sprintList } = storeToRefs(sprintsStore);
 // for later use
 // const route = useRoute(); //route object
 // const destId = route.params.destinationID;
 
 onMounted(async () => {
   await fetchNotes();
+  await fetchSprints();
 });
 
 const props = defineProps([
@@ -36,25 +42,36 @@ const navLinks = [
         size: "md",
       },
     },
-
   ],
 ];
 
-const show = computed(()=> {
-  if(notes.value.length < 1){
-  return false
-}
-return true
+const show = computed(() => {
+  if (notes.value.length < 1) {
+    return false;
+  }
+  return true;
 });
+const inputValue = ref("");
+const inputType = ref("");
+
+
 
 
 const isOpen = ref(false);
-</script>
+
+const start = ref("");
+const end = ref("");
+
+const testing = computed(()=> filteringTypes(inputType.value))
+const filtering = computed(()=>  filterNotes(inputValue.value, inputType.value))
+
+const clear = computed(()=> filterNotes(inputValue.value = '', inputType.value = ''))
+</script> 
 
 <template>
   <div>
     <div class="nav-flex my-2 border-b border-gray-200 dark:border-gray-800">
-      <UHorizontalNavigation :links="navLinks" />
+      <UHorizontalNavigation :links="inputValue" />
       <UModal v-model="isOpen">
         <div class="p-4">IS HERE</div>
       </UModal>
@@ -68,40 +85,47 @@ const isOpen = ref(false);
         >Insights</UButton
       >
     </div>
-    <!-- <div class="nav-flex wrapit" v-if="show">
+
+    <div class="nav-flex wrapit" v-if="show">
+      <UInput
+        class="w-full lg:w-48 my-3 mr-2"
+        placeholder="Search..."
+        v-model="inputValue"
+      />
+
+ 
+
+      <!-- <UInput class="w-full lg:w-48 my-3 mr-2" placeholder="Search..." v-model="start" />
+      <UInput class="w-full lg:w-48 my-3 mr-2" placeholder="Search..." v-model="end" /> -->
       <UInputMenu
         color="gray"
         variant="outline"
         trailing-icon="i-heroicons-chevron-down"
         class="w-full lg:w-48 my-3 mr-2"
-        placeholder="Select a sprint"
-        :options="sprintList"
-        model-value=""
+        placeholder="Select by type"
+        :options="CONFIG.variables.activityType"
+        v-model="inputType"
       />
-      <UInputMenu
-        color="gray"
-        variant="outline"
-        trailing-icon="i-heroicons-chevron-down"
+
+
+      <UButton
         class="w-full lg:w-48 my-3 mr-2"
-        placeholder="Select a sprint"
-        :options="sprintList"
-        model-value=""
-      />
-      <UInputMenu
-        color="gray"
+        color="red"
         variant="outline"
-        trailing-icon="i-heroicons-chevron-down"
-        class="w-full lg:w-48 my-3 mr-2"
-        placeholder="Select a sprint"
-        :options="sprintList"
-        model-value=""
+        label="Clear"
+        @click="inputValue = ''; inputType = ''"
+  
       />
-    </div> -->
+
+         
+
+    </div>
+     {{inputValue}}-----{{inputType}} ---- {{filtering}}
     <UIEmptyMessage v-if="notes.length < 1" title="notes" />
 
     <NotesList
       v-else
-      v-for="note in notes"
+      v-for="note in filterNotes(inputValue, inputType)"
       :key="note.id"
       :id="note.id"
       :description="note.description"

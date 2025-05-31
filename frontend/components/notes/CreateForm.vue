@@ -22,7 +22,7 @@ onMounted(async () => {
 const loadMessage = ref(false);
 
 const form = reactive({
-  // sprintId: currentSprint.value,
+  sprintId: currentSprint.value,
   title: "", // Note Title
   description: "", // Note Description
   date: "", // Start Date

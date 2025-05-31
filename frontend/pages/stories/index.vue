@@ -1,12 +1,17 @@
 <script setup lang="ts">
 import { onMounted } from "vue";
 const storyStore = useStoryStore();
+const sprintsStore = useSprintStore();
 import { storeToRefs } from "pinia";
 
 const { fetchStories } = storyStore;
 const { items } = storeToRefs<{
   items: Array<{ progressType: string; [key: string]: any }>;
 }>(storyStore);
+
+
+const { fetchSprints} = sprintsStore;
+const {currentSprint, sprintList} = storeToRefs(sprintsStore);
 
 
 
@@ -45,12 +50,12 @@ const links = [
         label: "Add Story",
         color: "blue",
         size: "md",
-      },
+      }
     },
   ],
 ];
 
-const sprintList = ['cool']
+
 
 const show = computed(()=> {
   if(items.value.length < 1){
@@ -63,6 +68,17 @@ const isOpen = ref(false);
 onMounted(async () => {
   await fetchStories();
 });
+
+const inputValue = ref('')
+const searched = computed(() => {
+  if (!storyStore.items) return storyStore.items
+  return storyStore.items.filter((p) => {
+    return (
+      p.storyTitle.toLowerCase().indexOf(inputValue.value.toLowerCase()) != -1
+    );
+  });
+});
+
 </script>
 <template class="border-b border-gray-200">
   <div>
@@ -94,30 +110,38 @@ onMounted(async () => {
           </UModal>
         </div>
         <div class="nav-flex wrapit" v-if="show">
+          
+      <UInput class="w-full lg:w-48 my-3 mr-2" placeholder="Search..." v-model="inputValue" />
+         
+         
           <UInputMenu
             color="gray"
             variant="outline"
             trailing-icon="i-heroicons-chevron-down"
             class="w-full lg:w-48 my-3 mr-2"
-            placeholder="Select a sprint"
+            placeholder="Select by type"
             :options="sprintList"
             model-value=""
           />
+
+                   <input
+        class="border border-gray-200 dark:border-gray-800 w-full lg:w-48 my-3 mr-2 px-2"
+        type="date"
+        placeholder="start date"
+        v-model="start"
+      />
+      <input
+        class="border border-gray-200 dark:border-gray-800 w-full lg:w-48 my-3 mr-2 px-2"
+        type="date"
+        placeholder="start date"
+        v-model="end"
+      />
           <UInputMenu
             color="gray"
             variant="outline"
             trailing-icon="i-heroicons-chevron-down"
             class="w-full lg:w-48 my-3 mr-2"
-            placeholder="Select a sprint"
-            :options="sprintList"
-            model-value=""
-          />
-          <UInputMenu
-            color="gray"
-            variant="outline"
-            trailing-icon="i-heroicons-chevron-down"
-            class="w-full lg:w-48 my-3 mr-2"
-            placeholder="Select a sprint"
+            placeholder="Select work type"
             :options="sprintList"
             model-value=""
           />
@@ -126,7 +150,7 @@ onMounted(async () => {
         <UIEmptyMessage v-if="items.length < 1" title="stories" />
         <StoryList
           v-else
-          v-for="item in items"
+          v-for="item in searched"
           :key="item.id"
           :id="item.id"
           :progressType="item.progressType"

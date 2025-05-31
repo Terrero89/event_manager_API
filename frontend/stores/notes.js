@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-
+import { CONFIG } from "~/config/globalVariables";
 export const useNoteStore = defineStore({
   id: "notes",
   state: () => ({
@@ -104,6 +104,43 @@ export const useNoteStore = defineStore({
       const note = this.itemsAsArray.filter((item) => item.id);
       return (id) => note.filter((data) => data.id === id);
     },
+
+    filterNotesByName: (state) => (filter) => {
+      if (!filter) return this.itemsAsArray; // Return all if no filter
+      return this.itemsAsArray.filter((item) =>
+        item.noteName.toLowerCase().includes(filter.toLowerCase()) // Adjust 'name' to the correct property
+      );
+    },
+    filterItemsByInput: (state) => (inputValue) => {
+       if (!state.notes) return state.notes;
+      return state.notes.filter((item) =>
+        item.noteName.toLowerCase().includes(inputValue.toLowerCase() -1)
+      );
+    },
+//id, byStatus, byCategory, byBooking
+    filteringTypes: (state) => (type) => {
+      let notesArr = state.notes;
+     notesArr = notesArr .filter((item) => item.noteType === type);
+     return notesArr;
+    },
+
+    filterNotes: (state) => (nameFilter, typeFilter) => {
+      let filteredNotes = state.notes;
+
+      if (nameFilter) {
+        filteredNotes = filteredNotes.filter((item) =>
+          item.noteName.toLowerCase().includes(nameFilter.toLowerCase())
+        );
+      }
+
+      if (typeFilter) {
+        filteredNotes = filteredNotes.filter((item) => 
+          item.noteType === typeFilter
+        );
+      }
+
+      return filteredNotes;
+    }
 
   },
 });

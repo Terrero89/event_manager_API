@@ -2,6 +2,10 @@
 import { onMounted } from "vue";
 const eventsStore = useEventStore();
 import { storeToRefs } from "pinia";
+const sprintsStore = useSprintStore();
+
+
+
 
 interface Event {
   id: number | string;
@@ -17,6 +21,20 @@ interface Event {
 const { fetchEvents } = eventsStore;
 const { events } = storeToRefs(eventsStore) as { events: Ref<Event[]> };
 
+const { fetchSprints} = sprintsStore;
+const {currentSprint, sprintList} = storeToRefs(sprintsStore);
+
+
+
+const inputValue = ref('')
+const searched = computed(() => {
+  if (!eventsStore.events) return eventsStore.events
+  return eventsStore.events.filter((p) => {
+    return (
+      p.eventName.toLowerCase().indexOf(inputValue.value.toLowerCase()) != -1
+    );
+  });
+});
 onMounted(async () => {
   await fetchEvents();
 });
@@ -61,13 +79,15 @@ const isOpen = ref(false);
       >
     </div>
 
-    <!-- <div class="nav-flex wrapit" v-if="show">
+    <div class="nav-flex wrapit" v-if="show">
+            <UInput class="w-full lg:w-48 my-3 mr-2" placeholder="Search..." v-model="inputValue" />
+
       <UInputMenu
         color="gray"
         variant="outline"
         trailing-icon="i-heroicons-chevron-down"
         class="w-full lg:w-48 my-3 mr-2"
-        placeholder="Select a sprint"
+        placeholder="Select by event type"
         :options="sprintList"
         model-value=""
       />
@@ -76,26 +96,18 @@ const isOpen = ref(false);
         variant="outline"
         trailing-icon="i-heroicons-chevron-down"
         class="w-full lg:w-48 my-3 mr-2"
-        placeholder="Select a sprint"
+        placeholder="Select by status"
         :options="sprintList"
         model-value=""
       />
-      <UInputMenu
-        color="gray"
-        variant="outline"
-        trailing-icon="i-heroicons-chevron-down"
-        class="w-full lg:w-48 my-3 mr-2"
-        placeholder="Select a sprint"
-        :options="sprintList"
-        model-value=""
-      />
-    </div> -->
+    
+    </div>
 
     <UIEmptyMessage v-if="events.length < 1" title="events" />
 
     <EventsList
       v-else
-      v-for="item in events"
+      v-for="item in searched"
       :key="item.id"
       :id="item.id"
       :description="item.description"

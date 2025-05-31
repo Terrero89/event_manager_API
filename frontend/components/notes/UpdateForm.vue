@@ -84,7 +84,7 @@ const removeItem = async (id) => {
     <h1 class="title">Modify Note</h1>
     <form @submit.prevent="handleSubmit">
       <!-- Header Fields -->
-      <!-- <div class="form-group">
+      <div class="form-group">
         <label for="assignedSprint">Sprint ID</label>
         <select v-model="form.sprintId" id="Sprint">
           <option value="" disabled>Select sprint</option>
@@ -92,7 +92,7 @@ const removeItem = async (id) => {
 
         </select>
        <span v-if="errors.sprintId" class="error">{{ errors.sprintId}}</span>
-      </div> -->
+      </div>
       <div class="form-group">
         <label for="reporters">Note Type</label>
         <select v-model="form.noteType" id="status">
