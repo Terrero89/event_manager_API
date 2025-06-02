@@ -5,7 +5,7 @@ const noteStore = useNoteStore();
 const sprintsStore = useSprintStore();
 import { storeToRefs } from "pinia";
 
-const { fetchNotes,filteringTypes, filterItemsByInput, filterNotes} = noteStore;
+const { fetchNotes, filterNotes} = noteStore;
 const { notes } = storeToRefs(noteStore);
 
 const { fetchSprints } = sprintsStore;
@@ -59,19 +59,17 @@ const inputType = ref("");
 
 const isOpen = ref(false);
 
-const start = ref("");
-const end = ref("");
 
-const testing = computed(()=> filteringTypes(inputType.value))
-const filtering = computed(()=>  filterNotes(inputValue.value, inputType.value))
 
-const clear = computed(()=> filterNotes(inputValue.value = '', inputType.value = ''))
+
+
+
 </script> 
 
 <template>
   <div>
     <div class="nav-flex my-2 border-b border-gray-200 dark:border-gray-800">
-      <UHorizontalNavigation :links="inputValue" />
+      <UHorizontalNavigation :links="navLinks" />
       <UModal v-model="isOpen">
         <div class="p-4">IS HERE</div>
       </UModal>
@@ -84,11 +82,12 @@ const clear = computed(()=> filterNotes(inputValue.value = '', inputType.value =
         @Click="isOpen = true"
         >Insights</UButton
       >
+    
     </div>
 
     <div class="nav-flex wrapit" v-if="show">
       <UInput
-        class="w-full lg:w-48 my-3 mr-2"
+        class="w-full lg:w-48 my-3 mr-2 "
         placeholder="Search..."
         v-model="inputValue"
       />
@@ -101,26 +100,26 @@ const clear = computed(()=> filterNotes(inputValue.value = '', inputType.value =
         color="gray"
         variant="outline"
         trailing-icon="i-heroicons-chevron-down"
-        class="w-full lg:w-48 my-3 mr-2"
+        class="w-full lg:w-48 my-3 mr-2 "
         placeholder="Select by type"
         :options="CONFIG.variables.activityType"
         v-model="inputType"
       />
 
-
-      <UButton
-        class="w-full lg:w-48 my-3 mr-2"
-        color="red"
+     <UButton
+        class=" my-3 mx-2 ml-auto "
+        color="teal"
         variant="outline"
         label="Clear"
         @click="inputValue = ''; inputType = ''"
   
       />
+   
 
          
 
     </div>
-     {{inputValue}}-----{{inputType}} ---- {{filtering}}
+  
     <UIEmptyMessage v-if="notes.length < 1" title="notes" />
 
     <NotesList
@@ -151,4 +150,6 @@ const clear = computed(()=> filterNotes(inputValue.value = '', inputType.value =
 .drop {
   margin-right: 5rem;
 }
+
+
 </style>

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { onMounted } from "vue";
+import { CONFIG } from "~/config/globalVariables";
 const eventsStore = useEventStore();
 import { storeToRefs } from "pinia";
 const sprintsStore = useSprintStore();
@@ -18,7 +19,7 @@ interface Event {
   status: string;
 }
 
-const { fetchEvents } = eventsStore;
+const { fetchEvents,  filterEvents, filterEventsByEventType} = eventsStore;
 const { events } = storeToRefs(eventsStore) as { events: Ref<Event[]> };
 
 const { fetchSprints} = sprintsStore;
@@ -27,14 +28,9 @@ const {currentSprint, sprintList} = storeToRefs(sprintsStore);
 
 
 const inputValue = ref('')
-const searched = computed(() => {
-  if (!eventsStore.events) return eventsStore.events
-  return eventsStore.events.filter((p) => {
-    return (
-      p.eventName.toLowerCase().indexOf(inputValue.value.toLowerCase()) != -1
-    );
-  });
-});
+const categoryInput = ref('')
+
+// const searched = computed(() =>   filterEventsByInput(inputValue.value))
 onMounted(async () => {
   await fetchEvents();
 });
@@ -60,6 +56,7 @@ const show = computed(() => {
   return true;
 });
 const isOpen = ref(false);
+
 </script>
 <template>
   <div>
@@ -77,6 +74,7 @@ const isOpen = ref(false);
         @Click="isOpen = true"
         >Insights</UButton
       >
+   
     </div>
 
     <div class="nav-flex wrapit" v-if="show">
@@ -97,17 +95,27 @@ const isOpen = ref(false);
         trailing-icon="i-heroicons-chevron-down"
         class="w-full lg:w-48 my-3 mr-2"
         placeholder="Select by status"
-        :options="sprintList"
-        model-value=""
+        :options="CONFIG.variables.eventTypes"
+        v-model="categoryInput"
       />
     
+    <UButton
+        class=" my-3 mx-2 ml-auto "
+        color="teal"
+        variant="outline"
+        label="Clear"
+        @click="inputValue = ''; categoryInput = ''"
+  
+      />
+   
+  
     </div>
 
     <UIEmptyMessage v-if="events.length < 1" title="events" />
 
     <EventsList
       v-else
-      v-for="item in searched"
+      v-for="item in filterEvents(inputValue,categoryInput)"
       :key="item.id"
       :id="item.id"
       :description="item.description"

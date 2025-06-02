@@ -96,6 +96,15 @@ const isOpen = ref(false);
         :options="sprintList"
         model-value=""
     />
+    <UButton
+        class=" my-3 mx-2 ml-auto "
+        color="teal"
+        variant="outline"
+        label="Clear"
+        @click="inputValue = ''; inputType = ''"
+  
+      />
+   
  </div>
       <UIEmptyMessage v-if="meetings.length < 1" title="meetings" />
 

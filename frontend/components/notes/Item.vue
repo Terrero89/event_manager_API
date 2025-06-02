@@ -8,6 +8,47 @@ const props = defineProps([
   "priorityLevel",
   "sprintId",
 ]);
+
+const typeColor = computed(() => {
+  switch (props.noteType) {
+    case "1x1":
+      return "blue";
+    case "Standup":
+      return "cyan";
+    case "Training":
+      return "orange";
+    case "Contribution":
+      return "purple";
+    case "Mentor Meeting":
+      return "yellow";
+    case "Mentee Meeting":
+      return "teal";
+    case "Retrospective":
+      return "green";
+    case "Planning":
+      return "amber";
+    case "Workshops":
+      return "red";
+    case "Collaboration":
+      return "lime";
+    case "Feedback Session":
+      return "indigo";
+    case "Brainstorming":
+      return "pink";
+    case "Presentation":
+      return "fuchsia";
+    case "Problem Solving":
+      return "violet";
+    case "Team Building":
+      return "rose";
+    case "Pair Programming":
+      return "emerald";
+    case "Other":
+      return "gray";
+    default:
+      return "gray";
+  }
+});
 const noteIdRoute = computed(()=> `/notes/${props.id}`)
 const isOpen = ref(false);
 </script>
@@ -23,8 +64,16 @@ const isOpen = ref(false);
         <div class="item-header">
           
          
-          <p><strong>Type:</strong> {{ noteType }}</p>
-          <p><strong>Description: </strong> {{ description }}</p>
+         
+                  <p><strong>Type</strong> <UBadge :color="typeColor" > {{ props.noteType }}</UBadge></p>
+      <p>
+              <strong>Description: </strong>
+              {{
+                description.length > 25
+                  ? description.slice(0, 25) + "..."
+                  : description
+              }}
+            </p>
         </div>
         <div class="item-content">
           <div>

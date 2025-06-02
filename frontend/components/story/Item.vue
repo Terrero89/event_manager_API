@@ -123,7 +123,7 @@ ype: Training
         <UButton :color="progressColor" variant="outline" class=" b">{{
           props.status
           }}</UButton>
-    
+
         <UModal v-model="isOpen">
           <div class="progress">
       

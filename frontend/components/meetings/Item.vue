@@ -31,29 +31,48 @@ const progressColor = computed(() => {
       return "gray";
   }
 });
+
 const typeColor = computed(() => {
   switch (props.meetingType) {
     case "1x1":
       return "blue";
+    case "Standup":
+      return "cyan";
     case "Training":
       return "orange";
     case "Contribution":
       return "purple";
+    case "Mentor Meeting":
+      return "yellow";
     case "Mentee Meeting":
       return "teal";
     case "Retrospective":
       return "green";
     case "Planning":
-      return "yellow";
+      return "amber";
     case "Workshops":
-      return "orange";
-    case "Mentor Meeting":
-      return "yellow";
+      return "red";
+    case "Collaboration":
+      return "lime";
+    case "Feedback Session":
+      return "indigo";
+    case "Brainstorming":
+      return "pink";
+    case "Presentation":
+      return "fuchsia";
+    case "Problem Solving":
+      return "violet";
+    case "Team Building":
+      return "rose";
+    case "Pair Programming":
+      return "emerald";
+    case "Other":
+      return "gray";
     default:
       return "gray";
   }
 });
-// "1x1", "Standup","Training", "Contribution", "Mentor Meeting","Mentee Meeting", "Retrospective", "Planning", "Workshops",  "Collaboration", "Feedback Session", "Brainstorming",  "Problem Solving","Team Building", "Other", "Pair Programming"],
+
 const noteIdRoute = computed(() => `/notes/${props.id}`);
 const isOpen = ref(false);
 </script>
@@ -94,7 +113,7 @@ const isOpen = ref(false);
       <div class="item-buttons my-2">
         <UButton class="" @click="isOpen = true">See Details</UButton>
         <UButton :color="progressColor" variant="outline" class="b">{{
-          props.meetingType
+          props.status
         }}</UButton>
         <UModal v-model="isOpen">
           <MeetingsDetails

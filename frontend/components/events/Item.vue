@@ -34,26 +34,28 @@ const progressColor = computed(() => {
 
 const typeColor = computed(() => {
   switch (props.eventType) {
-    case 'ERG Meeting':
-      return 'blue';
-    case 'Training':
-      return 'teal';
-    case 'Contribution':
-      return 'purple';
-    case 'Personal Development':
-      return 'green';
-    case 'Planning':
-      return 'yellow';
-    case 'Presentations':
-      return 'gray';
-    case 'Mentorship Program':
-      return 'yellow';
-    case 'Volunteering':
-      return 'purple';
-    case 'Networking':
-      return 'red';
+    case "ERG Meeting":
+      return "indigo";
+    case "Volunteering":
+      return "green";
+    case "Contribution":
+      return "purple";
+    case "Training":
+      return "orange";
+    case "Company":
+      return "blue";
+    case "Networking":
+      return "teal";
+    case "Personal Development":
+      return "pink";
+    case "Professional Development":
+      return "amber";
+    case "Mentorship Program":
+      return "yellow";
+    case "Presentation":
+      return "fuchsia";
     default:
-      return 'gray';
+      return "gray";
   }
 });
 const noteIdRoute = computed(() => `/notes/${props.id}`);

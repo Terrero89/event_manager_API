@@ -231,7 +231,7 @@ await fetchSprints()
         <label for="startDate">Date Assigned:</label>
         <input v-model="form.dateAssigned" type="date" id="startDate"/>
       </div>
-      {{ form.dateAssigned }}
+   
 
       <div class="form-group">
         <label for="storyDescription">Story Comments</label>
