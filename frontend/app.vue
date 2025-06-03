@@ -5,11 +5,13 @@
 
 <template>
   <div>
-    <NuxtLayout>
-      <UContainer>
+    <!-- <NuxtLayout> -->
+      <!-- <UContainer>
         <NuxtPage class="page"/>
-      </UContainer>
-    </NuxtLayout>
+      </UContainer> -->
+      
+    <!-- </NuxtLayout> -->
+    <UIUnderConstruction />
   </div>
 </template>
 
