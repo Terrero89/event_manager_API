@@ -79,7 +79,15 @@ const isOpen = ref(false);
 
     <div class="nav-flex wrapit" v-if="show">
             <UInput class="w-full lg:w-48 my-3 mr-2" placeholder="Search..." v-model="inputValue" />
-
+  <UInputMenu
+        color="gray"
+        variant="outline"
+        trailing-icon="i-heroicons-chevron-down"
+        class="w-full lg:w-48 my-3 mr-2"
+        placeholder="Select by category"
+        :options="CONFIG.variables.eventTypes"
+        v-model="categoryInput"
+      />
       <UInputMenu
         color="gray"
         variant="outline"
@@ -89,15 +97,7 @@ const isOpen = ref(false);
         :options="sprintList"
         model-value=""
       />
-      <UInputMenu
-        color="gray"
-        variant="outline"
-        trailing-icon="i-heroicons-chevron-down"
-        class="w-full lg:w-48 my-3 mr-2"
-        placeholder="Select by status"
-        :options="CONFIG.variables.eventTypes"
-        v-model="categoryInput"
-      />
+    
     
     <UButton
         class=" my-3 mx-2 ml-auto "

@@ -94,8 +94,7 @@ const isOpen = ref(false);
 
  
 
-      <!-- <UInput class="w-full lg:w-48 my-3 mr-2" placeholder="Search..." v-model="start" />
-      <UInput class="w-full lg:w-48 my-3 mr-2" placeholder="Search..." v-model="end" /> -->
+
       <UInputMenu
         color="gray"
         variant="outline"
