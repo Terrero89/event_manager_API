@@ -102,5 +102,76 @@ export const useMeetingStore = defineStore({
       const note = this.itemsAsArray.filter((item) => item.id);
       return (id) => note.filter((data) => data.id === id);
     },
+
+    filterMeetings: (state) => (nameFilter, typeFilter, startDate, endDate, statusFilter) => {
+  let filteredItems = state.meetings;
+
+  if (nameFilter) {
+    filteredItems = filteredItems.filter((item) =>
+      item.meetingName.toLowerCase().includes(nameFilter.toLowerCase())
+    );
+  }
+
+  if (typeFilter) {
+  filteredItems = filteredItems.filter(
+      (item) => item.meetingType === typeFilter
+    );
+  }
+
+  if (startDate && endDate) {
+    // Filter between start and end date
+    filteredItems= filteredItems.filter((item) => {
+      const eventDate = new Date(item.date);
+      return (
+        eventDate >= new Date(startDate) && eventDate <= new Date(endDate)
+      );
+    });
+  } else if (startDate) {
+    // Filter by only the startDate
+    filteredItems= filteredItems.filter((item) => {
+      const eventDate = new Date(item.date);
+      return eventDate.toISOString().slice(0, 10) === startDate;
+    });
+  } else if (endDate) {
+    // Filter by only the endDate
+    filteredItems= filteredItems.filter((item) => {
+      const eventDate = new Date(item.date);
+      return eventDate.toISOString().slice(0, 10) === endDate;
+    });
+  }
+
+  if (statusFilter) {
+    filteredItems = filteredItems.filter(
+      (item) => item.status === statusFilter
+    );
+  }
+
+  return filteredItems;
+},
+
+totalFilteredMeetingStats: () => (items) => {
+  const totalDuration = items.reduce(
+    (sum, item) => sum + (Number(item.duration) || 0),
+    0
+  );
+
+  const totalItems = items.length;
+
+  const completedCount = items.filter(
+    (item) => item.status === "Completed"
+  ).length;
+
+    const pendingCount = items.filter(
+    (item) => item.status === "Pending"
+  ).length;
+
+  return {
+    totalDuration,
+    totalItems,
+    completedCount,
+    pendingCount,
+  };
+
+  },
   },
 });

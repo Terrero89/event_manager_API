@@ -71,8 +71,8 @@ const isOpen = ref(false);
         <!-- <h1>{{id}}</h1> -->
 
         <div class="item-header">
-                    <p><strong>Event Type:</strong> <UBadge :color="typeColor" > {{ props.eventType }}</UBadge></p>
- <p><strong>Status:</strong> <UBadge :color="progressColor" > {{ props.status}}</UBadge></p>
+                    <p><strong>Event Type:</strong> <UBadge :color="typeColor" variant="soft" > {{ props.eventType }}</UBadge></p>
+ <p><strong>Status:</strong> <UBadge :color="progressColor" variant="soft" > {{ props.status}}</UBadge></p>
         </div>
         <div class="item-content">
           <div>
@@ -92,7 +92,7 @@ const isOpen = ref(false);
       </div>
 
       <div class="item-buttons my-2">
-        <UButton class="" @click="isOpen = true">See Details</UButton>
+        <UButton variant="soft" class="" @click="isOpen = true">Details</UButton>
        
 
         

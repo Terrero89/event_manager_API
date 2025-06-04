@@ -103,6 +103,102 @@ export const useStoryStore = defineStore({
       return (id) => story.filter((data) => data.id === id);
     },
 
+    filterStories: (state) => (
+  nameFilter,
+  typeFilter,
+  startDate,
+  endDate,
+  statusFilter,
+  pointing,
+  workType
+) => {
+  let filteredItems = state.items;
+
+  if (nameFilter) {
+    filteredItems = filteredItems.filter((item) =>
+      item.storyTitle.toLowerCase().includes(nameFilter.toLowerCase())
+    );
+  }
+
+  if (typeFilter) {
+    filteredItems = filteredItems.filter(
+      (item) => item.developmentType === typeFilter
+    );
+  }
+console.log("workType", workType);
+console.log("workType",  filteredItems);
+console.log("workType", typeof pointing);
+console.log("workType",  filteredItems);
+  if (workType) {
+    filteredItems = filteredItems.filter(
+      (item) => item.workType === workType
+    );
+  }
+
+  if (startDate && endDate) {
+    filteredItems = filteredItems.filter((item) => {
+      const eventDate = new Date(item.dateAssigned);
+      return !isNaN(eventDate) &&
+        eventDate >= new Date(startDate) &&
+        eventDate <= new Date(endDate);
+    });
+  } else if (startDate) {
+    filteredItems = filteredItems.filter((item) => {
+      const eventDate = new Date(item.dateAssigned);
+      return !isNaN(eventDate) &&
+        eventDate.toISOString().split("T")[0] ===
+        new Date(startDate).toISOString().split("T")[0];
+    });
+  } else if (endDate) {
+    filteredItems = filteredItems.filter((item) => {
+      const eventDate = new Date(item.dateAssigned);
+      return !isNaN(eventDate) &&
+        eventDate.toISOString().split("T")[0] ===
+        new Date(endDate).toISOString().split("T")[0];
+    });
+  }
+
+  if (statusFilter) {
+    filteredItems = filteredItems.filter(
+      (item) => item.status === statusFilter
+    );
+  }
+
+  if (pointing) {
+    if (Array.isArray(pointing)) {
+      filteredItems = filteredItems.filter((item) =>
+        pointing.includes(String(item.storyPoints))
+      );
+    } else {
+      filteredItems = filteredItems.filter(
+        (item) => String(item.storyPoints) === pointing
+      );
+    }
+  }
+
+  return filteredItems;
+},
+
+
+totalFilteredStoriesStats: () => (items, status) => {
+  let     statusType =  ["Backlog", "To Do", "In Progress", "Demo Ready", "Completed", "Released"]
+ 
+  const totalItems = items.length;
+
+  const filterType = items.filter(
+    (item) => item.status === statusType
+  ).length;
+
+   
+
+  return {
+  
+    totalItems,
+    filterType,
+  };
+
+  },
+
 
     
   },

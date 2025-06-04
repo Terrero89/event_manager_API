@@ -103,26 +103,28 @@ ype: Training
 
         <div class="item-header">
         
-          <p><strong>Development: </strong> <UBadge :color="developmentTypeColor" variant="outline"> {{ props.developmentType }}</UBadge></p>
+          <p><strong>Development: </strong> <UBadge :color="developmentTypeColor" variant="soft"> {{ props.developmentType }}</UBadge></p>
 
 
  
-               <p><strong>Work Type:</strong> <UBadge :color="workTypeColor" > {{ props.workType }}</UBadge></p>
+               <p><strong>Work Type:</strong> <UBadge :color="workTypeColor" variant="soft"> {{ props.workType }}</UBadge></p>
         </div>
+         <p><strong>Status:</strong> <UBadge :color="progressColor" variant="soft"> {{ props.status }}</UBadge></p>
         <div class="item-content">
           <div>
             <p><strong>Start Date: </strong> {{ formatDate(props.dateAssigned) }}</p>
             <p><strong>End Date: </strong> {{ formatDate(props.dateCompleted) ? '' : 'Not Completed' }}</p>
+                       <p><strong>Points: </strong> <UBadge color="red" variant="soft"> {{ props.storyPoints }}</UBadge></p>
           </div>
+
+{{storyPoints}}
         </div>
       </div>
 
       <div class="item-buttons my-2">
        
-    <UButton class="" @click="isOpen = true">See Details</UButton>
-        <UButton :color="progressColor" variant="outline" class=" b">{{
-          props.status
-          }}</UButton>
+    <UButton variant="soft" class="" progressColor @click="isOpen = true">Details</UButton>
+ 
 
         <UModal v-model="isOpen">
           <div class="progress">

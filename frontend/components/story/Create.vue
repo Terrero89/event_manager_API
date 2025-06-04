@@ -218,7 +218,7 @@ await fetchSprints()
         <span v-if="errors.status" class="error">{{ errors.status }}</span>
       </div>
 
-      <div class="form-group">
+      <!-- <div class="form-group">
         <label for="repos">Repo Names</label>
         <input type="text" class="form-control"
             v-model="form.repoNames"
@@ -230,7 +230,7 @@ await fetchSprints()
       <div>
         <label for="startDate">Date Assigned:</label>
         <input v-model="form.dateAssigned" type="date" id="startDate"/>
-      </div>
+      </div> -->
    
 
       <div class="form-group">

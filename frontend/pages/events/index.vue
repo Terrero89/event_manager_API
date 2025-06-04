@@ -52,7 +52,6 @@ const show = computed(() => {
 const isOpen = ref(false);
 const inputValue = ref("");
 const categoryInput = ref("");
-
 const startDate = ref("");
 const endDate = ref("");
 const statusInput = ref("")
@@ -167,22 +166,23 @@ const sortedFilteredEvents = computed(() => {
 <div v-if="showStats" class="numbers my-2">
   <div class="mr-2">
     Total {{ categoryInput === '' ? 'Items' : categoryInput}}:
-    <UBadge variant="outline" class="font-bold">2</UBadge>
+    <UBadge variant="soft" color="teal" class="font-bold">2</UBadge>
   </div>
   <div class="mr-2" v-if="stats.completedCount > 0">
- Status {{statusInput !== "Pending" || statusInput !== " Completed" ? statusInput : "Totals"}}:
-    <UBadge variant="outline" class="font-bold">{{ stats.completedCount }}</UBadge>
+ Status {{statusInput !== "Pending" && statusInput !== "Completed" ? statusInput : "Totals"}}:
+    <UBadge variant="soft" class="font-bold">{{ stats.completedCount }}</UBadge>
     
   </div>
+  
 
    <div class="mr-2" v-if="stats.pendingCount > 0">
     Total {{statusInput}}:
-    <UBadge variant="outline" class="font-bold">{{ stats.pendingCount }}</UBadge>
+    <UBadge variant="soft" color="teal"  class="font-bold">{{ stats.pendingCount }}</UBadge>
     
   </div>
   <div class="mr-2">
     Total Hours:
-    <UBadge variant="outline" class="font-bold">{{ stats.totalDuration }}</UBadge>
+    <UBadge variant="soft" color="teal"  class="font-bold">{{ stats.totalDuration }}</UBadge>
   </div>
 </div>
 

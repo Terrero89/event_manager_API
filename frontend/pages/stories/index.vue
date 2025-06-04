@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { onMounted } from "vue";
+import { CONFIG } from "~/config/globalVariables";
 const storyStore = useStoryStore();
 const sprintsStore = useSprintStore();
 import { storeToRefs } from "pinia";
 
-const { fetchStories } = storyStore;
+const { fetchStories,  filterStories, totalFilteredStoriesStats } = storyStore;
 const { items } = storeToRefs<{
   items: Array<{ progressType: string; [key: string]: any }>;
 }>(storyStore);
@@ -69,16 +70,51 @@ onMounted(async () => {
   await fetchStories();
 });
 
-const inputValue = ref('')
-const searched = computed(() => {
-  if (!storyStore.items) return storyStore.items
-  return storyStore.items.filter((p) => {
-    return (
-      p.storyTitle.toLowerCase().indexOf(inputValue.value.toLowerCase()) != -1
-    );
-  });
+// 
+const inputValue = ref("");
+const categoryInput = ref("");
+const startDate = ref("");
+const endDate = ref("");
+const statusInput = ref("");
+const pointing = ref('')
+const workTypesInput = ref('')
+
+const stats = computed(()=> totalFilteredStoriesStats(filterStories(inputValue.value, categoryInput.value, startDate.value, endDate.value,  statusInput.value, pointing.value, workTypesInput.value)));
+
+const showStats = computed(() => {
+  return (
+    inputValue.value.trim() !== "" ||
+    categoryInput.value.trim() !== "" ||
+    startDate.value !== "" ||
+    endDate.value !== "" ||
+    statusInput.value !== "" ||
+    pointing.value !== "" ||
+    workTypesInput.value
+  );
 });
 
+const sortedFilteredStories= computed(() => {
+  const filtered = filterStories(
+    inputValue.value,
+    categoryInput.value,
+    startDate.value,
+    endDate.value,
+    statusInput.value,
+    pointing.value,
+    workTypesInput.value
+  );
+
+  const inProgress = filtered.filter(s => s.status === "In Progress");
+  const notInProgress = filtered.filter(s => s.status !== "In Progress");
+
+  return [
+    ...inProgress,
+    ...notInProgress.slice().sort((a, b) => {
+      const order = { "Pending": 0, "Complete": 1 };
+      return (order[a.status] ?? 99) - (order[b.status] ?? 99);
+    }),
+  ];
+});
 </script>
 <template class="border-b border-gray-200">
   <div>
@@ -89,78 +125,129 @@ const searched = computed(() => {
       <!---->
       <!--DROPDOWN IN STORIES-->
       <div class="nav-flex my-2 border-b border-gray-200 dark:border-gray-800">
-        <UHorizontalNavigation :links="links" class="" />
-        <UModal v-model="isOpen">
-          <div class="p-4">IS HERE</div>
-        </UModal>
-        <UButton
-          class="my-3"
-          color="blue"
-          variant="soft"
-          label="Add"
-          @Click="isOpen = true"
-          >Insights</UButton
-        >
-      </div>
+      <UHorizontalNavigation :links="links" class="" />
+      <UModal v-model="isOpen">
+        <div class="p-4">IS HERE</div>
+      </UModal>
 
-      <div class="progress">
-        <div class="item-buttons">
-          <UModal v-model="isOpen">
-            <div class="p-4">SHOW DETAILS HERE</div>
-          </UModal>
-        </div>
-        <div class="nav-flex wrapit" v-if="show">
-          
-      <UInput class="w-full lg:w-48 my-3 mr-2" placeholder="Search..." v-model="inputValue" />
-         
-         
-          <UInputMenu
-            color="gray"
-            variant="outline"
-            trailing-icon="i-heroicons-chevron-down"
-            class="w-full lg:w-48 my-3 mr-2"
-            placeholder="Select by type"
-            :options="sprintList"
-            model-value=""
-          />
+      <UButton
+        class="my-3"
+        color="blue"
+        variant="soft"
+        label="Add"
+        @Click="isOpen = true"
+        >Insights</UButton
+      >
+    </div>
 
-                   <input
-        class="border border-gray-200 dark:border-gray-800 w-full lg:w-48 my-3 mr-2 px-2"
-        type="date"
-        placeholder="start date"
-        v-model="start"
+    <div class="nav-flex wrapit" v-if="show">
+      <UInput
+        color="gray"
+        variant="outline"
+        class="w-full lg:w-48 my-3 mr-2"
+        placeholder="Search..."
+        v-model="inputValue"
       />
-      <input
-        class="border border-gray-200 dark:border-gray-800 w-full lg:w-48 my-3 mr-2 px-2"
-        type="date"
-        placeholder="start date"
-        v-model="end"
+      <UInputMenu
+        color="gray"
+        variant="outline"
+        trailing-icon="i-heroicons-chevron-down"
+        class="w-full lg:w-48 my-3 mr-2"
+        placeholder="Select by category"
+        :options='["Frontend", "Backend", "Fullstack"]'
+        v-model="categoryInput"
       />
-          <UInputMenu
-            color="gray"
-            variant="outline"
-            trailing-icon="i-heroicons-chevron-down"
-            class="w-full lg:w-48 my-3 mr-2"
-            placeholder="Select work type"
-            :options="sprintList"
-            model-value=""
-          />
+      <UInputMenu
+        color="gray"
+        variant="outline"
+        trailing-icon="i-heroicons-chevron-down"
+        class="w-full lg:w-48 my-3 mr-2"
+        placeholder="Select by status"
+        :options="CONFIG.variables.status"
+        v-model="statusInput"
+      />
+       <UInputMenu
+        color="gray"
+        variant="outline"
+        trailing-icon="i-heroicons-chevron-down"
+        class="w-full lg:w-24 my-3 mr-2"
+        placeholder="Select by Points"
+        :options="CONFIG.variables.points"
+        v-model="pointing"
+      />
+  <UInputMenu
+        color="gray"
+        variant="outline"
+        trailing-icon="i-heroicons-chevron-down"
+        class="w-full lg:w-48 my-3 mr-2"
+        placeholder="Select by status"
+        :options="CONFIG.variables.workTypes"
+        v-model="workTypesInput"
+      />
+   
 
-          <UButton
-        class=" my-3 mx-2 ml-auto "
+
+      <UInput
+        color="gray"
+        variant="outline"
+        v-model="startDate"
+        type="date"
+        placeholder="Start date"
+        class="w-full lg:w-36 my-3 mr-2"
+      />
+
+      <UInput
+        color="gray"
+        variant="outline"
+        v-model="endDate"
+        type="date"
+        placeholder="End date"
+        class="w-full lg:w-36 my-3 mr-2"
+      />
+      <UButton
+        class="my-3 mx-2 ml-auto"
         color="teal"
         variant="outline"
         label="Clear"
-        @click="inputValue = ''; inputType = ''"
-  
+        @click="
+          inputValue = '';
+          categoryInput = '';
+          startDate = '';
+          endDate = '';
+          statusInput = '';
+          pointing = '';
+          workTypesInput = '';
+        "
       />
-   
-        </div>
-        
+       </div>
+        {{ totalFilteredStoriesStats(filterStories(inputValue, categoryInput, startDate, endDate,  statusInput)) }}
+            <div class="numbers my-2">
+
+<div  class="numbers my-2">
+  <div class="mr-2">
+    Total {{ categoryInput === '' ? 'Items' : categoryInput}}:
+    <UBadge variant="soft" color="teal" class="font-bold">2</UBadge>
+  </div>
+  <div class="mr-2" v-if="stats.filterType > 0">
+ Status {{statusInput !== "Pending" && statusInput !== "Completed" ? statusInput : "Totals"}}:
+    <UBadge variant="soft" class="font-bold">{{ stats.filterType}}</UBadge>
+    
+  </div>
+  
+{{pointing}}
+   <div class="mr-2" v-if="stats.filterType > 0">
+    Total {{statusInput}}:
+    <UBadge variant="soft" color="teal"  class="font-bold">{{ stats.filterType}}</UBadge>
+    
+  </div>
+ 
+</div>
+
+</div>
         <UIEmptyMessage v-if="items.length < 1" title="stories" />
         <StoryList
           v-else
-          v-for="item in searched"
+          v-for="item in sortedFilteredStories"
           :key="item.id"
           :id="item.id"
           :progressType="item.progressType"
@@ -185,7 +272,7 @@ const searched = computed(() => {
       </div>
       <div class="my-12"></div>
     </div>
-  </div>
+  
 </template>
 
 <style scoped>
