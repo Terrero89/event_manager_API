@@ -108,74 +108,7 @@ export const useEventStore = defineStore({
 
     // ON HOLD For NEXT CHANGES
 
-    categoryFilter: (state) => (id, byStatus, byCategory) => {
-      // Step 1: Filter by destination ID (parentDestinationID)
-      let currEvents = state.events;
-      currEvents = currEvents.filter((item) => item.id === id);
-
-      if (byStatus === "Pending") {
-        currEvents = currEvents.filter((data) => data.status === "Pending");
-      }
-      if (byStatus === "In Progress") {
-        currEvents = currEvents.filter((data) => data.status === "In Progress");
-      }
-
-      if (byStatus === "Completed") {
-        currEvents = currEvents.filter((data) => data.status === "Completed");
-      }
-
-      // activityType: ["1x1", "Standup","Training", "Contribution", "Mentor Meeting","Mentee Meeting", "Retrospective", "Planning", "Workshops",  "Collaboration", "Feedback Session", "Brainstorming","Presentation",  "Problem Solving","Team Building", "Other", "Pair Programming"],
-
-      if (byCategory === "1x1") {
-        currEvents = currEvents.filter((data) => data.eventType === "1x1");
-      }
-      if (byCategory === "Standup") {
-        currEvents = currEvents.filter((data) => data.eventType === "Standup");
-      }
-      if (byCategory === "Training") {
-        currEvents = currEvents.filter((data) => data.eventType === "Training");
-      }
-      if (byCategory === "Contribution") {
-        currEvents = currEvents.filter((data) => data.eventType === "Contribution");
-      }
-      if (byCategory === "Mentor Meeting") {
-        currEvents = currEvents.filter((data) => data.eventType === "Mentor Meeting");
-      }
-      if (byCategory === "Mentee Meeting") {
-        currEvents = currEvents.filter((data) => data.eventType === "Mentee Meeting");
-      }
-      if (byCategory === "Retrospective") {
-        currEvents = currEvents.filter((data) => data.eventType === "Retrospective");
-      }
-      if (byCategory === "Planning") {
-        currEvents = currEvents.filter((data) => data.eventType === "Planning");
-      }
-      if (byCategory === "Workshops") {
-        currEvents = currEvents.filter((data) => data.eventType === "Workshops");
-      }
-      if (byCategory === "Collaboration") {
-        currEvents = currEvents.filter((data) => data.eventType === "Collaboration");
-      }
-      if (byCategory === "Feedback Session") {
-        currEvents = currEvents.filter((data) => data.eventType === "Feedback Session");
-      }
-      if (byCategory === "Brainstorming") {
-        currEvents = currEvents.filter((data) => data.eventType === "Brainstorming");
-      }
-      if (byCategory === "Presentation") {
-        currEvents = currEvents.filter((data) => data.eventType === "Presentation");
-      }
-      if (byCategory === "Problem Solving") {
-        currEvents = currEvents.filter((data) => data.eventType === "Problem Solving");
-      }
-      if (byCategory === "Team Building") {
-        currEvents = currEvents.filter((data) => data.eventType === "Team Building");
-      }
-      if (byCategory === "Other") {
-        currEvents = currEvents.filter((data) => data.eventType === "Other");
-      }
-    },
-
+   
     filterEventsByEventType: (state) => (byCategory) => {
       // Step 1: Filter by destination ID (parentDestinationID)
       let currEvents = state.events;
@@ -220,7 +153,8 @@ export const useEventStore = defineStore({
     },
 
 
-filterEvents: (state) => (nameFilter, typeFilter) => {
+
+filterEvents: (state) => (nameFilter, typeFilter, startDate, endDate, statusFilter) => {
   let filteredEvents = state.events;
 
   if (nameFilter) {
@@ -235,11 +169,59 @@ filterEvents: (state) => (nameFilter, typeFilter) => {
     );
   }
 
+  if (startDate && endDate) {
+    // Filter between start and end date
+    filteredEvents = filteredEvents.filter((item) => {
+      const eventDate = new Date(item.date);
+      return (
+        eventDate >= new Date(startDate) && eventDate <= new Date(endDate)
+      );
+    });
+  } else if (startDate) {
+    // Filter by only the startDate
+    filteredEvents = filteredEvents.filter((item) => {
+      const eventDate = new Date(item.date);
+      return eventDate.toISOString().slice(0, 10) === startDate;
+    });
+  } else if (endDate) {
+    // Filter by only the endDate
+    filteredEvents = filteredEvents.filter((item) => {
+      const eventDate = new Date(item.date);
+      return eventDate.toISOString().slice(0, 10) === endDate;
+    });
+  }
+
+  if (statusFilter) {
+    filteredEvents = filteredEvents.filter(
+      (item) => item.status === statusFilter
+    );
+  }
+
   return filteredEvents;
 },
+totalFilteredStats: () => (items) => {
+  const totalDuration = items.reduce(
+    (sum, item) => sum + (Number(item.duration) || 0),
+    0
+  );
 
+  const totalItems = items.length;
 
-    
+  const completedCount = items.filter(
+    (item) => item.status === "Completed"
+  ).length;
 
-  }
+    const pendingCount = items.filter(
+    (item) => item.status === "Pending"
+  ).length;
+
+  return {
+    totalDuration,
+    totalItems,
+    completedCount,
+    pendingCount 
+  };
+
+  },
+  },
   });

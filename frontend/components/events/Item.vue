@@ -71,8 +71,8 @@ const isOpen = ref(false);
         <!-- <h1>{{id}}</h1> -->
 
         <div class="item-header">
-                    <p><strong>Event Type</strong> <UBadge :color="typeColor" > {{ props.eventType }}</UBadge></p>
-
+                    <p><strong>Event Type:</strong> <UBadge :color="typeColor" > {{ props.eventType }}</UBadge></p>
+ <p><strong>Status:</strong> <UBadge :color="progressColor" > {{ props.status}}</UBadge></p>
         </div>
         <div class="item-content">
           <div>
@@ -93,9 +93,7 @@ const isOpen = ref(false);
 
       <div class="item-buttons my-2">
         <UButton class="" @click="isOpen = true">See Details</UButton>
-        <UButton :color="progressColor" variant="outline" class=" b">{{
-          props.status
-          }}</UButton>
+       
 
         
         <UModal v-model="isOpen">
