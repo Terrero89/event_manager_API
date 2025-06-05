@@ -113,11 +113,11 @@ ype: Training
         <div class="item-content">
           <div>
             <p><strong>Start Date: </strong> {{ formatDate(props.dateAssigned) }}</p>
-            <p><strong>End Date: </strong> {{ formatDate(props.dateCompleted) ? '' : 'Not Completed' }}</p>
+            <p><strong>End Date: </strong> {{ formatDate(props.dateCompleted) ? formatDate(props.dateCompleted) : 'Not Completed' }}</p>
                        <p><strong>Points: </strong> <UBadge color="red" variant="soft"> {{ props.storyPoints }}</UBadge></p>
           </div>
 
-{{storyPoints}}
+
         </div>
       </div>
 

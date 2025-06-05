@@ -43,9 +43,6 @@ const form = ref({
   duration: props.eventById.duration,
 });
 
-// Error messages
-const errors = ref({});
-const router = useRouter();
 
 
 const validateFields = () => {
@@ -71,9 +68,10 @@ console.log({...form.value})
 };
 
 const removeItem = async (id) => {
+  
   if (confirm("Are you sure you want to delete this city? This action cannot be undone.")) {
     await deleteEvent(id); // Proceed with the deletion if confirmed
-    console.log(deleteEvent(id))
+   
     // Optionally navigate or refresh the page after deletion
     navigateTo(`/`);
   }
@@ -126,9 +124,6 @@ const removeItem = async (id) => {
         />
         <span v-if="errors.eventName" class="error">{{ errors.eventName }}</span>
       </div>
-
-   
-
       <!-- Date -->
       <div class="form-group">
         <label for="date">Date</label>

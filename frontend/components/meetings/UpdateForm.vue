@@ -11,7 +11,7 @@ import { storeToRefs } from "pinia";
 const {  addSprint, fetchSprints } = sprintsStore;
 const {currentSprint, sprintList  } = storeToRefs(sprintsStore);
 
-const {   updateMeeting, deleteMeeting, fetchMeetings } = meetingStore;
+const {   updateMeeting, fetchMeetings, deleteMeeting } = meetingStore;
 const { } = storeToRefs(meetingStore);
 
 
@@ -63,7 +63,8 @@ const handleSubmit = async () => {
 
 
 const removeItem = async (id) => {
-  if (confirm("Are you sure you want to delete this city? This action cannot be undone.")) {
+ 
+  if (confirm("Are you sure you wprops.noteById.idant to delete this city? This action cannot be undone.")) {
     await deleteMeeting(id); // Proceed with the deletion if confirmed
  
   }
@@ -127,7 +128,7 @@ const removeItem = async (id) => {
      
 
       <div class="modal-actions">
-        <UButton color="red" @click="removeItem(props.noteById.id)">Delete</UButton>
+        <UButton color="red" @click="removeItem(props.meetingById.id)">Delete</UButton>
         <UButton type="submit">Update</UButton> 
     </div>
    

@@ -175,7 +175,7 @@ const handleSubmit = async () => {
       <!-- Priority Level -->
       <div class="form-group">
         <label for="description">Description</label>
-        <input
+        <textarea
           v-model="form.description"
           type="text"
           id="priorityLevel"

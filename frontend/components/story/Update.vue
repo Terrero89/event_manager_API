@@ -58,7 +58,7 @@ const story = ref({
 const handleSubmit = async () => {
 
 
-//   console.log({ ...story.value });
+
   await updateStory(props.storyById.id, { ...story.value });
   navigateTo(`/`);
 };
@@ -67,7 +67,7 @@ const handleSubmit = async () => {
 const removeItem = async (id) => {
   if (confirm("Are you sure you want to delete this city? This action cannot be undone.")) {
     await deleteStory(id); // Proceed with the deletion if confirmed
-    console.log(deleteStory(id))
+ 
     // Optionally navigate or refresh the page after deletionsprintID
     navigateTo(`/`);
   }

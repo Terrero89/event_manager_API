@@ -53,7 +53,7 @@ const isOpen = ref(false);
           class="b mx-2"
           >{{ props.status }}</UButton
         >
-        <UButton class="b" @click="isOpen = true">Details</UButton>
+        <UButton variant="soft" class="b" @click="isOpen = true">Details</UButton>
         <UModal v-model="isOpen"  >
           <SprintsDetails
             :id="props.id"

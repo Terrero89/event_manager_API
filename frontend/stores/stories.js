@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+import { CONFIG } from "~/config/globalVariables";
 
 export const useStoryStore = defineStore({
   id: "story",
@@ -55,7 +56,7 @@ export const useStoryStore = defineStore({
     async deleteStory(itemID) {
       const url = `https://project-manager-app-f9829-default-rtdb.firebaseio.com/stories/${itemID}.json`;
       let response = await fetch(url, {
-        method: "DELETE",
+        method: "DELETE",      filterWorkType: filterWorkType,
         "Content-type": "application/json",
       });
       if (!response.ok) {
@@ -125,10 +126,7 @@ export const useStoryStore = defineStore({
       (item) => item.developmentType === typeFilter
     );
   }
-console.log("workType", workType);
-console.log("workType",  filteredItems);
-console.log("workType", typeof pointing);
-console.log("workType",  filteredItems);
+
   if (workType) {
     filteredItems = filteredItems.filter(
       (item) => item.workType === workType
@@ -180,22 +178,26 @@ console.log("workType",  filteredItems);
 },
 
 
-totalFilteredStoriesStats: () => (items, status) => {
-  let     statusType =  ["Backlog", "To Do", "In Progress", "Demo Ready", "Completed", "Released"]
- 
+totalFilteredStoriesStats: () => (items) => {
+  let statusType =  ["Backlog", "To Do", "In Progress", "Demo Ready", "Completed", "Released"]
+  
   const totalItems = items.length;
 
+  // by frontent etc
   const filterType = items.filter(
     (item) => item.status === statusType
-  ).length;
+  ).length
+
+
 
    
 
-  return {
-  
-    totalItems,
-    filterType,
-  };
+    return {
+      totalItems,
+      filterType,
+    
+
+    };
 
   },
 

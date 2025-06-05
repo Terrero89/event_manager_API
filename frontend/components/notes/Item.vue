@@ -65,7 +65,7 @@ const isOpen = ref(false);
           
          
          
-                  <p><strong>Type</strong> <UBadge :color="typeColor" > {{ props.noteType }}</UBadge></p>
+                  <p><strong>Type:</strong> <UBadge variant="soft" :color="typeColor" > {{ props.noteType }}</UBadge></p>
       <p>
               <strong>Description: </strong>
               {{
@@ -86,7 +86,7 @@ const isOpen = ref(false);
         </div>
       </div>
       <div class="item-buttons my-2">
-        <UButton class="b" @click="isOpen = true" >Details</UButton>
+        <UButton variant="soft" class="b" @click="isOpen = true" >Details</UButton>
         <!-- <NuxtLink :to="noteIdRoute">About page</NuxtLink> -->
         <UModal v-model="isOpen"  >
     
