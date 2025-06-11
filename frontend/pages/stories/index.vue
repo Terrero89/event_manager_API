@@ -220,7 +220,7 @@ const sortedFilteredStories= computed(() => {
         "
       />
        </div>
-        {{ totalFilteredStoriesStats(filterStories(inputValue, categoryInput, startDate, endDate,  statusInput)) }}
+        <!-- {{ totalFilteredStoriesStats(filterStories(inputValue, categoryInput, startDate, endDate,  statusInput)) }} -->
             <div class="numbers my-2">
 
 <div  class="numbers my-2">

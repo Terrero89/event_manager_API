@@ -125,10 +125,6 @@ export const useStoryStore = defineStore({
       (item) => item.developmentType === typeFilter
     );
   }
-console.log("workType", workType);
-console.log("workType",  filteredItems);
-console.log("workType", typeof pointing);
-console.log("workType",  filteredItems);
   if (workType) {
     filteredItems = filteredItems.filter(
       (item) => item.workType === workType
