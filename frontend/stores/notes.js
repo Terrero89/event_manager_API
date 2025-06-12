@@ -1,120 +1,118 @@
 import { defineStore } from "pinia";
-import { CONFIG } from "~/config/globalVariables";
+
 export const useNoteStore = defineStore({
   id: "notes",
   state: () => ({
-    URL: "http://localhost:8080/api/v1/notes",
-    URL_2:
-      "https://project-manager-app-f9829-default-rtdb.firebaseio.com/notes.json",
     notes: [],
   }),
   actions: {
     async fetchNotes() {
-      const response = await fetch(this.URL_2);
-      const responseData = await response.json();
-      this.notes = responseData;
-
-      if (!response.ok) {
-        const error = new Error(responseData.message || "Failed to fetch!");
-        throw error;
-      }
-
-      const notesList = [];
-
-      for (const key in this.notes) {
-        if (this.notes[key]) {
-          // Check if city data exists
-          const newItem = {
-            id: key,
-            ...this.notes[key],
-          };
-          notesList.push(newItem);
-        }
-      }
-      this.notes = notesList;
-      // this.sprintList = itemsList.map((item) => item.sprintID);
-      // this.currentSprint = itemsList[0].sprintID;
-    },
-    async addNote(data) {
+      const config = useRuntimeConfig();
       try {
-        const response = await fetch(this.URL_2, {
+        const response = await fetch(`${config.public.firebaseBase}/notes.json`);
+        const responseData = await response.json();
+
+        if (!response.ok) {
+          const error = new Error(responseData.message || "Failed to fetch!");
+          throw error;
+        }
+
+        const notesList = [];
+        for (const key in responseData) {
+          if (responseData[key]) {
+            notesList.push({ id: key, ...responseData[key] });
+          }
+        }
+        this.notes = notesList;
+      } catch (error) {
+        console.error("Failed to fetch notes:", error);
+      }
+    },
+
+    async addNote(data) {
+      const config = useRuntimeConfig();
+      try {
+        const response = await fetch(`${config.public.apiBase}/notes`, {
           method: "POST",
           body: JSON.stringify({ ...data }),
+          headers: { "Content-Type": "application/json" },
         });
+
         if (!response.ok) {
-          throw new Error("Failed to add event");
+          throw new Error("Failed to add note");
         }
       } catch (error) {
         console.error("Failed to add notes:", error);
       }
     },
+
     async deleteNote(itemID) {
-      const url = `https://project-manager-app-f9829-default-rtdb.firebaseio.com/notes/${itemID}.json`;
-      let response = await fetch(url, {
-        method: "DELETE",
-        "Content-type": "application/json",
-      });
-      if (!response.ok) {
-        console.log("Error, request failed");
+      const config = useRuntimeConfig();
+      const url = `${config.public.firebaseBase}/notes/${itemID}.json`;
+      try {
+        const response = await fetch(url, {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+        });
+
+        if (!response.ok) {
+          console.error("Error, request failed");
+        }
+      } catch (error) {
+        console.error("Error deleting note:", error);
       }
     },
 
     async updateNote(itemID, payload) {
-      const url = `https://project-manager-app-f9829-default-rtdb.firebaseio.com/notes/${itemID}.json`;
+      const config = useRuntimeConfig();
+      const url = `${config.public.firebaseBase}/notes/${itemID}.json`;
       const options = {
         method: "PATCH",
-        headers: { "Content-type": "application/json" },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       };
 
       try {
         const response = await fetch(url, options);
         if (!response.ok) {
-          throw new Error("Failed to update city");
+          throw new Error("Failed to update note");
         }
 
-        // Ensure the response contains the updated data
-        const updatedCity = await response.json();
+        const updatedNote = await response.json();
 
-        // Update the local state after a successful update
-        const index = this.notes.findIndex((city) => city.id === cityID);
+        const index = this.notes.findIndex((note) => note.id === itemID);
         if (index !== -1) {
-          // Use the returned data from Firebase to ensure consistency
-          this.notes[index] = { id: cityID, ...updatedCity };
+          this.notes[index] = { id: itemID, ...updatedNote };
         }
       } catch (error) {
-        console.error("Error updating city:", error);
+        console.error("Error updating note:", error);
       }
     },
   },
-  getters: {
-    itemsAsArray: (state) => {
-      return state.notes;
-    },
 
-    //finds item based on parentDestinationID
-    filterItemById(state) {
-      const note = this.itemsAsArray.filter((item) => item.id);
-      return (id) => note.filter((data) => data.id === id);
+  getters: {
+    itemsAsArray: (state) => state.notes,
+
+    filterItemById: (state) => (id) => {
+      return state.notes.filter((item) => item.id === id);
     },
 
     filterNotesByName: (state) => (filter) => {
-      if (!filter) return this.itemsAsArray; // Return all if no filter
-      return this.itemsAsArray.filter(
-        (item) => item.noteName.toLowerCase().includes(filter.toLowerCase()) // Adjust 'name' to the correct property
+      if (!filter) return state.notes;
+      return state.notes.filter((item) =>
+        item.noteName.toLowerCase().includes(filter.toLowerCase())
       );
     },
+
     filterItemsByInput: (state) => (inputValue) => {
       if (!state.notes) return state.notes;
       return state.notes.filter((item) =>
-        item.noteName.toLowerCase().includes(inputValue.toLowerCase() - 1)
+        item.noteName.toLowerCase().includes(inputValue.toLowerCase())
       );
     },
-    //id, byStatus, byCategory, byBooking
+
     filteringTypes: (state) => (type) => {
-      let notesArr = state.notes;
-      notesArr = notesArr.filter((item) => item.noteType === type);
-      return notesArr;
+      return state.notes.filter((item) => item.noteType === type);
     },
 
     filterNotes: (state) => (nameFilter, typeFilter) => {

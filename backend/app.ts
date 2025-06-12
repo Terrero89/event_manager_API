@@ -9,10 +9,13 @@ import notesRoutes from './routes/notes-routes';
 import meetingRoutes from './routes/meetings-routes';
 import sprintRoutes from './routes/sprint-routes';
 import cors = require('cors');
+// import dotenv from "dotenv";
+// import path = require('path');
 require("dotenv").config();
 
 const mongoose = require('mongoose');
 const app: Express = express();
+
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -30,7 +33,7 @@ app.use(cors());
 // );eventskRoutes
 // global middleware
 app.use((req: Request, res: Response, next: express.NextFunction) => {
-    console.log(req.method + ' ' + req.path, + ' ' + req.url);
+    console.log(`${req.method} ${req.path} ${req.url}`);
     next();
 });
 
@@ -38,7 +41,7 @@ app.use((req: Request, res: Response, next: express.NextFunction) => {
 app.use("/api/v1/auth", authRoutes); // user auth
 app.use("/api/v1/", storyRoutes); // home route
 app.use("/api/v1/", usersRoutes); // home route
-app.use("/api/v1/", notesRoutes);
+app.use("/api/v1/notes", notesRoutes);
 app.use("/api/v1/", eventsRoutes); // home route
 app.use("/api/v1/", meetingRoutes);
 app.use("/api/v1/", sprintRoutes);

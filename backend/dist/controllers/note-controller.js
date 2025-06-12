@@ -43,11 +43,10 @@ const getNoteController = (req, res) => __awaiter(void 0, void 0, void 0, functi
 });
 exports.getNoteController = getNoteController;
 const createNoteController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { title, description, date, dueDate, priorityLevel, noteName, noteType, sprintId } = req.body;
+    const { description, date, priorityLevel, noteName, noteType, sprintId } = req.body;
     // MORE ERROR HANDLING COMING UP
     try {
         const note = yield notes_models_1.Note.create({
-            title,
             description,
             date,
             priorityLevel,

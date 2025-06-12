@@ -23,7 +23,7 @@ const loadMessage = ref(false);
 
 const form = reactive({
   sprintId: currentSprint.value,
-  title: "", // Note Title
+
   description: "", // Note Description
   date: "", // Start Date
   priorityLevel: "N/A", // Unused but included for validation
@@ -37,7 +37,7 @@ const router = useRouter();
 const validateFields = () => {
   // errors.sprintId = !form.sprintId ? "Sprint is required" : "";
   errors.noteType = !form.noteType ? "Note Type is required" : "";
-  errors.title = !form.title ? "Note Title is required" : "";
+
   errors.noteName = !form.noteName ? "Note Name is required" : "";
   errors.date = !form.date ? "Date is required" : "";
   errors.description = !form.description ? "Note Description is required" : "";
@@ -49,7 +49,7 @@ const handleSubmit = async () => {
 
   const newNote = {
     // sprintId: currentSprint.value,
-    title: form.title,
+   
     noteType: form.noteType,
     description: form.description,
     date: form.date,
@@ -98,8 +98,8 @@ const handleSubmit = async () => {
         </select>
         <span v-if="errors.noteType" class="error">{{ errors.noteType }}</span>
       </div>
-      <div class="form-group">
-        <label for="storyName">Note Title</label>
+      <!-- <div class="form-group"> -->
+        <!-- <label for="storyName">Note Title</label>
         <input
           v-model="form.title"
           type="text"
@@ -107,7 +107,7 @@ const handleSubmit = async () => {
           placeholder="Enter Story Name"
         />
         <span v-if="errors.title" class="error">{{ errors.title }}</span>
-      </div>
+      </div> -->
 
       <div class="form-group">
         <label for="storyName">Note Name</label>

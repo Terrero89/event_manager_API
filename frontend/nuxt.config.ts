@@ -1,7 +1,11 @@
 export default defineNuxtConfig({
   ssr: false,
   compatibilityDate: '2024-04-03',
-
+  runtimeConfig: {
+    public: {
+      apiBase: process.env.API_LOCAL ,
+      firebaseBase: process.env.FIREBASE_BASE || 'https://project-manager-app-f9829-default-rtdb.firebaseio.com',
+    },
   devtools: {
     enabled: true,
 
