@@ -19,14 +19,14 @@ export const getNoteController = async (req: Request, res: Response) => {
 
     //?handling error if no id is found
     if (!mongoose.Types.ObjectId.isValid(id)) {
-        res.status(404).json({ error: "Todo does not exist" });
+        res.status(404).json({ error: "Note does not exist" });
         return;
     }
 
     const note = await Note.findById(id); //finding by specific id from params
     //error handling for not id found
     if (!note) {
-        res.status(404).json({ error: "NO Note FOUND" });
+        res.status(404).json({ error: "No Note FOUND" });
         return;
     }
 
@@ -60,7 +60,7 @@ export const updateNoteController = async (req: Request, res: Response) => {
     const { id } = req.params;
     //check if exist in mongoose
     if (!mongoose.Types.ObjectId.isValid(id)) {
-        res.status(400).json({ error: "No such todo" });
+        res.status(400).json({ error: "No such Note" });
         return;
     }
     //__id == mongoDB Id/ update id === __id

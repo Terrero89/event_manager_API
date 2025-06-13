@@ -1,6 +1,6 @@
 <script setup>
 const props = defineProps([
-  "id",
+  "_id",
   "description",
   "date",
   "noteType",
@@ -59,8 +59,7 @@ const isOpen = ref(false);
     <UIRenderer>
       <div class="item">
         <p><strong>Name: </strong> {{ noteName }}</p>
-     
-
+     {{props._id}} hello
         <div class="item-header">
           
          
@@ -91,7 +90,7 @@ const isOpen = ref(false);
         <UModal v-model="isOpen"  >
     
          <NotesDetails
-             :id="props.id"
+             :_id="props._id"
             :title="props.title"
             :description="props.description"
             :date="props.date"

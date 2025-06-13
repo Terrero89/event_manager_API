@@ -7,7 +7,7 @@ import { storeToRefs } from "pinia";
 const {  itemsAsArray, filterItemById } = noteStore;
 const { notes } = storeToRefs(noteStore);
 const props = defineProps([
-  'id',
+  '_id',
   'title',
   'description',
   'date',
@@ -19,13 +19,12 @@ const props = defineProps([
 ])
 
 const by = computed(()=> {{
-  for(let i=0; i<filterItemById(props.id).length; i++){
-    return filterItemById(props.id)[i]
+  for(let i=0; i<filterItemById(props._id).length; i++){
+    return filterItemById(props._id)[i]
   }
 }})
 // for later use
-// const route = useRoute(); //route object
-// const destId = route.params.destinationID;
+
 
 onMounted(async () => {
  
@@ -34,6 +33,7 @@ onMounted(async () => {
 
 <template>
   <div class="modal-details">
+
     <NotesUpdateForm :noteById="by"/>
   </div>
 </template>

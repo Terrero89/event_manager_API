@@ -3,7 +3,7 @@
 <script setup>
 
 const props = defineProps([
-    "id",
+    "_id",
 "description",
 "date",
 "noteType",
@@ -32,7 +32,7 @@ const isOpen = ref(false);
       </div>
   
         <NotesItem 
-            :id="props.id"
+            :_id="props._id"
             :description="props.description"
             :date="props.date"
             :noteType="props.noteType"

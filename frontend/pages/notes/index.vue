@@ -6,13 +6,11 @@ const sprintsStore = useSprintStore();
 import { storeToRefs } from "pinia";
 
 const { fetchNotes, filterNotes} = noteStore;
-const { notes } = storeToRefs(noteStore);
+const { notes, } = storeToRefs(noteStore);
 
 const { fetchSprints } = sprintsStore;
 const { currentSprint, sprintList } = storeToRefs(sprintsStore);
-// for later use
-// const route = useRoute(); //route object
-// const destId = route.params.destinationID;
+
 
 onMounted(async () => {
   await fetchNotes();
@@ -118,14 +116,14 @@ const isOpen = ref(false);
          
 
     </div>
-  
-    <UIEmptyMessage v-if="notes.length < 1" title="notes" />
 
+    <UIEmptyMessage v-if="notes.length < 1" title="notes" />
+  
     <NotesList
       v-else
       v-for="note in filterNotes(inputValue, inputType)"
-      :key="note.id"
-      :id="note.id"
+      :key="note._id"
+      :_id="note._id"
       :description="note.description"
       :title="note.title"
       :date="note.date"
