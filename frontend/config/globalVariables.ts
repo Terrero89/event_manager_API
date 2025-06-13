@@ -4,7 +4,7 @@ export const CONFIG = {
         difficultyLevels: ["Low", "Medium", "High", "Critical"],
         workTypes: [ "Story", "Bug", "Non-prod", "Tasks", "Tech Debt", "Spike", "Feature", "Epic"],
         developmentTypes: ["Frontend", "Backend", "Fullstack"],
-        status: ["Backlog", "To Do", "In Progress", "Demo Ready", "Completed", "Released"],
+        status: ["Backlog", "Blocked","To Do", "In Progress", "Demo Ready", "Completed", "Released"],
         
         statusLevel: ["Pending","In Progress", "Completed", ],
         repoNames: ["example1", "example2", "example3", "example4", "example5"],
