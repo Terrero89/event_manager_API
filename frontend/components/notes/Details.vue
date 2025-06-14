@@ -14,7 +14,9 @@ const props = defineProps({
   noteType: String,
   noteName: String,
   priorityLevel: String,
-  sprintId: String
+  sprintId: String,
+   updatedAt: String,
+  createdAt:String,
 });
 
 const by = computed(() => {

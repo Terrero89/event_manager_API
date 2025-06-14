@@ -6,6 +6,8 @@ const props = defineProps({
   noteType: String,
   noteName: String,
   sprintId: String,
+   updatedAt: String,
+  createdAt:String,
 });
 
 const typeColor = computed(() => {
@@ -76,6 +78,7 @@ const isOpen = ref(false);
             }}
           </p>
         </div>
+
         <div class="item-content">
           <div>
             <p><strong>Date: </strong> {{ formatDate(date) }}</p>
@@ -84,7 +87,16 @@ const isOpen = ref(false);
             <p><strong>Sprint ID:</strong> {{ sprintId }}</p>
           </div>
         </div>
+         <div>
+<div class="data">
+            <p class="mr-2"><strong>CreatedAt:</strong> {{  formatDate(props.createdAt)}}</p>
+            <p><strong>updatedAt </strong> {{  formatDate(props.updatedAt)}}</p>
+            </div>
+          </div>
       </div>
+            
+         
+    
       <div class="item-buttons my-2">
         <UButton variant="soft" class="b" @click="isOpen = true"
           >Details</UButton
@@ -101,6 +113,8 @@ const isOpen = ref(false);
             :noteType="props.noteType"
             :noteName="props.noteName"
             :sprintId="props.sprintId"
+            :updatedAt="props.updatedAt"
+            :createdAt="props.createdAt"
           />
         </UModal>
       </div>
@@ -109,6 +123,10 @@ const isOpen = ref(false);
 </template>
 
 <style scoped>
+.data{
+  display:flex;
+  flex-wrap:wrap;
+}
 .item {
   margin: 0.9rem 0;
   display: flex;

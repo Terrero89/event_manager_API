@@ -8,7 +8,9 @@ const props = defineProps({
   date: String,
   noteType: String,
   noteName: String,
-  sprintId: String
+  sprintId: String,
+  updatedAt: String,
+  createdAt:String,
 });
 const isOpen = ref(false);
 </script>
@@ -38,6 +40,8 @@ const isOpen = ref(false);
         :noteName="props.noteName"
         :priorityLevel="props.priorityLevel"
         :sprintId="props.sprintId"
+          :updatedAt="props.updatedAt"
+      :createdAt="props.createdAt"
       />
     </div>
 <div class="my-5"></div>

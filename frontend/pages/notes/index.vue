@@ -26,6 +26,7 @@ const props = defineProps([
   "noteType",
   "noteName",
   "sprintId",
+  "updatedAt",
 ]);
 
 const navLinks = [
@@ -115,7 +116,7 @@ const isOpen = ref(false);
 
 
     </div>
-  
+
     <UIEmptyMessage v-if="notes.length < 1" title="notes" />
 
     <NotesList
@@ -128,8 +129,9 @@ const isOpen = ref(false);
       :date="note.date"
       :noteName="note.noteName"
       :noteType="note.noteType"
-   
       :sprintId="note.sprintId"
+      :updatedAt="note.updatedAt"
+      :createdAt="note.createdAt"
     />
     <div class="my-12"></div>
   </div>
