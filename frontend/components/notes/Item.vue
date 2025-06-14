@@ -1,14 +1,10 @@
 <script setup>
 const props = defineProps({
-  id: {
-    type: String,
-    required: true,
-  },
+  _id: { type: String, required: true },
   description: String,
   date: String,
   noteType: String,
   noteName: String,
-
   sprintId: String,
 });
 
@@ -52,7 +48,6 @@ const typeColor = computed(() => {
       return "gray";
   }
 });
-const noteIdRoute = computed(() => `/notes/${props._id}`);
 const isOpen = ref(false);
 </script>
 
@@ -63,7 +58,8 @@ const isOpen = ref(false);
       <div class="item">
         <p><strong>Name: </strong> {{ noteName }}</p>
 
-        {{ props.id }}
+        <!-- id:{{ props.id }} -->
+        
         <div class="item-header">
           <p>
             <strong>Type:</strong>
@@ -93,8 +89,10 @@ const isOpen = ref(false);
         <UButton variant="soft" class="b" @click="isOpen = true"
           >Details</UButton
         >
+    
         <!-- <NuxtLink :to="noteIdRoute">About page</NuxtLink> -->
         <UModal v-model="isOpen">
+       
           <NotesDetails
             :_id="props._id"
             :title="props.title"

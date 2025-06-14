@@ -8,10 +8,7 @@ const {  itemsAsArray, filterItemById } = noteStore;
 const { notes } = storeToRefs(noteStore);
 
 const props = defineProps({
-  id: {
-    type: String,
-    required: true
-  },
+  _id: { type: String, required: true },
   description: String,
   date: String,
   noteType: String,
@@ -20,19 +17,16 @@ const props = defineProps({
   sprintId: String
 });
 
-const by = computed(()=> {{
-  for(let i=0; i<filterItemById(props.id).length; i++){
-    return filterItemById(props.id)[i]
-  }
-}})
-
+const by = computed(() => {
+  return filterItemById(props._id)[0];
+});
 onMounted(async () => {
  
 });
 </script>
 
 <template>
-  ID: {{by._id}}
+  <!-- props:{{props}} -->
   <div class="modal-details">
     <NotesUpdateForm :noteById="by"/>
   </div>

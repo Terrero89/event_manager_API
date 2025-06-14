@@ -67,7 +67,7 @@ async fetchNotes() {
 
  async updateNote(itemID, payload) {
   const config = useRuntimeConfig();
-  const url = `${config.public.apiBase}/notes/684c95d1b43eee84c479b89d`;
+  const url = `${config.public.apiBase}/notes/${itemID}`;
 
   try {
     const response = await fetch(url, {
@@ -99,7 +99,7 @@ async fetchNotes() {
     itemsAsArray: (state) => state.notes,
 
     filterItemById: (state) => (id) => {
-      return state.notes.filter((item) => item.id === id);
+      return state.notes.filter((item) => item._id === id);
     },
 
     filterNotesByName: (state) => (filter) => {

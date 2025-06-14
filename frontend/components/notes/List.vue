@@ -3,10 +3,7 @@
 <script setup>
 
 const props = defineProps({
-  id: {
-    type: String,
-    required: true
-  },
+  _id: { type: String, required: true },
   description: String,
   date: String,
   noteType: String,
@@ -32,9 +29,9 @@ const isOpen = ref(false);
             </UModal>
         
       </div>
-  
+
         <NotesItem
-        :id="props.id"
+        :_id="props._id"
         :description="props.description"
         :date="props.date"
         :noteType="props.noteType"

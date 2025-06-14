@@ -25,7 +25,6 @@ const props = defineProps([
   "date",
   "noteType",
   "noteName",
-  
   "sprintId",
 ]);
 
@@ -113,10 +112,7 @@ const isOpen = ref(false);
         @click="inputValue = ''; inputType = ''"
   
       />
-  
-         <div   v-for="note in filterNotes(inputValue, inputType)">
-         
-         {{note._id}}</div>
+
 
     </div>
   
@@ -126,7 +122,7 @@ const isOpen = ref(false);
       v-else
       v-for="note in filterNotes(inputValue, inputType)"
       :key="note._id"
-      :id="note._id"
+      :_id="note._id"
       :description="note.description"
       :title="note.title"
       :date="note.date"

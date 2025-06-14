@@ -18,10 +18,9 @@ const {
 } = noteStore;
 const { notes } = storeToRefs(noteStore);
 
-const props = defineProps([
- 
-  "noteById"
-])
+const props = defineProps({
+  noteById: { type: Object, required: true }
+});
 
 onMounted(async() => {
 await fetchSprints()
@@ -31,7 +30,6 @@ await fetchSprints()
 // Replace reactive with ref
 const form = ref({
   sprintId:  props.noteById.sprintId,
-
   description: props.noteById.description,
   date: props.noteById.date,
   noteName: props.noteById.noteName,
@@ -82,7 +80,7 @@ const removeItem = async (id) => {
     <h1 class="title">Modify Note</h1>
     <form @submit.prevent="handleSubmit">
       <!-- Header Fields -->
-      {{noteById._id}}
+     hell {{noteById._id}}
       <div class="form-group">
         <label for="assignedSprint">Sprint ID</label>
         <select v-model="form.sprintId" id="Sprint">
@@ -100,17 +98,7 @@ const removeItem = async (id) => {
         </select>
         <span v-if="errors.noteType" class="error">{{ errors.noteType }}</span>
       </div>
-      <!-- <div class="form-group">
-        <label for="storyName">Note Title</label>
-        <input
-            v-model="form.title"
-            type="text"
-            id="story Name"
-            placeholder="Enter Story Name"
-        />
-        <span v-if="errors.title" class="error">{{ errors.title}}</span>
-      </div> -->
-
+  
       <div class="form-group">
         <label for="storyName">Note Name</label>
         <input
