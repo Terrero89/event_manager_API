@@ -2,15 +2,17 @@
 
 <script setup>
 
-const props = defineProps([
-    "id",
-"description",
-"date",
-"noteType",
-"noteName",
-"priorityLevel",
-"sprintId",
-]);
+const props = defineProps({
+  id: {
+    type: String,
+    required: true
+  },
+  description: String,
+  date: String,
+  noteType: String,
+  noteName: String,
+  sprintId: String
+});
 const isOpen = ref(false);
 </script>
 <template>
@@ -31,17 +33,15 @@ const isOpen = ref(false);
         
       </div>
   
-        <NotesItem 
-            :id="props.id"
-            :description="props.description"
-            :date="props.date"
-            :noteType="props.noteType"
-            :noteName="props.noteName"
-            :priorityLevel="props.priorityLevel"
-            :sprintId="props.sprintId"
-            
-        />
-
+        <NotesItem
+        :id="props.id"
+        :description="props.description"
+        :date="props.date"
+        :noteType="props.noteType"
+        :noteName="props.noteName"
+        :priorityLevel="props.priorityLevel"
+        :sprintId="props.sprintId"
+      />
     </div>
 <div class="my-5"></div>
     </div>

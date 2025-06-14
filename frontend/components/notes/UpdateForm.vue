@@ -30,11 +30,10 @@ await fetchSprints()
 
 // Replace reactive with ref
 const form = ref({
-  // sprintId:  props.noteById.sprintId,
-  title: props.noteById.title,
+  sprintId:  props.noteById.sprintId,
+
   description: props.noteById.description,
   date: props.noteById.date,
-  priorityLevel: props.noteById.priorityLevel,
   noteName: props.noteById.noteName,
   noteType: props.noteById.noteType,
 });
@@ -45,7 +44,6 @@ const validateFields = () => {
   const f = form.value;
   // errors.sprintId = !f.sprintId ? "Sprint is required" : "";
   errors.noteType = !f.noteType ? "Note Type is required" : "";
-  errors.title = !f.title ? "Note Title is required" : "";
   errors.noteName = !f.noteName ? "Note Name is required" : "";
   errors.date = !f.date ? "Date is required" : "";
   errors.description = !f.description ? "Note Description is required" : "";
@@ -58,7 +56,7 @@ const handleSubmit = async () => {
 
 
   console.log({ ...form.value });
-  await updateNote(props.noteById.id, { ...form.value });
+  await updateNote(props.noteById._id, { ...form.value });
   navigateTo(`/`);
 };
 
@@ -76,14 +74,15 @@ const removeItem = async (id) => {
 
 <template>
   <div class="form-container">
-    <!-- {{sprintList}}xxx{{currSprint }} -->
-<!--    {{sprints}}-->
+
  <div>
-  <!-- {{form }}----{{props.noteById.id}} -->
-</div>
+  
+</div>_
+
     <h1 class="title">Modify Note</h1>
     <form @submit.prevent="handleSubmit">
       <!-- Header Fields -->
+      {{noteById._id}}
       <div class="form-group">
         <label for="assignedSprint">Sprint ID</label>
         <select v-model="form.sprintId" id="Sprint">
@@ -101,7 +100,7 @@ const removeItem = async (id) => {
         </select>
         <span v-if="errors.noteType" class="error">{{ errors.noteType }}</span>
       </div>
-      <div class="form-group">
+      <!-- <div class="form-group">
         <label for="storyName">Note Title</label>
         <input
             v-model="form.title"
@@ -110,7 +109,7 @@ const removeItem = async (id) => {
             placeholder="Enter Story Name"
         />
         <span v-if="errors.title" class="error">{{ errors.title}}</span>
-      </div>
+      </div> -->
 
       <div class="form-group">
         <label for="storyName">Note Name</label>
@@ -141,7 +140,7 @@ const removeItem = async (id) => {
      
 
       <div class="modal-actions">
-        <UButton color="red" @click="removeItem(props.noteById.id)">Delete</UButton>
+        <UButton color="red" @click="removeItem(props.noteById._id)">Delete</UButton>
         <UButton type="submit">Update</UButton> 
     </div>
    

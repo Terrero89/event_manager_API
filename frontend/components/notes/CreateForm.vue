@@ -34,7 +34,7 @@ const errors = reactive({});
 const router = useRouter();
 
 const validateFields = () => {
-  // errors.sprintId = !form.sprintId ? "Sprint is required" : "";
+  errors.sprintId = !form.sprintId ? "Sprint is required" : "";
   errors.noteType = !form.noteType ? "Note Type is required" : "";
   errors.priorityLevel = !form.priorityLevel ? "Priority is required" : "";
   errors.noteName = !form.noteName ? "Note Name is required" : "";

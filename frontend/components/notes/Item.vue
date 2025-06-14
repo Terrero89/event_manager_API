@@ -1,13 +1,16 @@
 <script setup>
-const props = defineProps([
-  "id",
-  "description",
-  "date",
-  "noteType",
-  "noteName",
-  "priorityLevel",
-  "sprintId",
-]);
+const props = defineProps({
+  id: {
+    type: String,
+    required: true,
+  },
+  description: String,
+  date: String,
+  noteType: String,
+  noteName: String,
+
+  sprintId: String,
+});
 
 const typeColor = computed(() => {
   switch (props.noteType) {
@@ -49,7 +52,7 @@ const typeColor = computed(() => {
       return "gray";
   }
 });
-const noteIdRoute = computed(()=> `/notes/${props.id}`)
+const noteIdRoute = computed(() => `/notes/${props._id}`);
 const isOpen = ref(false);
 </script>
 
@@ -59,26 +62,27 @@ const isOpen = ref(false);
     <UIRenderer>
       <div class="item">
         <p><strong>Name: </strong> {{ noteName }}</p>
-     
 
+        {{ props.id }}
         <div class="item-header">
-          
-         
-         
-                  <p><strong>Type:</strong> <UBadge variant="soft" :color="typeColor" > {{ props.noteType }}</UBadge></p>
-      <p>
-              <strong>Description: </strong>
-              {{
-                description.length > 25
-                  ? description.slice(0, 25) + "..."
-                  : description
-              }}
-            </p>
+          <p>
+            <strong>Type:</strong>
+            <UBadge variant="soft" :color="typeColor">
+              {{ props.noteType }}</UBadge
+            >
+          </p>
+          <p>
+            <strong>Description: </strong>
+            {{
+              description.length > 25
+                ? description.slice(0, 25) + "..."
+                : description
+            }}
+          </p>
         </div>
         <div class="item-content">
           <div>
-            <p><strong>Date: </strong> {{formatDate(date) }}</p>
-            
+            <p><strong>Date: </strong> {{ formatDate(date) }}</p>
 
             <p><strong>Priority Level:</strong> {{ priorityLevel }}</p>
             <p><strong>Sprint ID:</strong> {{ sprintId }}</p>
@@ -86,23 +90,20 @@ const isOpen = ref(false);
         </div>
       </div>
       <div class="item-buttons my-2">
-        <UButton variant="soft" class="b" @click="isOpen = true" >Details</UButton>
+        <UButton variant="soft" class="b" @click="isOpen = true"
+          >Details</UButton
+        >
         <!-- <NuxtLink :to="noteIdRoute">About page</NuxtLink> -->
-        <UModal v-model="isOpen"  >
-    
-         <NotesDetails
-             :id="props.id"
+        <UModal v-model="isOpen">
+          <NotesDetails
+            :_id="props._id"
             :title="props.title"
             :description="props.description"
             :date="props.date"
             :noteType="props.noteType"
             :noteName="props.noteName"
-            :priorityLevel="props.priorityLevel"
             :sprintId="props.sprintId"
-         
-         />
-        
-        
+          />
         </UModal>
       </div>
     </UIRenderer>
@@ -114,15 +115,14 @@ const isOpen = ref(false);
   margin: 0.9rem 0;
   display: flex;
 }
-.item-content div{
-
-  display:flex;
-  flex-wrap:wrap;
+.item-content div {
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .item .item-header {
-    display:flex;
-    flex-wrap:wrap;
+  display: flex;
+  flex-wrap: wrap;
 
   font-size: 0.9rem;
   /* border:solid red 1px; */
@@ -132,7 +132,6 @@ const isOpen = ref(false);
   margin: 0.2rem 0;
   font-size: 0.9rem;
   margin-right: 1rem;
-
 }
 .item-header strong {
   margin: 0.1rem 0;

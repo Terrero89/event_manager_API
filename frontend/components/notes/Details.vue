@@ -6,26 +6,25 @@ import { storeToRefs } from "pinia";
 
 const {  itemsAsArray, filterItemById } = noteStore;
 const { notes } = storeToRefs(noteStore);
-const props = defineProps([
-  'id',
-  'title',
-  'description',
-  'date',
-  'noteType',
-  'noteName',
-  'priorityLevel',
-  'sprintId',
-  
-])
+
+const props = defineProps({
+  id: {
+    type: String,
+    required: true
+  },
+  description: String,
+  date: String,
+  noteType: String,
+  noteName: String,
+  priorityLevel: String,
+  sprintId: String
+});
 
 const by = computed(()=> {{
   for(let i=0; i<filterItemById(props.id).length; i++){
     return filterItemById(props.id)[i]
   }
 }})
-// for later use
-// const route = useRoute(); //route object
-// const destId = route.params.destinationID;
 
 onMounted(async () => {
  
@@ -33,6 +32,7 @@ onMounted(async () => {
 </script>
 
 <template>
+  ID: {{by._id}}
   <div class="modal-details">
     <NotesUpdateForm :noteById="by"/>
   </div>

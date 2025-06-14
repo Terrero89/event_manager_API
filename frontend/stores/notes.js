@@ -4,31 +4,33 @@ export const useNoteStore = defineStore({
   id: "notes",
   state: () => ({
     notes: [],
+    notes2:[],
   }),
   actions: {
-    async fetchNotes() {
-      const config = useRuntimeConfig();
-      try {
-        const response = await fetch(`${config.public.firebaseBase}/notes.json`);
-        const responseData = await response.json();
 
-        if (!response.ok) {
-          const error = new Error(responseData.message || "Failed to fetch!");
-          throw error;
-        }
+async fetchNotes() {
+  const config = useRuntimeConfig();
+  try {
+    const response = await fetch(`${config.public.apiBase}/notes`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
 
-        const notesList = [];
-        for (const key in responseData) {
-          if (responseData[key]) {
-            notesList.push({ id: key, ...responseData[key] });
-          }
-        }
-        this.notes = notesList;
-      } catch (error) {
-        console.error("Failed to fetch notes:", error);
-      }
-    },
+    if (!response.ok) {
+      throw new Error(`Failed to fetch notes: ${response.status} ${response.statusText}`);
+    }
 
+    const data = await response.json();
+    this.notes = data;
+    return data;
+
+  } catch (error) {
+    console.error("Failed to fetch notes:", error);
+    return null;
+  }
+},
     async addNote(data) {
       const config = useRuntimeConfig();
       try {
@@ -48,7 +50,7 @@ export const useNoteStore = defineStore({
 
     async deleteNote(itemID) {
       const config = useRuntimeConfig();
-      const url = `${config.public.firebaseBase}/notes/${itemID}.json`;
+      const url = `${config.public.apiBase}/notes/${itemID}`;
       try {
         const response = await fetch(url, {
           method: "DELETE",
@@ -63,31 +65,34 @@ export const useNoteStore = defineStore({
       }
     },
 
-    async updateNote(itemID, payload) {
-      const config = useRuntimeConfig();
-      const url = `${config.public.firebaseBase}/notes/${itemID}.json`;
-      const options = {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      };
+ async updateNote(itemID, payload) {
+  const config = useRuntimeConfig();
+  const url = `${config.public.apiBase}/notes/684c95d1b43eee84c479b89d`;
 
-      try {
-        const response = await fetch(url, options);
-        if (!response.ok) {
-          throw new Error("Failed to update note");
-        }
+  try {
+    const response = await fetch(url, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(payload)
+    });
 
-        const updatedNote = await response.json();
+    if (!response.ok) {
+      throw new Error(`Failed to update note: ${response.status} ${response.statusText}`);
+    }
 
-        const index = this.notes.findIndex((note) => note.id === itemID);
-        if (index !== -1) {
-          this.notes[index] = { id: itemID, ...updatedNote };
-        }
-      } catch (error) {
-        console.error("Error updating note:", error);
-      }
-    },
+    const updatedNote = await response.json();
+
+    // Update local Pinia state
+    const index = this.notes.findIndex(note => note.id === itemID);
+    if (index !== -1) {
+      this.notes[index] = { id: itemID, ...updatedNote };
+    }
+  } catch (error) {
+    console.error("Error updating note:", error);
+  }
+}
   },
 
   getters: {
