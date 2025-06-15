@@ -88,7 +88,14 @@ const isOpen = ref(false);
 
             <p><strong>Duration:</strong> {{ duration }} hours</p>
           </div>
+          <!-- <div class="data">
+            <p class="mr-2">
+              <strong>Created:</strong> {{ formatDate(props.createdAt) }}
+            </p>
+            <p><strong>updated: </strong> {{ formatDate(props.updatedAt) }}</p>
+          </div> -->
         </div>
+
       </div>
 
       <div class="item-buttons my-2">
@@ -107,6 +114,10 @@ const isOpen = ref(false);
 </template>
 
 <style scoped>
+  .data{
+    display: flex;
+  flex-wrap: wrap;
+}
 .b {
 margin-top: auto;
 margin-left:auto;

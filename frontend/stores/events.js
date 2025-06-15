@@ -10,46 +10,43 @@ export const useEventStore = defineStore({
 
   }),
   actions: {
-    async fetchEvents() {
-      const response = await fetch(this.URL_2);
-      const responseData = await response.json();
-      this.events = responseData;
+async fetchEvents(){
+  const config = useRuntimeConfig();
+  try {
+    const response = await fetch(`${config.public.apiBase}/events`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
 
-      if (!response.ok) {
-        const error = new Error(responseData.message || "Failed to fetch!");
-        throw error;
-      }
+    if (!response.ok) {
+      throw new Error(`Failed to fetch events: ${response.status} ${response.statusText}`);
+    }
 
-      const eventList = [];
+    const data = await response.json();
+    this.events = data;
+    return data;
 
-      for (const key in this.events) {
-        if (this.events[key]) {
-          const newEvent = {
-            id: key,
-            ...this.events[key],
-          };
-          eventList.push(newEvent);
-        }
-      }
-      this.events = eventList;
-    },
-    async addEvent(data) {
+  } catch (error) {
+    console.error("Failed to fetch events:", error);
+    return null;
+  }
+},
+    async addEvent(data){
+        const config = useRuntimeConfig();
       try {
-        const response = await fetch(this.URL_2, {
+        const response = await fetch(`${config.public.apiBase}/events`, {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
           body: JSON.stringify({ ...data }),
+          headers: { "Content-Type": "application/json" },
         });
+
         if (!response.ok) {
           throw new Error("Failed to add event");
         }
-
-        // No need to generate a unique ID here, data is stored directly
       } catch (error) {
-        console.error("Failed to add Event:", error);
-      } finally {
+        console.error("Failed to add event:", error);
       }
     },
     async deleteEvent(itemID) {

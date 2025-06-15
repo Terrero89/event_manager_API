@@ -43,11 +43,10 @@ const getEventController = (req, res) => __awaiter(void 0, void 0, void 0, funct
 });
 exports.getEventController = getEventController;
 const createEventController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { title, description, date, eventName, eventType, duration, status, sprintId } = req.body;
+    const { description, date, eventName, eventType, duration, status, sprintId } = req.body;
     // MORE ERROR HANDLING COMING UP
     try {
         const event = yield events_models_1.Event.create({
-            title,
             description,
             date,
             eventName,

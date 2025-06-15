@@ -146,6 +146,7 @@ const removeItem = async (id) => {
         <label for="duration">Duration</label>
         <input
           v-model="form.duration"
+          step="0.25"
           type="number"
           id="duration"
           placeholder="Enter Duration (e.g., 2h)"

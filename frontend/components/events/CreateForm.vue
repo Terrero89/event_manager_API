@@ -16,14 +16,11 @@ const { events } = storeToRefs(eventsStore);
 // const route = useRoute(); //route object
 // const destId = route.params.destinationID;
 const loadMessage = ref(false);
-onMounted(async() => {
 
-  await fetchSprints()
-});
 
 // Main form state
 const form = reactive({
-  // sprintId: currentSprint.value,
+  sprintId: currentSprint.value || '',
   // title: "Title",           // Note Title
   eventName: "dddd",            // Event Name
   eventType: "dddd",            // Event Type
@@ -43,7 +40,7 @@ const router = useRouter();
 const validateFields = () => {
   // errors.sprintId = !form.sprintId ? "Sprint is required" : "";
   errors.eventType = !form.eventType ? "Note Type is required" : "";
-  // errors.title = !form.title ? "Note Title is required" : "";
+
   errors.eventName = !form.eventName ? "Note Name is required" : "";
   errors.date = !form.date ? "Date is required" : "";
   errors.duration = !form.duration ? "Duration is required" : "";
@@ -58,7 +55,7 @@ const handleSubmit = async () => {
   if (!validateFields()) return;
 
   const newEvent = {
-    // sprintId: currentSprint.value,
+    sprintId: currentSprint.value,
     // title: form.title,
     eventName: form.eventName,
     eventType: form.eventType,
@@ -79,12 +76,27 @@ const handleSubmit = async () => {
   }, 1700);
 };
 
+onMounted(async() => {
+
+  await fetchSprints()
+});
+
 </script>
 <template>
   <div class="form-container">
     <h1 class="title">Create a New Event</h1>
     <form @submit.prevent="handleSubmit">
-  
+      <div class="form-group">
+        <label for="eventName">Sprint Id</label>
+        <input
+          v-model="form.sprintId"
+          type="text"
+          id="sprintId"
+          placeholder="Enter Event Name"
+        />
+
+      </div>
+
    <div class="form-group">
         <label for="reporters">Event Type</label>
         <select v-model="form.eventType" id="status">

@@ -4,7 +4,6 @@ export const useNoteStore = defineStore({
   id: "notes",
   state: () => ({
     notes: [],
-    notes2:[],
   }),
   actions: {
 

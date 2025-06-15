@@ -6,8 +6,8 @@ const props = defineProps({
   noteType: String,
   noteName: String,
   sprintId: String,
-   updatedAt: String,
-  createdAt:String,
+  updatedAt: String,
+  createdAt: String,
 });
 
 const typeColor = computed(() => {
@@ -61,7 +61,7 @@ const isOpen = ref(false);
         <p><strong>Name: </strong> {{ noteName }}</p>
 
         <!-- id:{{ props.id }} -->
-        
+
         <div class="item-header">
           <p>
             <strong>Type:</strong>
@@ -87,24 +87,23 @@ const isOpen = ref(false);
             <p><strong>Sprint ID:</strong> {{ sprintId }}</p>
           </div>
         </div>
-         <div>
-<div class="data">
-            <p class="mr-2"><strong>CreatedAt:</strong> {{  formatDate(props.createdAt)}}</p>
-            <p><strong>updatedAt </strong> {{  formatDate(props.updatedAt)}}</p>
-            </div>
+        <div>
+          <div class="data">
+            <p class="mr-2">
+              <strong>Created:</strong> {{ formatDate(props.createdAt) }}
+            </p>
+            <p><strong>updated: </strong> {{ formatDate(props.updatedAt) }}</p>
           </div>
+        </div>
       </div>
-            
-         
-    
+
       <div class="item-buttons my-2">
         <UButton variant="soft" class="b" @click="isOpen = true"
           >Details</UButton
         >
-    
+
         <!-- <NuxtLink :to="noteIdRoute">About page</NuxtLink> -->
         <UModal v-model="isOpen">
-       
           <NotesDetails
             :_id="props._id"
             :title="props.title"
@@ -123,9 +122,9 @@ const isOpen = ref(false);
 </template>
 
 <style scoped>
-.data{
-  display:flex;
-  flex-wrap:wrap;
+.data {
+  display: flex;
+  flex-wrap: wrap;
 }
 .item {
   margin: 0.9rem 0;
