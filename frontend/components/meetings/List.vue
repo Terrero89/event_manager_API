@@ -3,14 +3,16 @@
 <script setup>
 
 const props = defineProps([
-    "id",
+    "_id",
 "description",
 "date",
 "meetingType",
 "meetingName",
 "duration",
 "sprintId",
-"status"
+"status",
+"createdAt",
+"updatedAt",
 ]);
 const isOpen = ref(false);
 </script>
@@ -33,7 +35,7 @@ const isOpen = ref(false);
       </div>
   
         <MeetingsItem
-            :id="props.id"
+            :_id="props._id"
             :description="props.description"
             :date="props.date"
             :meetingName="props.meetingName"
@@ -41,6 +43,8 @@ const isOpen = ref(false);
             :duration="props.duration"
             :sprintId="props.sprintId"
             :status="props.status"
+             :updatedAt="props.updatedAt"
+            :createdAt="props.createdAt"
             
         />
 

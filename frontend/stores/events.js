@@ -4,8 +4,6 @@ import {CONFIG} from '../config/globalLinks'
 export const useEventStore = defineStore({
   id: "events",
   state: () => ({
-    URL: "http://localhost:8080/api/v1/events",
-    URL_2: `https://project-manager-app-f9829-default-rtdb.firebaseio.com/events.json`,
     events: [],
 
   }),

@@ -29,8 +29,7 @@ await fetchSprints()
 
 // Replace reactive with ref
 const form = ref({
-  // sprintId:  props.meetingById.sprintId,
-  // title: props.meetingById.title,
+  sprintId:  props.meetingById.sprintId,
   description: props.meetingById.description,
   meetingName: props.meetingById.meetingName,
   meetingType: props.meetingById.meetingType,
@@ -42,17 +41,7 @@ const form = ref({
 
 const errors = reactive({});
 const router = useRouter();
-const validateFields = () => {
-  const f = form.value;
-  // errors.sprintId = !f.sprintId ? "Sprint is required" : "";
-  errors.meetingType = !f.meetingType ? "Note Type is required" : "";
-  // errors.title = !f.title ? "Meeting Title is required" : "";
-  errors.meetingName = !f.meetingName ? "Meeting Name is required" : "";
-  errors.date = !f.date ? "Date is required" : "";
-  errors.description = !f.description ? "Meeting Description is required" : "";
-  errors.duration = !f.duration ? "Meeting Description is required" : "";
-  return Object.values(errors).every((err) => !err);
-};
+
 
 const handleSubmit = async () => {
   if (!validateFields()) return;
@@ -84,7 +73,7 @@ const removeItem = async (id) => {
           <option value="" disabled>Select Type</option>
           <option v-for="activity in CONFIG.variables.activityType" :key="activity" :value="activity">{{ activity }}</option>
         </select>
-        <span v-if="errors.noteType" class="error">{{ errors.noteType }}</span>
+     
       </div>
     
       <div class="form-group">
@@ -95,7 +84,7 @@ const removeItem = async (id) => {
             id="story Name"
             placeholder="Enter Story Name"
         />
-        <span v-if="errors.noteName" class="error">{{ errors.noteName}}</span>
+    
       </div>
 
       <div  class="form-group">
@@ -113,7 +102,7 @@ const removeItem = async (id) => {
           <option v-for="activity in CONFIG.variables.statusLevel" :key="activity" :value="activity">{{ activity }}</option>
 
         </select>
-       <span v-if="errors.sprintId" class="error">{{ errors.sprintId}}</span>
+  
       </div>
       <div class="form-group ">
         <label for="storyName">Description</label>
@@ -123,12 +112,12 @@ const removeItem = async (id) => {
             id="story Name"
             placeholder="Enter Story Name"
         />
-        <span v-if="errors.noteName" class="error">{{ errors.description}}</span>
+     
       </div>
      
 
       <div class="modal-actions">
-        <UButton color="red" @click="removeItem(props.meetingById.id)">Delete</UButton>
+        <UButton color="red" @click="removeItem(props._id)">Delete</UButton>
         <UButton type="submit">Update</UButton> 
     </div>
    

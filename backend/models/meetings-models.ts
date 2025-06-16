@@ -2,7 +2,7 @@ import mongoose, { Schema } from "mongoose";
 
 const MeetingsSchema: Schema = new Schema(
   {
-    title: { type: String, required: true },
+  
     meetingName: { type: String, required: true },
     meetingType: { type: String, required: true },
     description: { type: String, required: true },

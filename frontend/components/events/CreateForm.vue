@@ -17,8 +17,8 @@ const loadMessage = ref(false);
 // Main form state
 const form = reactive({
   sprintId: currentSprint.value || "",
-  eventName: "dddd", // Event Name
-  eventType: "dddd", // Event Type
+  eventName: "", // Event Name
+  eventType: "", // Event Type
   date: "", // Date
   description: "ddddd", // Description
   status: "Completed", // Status

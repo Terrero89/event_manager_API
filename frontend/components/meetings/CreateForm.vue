@@ -22,8 +22,8 @@ const loadMessage = ref(false);
 
 // Main form state
 const form = reactive({
-  // sprintId: currentSprint.value,
-  title: "Title", // Note Title
+  sprintId: currentSprint.value,
+  title: "", // Note Title
   meetingName: "", // Event Name
   meetingType: "", // Event Type
   date: "", // Date
@@ -40,9 +40,9 @@ const router = useRouter();
 
 // Form field validation
 const validateFields = () => {
-  // errors.sprintId = !form.sprintId ? "Sprint is required" : "";
+
   errors.meetingType = !form.meetingType ? "Meeting Type is required" : "";
-  // errors.title = !form.title ? "Meeting Title is required" : "";
+
   errors.meetingName = !form.meetingName ? "Meeting Name is required" : "";
   errors.date = !form.date ? "Date is required" : "";
   errors.duration = !form.duration ? "Duration is required" : "";
@@ -60,7 +60,7 @@ const handleSubmit = async () => {
 
   const newMeeting = {
     // sprintId: form.sprintId,
-    title: form.title,
+    title: "testing.",
     meetingName: form.meetingName,
     meetingType: form.meetingType,
     date: form.date,
@@ -71,19 +71,23 @@ const handleSubmit = async () => {
 
   console.log("Before submission", newMeeting);
   await addMeeting(newMeeting);
-  loadMessage.value = true;
+ loadMessage.value = true;
   setTimeout(() => {
     loadMessage.value = false;
     navigateTo(`/`);
   }, 1700);
 };
+
+onMounted(async () => {
+  await fetchSprints();
+});
 </script>
 <template>
   <div class="form-container">
     <h1 class="title">Create a Meeting</h1>
     <form @submit.prevent="handleSubmit">
       <!-- Sprint -->
-      <!-- <div class="form-group">
+      <div class="form-group">
         <label for="sprint">Sprint</label>
         <select v-model="form.sprintId" id="sprint">
           <option value="" disabled>Select sprint</option>
@@ -92,7 +96,7 @@ const handleSubmit = async () => {
           </option>
         </select>
         <span v-if="errors.sprintId" class="error">{{ errors.sprintId }}</span>
-      </div> -->
+      </div>
 
       <!-- Event Type -->
       <div class="form-group">

@@ -78,12 +78,7 @@ const isOpen = ref(false);
     <UIRenderer>
       <div class="item">
         <p><strong>Event Name: </strong> {{ eventName }}</p>
-        <!-- <h1>{{id}}</h1> -->
-<!-- ID: {{ props.id }} -->
-<!-- <div>PROPS: {{props}}</div> -->
-<!-- <div>{{by}}</div> -->
-<!-- <div>props.id: {{props.id}}</div> -->
-<!-- <div>from DB {{filterItemById(props.id) }}</div> -->
+
         <div class="item-header">
                     <p><strong>Event Type:</strong> <UBadge :color="typeColor" variant="soft" > {{ props.eventType }}</UBadge></p>
  <p><strong>Status:</strong> <UBadge :color="progressColor" variant="soft" > {{ props.status}}</UBadge></p>

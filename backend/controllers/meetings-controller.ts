@@ -34,14 +34,14 @@ export const getMeetingController = async (req: Request, res: Response) => {
 }
 
 export const createMeetingController = async (req: Request, res: Response) => {
-    const { title, description, date, meetingName, meetingType, duration, status, sprintId} = req.body
+    const {  description, date, meetingName, meetingType, duration, status, sprintId} = req.body
     
     // MORE ERROR HANDLING COMING UP
 
 
     try {
         const meeting = await Meeting.create({
-            title,
+       
             description,
             date,
             meetingName,

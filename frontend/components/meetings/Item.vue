@@ -1,6 +1,15 @@
 <script setup>
+
+const sprintsStore = useSprintStore();
+const meetingStore = useMeetingStore();
+
+const { addSprint, fetchSprints } = sprintsStore;
+const { sprintList, currentSprint } = storeToRefs(sprintsStore);
+
+const { addMeeting, fetchMeetings, filterItemById } = meetingStore;
+const { meetings } = storeToRefs(meetingStore);
 const props = defineProps([
-  "id",
+  "_id",
   "title",
   "description",
   "date",
@@ -9,6 +18,8 @@ const props = defineProps([
   "duration",
   "sprintId",
   "status",
+  "createdAt",
+"updatedAt",
 ]);
 const progressColor = computed(() => {
   switch (props.status) {
@@ -73,7 +84,15 @@ const typeColor = computed(() => {
   }
 });
 
-const noteIdRoute = computed(() => `/notes/${props.id}`);
+const by = computed(() => {
+  return filterItemById(props._id)[0];
+});
+
+onMounted(async () => {
+  await fetchMeetings();
+});
+
+
 const isOpen = ref(false);
 </script>
 
@@ -115,11 +134,12 @@ const isOpen = ref(false);
       </div>
 
       <div class="item-buttons my-2">
+      {{props._id}}
         <UButton variant="soft" class="" @click="isOpen = true">Details</UButton>
        
         <UModal v-model="isOpen">
           <MeetingsDetails
-            :id="props.id"
+            :_id="props._id"
             :description="props.description"
             :date="props.date"
             :meetingName="props.meetingName"
@@ -127,6 +147,8 @@ const isOpen = ref(false);
             :duration="props.duration"
             :sprintId="props.sprintId"
             :status="props.status"
+            :updatedAt="props.updatedAt"
+            :createdAt="props.createdAt"
           />
         </UModal>
       </div>

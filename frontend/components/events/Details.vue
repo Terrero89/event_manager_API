@@ -29,11 +29,16 @@ const props = defineProps([
 "createdAt",
 "updatedAt",
 ]);
-function formatDate(value) {
+function formatDate(value){
   const date = new Date(value);
-  const year = date.getFullYear();
-  const month = `${date.getMonth() + 1}`.padStart(2, '0');
-  const day = `${date.getDate()}`.padStart(2, '0');
+
+  // Add timezone offset
+  const localDate = new Date(date.getTime() + date.getTimezoneOffset() * 60000);
+
+  const year = localDate.getFullYear();
+  const month = `${localDate.getMonth() + 1}`.padStart(2, '0');
+  const day = `${localDate.getDate()}`.padStart(2, '0');
+
   return `${year}-${month}-${day}`;
 }
 // ref

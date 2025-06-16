@@ -10,87 +10,93 @@ export const useMeetingStore = defineStore({
   }),
   actions: {
     async fetchMeetings() {
-      const response = await fetch(this.URL_2);
-      const responseData = await response.json();
-      this.meetings = responseData;
+  const config = useRuntimeConfig();
+  try {
+    const response = await fetch(`${config.public.apiBase}/meetings`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
 
-      if (!response.ok) {
-        const error = new Error(responseData.message || "Failed to fetch!");
-        throw error;
-      }
+    if (!response.ok) {
+      throw new Error(`Failed to fetch events: ${response.status} ${response.statusText}`);
+    }
 
-      const meetingList = [];
+    const data = await response.json();
+    this.meetings = data;
+    return data;
 
-      for (const key in this.meetings) {
-        if (this.meetings[key]) {
-          const newNote = {
-            id: key,
-            ...this.meetings[key],
-          };
-          meetingList.push(newNote);
-        }
-      }
-      this.meetings = meetingList;
-    },
+  } catch (error) {
+    console.error("Failed to fetch events:", error);
+    return null;
+  }
+},
     async addMeeting(data) {
-      this.isLoading = true; // Start loading
-
+        const config = useRuntimeConfig();
       try {
-        const response = await fetch(this.URL_2, {
+        const response = await fetch(`${config.public.apiBase}/meetings`, {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
           body: JSON.stringify({ ...data }),
+          headers: { "Content-Type": "application/json" },
         });
-        if (!response.ok) {
-          throw new Error("Failed to add event");
-        }
 
-        // No need to generate a unique ID here, data is stored directly
+        if (!response.ok) {
+          throw new Error("Failed to add meeting");
+        }
       } catch (error) {
-        console.error("Failed to add city:", error);
-      } finally {
-        this.isLoading = false; // Stop loading
+        console.error("Failed to add meeting:", error);
       }
     },
     async deleteMeeting(itemID) {
-      const url = `https://project-manager-app-f9829-default-rtdb.firebaseio.com/meetings/${itemID}.json`;
-      let response = await fetch(url, {
-        method: "DELETE",
-        "Content-type": "application/json",
-      });
-      if (!response.ok) {
-        console.log("Error, request failed");
-      }
-    },
+  const config = useRuntimeConfig();
+  const url = `${config.public.apiBase}/meetings/${itemID}`;
+  try {
+    const response = await fetch(url, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+    });
+
+    if (!response.ok) {
+      console.error("Error, request failed");
+      return;
+    }
+
+    // ✅ Update local state after deletion
+    this.events = this.events.filter((event) => event._id !== itemID);
+  } catch (error) {
+    console.error("Error deleting Event:", error);
+  }
+},
 
     async updateMeeting(itemID, payload) {
-      const url = `https://project-manager-app-f9829-default-rtdb.firebaseio.com/meetings/${itemID}.json`;
+  const config = useRuntimeConfig();
+  const url = `${config.public.apiBase}/meetings/${itemID}`;
 
-      try {
-        const response = await fetch(url, {
-          method: "PATCH",
-          headers: { "Content-type": "application/json" },
-          body: JSON.stringify({ ...payload }),
-        });
+  try {
+    const response = await fetch(url, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
 
-        if (!response.ok) {
-          throw new Error("Failed to update meeting");
-        }
+    if (!response.ok) {
+      throw new Error(`Failed to update meeting: ${response.status} ${response.statusText}`);
+    }
 
-        // Ensure the response contains the updated data
-        const updatedMeeting = await response.json();
+    const updatedEvent = await response.json();
 
-        // Update the local state after a successful update
-        const index = this.meetings.findIndex((meeting) => meeting.id === itemID);
-        if (index !== -1) {
-          this.meetings[index] = { id: itemID, ...updatedMeeting };
-        }
-      } catch (error) {
-        console.error("Error updating meeting:", error);
-      }
-    },
+    // ✅ Update local Pinia state directly
+    const index = this.events.findIndex((event) => event._id === itemID);
+    if (index !== -1) {
+      this.events[index] = updatedEvent;
+    }
+  } catch (error) {
+    console.error("Error updating meeting:", error);
+  }
+},
   },
   getters: {
     itemsAsArray: (state) => {
@@ -98,11 +104,10 @@ export const useMeetingStore = defineStore({
     },
 
     //finds item based on parentDestinationID
-    filterItemById(state) {
-      const note = this.itemsAsArray.filter((item) => item.id);
-      return (id) => note.filter((data) => data.id === id);
+  
+  filterItemById: (state) => (id) => {
+      return state.meetings.filter((item) => item._id === id);
     },
-
     filterMeetings: (state) => (nameFilter, typeFilter, startDate, endDate, statusFilter) => {
   let filteredItems = state.meetings;
 

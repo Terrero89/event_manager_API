@@ -178,8 +178,8 @@ const sortedFilteredEvents = computed(() => {
     <MeetingsList
       v-else
       v-for="item in sortedFilteredEvents"
-      :key="item.id"
-      :id="item.id"
+      :key="item._id"
+      :_id="item._id"
       :description="item.description"
       :date="item.date"
       :meetingName="item.meetingName"
@@ -187,6 +187,8 @@ const sortedFilteredEvents = computed(() => {
       :duration="item.duration"
       :sprintId="item.sprintId"
       :status="item.status"
+       :updatedAt="item.updatedAt"
+        :createdAt="item.createdAt"
     />
 
     <div class="my-12"></div>
