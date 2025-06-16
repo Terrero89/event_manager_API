@@ -11,7 +11,9 @@ const props = defineProps([
 "eventName",
 "duration",
 "sprintId",
-"status"
+"status",
+"createdAt",
+"updatedAt",
 ]);
 
 const progressColor = computed(() => {
@@ -100,12 +102,12 @@ const isOpen = ref(false);
 
             <p><strong>Duration:</strong> {{ duration }} hours</p>
           </div>
-          <!-- <div class="data">
+          <div class="data">
             <p class="mr-2">
               <strong>Created:</strong> {{ formatDate(props.createdAt) }}
             </p>
             <p><strong>updated: </strong> {{ formatDate(props.updatedAt) }}</p>
-          </div> -->
+          </div>
         </div>
 
       </div>
@@ -113,21 +115,10 @@ const isOpen = ref(false);
       <div class="item-buttons my-2">
 
         <UButton variant="soft" class="" @click="isOpen = true">Details</UButton>
-       
-<!-- {{props}} -->
-<!-- by:{{by}}         -->
+
         <UModal v-model="isOpen">
-          <!-- <EventsDetails
-          :item="by"
-           :_id="props._id" 
-          :description="props.description"
-           :date="props.date"
-            :eventType="props.eventType"
-             :eventName="props.eventName"
-              :duration="props.duration"
-            :sprintId="props.sprintId" 
-            :status="props.status" /> -->
-            <UITest
+  
+            <EventsDetails
         
            :_id="props._id" 
           :description="props.description"
@@ -136,7 +127,8 @@ const isOpen = ref(false);
              :eventName="props.eventName"
               :duration="props.duration"
             :sprintId="props.sprintId" 
-            :status="props.status" /> 
+            :status="props.status"
+             /> 
             
         </UModal>
       </div>

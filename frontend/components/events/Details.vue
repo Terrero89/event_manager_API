@@ -1,9 +1,22 @@
 <script setup>
+import { reactive, computed } from "vue";
+import { useRouter } from "vue-router";
+import { CONFIG } from "~/config/globalVariables";
+import { onMounted } from "vue";
 const eventsStore = useEventStore();
 import { storeToRefs } from "pinia";
+const sprintsStore = useSprintStore();
 
-const {  itemsAsArray, filterItemById } = eventsStore
-const {events} = storeToRefs(eventsStore)
+const { addSprint, fetchSprints } = sprintsStore;
+const { sprintList, currentSprint } = storeToRefs(sprintsStore);
+const { addEvent, updateEvent, deleteEvent } = eventsStore;
+const { events } = storeToRefs(eventsStore);
+
+
+onMounted(async () => {
+  await fetchSprints();
+});
+
 const props = defineProps([
     "_id",
 "description",
@@ -12,37 +25,172 @@ const props = defineProps([
 "eventName",
 "duration",
 "sprintId",
-"status"
+"status",
+"createdAt",
+"updatedAt",
 ]);
-const by = computed(() => {
-  return filterItemById(props._id)[0];
+function formatDate(value) {
+  const date = new Date(value);
+  const year = date.getFullYear();
+  const month = `${date.getMonth() + 1}`.padStart(2, '0');
+  const day = `${date.getDate()}`.padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+// ref
+// Main form state using ref
+const form = ref({
+   
+  sprintId: currentSprint.value || '',
+  eventName: props.eventName,
+  eventType: props.eventType,
+  date: formatDate(props.date) ,
+  description: props.description,
+  status: props.status,
+  duration: props.duration,
 });
+
+const handleSubmit = async () => {
+
+
+  console.log({ ...form.value });
+  await updateEvent(props._id, { ...form.value });
+  navigateTo(`/`);
+};
+
+const removeItem = async (id) => {
+  if (
+    confirm(
+      "Are you sure you want to delete this city? This action cannot be undone."
+    )
+  ) {
+    await deleteEvent(id); // Proceed with the deletion if confirmed
+
+    // Optionally navigate or refresh the page after deletion
+    navigateTo(`/`);
+  }
+};
+
+
 </script>
 
 <template>
-  <div class="modal-details">
- ITEM: {{props.item}}
-   <EventsUpdateForm :eventById="by"/>
+
+  <div class="form-container">
+  
+  <h1 class="title">Modify Event</h1>
+   <form @submit.prevent="handleSubmit">
+  
+       <!-- Sprint -->
+      <div class="form-group">
+        <label for="sprint">Sprint Id {{form.sprintId}}</label>
+        <select v-model="form.sprintId" id="Event">
+          <option value="" disabled>Select sprint</option>
+          <option :value="item" v-for="item in sprintList"  :key="item" >{{ item }}</option>
+        </select>
+      
+      </div>
+
+       <!-- Event Type -->
+      <div class="form-group">
+        <label for="reporters">Event Type</label>
+        <select v-model="form.eventType" id="status">
+          <option value="" disabled>Select Type</option>
+          <option
+            v-for="activity in CONFIG.variables.eventTypes"
+            :key="activity"
+            :value="activity"
+          >
+            {{ activity }}
+          </option>
+        </select>
+       <!-- Event Name -->
+      <div class="form-group">
+        <label for="eventName">Event Name</label>
+        <input
+          v-model="form.eventName"
+          type="text"
+          id="eventName"
+          placeholder="Enter Event Name"
+        />
+ 
+      </div>
+          <div class="form-group">
+        <label for="date">Date</label>
+        <input v-model="form.date" type="date" id="date" />
+   
+      </div>
+
+        <!-- Status -->
+      <div class="form-group">
+        <label for="reporters">Status</label>
+        <select v-model="form.status" id="status">
+          <option value="" disabled>Select Type</option>
+          <option
+            v-for="activity in CONFIG.variables.statusLevel"
+            :key="activity"
+            :value="activity"
+          >
+            {{ activity }}
+          </option>
+        </select>
+       
+      </div>
+      <!-- Duration -->
+      <div class="form-group">
+        <label for="duration">Duration</label>
+        <input
+          v-model="form.duration"
+          step="0.25"
+          type="number"
+          id="duration"
+          placeholder="Enter Duration (e.g., 2h)"
+        />
+     
+      </div>
+      <!-- Priority Level -->
+      <div class="form-group">
+        <label for="priorityLevel">Description</label>
+        <textarea
+          class="form-control-textarea"
+          v-model="form.description"
+          type="text"
+          id="priorityLevel"
+          placeholder="Enter Priority (e.g., High)"
+        />
+    
+      </div>
+
+      <!-- Submit Button -->
+      <div class="modal-actions">
+        <UButton color="red" @click="removeItem(props._id)"
+          >Delete</UButton
+        >
+        <UButton type="submit">Update</UButton>
+      </div>
+
+
+      </div>
+   </form>
+    
   </div>
 </template>
 
 <style scoped>
 /* General Styles */
+
 body {
-  font-family: 'Arial', sans-serif;
+  font-family: "Arial", sans-serif;
   margin: 0;
   padding: 0;
   background-color: #f9f9f9;
 }
-e
-.title{
+
+.title {
   color: #bababa;
 }
 
 /* Form Container */
 .form-container {
-
-
   padding: 20px;
   background: #2c2c2c;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -169,4 +317,3 @@ select:focus {
   background-color: darkred;
 }
 </style>
-

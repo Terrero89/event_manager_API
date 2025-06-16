@@ -27,6 +27,7 @@ const props = defineProps([
   "noteName",
   "sprintId",
   "updatedAt",
+  "createdAt"
 ]);
 
 const navLinks = [

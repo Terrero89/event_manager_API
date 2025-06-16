@@ -13,7 +13,9 @@ const props = defineProps([
 "eventName",
 "duration",
 "sprintId",
-"status"
+"status",
+"createdAt",
+"updatedAt",
 ]);
 
 interface Event {
@@ -212,6 +214,8 @@ const sortedFilteredEvents = computed(() => {
       :duration="item.duration"
       :sprintId="item.sprintId"
       :status="item.status"
+        :updatedAt="item.updatedAt"
+        :createdAt="item.createdAt"
     />
   </div>
 </template>

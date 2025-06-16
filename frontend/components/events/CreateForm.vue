@@ -11,15 +11,12 @@ const { addSprint, fetchSprints } = sprintsStore;
 const { sprintList, currentSprint } = storeToRefs(sprintsStore);
 const { addEvent } = eventsStore;
 const { events } = storeToRefs(eventsStore);
-// for later use
-// const route = useRoute(); //route object
-// const destId = route.params.destinationID;
+
 const loadMessage = ref(false);
 
 // Main form state
 const form = reactive({
   sprintId: currentSprint.value || "",
-  // title: "Title",           // Note Title
   eventName: "dddd", // Event Name
   eventType: "dddd", // Event Type
   date: "", // Date
@@ -36,7 +33,7 @@ const router = useRouter();
 
 // Form field validation
 const validateFields = () => {
-  // errors.sprintId = !form.sprintId ? "Sprint is required" : "";
+
   errors.eventType = !form.eventType ? "Note Type is required" : "";
 
   errors.eventName = !form.eventName ? "Note Name is required" : "";
@@ -54,7 +51,7 @@ const handleSubmit = async () => {
 
   const newEvent = {
     sprintId: currentSprint.value,
-    // title: form.title,
+
     eventName: form.eventName,
     eventType: form.eventType,
     date: form.date,
