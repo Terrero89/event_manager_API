@@ -42,7 +42,6 @@ const router = useRouter();
 const validateFields = () => {
 
   errors.meetingType = !form.meetingType ? "Meeting Type is required" : "";
-
   errors.meetingName = !form.meetingName ? "Meeting Name is required" : "";
   errors.date = !form.date ? "Date is required" : "";
   errors.duration = !form.duration ? "Duration is required" : "";
@@ -59,8 +58,7 @@ const handleSubmit = async () => {
   if (!validateFields()) return;
 
   const newMeeting = {
-    // sprintId: form.sprintId,
-    title: "testing.",
+    sprintId: form.sprintId,
     meetingName: form.meetingName,
     meetingType: form.meetingType,
     date: form.date,

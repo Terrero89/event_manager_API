@@ -51,7 +51,6 @@ const handleSubmit = async () => {
 
   const newEvent = {
     sprintId: currentSprint.value,
-
     eventName: form.eventName,
     eventType: form.eventType,
     date: form.date,
