@@ -2,32 +2,30 @@
 import { reactive, computed } from "vue";
 import { useRouter } from "vue-router";
 import { CONFIG } from "~/config/globalVariables";
-import {onMounted } from 'vue'
+import { onMounted } from "vue";
 const eventsStore = useEventStore();
 import { storeToRefs } from "pinia";
 const sprintsStore = useSprintStore();
 
-
-const {  addSprint, fetchSprints} = sprintsStore;
-const {  sprintList, currentSprint } = storeToRefs(sprintsStore);
-const {  addEvent } = eventsStore;
+const { addSprint, fetchSprints } = sprintsStore;
+const { sprintList, currentSprint } = storeToRefs(sprintsStore);
+const { addEvent } = eventsStore;
 const { events } = storeToRefs(eventsStore);
 // for later use
 // const route = useRoute(); //route object
 // const destId = route.params.destinationID;
 const loadMessage = ref(false);
 
-
 // Main form state
 const form = reactive({
-  sprintId: currentSprint.value || '',
+  sprintId: currentSprint.value || "",
   // title: "Title",           // Note Title
-  eventName: "dddd",            // Event Name
-  eventType: "dddd",            // Event Type
-  date: "",                 // Date
-  description: "ddddd",          // Description
-  status: "Completed",      // Status
-  duration: 0,             // Duration
+  eventName: "dddd", // Event Name
+  eventType: "dddd", // Event Type
+  date: "", // Date
+  description: "ddddd", // Description
+  status: "Completed", // Status
+  duration: 0, // Duration
 });
 
 // Error messages
@@ -45,7 +43,7 @@ const validateFields = () => {
   errors.date = !form.date ? "Date is required" : "";
   errors.duration = !form.duration ? "Duration is required" : "";
   errors.description = !form.description ? "Note Description is required" : "";
-  errors.status = !form.status ? "Status is required": ""
+  errors.status = !form.status ? "Status is required" : "";
 
   return Object.values(errors).every((err) => !err);
 };
@@ -63,8 +61,6 @@ const handleSubmit = async () => {
     description: form.description,
     status: form.status,
     duration: form.duration,
- 
-
   };
 
   await addEvent(newEvent); // Add the new event to the store
@@ -76,11 +72,9 @@ const handleSubmit = async () => {
   }, 1700);
 };
 
-onMounted(async() => {
-
-  await fetchSprints()
+onMounted(async () => {
+  await fetchSprints();
 });
-
 </script>
 <template>
   <div class="form-container">
@@ -94,18 +88,25 @@ onMounted(async() => {
           id="sprintId"
           placeholder="Enter Event Name"
         />
-
       </div>
 
-   <div class="form-group">
+      <div class="form-group">
         <label for="reporters">Event Type</label>
         <select v-model="form.eventType" id="status">
           <option value="" disabled>Select Type</option>
-          <option v-for="activity in CONFIG.variables.eventTypes" :key="activity" :value="activity">{{ activity }}</option>
+          <option
+            v-for="activity in CONFIG.variables.eventTypes"
+            :key="activity"
+            :value="activity"
+          >
+            {{ activity }}
+          </option>
         </select>
-        <span v-if="errors.eventType" class="error">{{ errors.eventType }}</span>
+        <span v-if="errors.eventType" class="error">{{
+          errors.eventType
+        }}</span>
       </div>
- 
+
       <div class="form-group">
         <label for="eventName">Event Name</label>
         <input
@@ -114,10 +115,10 @@ onMounted(async() => {
           id="eventName"
           placeholder="Enter Event Name"
         />
-        <span v-if="errors.eventName" class="error">{{ errors.eventName }}</span>
+        <span v-if="errors.eventName" class="error">{{
+          errors.eventName
+        }}</span>
       </div>
-
-   
 
       <!-- Date -->
       <div class="form-group">
@@ -126,15 +127,20 @@ onMounted(async() => {
         <span v-if="errors.date" class="error">{{ errors.date }}</span>
       </div>
 
-
       <!-- Status -->
       <div class="form-group">
         <label for="reporters">Event Type</label>
         <select v-model="form.status" id="status">
           <option value="" disabled>Select Type</option>
-          <option v-for="activity in CONFIG.variables.statusLevel" :key="activity" :value="activity">{{ activity }}</option>
+          <option
+            v-for="activity in CONFIG.variables.statusLevel"
+            :key="activity"
+            :value="activity"
+          >
+            {{ activity }}
+          </option>
         </select>
-        <span v-if="errors.status" class="error">{{ errors.status}}</span>
+        <span v-if="errors.status" class="error">{{ errors.status }}</span>
       </div>
       <!-- Duration -->
       <div class="form-group">
@@ -146,7 +152,7 @@ onMounted(async() => {
           id="duration"
           placeholder="Enter Duration (e.g., 2h)"
         />
-        <span v-if="errors.duration" class="error">{{ errors.duration}}</span>
+        <span v-if="errors.duration" class="error">{{ errors.duration }}</span>
       </div>
 
       <!-- Priority Level -->
@@ -158,7 +164,9 @@ onMounted(async() => {
           id="priorityLevel"
           placeholder="Enter Priority (e.g., High)"
         />
-        <span v-if="errors.description" class="error">{{ errors.description}}</span>
+        <span v-if="errors.description" class="error">{{
+          errors.description
+        }}</span>
       </div>
 
       <!-- Submit Button -->
@@ -168,20 +176,19 @@ onMounted(async() => {
   </div>
 </template>
 
-
 <style scoped>
 .temp {
   color: rgb(6, 170, 135);
 }
 /* General Styles */
 body {
-  font-family: 'Arial', sans-serif;
+  font-family: "Arial", sans-serif;
   margin: 0;
   padding: 0;
   background-color: #f9f9f9;
 }
 
-.title{
+.title {
   color: #bababa;
 }
 
@@ -278,4 +285,3 @@ select:focus {
   }
 }
 </style>
-

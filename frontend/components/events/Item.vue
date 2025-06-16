@@ -1,13 +1,17 @@
 <script setup>
+const eventsStore = useEventStore();
+import { storeToRefs } from "pinia";
+
+const {  itemsAsArray, filterItemById } = eventsStore
 const props = defineProps([
-  "id",
-  "description",
-  "date",
-  "eventType",
-  "eventName",
-  "duration",
-  "sprintId",
-  "status",
+    "_id",
+"description",
+"date",
+"eventType",
+"eventName",
+"duration",
+"sprintId",
+"status"
 ]);
 
 const progressColor = computed(() => {
@@ -58,7 +62,11 @@ const typeColor = computed(() => {
       return "gray";
   }
 });
-const noteIdRoute = computed(() => `/notes/${props.id}`);
+
+const by = computed(() => {
+  return filterItemById(props._id)[0];
+});
+
 const isOpen = ref(false);
 </script>
 
@@ -69,7 +77,11 @@ const isOpen = ref(false);
       <div class="item">
         <p><strong>Event Name: </strong> {{ eventName }}</p>
         <!-- <h1>{{id}}</h1> -->
-
+<!-- ID: {{ props.id }} -->
+<!-- <div>PROPS: {{props}}</div> -->
+<!-- <div>{{by}}</div> -->
+<!-- <div>props.id: {{props.id}}</div> -->
+<!-- <div>from DB {{filterItemById(props.id) }}</div> -->
         <div class="item-header">
                     <p><strong>Event Type:</strong> <UBadge :color="typeColor" variant="soft" > {{ props.eventType }}</UBadge></p>
  <p><strong>Status:</strong> <UBadge :color="progressColor" variant="soft" > {{ props.status}}</UBadge></p>
@@ -99,14 +111,33 @@ const isOpen = ref(false);
       </div>
 
       <div class="item-buttons my-2">
+
         <UButton variant="soft" class="" @click="isOpen = true">Details</UButton>
        
-
-        
+<!-- {{props}} -->
+<!-- by:{{by}}         -->
         <UModal v-model="isOpen">
-          <EventsDetails :id="id" :title="props.title" :description="props.description" :date="props.date"
-            :eventType="props.eventType" :eventName="props.eventName" :duration="props.duration"
-            :sprintId="props.sprintId" :status="props.status" />
+          <!-- <EventsDetails
+          :item="by"
+           :_id="props._id" 
+          :description="props.description"
+           :date="props.date"
+            :eventType="props.eventType"
+             :eventName="props.eventName"
+              :duration="props.duration"
+            :sprintId="props.sprintId" 
+            :status="props.status" /> -->
+            <UITest
+        
+           :_id="props._id" 
+          :description="props.description"
+           :date="props.date"
+            :eventType="props.eventType"
+             :eventName="props.eventName"
+              :duration="props.duration"
+            :sprintId="props.sprintId" 
+            :status="props.status" /> 
+            
         </UModal>
       </div>
     </UIRenderer>

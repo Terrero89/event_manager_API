@@ -11,51 +11,48 @@ const { addSprint, fetchSprints } = sprintsStore;
 const { sprintList, currentSprint } = storeToRefs(sprintsStore);
 const { addEvent, updateEvent, deleteEvent } = eventsStore;
 const { events } = storeToRefs(eventsStore);
-// for later use
-// const route = useRoute(); //route object
-// const destId = route.params.destinationID;
+
 
 onMounted(async () => {
   await fetchSprints();
 });
 
 const props = defineProps([
-  "eventById",
-])
-
+    "_id",
+"description",
+"date",
+"eventType",
+"eventName",
+"duration",
+"sprintId",
+"status"
+]);
+function formatDate(value) {
+  const date = new Date(value);
+  const year = date.getFullYear();
+  const month = `${date.getMonth() + 1}`.padStart(2, '0');
+  const day = `${date.getDate()}`.padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+// ref
 // Main form state using ref
 const form = ref({
-  sprintId: currentSprint.value,
-
-  eventName: props.eventById.eventName,
-  eventType: props.eventById.eventType,
-  date: props.eventById.date,
-  description: props.eventById.description,
-  status: props.eventById.status,
-  duration: props.eventById.duration,
+   
+  sprintId: currentSprint.value || '',
+  eventName: props.eventName,
+  eventType: props.eventType,
+  date: formatDate(props.date) ,
+  description: props.description,
+  status: props.status,
+  duration: props.duration,
 });
 
-const validateFields = () => {
-  // errors.value.sprintId = !form.value.sprintId ? "Sprint is required" : "";
-  errors.value.eventType = !form.value.eventType ? "Note Type is required" : "";
-  // errors.value.title = !form.value.title ? "Note Title is required" : "";
-  errors.value.eventName = !form.value.eventName ? "Note Name is required" : "";
-  errors.value.date = !form.value.date ? "Date is required" : "";
-  errors.value.duration = !form.value.duration ? "Duration is required" : "";
-  errors.value.description = !form.value.description
-    ? "Note Description is required"
-    : "";
-  errors.value.status = !form.value.status ? "Status is required" : "";
-
-  return Object.values(errors.value).every((err) => !err);
-};
-// Submit handler
 const handleSubmit = async () => {
-  if (!validateFields()) return;
+
 
   console.log({ ...form.value });
-  await updateEvent(props.eventById._id, { ...form.value });
-  navigateTo(`/`);
+  await updateEvent(props._id, { ...form.value });
+//   navigateTo(`/`);
 };
 
 const removeItem = async (id) => {
@@ -70,22 +67,28 @@ const removeItem = async (id) => {
     navigateTo(`/`);
   }
 };
+
+
 </script>
+
 <template>
+
   <div class="form-container">
-    <h1 class="title">Modify Event</h1>
-    <form @submit.prevent="handleSubmit">
-      <!-- Sprint -->
-      <!-- <div class="form-group">
+  {{props._id}}
+  <h1 class="title">Modify Event</h1>
+   <form @submit.prevent="handleSubmit">
+   {{ form.eventName }}-- {{form.sprintId}} - {{form.eventType}}
+       <!-- Sprint -->
+      <div class="form-group">
         <label for="sprint">Sprint Id {{form.sprintId}}</label>
         <select v-model="form.sprintId" id="Event">
           <option value="" disabled>Select sprint</option>
           <option :value="item" v-for="item in sprintList"  :key="item" >{{ item }}</option>
         </select>
-        <span v-if="errors.sprintId" class="error">{{ errors.sprintId }}</span>
-      </div> -->
+      
+      </div>
 
-      <!-- Event Type -->
+       <!-- Event Type -->
       <div class="form-group">
         <label for="reporters">Event Type</label>
         <select v-model="form.eventType" id="status">
@@ -98,22 +101,7 @@ const removeItem = async (id) => {
             {{ activity }}
           </option>
         </select>
-        <span v-if="errors.eventType" class="error">{{
-          errors.eventType
-        }}</span>
-      </div>
-      <!-- Event Name -->
-      <!-- <div class="form-group">
-        <label for="eventName">Event Title</label>
-        <input
-          v-model="form.title"
-          type="text"
-          id="eventName"
-          placeholder="Enter Event Name"
-        />
-        <span v-if="errors.title" class="error">{{ errors.title}}</span>
-      </div> -->
-      <!-- Event Name -->
+       <!-- Event Name -->
       <div class="form-group">
         <label for="eventName">Event Name</label>
         <input
@@ -122,18 +110,15 @@ const removeItem = async (id) => {
           id="eventName"
           placeholder="Enter Event Name"
         />
-        <span v-if="errors.eventName" class="error">{{
-          errors.eventName
-        }}</span>
+ 
       </div>
-      <!-- Date -->
-      <div class="form-group">
+          <div class="form-group">
         <label for="date">Date</label>
         <input v-model="form.date" type="date" id="date" />
-        <span v-if="errors.date" class="error">{{ errors.date }}</span>
+   
       </div>
 
-      <!-- Status -->
+        <!-- Status -->
       <div class="form-group">
         <label for="reporters">Status</label>
         <select v-model="form.status" id="status">
@@ -146,7 +131,7 @@ const removeItem = async (id) => {
             {{ activity }}
           </option>
         </select>
-        <span v-if="errors.status" class="error">{{ errors.status }}</span>
+       
       </div>
       <!-- Duration -->
       <div class="form-group">
@@ -158,7 +143,7 @@ const removeItem = async (id) => {
           id="duration"
           placeholder="Enter Duration (e.g., 2h)"
         />
-        <span v-if="errors.duration" class="error">{{ errors.duration }}</span>
+     
       </div>
       <!-- Priority Level -->
       <div class="form-group">
@@ -170,19 +155,21 @@ const removeItem = async (id) => {
           id="priorityLevel"
           placeholder="Enter Priority (e.g., High)"
         />
-        <span v-if="errors.description" class="error">{{
-          errors.description
-        }}</span>
+    
       </div>
 
       <!-- Submit Button -->
       <div class="modal-actions">
-        <UButton color="red" @click="removeItem(props.noteById._id)"
+        <UButton color="red" @click="removeItem(props._id)"
           >Delete</UButton
         >
         <UButton type="submit">Update</UButton>
       </div>
-    </form>
+
+
+      </div>
+   </form>
+    
   </div>
 </template>
 

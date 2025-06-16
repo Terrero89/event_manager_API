@@ -5,6 +5,17 @@ const eventsStore = useEventStore();
 import { storeToRefs } from "pinia";
 const sprintsStore = useSprintStore();
 
+const props = defineProps([
+    "_id",
+"description",
+"date",
+"eventType",
+"eventName",
+"duration",
+"sprintId",
+"status"
+]);
+
 interface Event {
   id: number | string;
   description: string;
@@ -192,8 +203,8 @@ const sortedFilteredEvents = computed(() => {
     <EventsList
       v-else
       v-for="item in sortedFilteredEvents"
-      :key="item.id"
-      :id="item.id"
+      :key="item._id"
+      :_id="item._id"
       :description="item.description"
       :date="item.date"
       :eventName="item.eventName"

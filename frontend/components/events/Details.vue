@@ -5,24 +5,23 @@ import { storeToRefs } from "pinia";
 const {  itemsAsArray, filterItemById } = eventsStore
 const {events} = storeToRefs(eventsStore)
 const props = defineProps([
-  "id",
-  "description",
-  "date",
-  "eventType",
-  "eventName",
-  "duration",
-  "sprintId",
-  "status"
-])
-const by = computed(()=> {{
-  for(let i=0; i<filterItemById(props.id).length; i++){
-    return filterItemById(props.id)[i]
-  }
-}})
+    "_id",
+"description",
+"date",
+"eventType",
+"eventName",
+"duration",
+"sprintId",
+"status"
+]);
+const by = computed(() => {
+  return filterItemById(props._id)[0];
+});
 </script>
 
 <template>
   <div class="modal-details">
+ ITEM: {{props.item}}
    <EventsUpdateForm :eventById="by"/>
   </div>
 </template>

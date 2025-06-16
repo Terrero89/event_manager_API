@@ -49,46 +49,55 @@ async fetchEvents(){
         console.error("Failed to add event:", error);
       }
     },
-    async deleteEvent(itemID) {
-      const url = `https://project-manager-app-f9829-default-rtdb.firebaseio.com/events/${itemID}.json`
-      let response = await fetch(url,
-        {
-          method: "DELETE",
-          "Content-type": "application/json",
-        }
-      );
-      if (!response.ok) {
-        console.log("Error, request failed");
-      }
-    },
+async deleteEvent(itemID) {
+  const config = useRuntimeConfig();
+  const url = `${config.public.apiBase}/events/${itemID}`;
+  try {
+    const response = await fetch(url, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+    });
 
-    async updateEvent(eventID, payload) {
-      const url = `https://project-manager-app-f9829-default-rtdb.firebaseio.com/events/${eventID}.json`;
-      const options = {
-        method: "PATCH",
-        headers: { "Content-type": "application/json" },
-        body: JSON.stringify(payload),
-      };
+    if (!response.ok) {
+      console.error("Error, request failed");
+      return;
+    }
 
-      try {
-        const response = await fetch(url, options);
-        if (!response.ok) {
-          throw new Error("Failed to update Event");
-        }
+    // ✅ Update local state after deletion
+    this.events = this.events.filter((event) => event._id !== itemID);
+  } catch (error) {
+    console.error("Error deleting Event:", error);
+  }
+},
 
-        // Ensure the response contains the updated data
-        const updatedEvent = await response.json();
+     async updateEvent(itemID, payload) {
+  const config = useRuntimeConfig();
+  const url = `${config.public.apiBase}/events/${itemID}`;
 
-        // Update the local state after a successful update
-        const index = this.events.findIndex((event) => event.id === eventID);
-        if (index !== -1) {
-          // Use the returned data from Firebase to ensure consistency
-          this.events[index] = { id: eventID, ...updatedEvent };
-        }
-      } catch (error) {
-        console.error("Error updating Event:", error);
-      }
-    },
+  try {
+    const response = await fetch(url, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to update event: ${response.status} ${response.statusText}`);
+    }
+
+    const updatedEvent = await response.json();
+
+    // ✅ Update local Pinia state directly
+    const index = this.events.findIndex((event) => event._id === itemID);
+    if (index !== -1) {
+      this.events[index] = updatedEvent;
+    }
+  } catch (error) {
+    console.error("Error updating event:", error);
+  }
+},
   },
   getters: {
 
@@ -98,14 +107,9 @@ async fetchEvents(){
     },
 
     //finds item based on parentDestinationID
-    filterItemById(state) {
-      const note = this.itemsAsArray.filter((item) => item.id);
-      return (id) => note.filter((data) => data.id === id);
+  filterItemById: (state) => (id) => {
+      return state.events.filter((item) => item._id === id);
     },
-
-    // ON HOLD For NEXT CHANGES
-
-   
     filterEventsByEventType: (state) => (byCategory) => {
       // Step 1: Filter by destination ID (parentDestinationID)
       let currEvents = state.events;

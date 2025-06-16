@@ -2,7 +2,7 @@
 <script setup>
 
 const props = defineProps([
-    "id",
+    "_id",
 "description",
 "date",
 "eventType",
@@ -31,10 +31,10 @@ const isOpen = ref(false);
             </UModal>
         
       </div>
-
+List: {{props.id}}
+{{props}}
         <EventsItem
-            :id="id"
-            :title="props.title"
+            :_id="_id"
             :description="props.description"
             :date="props.date"
             :eventType="props.eventType"
