@@ -3,9 +3,7 @@ import { defineStore } from "pinia";
 export const useMeetingStore = defineStore({
   id: "meetings",
   state: () => ({
-    URL: "http://localhost:8080/api/v1/meetings",
-    URL_2:
-      "https://project-manager-app-f9829-default-rtdb.firebaseio.com/meetings.json",
+
     meetings: [],
   }),
   actions: {
@@ -63,7 +61,7 @@ export const useMeetingStore = defineStore({
     }
 
     // ✅ Update local state after deletion
-    this.events = this.events.filter((event) => event._id !== itemID);
+    this.meetings = this.meetings.filter((event) => event._id !== itemID);
   } catch (error) {
     console.error("Error deleting Event:", error);
   }
