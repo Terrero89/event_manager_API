@@ -22,6 +22,7 @@ const loadMessage = ref(false);
 
 // Main form state
 const form = reactive({
+
   sprintId: currentSprint.value,
   title: "", // Note Title
   meetingName: "", // Event Name
@@ -113,18 +114,7 @@ onMounted(async () => {
           errors.meetingType
         }}</span>
       </div>
-      <!-- Event Title -->
-      <!-- <div class="form-group">
-        <label for="eventName"> Meeting Title</label>
-        <input
-          v-model="form.title"
-          type="text"
-          id="eventName"
-          placeholder="Enter Meeting Name"
-        />
-        <span v-if="errors.title" class="error">{{ errors.title }}</span>
-      </div> -->
-      <!-- Event Name -->
+   
       <div class="form-group">
         <label for="eventName">Meeting Name</label>
         <input
@@ -148,7 +138,7 @@ onMounted(async () => {
       <!-- Status -->
       <div class="form-group">
         <label for="status">Status</label>
-        <select v-model="form.eventType" id="status">
+        <select v-model="form.status" id="status">
           <option value="" disabled>Select Type</option>
           <option
             v-for="activity in CONFIG.variables.statusLevel"

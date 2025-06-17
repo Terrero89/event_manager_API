@@ -55,12 +55,12 @@ const isOpen = ref(false);
 
 <template>
   <div>
-    <!-- <h3>ITEM COMPONENT</h3> -->
+
     <UIRenderer>
       <div class="item">
         <p><strong>Name: </strong> {{ noteName }}</p>
 
-        <!-- id:{{ props.id }} -->
+  
 
         <div class="item-header">
           <p>

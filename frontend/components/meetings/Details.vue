@@ -87,14 +87,13 @@ onMounted(async () => {
 <template>
   <div class="form-container">
  <div>
-  {{props._id}}
 </div>
     <h1 class="title">Modify Meeting</h1>
     <form @submit.prevent="handleSubmit">
 
         <!-- Sprint -->
       <div class="form-group">
-        <label for="sprint">Sprint Id {{form.sprintId}}</label>
+        <label for="sprint">Sprint Id </label>
         <select v-model="form.sprintId" id="Event">
           <option value="" disabled>Select sprint</option>
           <option :value="item" v-for="item in sprintList"  :key="item" >{{ item }}</option>

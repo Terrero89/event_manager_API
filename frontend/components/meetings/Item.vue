@@ -134,7 +134,6 @@ const isOpen = ref(false);
       </div>
 
       <div class="item-buttons my-2">
-      {{props._id}}
         <UButton variant="soft" class="" @click="isOpen = true">Details</UButton>
        
         <UModal v-model="isOpen">

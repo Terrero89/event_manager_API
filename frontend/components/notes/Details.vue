@@ -28,7 +28,6 @@ onMounted(async () => {
 </script>
 
 <template>
-  <!-- props:{{props}} -->
   <div class="modal-details">
     <NotesUpdateForm :noteById="by"/>
   </div>
