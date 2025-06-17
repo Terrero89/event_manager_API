@@ -15,7 +15,6 @@ const { sprintList, currentSprint } = storeToRefs(sprintsStore);
 const loadMessage = ref(false);
 const sprint = ref({
   sprintID: "SP-",
-  relatedStoryId: "DMR-001",
   startDate: "2025-01-22",
   dueDate: "2025-01-29",
   summary: ["summary1", "summary2", "summary3"],
@@ -36,7 +35,7 @@ const sprintDuration = computed(() => {
 const handleSubmit = async () => {
   const newSprint = {
     sprintID: sprint.value.sprintID,
-    relatedStoryId: sprint.value.relatedStoryId,
+  
     startDate: sprint.value.startDate,
     dueDate: sprint.value.dueDate,
     summary: sprint.value.summary,
@@ -67,16 +66,7 @@ const handleSubmit = async () => {
         <input v-model="sprint.sprintID" type="text" id="sprintID" />
       </div>
 
-      <!-- Related Story ID -->
-      <div>
-        <label for="relatedStoryId">Related Story ID:</label>
-        <input
-          v-model="sprint.relatedStoryId"
-          type="text"
-          id="relatedStoryId"
-        />
-      </div>
-
+     
       <!-- Start Date -->
       <div>
         <label for="startDate">Start Date:</label>
