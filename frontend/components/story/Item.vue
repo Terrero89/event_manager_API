@@ -95,8 +95,8 @@ const isOpen = ref(false);
     <UIRenderer>
       <div class="item">
         <p><strong>Sprint Id:</strong> {{ props.sprintId}}</p>
-        <p><strong>Story Name:</strong> {{ props.storyTitle }}</p>
-props:{{props._id}}
+        <p><strong>Story Name:</strong> {{ props.storyName }}</p>
+
         <div class="item-header">
         
           <p><strong>Development: </strong> <UBadge :color="developmentTypeColor" variant="soft"> {{ props.developmentType }}</UBadge></p>
