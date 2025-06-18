@@ -23,10 +23,10 @@ const form = reactive({
   storyTitle: "c2t please",
   storyNumber: "dm123",
   storyName: "storyName",
-  storyDescription: "descriptiopn",
-  difficultyLevel: "Low",
+    storyDescription: "descriptiopn",
+     difficultyLevel: "Low",
   storyPoints: 1,
-  workType: "Story",
+    workType: "Story",
   developmentType: "Frontend",
   status: "Backlog",
   reporter: "",
@@ -34,20 +34,14 @@ const form = reactive({
   learning: "changed perspective on this exe",
   repoNames: "repo1, repo2",
   dateAssigned: new Date(),
- 
-
   
- 
-
- 
-
 });
 const errors = reactive({});
 const router = useRouter();
 
 
 const validateFields = () => {
-  errors.sprintId= !form.sprintId ? "Sprint id is required" : "";
+  // errors.sprintId= !form.sprintId ? "Sprint id is required" : "";
   errors.storyTitle = !form.storyTitle ? "Story Title is required" : "";
   errors.storyName = !form.storyName ? "Story Name is required" : "";
   errors.storyNumber = !form.storyNumber ? "Story Number is required" : "";
@@ -76,8 +70,7 @@ const handleSubmit = async () => {
   if (!validateFields()) return;
 
   const newStory = {
-    sprintId: form.sprintId || '',
-    // storyTitle:form.storyTitle,
+    sprintId: form.sprintId,
     storyName: form.storyName,
     storyNumber: form.storyNumber,
     storyDescription: form.storyDescription,
@@ -91,6 +84,7 @@ const handleSubmit = async () => {
     repoNames: form.repoNames,
     learning: form.learning,
     dateAssigned: new Date(),
+    dateCompleted: new Date(),
    
    
 

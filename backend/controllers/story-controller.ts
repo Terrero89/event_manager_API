@@ -79,7 +79,6 @@ export const updateStoryController = async (req: Request, res: Response) => {
 export const createStoryController = async (req: Request, res: Response) => {
   const {
     sprintId,
-    storyTitle,
     storyName,
     storyNumber,
     storyDescription,
@@ -98,7 +97,6 @@ export const createStoryController = async (req: Request, res: Response) => {
   try {
     const story = await Stories.create({
       sprintId,
-      storyTitle,
       storyName,
       storyNumber,
       storyDescription,

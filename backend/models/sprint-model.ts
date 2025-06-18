@@ -10,9 +10,9 @@ const SprintSchema: Schema = new Schema({
     storiesUnderSprint:{
         type: String,
         required: false,
-    }
+    },
+}, { timestamps: true });
 
-});
 
 
 export const Sprint = mongoose.model("Sprint", SprintSchema);

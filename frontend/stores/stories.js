@@ -11,32 +11,37 @@ export const useStoryStore = defineStore({
   }),
   actions: {
     async fetchStories() {
-      const response = await fetch(this.URL_2);
-      const responseData = await response.json();
-      this.items = responseData;
+  const config = useRuntimeConfig();
+  const url = `${config.public.apiBase}/stories`;
+  try {
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
 
-      if (!response.ok) {
-        const error = new Error(responseData.message || "Failed to fetch!");
-        throw error;
-      }
+    if (!response.ok) {
+      throw new Error(`Failed to fetch sprints: ${response.status} ${response.statusText}`);
+    }
 
-      const itemsList = [];
+    const data = await response.json();
+    this.items = data;
+     
+     
+    return data;
 
-      for (const key in this.items) {
-        if (this.items[key]) {
-          // Check if city data exists
-          const newItem = {
-            id: key,
-            ...this.items[key],
-          };
-          itemsList.push(newItem);
-        }
-      }
-      this.items = itemsList;
-    },
+  } catch (error) {
+    console.error("Failed to fetch storiess:", error);
+    return null;
+  }
+},
     async addStory(data) {
+       const config = useRuntimeConfig();
+  const url = `${config.public.apiBase}/stories`;
+  // const url = "http://localhost:8080/api/v1/stories"
       try {
-        const response = await fetch(this.URL_2, {
+        const response = await fetch(url, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -53,45 +58,54 @@ export const useStoryStore = defineStore({
       } finally {
       }
     },
-    async deleteStory(itemID) {
-      const url = `https://project-manager-app-f9829-default-rtdb.firebaseio.com/stories/${itemID}.json`;
-      let response = await fetch(url, {
-        method: "DELETE",      filterWorkType: filterWorkType,
-        "Content-type": "application/json",
-      });
-      if (!response.ok) {
-        console.log("Error, request failed");
-      }
-    },
+async deleteStory(itemID) {
+  const config = useRuntimeConfig();
+  const url = `${config.public.apiBase}/stories/${itemID}`;
+  try {
+    const response = await fetch(url, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+    });
 
-    async updateStory(itemID, payload) {
-      const url = `https://project-manager-app-f9829-default-rtdb.firebaseio.com/stories/${itemID}.json`;
-      const options = {
-        method: "PATCH",
-        headers: { "Content-type": "application/json" },
-        body: JSON.stringify(payload),
-      };
+    if (!response.ok) {
+      console.error("Error, request failed");
+      return;
+    }
 
-      try {
-        const response = await fetch(url, options);
-        if (!response.ok) {
-          throw new Error("Failed to update city");
-        }
+    // ✅ Update local state after deletion
+    this.items = this.items.filter((event) => event._id !== itemID);
+  } catch (error) {
+    console.error("Error deleting Event:", error);
+  }
+},
+    async updateStory(itemID, payload){
+  const config = useRuntimeConfig();
+  const url = `${config.public.apiBase}/stories/${itemID}`;
 
-        // Ensure the response contains the updated data
-        const updatedCity = await response.json();
+  try {
+    const response = await fetch(url, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
 
-        // Update the local state after a successful update
-        const index = this.items.findIndex((city) => city.id === itemID);
-        if (index !== -1) {
-          // Use the returned data from Firebase to ensure consistency
-          this.items[index] = { id: itemID, ...updatedCity };
-        }
-      } catch (error) {
-        console.error("Error updating city:", error);
-      }
-    },
+    if (!response.ok) {
+      throw new Error(`Failed to update event: ${response.status} ${response.statusText}`);
+    }
 
+    const updatedEvent = await response.json();
+
+    // ✅ Update local Pinia state directly
+    const index = this.items.findIndex((event) => event._id === itemID);
+    if (index !== -1) {
+      this.items[index] = updatedEvent;
+    }
+  } catch (error) {
+    console.error("Error updating event:", error);
+  }
+},
   },
   getters: {
     itemsAsArray: (state) => {

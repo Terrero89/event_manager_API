@@ -19,8 +19,7 @@ const { currentSprint, sprintList } = storeToRefs(sprintsStore);
 const props = defineProps([
   //PROPS HERE
   "id",
-  "progressType",
-  "storyTitle", // fix bug etc...
+
   "storyNumber", // DMR-xxxx
   "storyName", // C2T xxx
   "storyDescription", // description
@@ -30,15 +29,13 @@ const props = defineProps([
   "developmentType", // frontend, backend, fullstack
   "status", // to do, in progress, demo ready, completed, released
   "storyComments",
-  "date",
-  "updatedAt",
   "reporter", // reported who assigned story
   "repoNames", // repo we are going to work on
   "dateAssigned",
   "dateCompleted",
-  "sprint", // PL!, 2 etcc
+  "sprintId", // PL!, 2 etcc
   "learning", // comments on learning
-
+"createdAt",
   "updatedAt",
 ]);
 const links = [
@@ -195,13 +192,27 @@ const sortedFilteredStories = computed(() => {
 
       </div>
       <UIEmptyMessage v-if="items.length < 1" title="stories" />
-      <StoryList v-else v-for="item in sortedFilteredStories" :key="item.id" :id="item.id"
-        :progressType="item.progressType" :storyTitle="item.storyTitle" :storyName="item.storyName"
-        :storyDescription="item.storyDescription" :difficultyLevel="item.difficultyLevel"
-        :storyPoints="item.storyPoints" :workType="item.workType" :developmentType="item.developmentType"
-        :status="item.status" :storyComments="item.storyComments" :date="item.date" :reporter="item.reporter"
-        :repoNames="item.repoNames" :dateAssigned="item.dateAssigned" :dateCompleted="item.dateCompleted"
-        :sprintId="item.sprintId" :learning="item.learning" />
+      <StoryList v-else v-for="item in sortedFilteredStories" 
+      :key="item._id" 
+      :_id="item._id"
+ :sprintId="item.sprintId" 
+         :storyNumber="item.storyNumber"
+          :storyName="item.storyName"
+        :storyDescription="item.storyDescription"
+         :difficultyLevel="item.difficultyLevel"
+        :storyPoints="item.storyPoints"
+         :workType="item.workType" 
+         :developmentType="item.developmentType"
+        :status="item.status"
+         :storyComments="item.storyComments"
+          :reporter="item.reporter"
+        :repoNames="item.repoNames" 
+        :dateAssigned="item.dateAssigned" 
+        :dateCompleted="item.dateCompleted"
+        :learning="item.learning"
+        :createdAt="item.createdAt"
+        :updatedAt="item.updatedAt"
+         />
     </div>
     <div class="my-12"></div>
   </div>

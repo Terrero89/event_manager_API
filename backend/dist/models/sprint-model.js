@@ -44,6 +44,6 @@ const SprintSchema = new mongoose_1.Schema({
     storiesUnderSprint: {
         type: String,
         required: false,
-    }
-});
+    },
+}, { timestamps: true });
 exports.Sprint = mongoose_1.default.model("Sprint", SprintSchema);

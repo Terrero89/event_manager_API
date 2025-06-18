@@ -1,8 +1,6 @@
 <script setup lang="ts">
 const props = defineProps([
-  "id",
-  "progressType",
-  "storyTitle", // fix bug etc...
+  "_id",
   "storyNumber", // DMR-xxxx
   "storyName", // C2T xxx
   "storyDescription", // description
@@ -12,17 +10,15 @@ const props = defineProps([
   "developmentType", // frontend, backend, fullstack
   "status", // to do, in progress, demo ready, completed, released
   "storyComments",
-  "date",
   "reporter", // reported who assigned story
   "repoNames", // repo we are going to work on
   "dateAssigned",
   "dateCompleted",
   "sprintId", // PL!, 2 etcc
   "learning", // comments on learning
-  "planningNotes", // planning for the spring
-
+"createdAt",
+  "updatedAt",
 ]);
-
 </script>
 
 <template>
@@ -32,9 +28,7 @@ const props = defineProps([
     <div class="progress">
       
       <StoryItem
-      :id="props.id"
-      :progressType="props.progressType"
-      :storyTitle="props.storyTitle"
+    :_id="props._id"
       :storyName="props.storyName"
       :storyDescription="props.storyDescription"
       :difficultyLevel="props.difficultyLevel"
@@ -43,14 +37,15 @@ const props = defineProps([
       :developmentType="props.developmentType"
       :status="props.status"
       :storyComments="props.storyComments"
-      :date="props.date"
+      :dateAssigned="props.dateAssigned"
       :reporter="props.reporter"
       :repoNames="props.repoNames"
-        :dateAssigned="props.dateAssigned"
       :dateCompleted="props.dateCompleted"
       :sprintId="props.sprintId"
       :learning="props.learning"
-     
+      :createdAt="props.createdAt"
+        :updatedAt="props.updatedAt"
+    
 
 
       />

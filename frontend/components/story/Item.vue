@@ -4,27 +4,23 @@
 import { computed, ref } from "vue";
 
 const props = defineProps([
-  //PROPS HERE
-  "id",
-  "storyTitle",
-  "storyDescription",
-  "difficultyLevel",
-  "storyPoints",
-  "workType",
-  "developmentType",
-  "status",
+  "_id",
+  "storyNumber", // DMR-xxxx
+  "storyName", // C2T xxx
+  "storyDescription", // description
+  "difficultyLevel", // easy, medium, hard
+  "storyPoints", // 1, 2, 3, 5, 8, 13
+  "workType", // feature, bug, production
+  "developmentType", // frontend, backend, fullstack
+  "status", // to do, in progress, demo ready, completed, released
   "storyComments",
-  "subtasks",
-  "date",
-  "updatedAt",
-  "reporter",
-  "repoNames",
+  "reporter", // reported who assigned story
+  "repoNames", // repo we are going to work on
   "dateAssigned",
   "dateCompleted",
-  "sprintId",
-  "storyType",
-  "learning",
-  "planningNotes",
+  "sprintId", // PL!, 2 etcc
+  "learning", // comments on learning
+"createdAt",
   "updatedAt",
 ]);
 
@@ -92,7 +88,7 @@ const progressColor = computed(() => {
 const isOpen = ref(false);
 </script>
 
-ype: Training
+
 <template>
   <div>
    <!-- change color based on development, workType etc. -->
@@ -100,7 +96,7 @@ ype: Training
       <div class="item">
         <p><strong>Sprint Id:</strong> {{ props.sprintId}}</p>
         <p><strong>Story Name:</strong> {{ props.storyTitle }}</p>
-
+props:{{props._id}}
         <div class="item-header">
         
           <p><strong>Development: </strong> <UBadge :color="developmentTypeColor" variant="soft"> {{ props.developmentType }}</UBadge></p>
@@ -130,9 +126,7 @@ ype: Training
           <div class="progress">
       
       <StoryDetails
-      :id="props.id"
-      :progressType="props.progressType"
-      :storyTitle="props.storyTitle"
+      :_id="props._id"
       :storyName="props.storyName"
       :storyDescription="props.storyDescription"
       :difficultyLevel="props.difficultyLevel"
@@ -141,12 +135,14 @@ ype: Training
       :developmentType="props.developmentType"
       :status="props.status"
       :storyComments="props.storyComments"
-      :date="props.date"
+      :dateAssigned="props.dateAssigned"
       :reporter="props.reporter"
       :repoNames="props.repoNames"
       :dateCompleted="props.dateCompleted"
       :sprintId="props.sprintId"
       :learning="props.learning"
+      :createdAt="props.createdAt"
+        :updatedAt="props.updatedAt"
     
 
 

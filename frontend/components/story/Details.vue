@@ -1,63 +1,221 @@
 <script setup>
 import { storeToRefs } from "pinia";
+import { ref, computed } from "vue";
+import { CONFIG } from "~/config/globalVariables";
+import { onMounted } from "vue";
 const storyStore = useStoryStore();
 
+
+
+const { fetchStories,
+    updateStory,
+  deleteStory,
+  itemsAsArray,
+  filterItemById,
+
+ } = storyStore;
+ const { items } = storeToRefs(storyStore);
+ 
 const props = defineProps([
-  //PROPS HERE
-  "id",
-  "storyTitle",
-  "storyDescription",
-  "difficultyLevel",
-  "storyPoints",
-  "workType",
-  "developmentType",
-  "status",
+  "_id",
+  "storyNumber", // DMR-xxxx
+  "storyName", // C2T xxx
+  "storyDescription", // description
+  "difficultyLevel", // easy, medium, hard
+  "storyPoints", // 1, 2, 3, 5, 8, 13
+  "workType", // feature, bug, production
+  "developmentType", // frontend, backend, fullstack
+  "status", // to do, in progress, demo ready, completed, released
   "storyComments",
-  "subtasks",
-  "date",
-  "updatedAt",
-  "reporter",
-  "repoNames",
+  "reporter", // reported who assigned story
+  "repoNames", // repo we are going to work on
   "dateAssigned",
   "dateCompleted",
-  "sprintId",
-  "storyType",
-  "learning",
-
+  "sprintId", // PL!, 2 etcc
+  "learning", // comments on learning
+"createdAt",
   "updatedAt",
 ]);
-const {
-   fetchStories,
+
+
+const story = ref({
   
-    itemsAsArray,
-    filterItemById,
-  } = storyStore;
- const { items } = storeToRefs(storyStore);
+    status: props.status,
+    storyTitle: props.storyTitle,
+    storyName: props.storyName,
+    storyDescription: props.storyDescription,
+    difficultyLevel: props.difficultyLevel,
+    storyPoints: props.storyPoints,
+    workType: props.workType,
+    developmentType: props.developmentType,
+    storyComments: props.storyComments,
+    reporter: props.reporter,
+    repoNames: props.repoNames,
+    dateAssigned:props.dateAssigned,
+    dateCompleted:props.dateCompleted,
+    sprintId: props.sprintId,
+    learning: props.learning,
+    createdAt:props.createdAt,
+    updatedAt:props.updatedAt,
+    
 
 
- console.log("From Details:", props.id);
 
-const by = computed(()=> {{
-  for(let i=0; i<filterItemById(props.id).length; i++){
-    return filterItemById(props.id)[i]
+});
+
+
+
+const handleSubmit = async () => {
+
+
+
+  await updateStory(props._id, { ...story.value });
+  navigateTo(`/`);
+};
+
+
+const removeItem = async (id) => {
+  if (confirm("Are you sure you want to delete this city? This action cannot be undone.")) {
+    await deleteStory(id); // Proceed with the deletion if confirmed
+ 
+    // Optionally navigate or refresh the page after deletionsprintID
+    navigateTo(`/`);
   }
-}})
+};
+onMounted(async () => {
+  await fetchStories();
+});
 
 onMounted(async () => {
   await fetchStories();
 });
 </script>
 
-
-
 <template>
-  <div class="modal-details">
-<StoryUpdate :storyById="by"/>
-</div>
+  <div>
+    <!-- <div>{{props.sprintById}}</div> -->
+   
+    <form @submit.prevent="handleSubmit" class="sprint-details form-container">
+      <h1>Modify Sprint</h1>
+      <!-- Sprint ID -->
+      <div>
+        <label for="sprintId">Sprint ID:</label>
+        <input v-model="story.sprintId" type="text" id="sprintId" />
+      </div>  
+
+      <div>
+        <label for="storyTitle">Description:</label>
+        <input
+          v-model="story.storyDescription"
+          type="text"
+          id="relatedStoryId"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="storyPoints">Story Points</label>
+        <select v-model="story.storyPoints" id="storyPoints">
+          <option value="" disabled>Select Points</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="5">5</option>
+          <option value="8">8</option>
+          <option value="13">13</option>
+        </select>
+      
+      </div>
+  
+      <div class="form-group">
+        <label for="difficultyLevel">Difficulty Level</label>
+        <select v-model="story.difficultyLevel" id="difficultyLevel">
+          <option value="" disabled>Select Level</option>
+          <option  v-for=" level in CONFIG.variables.difficultyLevels" :key="level " :value="level">{{level}}</option>
+
+        </select>
+        
+      </div>
+
+
+      <div class="form-group">
+        <label for="workType">Work Type</label>
+        <select v-model="story.workType" id="workType">
+          <option value="" disabled>Select Work Type</option>
+          <option :value="type" v-for="type in CONFIG.variables.workTypes" :key="type">{{type}}</option>
+
+        </select>
+        
+      </div>
+      <div class="form-group">
+        <label for="developmentType">Development Type</label>
+        <select v-model="story.developmentType" id="developmentType">
+          <option value="" disabled>Select Development Type</option>
+          <option :value="type" v-for="type in CONFIG.variables.developmentTypes" :key="type">{{type}}</option>
+
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="status">Status</label>
+        <select v-model="story.status" id="status">
+          <option value="" disabled>Select Status</option>
+          <option :value="status" v-for="status in CONFIG.variables.status" :key="status">{{status}}</option>
+
+        </select>
+        
+      </div>
+      <div class="form-group">
+        <label for="reporters">Reporter</label>
+        <select v-model="story.reporter" id="status">
+          <option value="" disabled>Select Reporter</option>
+          <option v-for="reporter in CONFIG.variables.reporters" :key="reporter" :value="reporter">{{ reporter }}</option>
+        </select>
+ 
+      </div>
+      <div class="form-group">
+        <label for="repos">Repo Names</label>
+        <input type="text" class="form-control"
+            v-model="story.repoNames"
+            id="repos"
+            placeholder="Enter repos following a coma"
+        ></input>
+        
+      </div>
+      <div>
+        <label for="startDate">Date Assigned:</label>
+        <input v-model="story.dateAssigned" type="date" id="DateAssigned"/>
+      </div>
+     
+       <div>
+        <label for="startDate">Date Completed:</label>
+        <input v-model="story.dateCompleted" type="date" id="DateCompleted"/>
+      </div>
+      <div class="form-group">
+        <label for="storyDescription">Story Comments</label>
+        <textarea
+        class="form-control-textarea"
+            v-model="story.storyComments"
+            id="storyComments"
+            placeholder="Enter Story Comments"
+        ></textarea>
+  
+      </div>
+      <div class="modal-actions">
+        <UButton color="red" @click="removeItem(props._id)">Delete</UButton>
+        <UButton type="submit">Update</UButton> 
+
+    </div>
+
+    </form>
+  </div>
 </template>
 
 <style scoped>
 /* General Styles */
+.form-control-textarea{
+  border: solid 1px #3c3c3c;
+  min-height: 11rem;
+}
 body {
   font-family: 'Arial', sans-serif;
   margin: 0;
