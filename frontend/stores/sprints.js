@@ -27,7 +27,7 @@ export const useSprintStore = defineStore({
     const data = await response.json();
     this.items = data;
      
-      this.sprintList = this.items.map((item) => item.sprintID);
+      this.sprintList = this.items.map((item) => item.sprintId);
       this.currentSprint = this.sprintList.reverse()[0];
     return data;
 
@@ -39,8 +39,10 @@ export const useSprintStore = defineStore({
 
      async addSprint(data) {
         const config = useRuntimeConfig();
+        const url = `${config.public.apiBase}/sprints`;
+     
       try {
-        const response = await fetch(`${config.public.apiBase}/sprints`, {
+        const response = await fetch(url, {
           method: "POST",
           body: JSON.stringify({ ...data }),
           headers: { "Content-Type": "application/json" },

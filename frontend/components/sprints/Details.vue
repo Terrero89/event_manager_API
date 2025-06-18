@@ -77,6 +77,9 @@ const removeItem = async (id) => {
     navigateTo(`/`);
   }
 };
+onMounted(async () => {
+  await fetchSprints();
+});
 
 
 </script>
@@ -120,6 +123,7 @@ const removeItem = async (id) => {
       </div>
 
       <!-- Stories Under Sprint -->
+      {{sprint.storiesUnderSprint}}
       <div>
         <label for="storiesUnderSprint">Stories Under Sprint:</label>
         <textarea
@@ -130,7 +134,6 @@ const removeItem = async (id) => {
         />
       </div>
       <div class="modal-actions">
-      props" {{props._id}}
       <UButton color="red" @click="removeItem(props._id)">Delete</UButton>
       <UButton type="submit">Update</UButton> 
       <!-- <button class="delete-button" @click="removeItem(props.sprintById.id)">Delete</button>
@@ -139,7 +142,6 @@ const removeItem = async (id) => {
       <!-- Calculated Duration -->
       <!--    <p><strong>Sprint Duration:</strong> {{ sprintDuration }} days</p>-->
     </form>
-    xxxxxxxxxxxxxxxx
   </div>
 </template>
 

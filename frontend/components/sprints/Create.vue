@@ -17,16 +17,16 @@ const sprint = ref({
   sprintId: "SP-",
   startDate: "2025-01-22",
   endDate: "2025-01-29",
-  summary: ["summary1", "summary2", "summary3"],
-  piNotes: ["note1", "note2", "note3"],
-  storiesUnderSprint: ["DMR-001", "DMR-002", "DMR-003"],
+  summary: "summary1, summary2,summary3",
+  piNotes: "note1, note2, note3",
+  storiesUnderSprint: "DMR-001, DMR-002, DMR-003",
 });
 
-// Calculate duration between startDate and dueDate
+// Calculate duration between startDate and endDate
 const sprintDuration = computed(() => {
-  if (sprint.value.startDate && sprint.value.dueDate) {
+  if (sprint.value.startDate && sprint.value.endDate) {
     const start = new Date(sprint.value.startDate);
-    const due = new Date(sprint.value.dueDate);
+    const due = new Date(sprint.value.endDate);
     return Math.floor((due - start) / (1000 * 60 * 60 * 24)) || 0;
   }
   return 0;
@@ -36,7 +36,7 @@ const handleSubmit = async () => {
   const newSprint = {
     sprintId: sprint.value.sprintId,
     startDate: sprint.value.startDate,
-    endDate: sprint.value.dueDate,
+    endDate: sprint.value.endDate,
     summary: sprint.value.summary,
     piNotes: sprint.value.piNotes,
     storiesUnderSprint: sprint.value.storiesUnderSprint,

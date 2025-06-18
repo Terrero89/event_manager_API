@@ -61,7 +61,7 @@ const isOpen = ref(false);
             :endDate="props.endDate"
             :summary="props.summary"
             :piNotes="props.piNotes"
-            :storyUnderSprint="props.storyUnderSprint"
+            :storiesUnderSprint="props.storiesUnderSprint"
             :updatedAt="props.updatedAt"
             :createdAt="props.createdAt"
           />

@@ -90,7 +90,7 @@ return true
       :endDate="item.endDate"
       :summary="item.summary"
       :piNotes="item.piNotes"
-      :storyUnderSprint="item.storyUnderSprint"
+      :storiesUnderSprint="item.storiesUnderSprint"
          :updatedAt="item.updatedAt"
         :createdAt="item.createdAt"
     />
