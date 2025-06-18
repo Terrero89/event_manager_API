@@ -10,10 +10,10 @@ import {
 const router = Router();
 
 // event routes --> api/v1/
-router.get("/stories", getStoriesController); // get all events route
-router.get("/stories/:id", getStoryController); // get all events route
-router.delete("/stories/:id", deleteStoryController);
-router.patch("/stories/:id", updateStoryController); // update story controller
-router.post("/stories", createStoryController); // delete story controller
+router.get("/", getStoriesController); // get all events route
+router.get("/:id", getStoryController); // get all events route
+router.delete("/:id", deleteStoryController);
+router.patch("/:id", updateStoryController); // update story controller
+router.post("/", createStoryController); // delete story controller
 
 export default router;

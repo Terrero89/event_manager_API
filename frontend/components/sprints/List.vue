@@ -1,13 +1,14 @@
 <script setup>
 const props = defineProps([
-  "id",
-  "sprintID",
-  "relatedStoryId",
+  "_id",
+  "sprintId",
   "startDate",
-  "dueDate",
+  "endDate",
   "summary",
   "piNotes",
   "storiesUnderSprint",
+  "createdAt",
+"updatedAt",
 ]);
 const isOpen = ref(false);
 </script>
@@ -21,14 +22,15 @@ const isOpen = ref(false);
       </div>
 
       <SprintsItem
-        :id="props.id"
-        :sprintID="props.sprintID"
-        :relatedStoryId="props.relatedStoryId"
+        :_id="props._id"
+        :sprintId="props.sprintId"
         :startDate="props.startDate"
-        :dueDate="props.dueDate"
+        :endDate="props.endDate"
         :summary="props.summary"
         :piNotes="props.piNotes"
         :storyUnderSprint="props.storyUnderSprint"
+          :updatedAt="props.updatedAt"
+            :createdAt="props.createdAt"
       />
     </div>
   </div>

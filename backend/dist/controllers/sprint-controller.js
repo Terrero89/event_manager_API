@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateSprintController = exports.getSprintController = exports.createSprintController = exports.getSprintsController = void 0;
+exports.deleteSprintController = exports.updateSprintController = exports.getSprintController = exports.createSprintController = exports.getSprintsController = void 0;
 const sprint_model_1 = require("../models/sprint-model");
 const mongoose_1 = __importDefault(require("mongoose"));
 const getSprintsController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -27,13 +27,12 @@ const getSprintsController = (req, res) => __awaiter(void 0, void 0, void 0, fun
 });
 exports.getSprintsController = getSprintsController;
 const createSprintController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { sprintID, relatedStoryId, startDate, dueDate, summary, piNotes, storiesUnderSprint, } = req.body;
+    const { sprintId, startDate, endDate, summary, piNotes, storiesUnderSprint, } = req.body;
     try {
         const newSprint = yield sprint_model_1.Sprint.create({
-            sprintID,
-            relatedStoryId,
+            sprintId,
             startDate,
-            dueDate,
+            endDate,
             summary,
             piNotes,
             storiesUnderSprint,
@@ -78,3 +77,17 @@ const updateSprintController = (req, res) => __awaiter(void 0, void 0, void 0, f
     res.status(200).json(sprint);
 });
 exports.updateSprintController = updateSprintController;
+const deleteSprintController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.params;
+    if (!mongoose_1.default.Types.ObjectId.isValid(id)) {
+        res.status(404).json({ error: "Sprint does not exist" });
+        return;
+    }
+    const sprint = yield sprint_model_1.Sprint.findByIdAndDelete(id);
+    if (!sprint) {
+        res.status(404).json({ error: "No sprint found" });
+        return;
+    }
+    res.status(200).json(sprint);
+});
+exports.deleteSprintController = deleteSprintController;

@@ -36,7 +36,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Meeting = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
 const MeetingsSchema = new mongoose_1.Schema({
-    title: { type: String, required: true },
     meetingName: { type: String, required: true },
     meetingType: { type: String, required: true },
     description: { type: String, required: true },

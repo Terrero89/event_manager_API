@@ -83,15 +83,16 @@ return true
     <SprintsList
       v-else
       v-for="item in items"
-      :key="item.id"
-      :id="item.id"
-      :sprintID="item.sprintID"
+      :key="item._id"
+      :_id="item._id"
+      :sprintId="item.sprintId"
       :startDate="item.startDate"
-      :dueDate="item.dueDate"
+      :endDate="item.endDate"
       :summary="item.summary"
       :piNotes="item.piNotes"
       :storyUnderSprint="item.storyUnderSprint"
-      :relatedStoryId="item.relatedStoryId"
+         :updatedAt="item.updatedAt"
+        :createdAt="item.createdAt"
     />
     <div class="my-12"></div>
      </div>

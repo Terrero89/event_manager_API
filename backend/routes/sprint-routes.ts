@@ -5,16 +5,18 @@ import {
 getSprintController, 
 getSprintsController,
 updateSprintController,
-createSprintController
+createSprintController,
+deleteSprintController
 
 } from "../controllers/sprint-controller";
 
 const router = Router();
 
 // event routes --> api/v1/
-router.get("/sprints", getSprintsController); // get all items route
-router.get("/sprints/:id", getSprintController); // get single item route
-router.patch("/sprints/:id", updateSprintController); // update controller
-router.post("/sprints", createSprintController); // create  controller
+router.get("/", getSprintsController); // get all items route
+router.get("/:id", getSprintController); // get single item route
+router.delete("/:id", deleteSprintController);
+router.patch("/:id", updateSprintController); // update controller
+router.post("/", createSprintController); // create  controller
 
 export default router;

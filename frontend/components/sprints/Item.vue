@@ -1,15 +1,16 @@
 <script setup>
 const props = defineProps([
-  "id",
-  "sprintID",
-  "relatedStoryId",
+  "_id",
+  "sprintId",
   "startDate",
-  "dueDate",
+  "endDate",
   "summary",
   "piNotes",
   "storiesUnderSprint",
+    "createdAt",
+"updatedAt",
 ]);
-const noteIdRoute = computed(() => `/story/${props.id}`);
+
 const isOpen = ref(false);
 </script>
 
@@ -18,15 +19,12 @@ const isOpen = ref(false);
     <!-- <h3>ITEM COMPONENT</h3> -->
     <UIRenderer>
       <div class="item">
-        <p><strong>Sprint: </strong> {{ sprintID }}</p>
+        <p><strong>Sprint: </strong> {{ props.sprintId }}</p>
 
-        <div class="item-header">
-          <p><strong>Related story ID:</strong> {{ relatedStoryId }}</p>
-        </div>
         <div class="item-content">
           <div>
             <p><strong>Start Date: </strong> {{ formatDate(startDate) }}</p>
-            <p><strong>End Date: </strong> {{ formatDate(dueDate) }}</p>
+            <p><strong>End Date: </strong> {{ formatDate(endDate) }}</p>
           </div>
         </div>
       </div>
@@ -53,17 +51,19 @@ const isOpen = ref(false);
           class="b mx-2"
           >{{ props.status }}</UButton
         >
+   
         <UButton variant="soft" class="b" @click="isOpen = true">Details</UButton>
         <UModal v-model="isOpen"  >
           <SprintsDetails
-            :id="props.id"
-            :sprintID="props.sprintID"
-            :relatedStoryId="props.relatedStoryId"
+            :_id="props._id"
+            :sprintId="props.sprintId"
             :startDate="props.startDate"
-            :dueDate="props.dueDate"
+            :endDate="props.endDate"
             :summary="props.summary"
             :piNotes="props.piNotes"
             :storyUnderSprint="props.storyUnderSprint"
+            :updatedAt="props.updatedAt"
+            :createdAt="props.createdAt"
           />
         </UModal>
       </div>

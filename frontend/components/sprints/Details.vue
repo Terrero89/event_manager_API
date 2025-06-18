@@ -1,45 +1,153 @@
 <script setup>
+import { ref, computed } from "vue";
+import { CONFIG } from "~/config/globalVariables";
+import { onMounted } from "vue";
+const sprintsStore = useSprintStore();
+import { storeToRefs } from "pinia";
+
+
+const {
+  updateSprint,
+  deleteSprint,
+    filterItemById,
+} = sprintsStore;
+const { currentSprint, sprintList } = storeToRefs(sprintsStore);
+
 const props = defineProps([
-  "id",
-  "sprintID",
-  "relatedStoryId",
+  "_id",
+  "sprintId",
   "startDate",
-  "dueDate",
+  "endDate",
   "summary",
   "piNotes",
   "storiesUnderSprint",
 ]);
-const sprintsStore = useSprintStore();
-import { storeToRefs } from "pinia";
 
-const {
-  updateprint,
-  deleteSprint,
-  updateSprint,
-  filterItemById,
-  
-} = sprintsStore;
-const { } = storeToRefs(sprintsStore);
+function formatDate(value){
+  const date = new Date(value);
 
-console.log("From Details:", props.id);
+  // Add timezone offset
+  const localDate = new Date(date.getTime() + date.getTimezoneOffset() * 60000);
 
-const by = computed(()=> {{
-  for(let i=0; i<filterItemById(props.id).length; i++){
-    return filterItemById(props.id)[i]
+  const year = localDate.getFullYear();
+  const month = `${localDate.getMonth() + 1}`.padStart(2, '0');
+  const day = `${localDate.getDate()}`.padStart(2, '0');
+
+  return `${year}-${month}-${day}`;
+}
+const sprint = ref({
+  sprintId: currentSprint.value ,
+  startDate: formatDate(props.startDate),
+  endDate: formatDate(props.endDate),
+  summary: props.summary,
+  piNotes: props.piNotes,
+  storiesUnderSprint: props.storiesUnderSprint,
+});
+
+
+// Calculate duration between startDate and dueDate
+const sprintDuration = computed(() => {
+  if (sprint.value.startDate && sprint.value.endDate) {
+    const start = new Date(sprint.value.startDate);
+    const due = new Date(sprint.value.endDate);
+    return Math.floor((due - start) / (1000 * 60 * 60 * 24)) || 0;
   }
-}})
+  return 0;
+});
+
+const handleSubmit = async () => {
+
+
+  if (sprintDuration < 0) return;
+
+  console.log({ ...sprint.value });
+  await updateSprint(props._id, { ...sprint.value });
+  navigateTo(`/`);
+};
+
+const removeItem = async (id) => {
+  if (
+    confirm(
+      "Are you sure you want to delete this city? This action cannot be undone."
+    )
+  ) {
+    await deleteSprint(id); // Proceed with the deletion if confirmed
+
+    // Optionally navigate or refresh the page after deletion
+    navigateTo(`/`);
+  }
+};
+
 
 </script>
 
 
 
 <template>
-  <div class="modal-details">
-<SprintsUpdate :sprintById="by"/>
-</div>
+  <div>
+    <!-- <div>{{props.sprintById}}</div> -->
+    ITEM:  {{props._id}}--{{currentSprint}}
+    <form @submit.prevent="handleSubmit" class="sprint-details form-container">
+  <h1 class="title">Modify Sprint</h1>
+      <!-- Sprint ID -->
+      <div>
+        <label for="sprintID">Sprint Id:</label>
+        <input v-model="sprint.sprintId" type="text" id="sprintID" />
+      </div>
+      <!-- Start Date -->
+    
+      <div>
+        <label for="startDate">Start Date:</label>
+        <input v-model="sprint.startDate" type="date" id="startDate" />
+      </div>
+
+      <!-- Due Date -->
+      <div>
+        <label for="endDate">Due Date:</label>
+        <input v-model="sprint.endDate" type="date" id="endDate" />
+      </div>
+
+      <!-- Summary -->
+      <div>
+        <label for="summary">Summary:</label>
+        <textarea class="form-control-textarea" v-model="sprint.summary" id="summary"></textarea>
+      </div>
+
+      <!-- PI Notes -->
+      <div >
+        <label for="piNotes">PI Notes:</label>
+        <textarea  class="form-control-textarea" v-model="sprint.piNotes" id="piNotes" ></textarea>
+      </div>
+
+      <!-- Stories Under Sprint -->
+      <div>
+        <label for="storiesUnderSprint">Stories Under Sprint:</label>
+        <textarea
+        class="form-control-textarea"
+          v-model.trim="sprint.storiesUnderSprint"
+          type="textarea"
+          id="storiesUnderSprint"
+        />
+      </div>
+      <div class="modal-actions">
+      props" {{props._id}}
+      <UButton color="red" @click="removeItem(props._id)">Delete</UButton>
+      <UButton type="submit">Update</UButton> 
+      <!-- <button class="delete-button" @click="removeItem(props.sprintById.id)">Delete</button>
+      <button type="submit" class="submit-button">Update</button> -->
+    </div>
+      <!-- Calculated Duration -->
+      <!--    <p><strong>Sprint Duration:</strong> {{ sprintDuration }} days</p>-->
+    </form>
+    xxxxxxxxxxxxxxxx
+  </div>
 </template>
 
 <style scoped>
+.form-control-textarea{
+  border: solid 1px #3c3c3c;
+  min-height: 7rem;
+}
 /* General Styles */
 body {
   font-family: 'Arial', sans-serif;

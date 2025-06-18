@@ -83,3 +83,21 @@ export const updateSprintController = async (req: Request, res: Response) => {
 
   res.status(200).json(sprint);
 };
+
+export const deleteSprintController = async (req: Request, res: Response) => {
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        res.status(404).json({ error: "Sprint does not exist" });
+        return;
+    }
+
+    const sprint = await Sprint.findByIdAndDelete(id);
+
+    if (!sprint) {
+        res.status(404).json({ error: "No sprint found" });
+        return;
+    }
+
+    res.status(200).json(sprint);
+}

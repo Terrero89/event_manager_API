@@ -38,12 +38,12 @@ app.use((req, res, next) => {
 });
 // ROUTES 
 app.use("/api/v1/auth", auth_routes_1.default); // user auth
-app.use("/api/v1/", story_routes_1.default); // home route
+app.use("/api/v1/stories", story_routes_1.default); // home route
 app.use("/api/v1/", users_routes_1.default); // home route
 app.use("/api/v1/notes", notes_routes_1.default);
-app.use("/api/v1/", events_routes_1.default); // home route
-app.use("/api/v1/", meetings_routes_1.default);
-app.use("/api/v1/", sprint_routes_1.default);
+app.use("/api/v1/events", events_routes_1.default); // home route
+app.use("/api/v1/meetings", meetings_routes_1.default);
+app.use("/api/v1/sprints", sprint_routes_1.default);
 mongoose.connect(global_1.CONFIG.MONGODB_URL).then(() => {
     console.log('Connected MongoDB...');
 }).catch((error) => console.log(error));

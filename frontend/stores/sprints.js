@@ -11,98 +11,101 @@ export const useSprintStore = defineStore({
   }),
   actions: {
     async fetchSprints() {
-      const response = await fetch(this.URL_2);
-      const responseData = await response.json();
-      this.items = responseData;
+  const config = useRuntimeConfig();
+  try {
+    const response = await fetch(`${config.public.apiBase}/sprints`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
 
-      if (!response.ok) {
-        const error = new Error(responseData.message || "Failed to fetch!");
-        throw error;
-      }
+    if (!response.ok) {
+      throw new Error(`Failed to fetch sprints: ${response.status} ${response.statusText}`);
+    }
 
-      const itemsList = [];
-
-      for (const key in this.items) {
-        if (this.items[key]) {
-          // Check if city data exists
-          const newItem = {
-             id: key,
-            ...this.items[key],
-          };
-          itemsList.push(newItem);
-        }
-      }
-      this.items = itemsList;
-      this.sprintList = itemsList.map((item) => item.sprintID);
+    const data = await response.json();
+    this.items = data;
+     
+      this.sprintList = this.items.map((item) => item.sprintID);
       this.currentSprint = this.sprintList.reverse()[0];
-     },
+    return data;
+
+  } catch (error) {
+    console.error("Failed to fetch sprints:", error);
+    return null;
+  }
+},
 
      async addSprint(data) {
-      this.isLoading = true; // Start loading
-
+        const config = useRuntimeConfig();
       try {
-        const response = await fetch(
-          this.URL_2,
-          {
-            method: "POST",
-            body: JSON.stringify({ ...data }),
-          }
-        );
-        if (!response.ok) {
-          throw new Error("Failed to add event");
-        }
+        const response = await fetch(`${config.public.apiBase}/sprints`, {
+          method: "POST",
+          body: JSON.stringify({ ...data }),
+          headers: { "Content-Type": "application/json" },
+        });
 
-        // No need to generate a unique ID here, data is stored directly
+        if (!response.ok) {
+          throw new Error("Failed to add sprints");
+        }
       } catch (error) {
-        console.error("Failed to add city:", error);
-      } finally {
-        this.isLoading = false; // Stop loading
+        console.error("Failed to add sprints:", error);
       }
     },
-// 
+async deleteSprint(itemID) {
+  const config = useRuntimeConfig();
+  const url = `${config.public.apiBase}/sprints/${itemID}`;
+  // const url = this.URL + `/${itemID}`;
+console.log("TEST",url)
+  try {
+    const response = await fetch(url, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+    });
 
-      async deleteSprint(itemID) {
-        const url = `https://project-manager-app-f9829-default-rtdb.firebaseio.com/sprints/${itemID}.json`
-        let response = await fetch(url,
-          {
-            method: "DELETE",
-            "Content-type": "application/json",
-          }
-        );
-        if (!response.ok) {
-          console.log("Error, request failed");
-        }
-  
+    const text = await response.text();
+
+    if (!response.ok) {
+      console.error("❌ Delete failed:", response.status, text);
+      return;
+    }
+
+    console.log("✅ Sprint deleted:", text);
+    this.items = this.items.filter((event) => event._id !== itemID);
+  } catch (error) {
+    console.error("❌ Error deleting sprint:", error);
+  }
+},
+
+    async updateSprint(itemID, payload)  {
+  const config = useRuntimeConfig();
+  const url = `${config.public.apiBase}/sprints/${itemID}`;
+
+  try {
+    const response = await fetch(url, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
       },
-  
+      body: JSON.stringify(payload),
+    });
 
-    async updateSprint(cityID, payload) {
-      const url = `https://project-manager-app-f9829-default-rtdb.firebaseio.com/sprints/${cityID}.json`;
-      const options = {
-        method: "PATCH",
-        headers: { "Content-type": "application/json" },
-        body: JSON.stringify(payload),
-      };
+    if (!response.ok) {
+      throw new Error(`Failed to update sprint: ${response.status} ${response.statusText}`);
+    }
 
-      try {
-        const response = await fetch(url, options);
-        if (!response.ok) {
-          throw new Error("Failed to update city");
-        }
+    const updatedEvent = await response.json();
 
-        // Ensure the response contains the updated data
-        const updatedCity = await response.json();
-
-        // Update the local state after a successful update
-        const index = this.items.findIndex((city) => city.id === cityID);
-        if (index !== -1) {
-          // Use the returned data from Firebase to ensure consistency
-          this.items[index] = { id: cityID, ...updatedCity };
-        }
-      } catch (error) {
-        console.error("Error updating city:", error);
-      }
-    },
+    // ✅ Update local Pinia state directly
+    const index = this.items.findIndex((event) => event._id === itemID);
+    if (index !== -1) {
+      this.items[index] = updatedEvent;
+    }
+  } catch (error) {
+    console.error("Error updating event:", error);
+  }
+},
   },
   getters: {
 

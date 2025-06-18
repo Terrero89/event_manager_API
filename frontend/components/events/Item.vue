@@ -2,7 +2,7 @@
 const eventsStore = useEventStore();
 import { storeToRefs } from "pinia";
 
-const {  itemsAsArray, filterItemById } = eventsStore
+const {  itemsAsArray} = eventsStore
 const props = defineProps([
     "_id",
 "description",
@@ -65,9 +65,6 @@ const typeColor = computed(() => {
   }
 });
 
-const by = computed(() => {
-  return filterItemById(props._id)[0];
-});
 
 const isOpen = ref(false);
 </script>

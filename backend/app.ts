@@ -39,12 +39,12 @@ app.use((req: Request, res: Response, next: express.NextFunction) => {
 
 // ROUTES 
 app.use("/api/v1/auth", authRoutes); // user auth
-app.use("/api/v1/", storyRoutes); // home route
+app.use("/api/v1/stories", storyRoutes); // home route
 app.use("/api/v1/", usersRoutes); // home route
 app.use("/api/v1/notes", notesRoutes);
-app.use("/api/v1/", eventsRoutes); // home route
-app.use("/api/v1/", meetingRoutes);
-app.use("/api/v1/", sprintRoutes);
+app.use("/api/v1/events", eventsRoutes); // home route
+app.use("/api/v1/meetings", meetingRoutes);
+app.use("/api/v1/sprints", sprintRoutes);
 
 
 mongoose.connect(CONFIG.MONGODB_URL).then(() => {

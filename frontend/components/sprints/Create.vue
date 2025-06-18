@@ -14,9 +14,9 @@ const { sprintList, currentSprint } = storeToRefs(sprintsStore);
 
 const loadMessage = ref(false);
 const sprint = ref({
-  sprintID: "SP-",
+  sprintId: "SP-",
   startDate: "2025-01-22",
-  dueDate: "2025-01-29",
+  endDate: "2025-01-29",
   summary: ["summary1", "summary2", "summary3"],
   piNotes: ["note1", "note2", "note3"],
   storiesUnderSprint: ["DMR-001", "DMR-002", "DMR-003"],
@@ -34,10 +34,9 @@ const sprintDuration = computed(() => {
 
 const handleSubmit = async () => {
   const newSprint = {
-    sprintID: sprint.value.sprintID,
-  
+    sprintId: sprint.value.sprintId,
     startDate: sprint.value.startDate,
-    dueDate: sprint.value.dueDate,
+    endDate: sprint.value.dueDate,
     summary: sprint.value.summary,
     piNotes: sprint.value.piNotes,
     storiesUnderSprint: sprint.value.storiesUnderSprint,
@@ -63,7 +62,7 @@ const handleSubmit = async () => {
       <!-- Sprint ID -->
       <div>
         <label for="sprintID">Sprint ID:</label>
-        <input v-model="sprint.sprintID" type="text" id="sprintID" />
+        <input v-model="sprint.sprintId" type="text" id="sprintID" />
       </div>
 
      
@@ -75,8 +74,8 @@ const handleSubmit = async () => {
 
       <!-- Due Date -->
       <div>
-        <label for="dueDate">Due Date:</label>
-        <input v-model="sprint.dueDate" type="date" id="dueDate" />
+        <label for="endDate">End Date:</label>
+        <input v-model="sprint.endDate" type="date" id="endDate" />
       </div>
 
       <!-- Summary -->

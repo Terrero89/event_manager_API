@@ -19,10 +19,9 @@ const props = defineProps([
 ])
 
 const sprint = ref({
-  sprintID: currentSprint.value ,
-  relatedStoryId: props.sprintById.relatedStoryId,
+  sprintId: currentSprint.value ,
   startDate: props.sprintById.startDate,
-  dueDate: props.sprintById.dueDate,
+  endDate: props.sprintById.dueDate,
   summary: props.sprintById.summary,
   piNotes: props.sprintById.piNotes,
   storiesUnderSprint: props.sprintById.storiesUnderSprint,
@@ -41,10 +40,9 @@ const sprintDuration = computed(() => {
 
 const handleSubmit = async () => {
   const newSprint = {
-    sprintID: sprint.value.sprintID,
-    relatedStoryId: sprint.value.relatedStoryId,
+    sprintId: sprint.value.sprintId,
     startDate: sprint.value.startDate,
-    dueDate: sprint.value.dueDate,
+    endDate: sprint.value.dueDate,
     summary: sprint.value.summary,
     piNotes: sprint.value.piNotes,
     storiesUnderSprint: sprint.value.storiesUnderSprint,
@@ -54,7 +52,7 @@ const handleSubmit = async () => {
   if (sprintDuration < 0) return;
 
   console.log({ ...sprint.value });
-  await updateSprint(props.sprintById.id, { ...sprint.value });
+  await updateSprint(props.sprintById._id, { ...sprint.value });
   navigateTo(`/`);
 };
 
@@ -69,6 +67,9 @@ const removeItem = async (id) => {
 };
 
 
+onMounted(async () => {
+  await fetchSprints();
+});
 </script>
 
 <template>
@@ -101,7 +102,7 @@ const removeItem = async (id) => {
 
       <!-- Due Date -->
       <div>
-        <label for="dueDate">Due Date:</label>
+        <label for="dueDate">End Date:</label>
         <input v-model="sprint.dueDate" type="date" id="dueDate" />
       </div>
 
@@ -130,13 +131,11 @@ const removeItem = async (id) => {
       <div class="modal-actions">
       <UButton color="red" @click="removeItem(props.sprintById.id)">Delete</UButton>
       <UButton type="submit">Update</UButton> 
-      <!-- <button class="delete-button" @click="removeItem(props.sprintById.id)">Delete</button>
-      <button type="submit" class="submit-button">Update</button> -->
+  
     </div>
-      <!-- Calculated Duration -->
-      <!--    <p><strong>Sprint Duration:</strong> {{ sprintDuration }} days</p>-->
+
     </form>
-    xxxxxxxxxxxxxxxx
+
   </div>
 </template>
 

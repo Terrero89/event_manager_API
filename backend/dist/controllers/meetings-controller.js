@@ -43,11 +43,10 @@ const getMeetingController = (req, res) => __awaiter(void 0, void 0, void 0, fun
 });
 exports.getMeetingController = getMeetingController;
 const createMeetingController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { title, description, date, meetingName, meetingType, duration, status, sprintId } = req.body;
+    const { description, date, meetingName, meetingType, duration, status, sprintId } = req.body;
     // MORE ERROR HANDLING COMING UP
     try {
         const meeting = yield meetings_models_1.Meeting.create({
-            title,
             description,
             date,
             meetingName,
