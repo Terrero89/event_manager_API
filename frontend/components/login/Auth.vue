@@ -1,17 +1,43 @@
+<script setup lang="ts">
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+
+
+const password = ref('');
+const email = ref('');
+const errors = ref<{ email?: string; password?: string,  username?: String,}>({});
+const router = useRouter();
+
+const validateLoginFields = () => {
+  errors.value = {};
+  // if (!username.value) errors.value.username = 'Username is required.';
+  if (!password.value) errors.value.password = 'Password is required.';
+  if (!email.value) errors.value.email = 'Email is required.';
+  return Object.keys(errors.value).length === 0;
+};
+
+const handleLogin = async () => {
+  if (!validateLoginFields()) return;
+
+  try {
+    const userCredentials =  {  email: email.value, password: password.value }
+    const response = await $fetch('https://eventmanagerapi-dev.up.railway.app/api/v1/auth/login', {
+      method: 'POST',
+      body:userCredentials,
+    });
+    console.log('Login successful:', response);
+    router.push('/');
+  } catch (error) {
+    errors.value.username = (error as any)?.data?.message || (error as any)?.message || 'Invalid login credentials.';
+  }
+};
+</script>
+
 <template>
   <div class="auth-container">
     <h1>Login</h1>
     <form @submit.prevent="handleLogin">
-<!--      <div class="form-group">-->
-<!--        <label for="username">Username</label>-->
-<!--        <input-->
-<!--            v-model="username"-->
-<!--            type="text"-->
-<!--            id="username"-->
-<!--            placeholder="Enter your username"-->
-<!--        />-->
-<!--        <span v-if="errors.username" class="error">{{ errors.username }}</span>-->
-<!--      </div>-->
+
       <div class="form-group">
         <label for="password">Email</label>
         <input
@@ -42,41 +68,6 @@
     </p>
   </div>
 </template>
-
-<script setup lang="ts">
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
-
-// const username = ref('');
-const password = ref('');
-const email = ref('');
-const errors = ref<{ username?: string; password?: string }>({});
-const router = useRouter();
-
-const validateLoginFields = () => {
-  errors.value = {};
-  // if (!username.value) errors.value.username = 'Username is required.';
-  if (!password.value) errors.value.password = 'Password is required.';
-  if (!email.value) errors.value.password = 'Password is required.';
-  return Object.keys(errors.value).length === 0;
-};
-
-const handleLogin = async () => {
-  if (!validateLoginFields()) return;
-
-  try {
-    const userCredentials =  {  email: email.value, password: password.value }
-    const response = await $fetch('http://localhost:8080/api/v1/auth/login', {
-      method: 'POST',
-      body:userCredentials,
-    });
-    console.log('Login successful:', response);
-    router.push('/');
-  } catch (error) {
-    errors.value.username = error?.data?.message || 'Invalid login credentials.';
-  }
-};
-</script>
 
 
 <style scoped>
