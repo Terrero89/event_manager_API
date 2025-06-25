@@ -4,13 +4,16 @@ import mongoose from "mongoose";
 
 
 
-export const getEventsController = async (req: Request, res: Response) => {
+export const getEventsController = async (req: any, res: Response) => {
     try {
-        const allEvents = await Event.find({}).sort({ createdAt: -1 });
-        res.status(200).json(allEvents);
+        const user_id = req.user_id
+
+  const events = await Event.find({user_id}).sort({createdAt: -1})
+
+  res.status(200).json(events); //return all todos
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: "Error fetching Notes" });
+        res.status(500).json({ message: "Error fetching Events" });
     }
 }
 
@@ -33,7 +36,7 @@ export const getEventController = async (req: Request, res: Response) => {
     res.status(200).json(event); //return that specific id from tODO
 }
 
-export const createEventController = async (req: Request, res: Response) => {
+export const createEventController = async (req: any, res: Response) => {
     const {description, date, eventName, eventType, duration, status, sprintId} = req.body
     // MORE ERROR HANDLING COMING UP
 
@@ -47,6 +50,7 @@ export const createEventController = async (req: Request, res: Response) => {
             duration,
             status,
             sprintId,
+            user: req.user.id // Assuming you have user info in req.user
         });
 
 

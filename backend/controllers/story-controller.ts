@@ -76,7 +76,7 @@ export const updateStoryController = async (req: Request, res: Response) => {
   res.status(200).json(story);
 };
 
-export const createStoryController = async (req: Request, res: Response) => {
+export const createStoryController = async (req: any, res: Response) => {
   const {
     sprintId,
     storyName,
@@ -111,6 +111,7 @@ export const createStoryController = async (req: Request, res: Response) => {
       learning,
       dateAssigned,
       dateCompleted,
+          user: req.user.id // Assuming you have user info in req.user
     });
     res.status(200).json(story);
   } catch (error) {

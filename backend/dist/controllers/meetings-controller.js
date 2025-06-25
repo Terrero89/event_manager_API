@@ -53,7 +53,8 @@ const createMeetingController = (req, res) => __awaiter(void 0, void 0, void 0, 
             meetingType,
             duration,
             status,
-            sprintId
+            sprintId,
+            user: req.user.id // Assuming you have user info in req.user
         });
         res.status(200).json(meeting);
     }

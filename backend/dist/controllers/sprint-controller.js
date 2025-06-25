@@ -36,6 +36,7 @@ const createSprintController = (req, res) => __awaiter(void 0, void 0, void 0, f
             summary,
             piNotes,
             storiesUnderSprint,
+            user: req.user.id // Assuming you have user info in req.user
         });
         res.status(200).json(newSprint);
     }

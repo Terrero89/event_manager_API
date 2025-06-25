@@ -18,7 +18,8 @@ const storySchema = new mongoose.Schema(
     learning: {      type: String,      required: false,    },
     repoNames: {      type: String,      required: false,    },
     dateAssigned: {      type: Date,      default: Date.now,    },
-    dateCompleted: {      type: Date,      default: Date.now,    }
+    dateCompleted: {      type: Date,      default: Date.now,    },
+      user_id: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
   },
 },
   { timestamps: true }

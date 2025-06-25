@@ -45,5 +45,6 @@ const SprintSchema = new mongoose_1.Schema({
         type: String,
         required: false,
     },
+    user_id: { type: mongoose_1.default.Schema.Types.ObjectId, ref: 'User' }
 }, { timestamps: true });
 exports.Sprint = mongoose_1.default.model("Sprint", SprintSchema);

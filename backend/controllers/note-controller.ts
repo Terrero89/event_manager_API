@@ -33,7 +33,7 @@ export const getNoteController = async (req: Request, res: Response) => {
     res.status(200).json(note); //return that specific id from tODO
 }
 
-export const createNoteController = async (req: Request, res: Response) => {
+export const createNoteController = async (req: any, res: Response) => {
     const {description, date, priorityLevel, noteName, noteType, sprintId} = req.body
     // MORE ERROR HANDLING COMING UP
 
@@ -46,7 +46,8 @@ export const createNoteController = async (req: Request, res: Response) => {
             priorityLevel,
             noteType,
             noteName,
-            sprintId
+            sprintId,
+            user: req.user.id // Assuming you have user info in req.user
         
         });
 

@@ -9,6 +9,7 @@ const NotesSchema: Schema = new Schema({
     date: { type: Date, required: true },
     priorityLevel: { type: String, required: true },
     sprintId: { type: String, required: false },
+      user_id: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
 
 
 },{ timestamps: true });

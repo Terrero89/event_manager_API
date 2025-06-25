@@ -24,7 +24,8 @@ const validateLoginFields = () => {
 
 const handleLogin = async () => {
   if (!validateLoginFields()) return;
-login(email.value, password.value)
+await login(email.value, password.value)
+ router.push('/stories');
 
 };
 </script>

@@ -9,7 +9,8 @@ const MeetingsSchema: Schema = new Schema(
     date: { type: Date, required: true },
     duration: { type: Number, required: true },
     status: { type: String, required: true },
-    sprintId: { type: String, required: true}
+    sprintId: { type: String, required: true},
+      user_id: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
   },
   { timestamps: true }
 );

@@ -92,6 +92,7 @@ const createStoryController = (req, res) => __awaiter(void 0, void 0, void 0, fu
             learning,
             dateAssigned,
             dateCompleted,
+            user: req.user.id // Assuming you have user info in req.user
         });
         res.status(200).json(story);
     }

@@ -52,7 +52,8 @@ const createNoteController = (req, res) => __awaiter(void 0, void 0, void 0, fun
             priorityLevel,
             noteType,
             noteName,
-            sprintId
+            sprintId,
+            user: req.user.id // Assuming you have user info in req.user
         });
         res.status(200).json(note);
     }

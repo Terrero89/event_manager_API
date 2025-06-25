@@ -42,5 +42,6 @@ const NotesSchema = new mongoose_1.Schema({
     date: { type: Date, required: true },
     priorityLevel: { type: String, required: true },
     sprintId: { type: String, required: false },
+    user_id: { type: mongoose_1.default.Schema.Types.ObjectId, ref: 'User' }
 }, { timestamps: true });
 exports.Note = mongoose_1.default.model("Notes", NotesSchema);

@@ -33,7 +33,7 @@ export const getMeetingController = async (req: Request, res: Response) => {
     res.status(200).json(meeting); //return that specific id from tODO
 }
 
-export const createMeetingController = async (req: Request, res: Response) => {
+export const createMeetingController = async (req: any, res: Response) => {
     const {  description, date, meetingName, meetingType, duration, status, sprintId} = req.body
     
     // MORE ERROR HANDLING COMING UP
@@ -48,7 +48,8 @@ export const createMeetingController = async (req: Request, res: Response) => {
             meetingType,
             duration,
             status,
-            sprintId
+            sprintId,
+            user: req.user.id // Assuming you have user info in req.user
         
         });
 

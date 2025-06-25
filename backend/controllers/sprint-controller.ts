@@ -12,7 +12,7 @@ export const getSprintsController = async (req: Request, res: Response) => {
   }
 };
 
-export const createSprintController = async (req: Request, res: Response) => {
+export const createSprintController = async (req: any, res: Response) => {
   const {
     sprintId,
     startDate,
@@ -20,6 +20,7 @@ export const createSprintController = async (req: Request, res: Response) => {
     summary,
     piNotes,
     storiesUnderSprint,
+    
 
   } = req.body;
   try {
@@ -30,6 +31,7 @@ export const createSprintController = async (req: Request, res: Response) => {
         summary,
         piNotes,
         storiesUnderSprint,
+        user: req.user.id // Assuming you have user info in req.user
 
     });
     res.status(200).json(newSprint);

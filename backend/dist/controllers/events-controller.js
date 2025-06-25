@@ -17,12 +17,13 @@ const events_models_1 = require("../models/events-models");
 const mongoose_1 = __importDefault(require("mongoose"));
 const getEventsController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const allEvents = yield events_models_1.Event.find({}).sort({ createdAt: -1 });
-        res.status(200).json(allEvents);
+        const user_id = req.user_id;
+        const events = yield events_models_1.Event.find({ user_id }).sort({ createdAt: -1 });
+        res.status(200).json(events); //return all todos
     }
     catch (error) {
         console.error(error);
-        res.status(500).json({ message: "Error fetching Notes" });
+        res.status(500).json({ message: "Error fetching Events" });
     }
 });
 exports.getEventsController = getEventsController;
@@ -54,6 +55,7 @@ const createEventController = (req, res) => __awaiter(void 0, void 0, void 0, fu
             duration,
             status,
             sprintId,
+            user: req.user.id // Assuming you have user info in req.user
         });
         res.status(200).json(event);
     }
