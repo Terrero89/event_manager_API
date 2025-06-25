@@ -3,23 +3,35 @@ import jwt from 'jsonwebtoken';
 import { CONFIG } from '../config/global';
 
 
-export const verifyToken = (req: Request, res: Response, next: NextFunction): void => {
-    const authHeader = req.headers.authorization;
+interface DecodedToken {
+  id: string;
+  // add more fields if needed like `email`, `role`, etc.
+}
 
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
-        res.status(401).json({ message: 'Unauthorized: Token not provided' });
-        return;
-    }
+export const verifyToken = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): void => {
+  const authHeader = req.headers.authorization;
 
-    const token = authHeader.split(' ')[1];
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    res.status(401).json({ message: 'Unauthorized: Token not provided' });
+    return;
+  }
 
-    try {
-        const decoded = jwt.verify(token, CONFIG.JWT_SECRET as string);
-        req.body.user = decoded; // Attach the decoded token (user data) to the request
-        next();
-    } catch (error) {
-        res.status(401).json({ message: 'Unauthorized: Invalid token' });
-    }
+  const token = authHeader.split(' ')[1];
+
+  try {
+    const decoded = jwt.verify(token, CONFIG.JWT_SECRET as string) as DecodedToken;
+
+    // ✅ Attach decoded token to `req.user` (not `req.body.user`)
+    (req as any).user = decoded;
+
+    next();
+  } catch (error) {
+    res.status(401).json({ message: 'Unauthorized: Invalid token' });
+  }
 };
 
 

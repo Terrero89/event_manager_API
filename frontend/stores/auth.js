@@ -3,7 +3,7 @@ import { defineStore } from 'pinia'
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
-    token: '',
+    token:  localStorage.getItem("token") || "",
     user: null,
     userEmail: '',
     userId: '',
@@ -11,6 +11,7 @@ export const useAuthStore = defineStore('auth', {
 
   }),
   actions: {
+
     async login(email, password) {
       try {
         const response = await fetch('https://eventmanagerapi-dev.up.railway.app/api/v1/auth/login', {
@@ -33,6 +34,8 @@ export const useAuthStore = defineStore('auth', {
         this.userId = data.user.id;
         this.userUsername = data.user.username;
         console.log('Login successful:', data);
+        // adding to localStorage
+        localStorage.setItem('token', data.token);
 
       } catch (error) {
         console.error('Login failed:', error.message || error);

@@ -5,6 +5,12 @@ const eventsStore = useEventStore();
 import { storeToRefs } from "pinia";
 const sprintsStore = useSprintStore();
 
+const authStore = useAuthStore();
+
+
+const {login} = authStore;
+const { userId, userEmail, token , user} = storeToRefs(authStore);
+
 const props = defineProps([
     "_id",
 "description",
@@ -39,7 +45,10 @@ const { currentSprint, sprintList } = storeToRefs(sprintsStore);
 
 // const searched = computed(() =>   filterEventsByInput(inputValue.value))
 onMounted(async () => {
-  await fetchEvents();
+
+  if (token.value !== ""){
+      await fetchEvents();
+  }
 });
 const navLinks = [
   [],

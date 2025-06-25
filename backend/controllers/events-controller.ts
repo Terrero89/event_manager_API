@@ -2,17 +2,19 @@ import { Request, Response } from "express";
 import { Event } from "../models/events-models";
 import mongoose from "mongoose";
 
-export const getEventsController = async (req: any, res: Response) => {
-  try {
-    const user_id = req.user_id;
-    const events = await Event.find({ user: req.user.id }).sort({
-      createdAt: -1,
-    });
+export const getEventsController = async (req: Request, res: Response) => {
+  const userId = (req as any).user?.id;
 
-    res.status(200).json(events); //return all todos
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Error fetching Events" });
+  if (!userId) {
+    return res.status(401).json({ message: 'Unauthorized: No user ID found' });
+  }
+
+  try {
+    const events = await Event.find({ user: userId });
+    res.json(events);
+  } catch (err) {
+    console.error("Error fetching events:", err);
+    res.status(500).json({ message: "Server error fetching events" });
   }
 };
 

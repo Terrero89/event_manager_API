@@ -43,12 +43,15 @@ export const useEventStore = defineStore({
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${auth.token}`, // <- send token
+            Authorization: `Bearer ${auth.token}`,
           },
           body: JSON.stringify({ ...data }),
+      
         });
         console.log("TOKE WHEN CREATING EVENT", auth.token);
         if (!response.ok) {
+          const errorText = await response.text(); // capture backend error message
+          console.error("Server responded with:", response.status, errorText);
           throw new Error("Failed to add event");
         }
 

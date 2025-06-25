@@ -16,16 +16,18 @@ exports.deleteEventController = exports.updateEventController = exports.createEv
 const events_models_1 = require("../models/events-models");
 const mongoose_1 = __importDefault(require("mongoose"));
 const getEventsController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const user_id = req.user_id;
-        const events = yield events_models_1.Event.find({ user: req.user.id }).sort({
-            createdAt: -1,
-        });
-        res.status(200).json(events); //return all todos
+    var _a;
+    const userId = (_a = req.user) === null || _a === void 0 ? void 0 : _a.id;
+    if (!userId) {
+        return res.status(401).json({ message: 'Unauthorized: No user ID found' });
     }
-    catch (error) {
-        console.error(error);
-        res.status(500).json({ message: "Error fetching Events" });
+    try {
+        const events = yield events_models_1.Event.find({ user: userId });
+        res.json(events);
+    }
+    catch (err) {
+        console.error("Error fetching events:", err);
+        res.status(500).json({ message: "Server error fetching events" });
     }
 });
 exports.getEventsController = getEventsController;

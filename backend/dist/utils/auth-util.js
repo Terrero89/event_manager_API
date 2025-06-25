@@ -15,7 +15,8 @@ const verifyToken = (req, res, next) => {
     const token = authHeader.split(' ')[1];
     try {
         const decoded = jsonwebtoken_1.default.verify(token, global_1.CONFIG.JWT_SECRET);
-        req.body.user = decoded; // Attach the decoded token (user data) to the request
+        // ✅ Attach decoded token to `req.user` (not `req.body.user`)
+        req.user = decoded;
         next();
     }
     catch (error) {
