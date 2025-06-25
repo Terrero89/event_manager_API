@@ -66,7 +66,7 @@ const loginController = (req, res) => __awaiter(void 0, void 0, void 0, function
             return;
         }
         // Generate JWT token
-        const token = jsonwebtoken_1.default.sign({ id: user._id }, process.env.JWT_SECRET, {
+        const token = jsonwebtoken_1.default.sign({ id: user._id, email: user.email }, process.env.JWT_SECRET, {
             expiresIn: "1h",
         });
         // Set HttpOnly cookie
@@ -76,7 +76,7 @@ const loginController = (req, res) => __awaiter(void 0, void 0, void 0, function
         //   sameSite: "strict", // Prevent CSRF attacks
         //   maxAge: 3600000, // 1 hour
         // });
-        res.status(200).json({ token, cookie: 'authToken' });
+        res.status(200).json({ token, user: { id: user._id, username: user.username, email: user.email } });
     }
     catch (error) {
         console.error("Error logging in:", error);

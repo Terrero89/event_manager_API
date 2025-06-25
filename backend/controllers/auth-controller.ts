@@ -1,5 +1,5 @@
 import {Request, Response} from "express";
-import {User, IUser} from "../models/user-model";
+import {User} from "../models/user-model";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
@@ -72,7 +72,7 @@ export const loginController = async (
         }
 
         // Generate JWT token
-        const token = jwt.sign({id: user._id}, process.env.JWT_SECRET as string, {
+        const token = jwt.sign(   { id: user._id, email: user.email }, process.env.JWT_SECRET as string, {
             expiresIn: "1h",
         });
 
@@ -84,7 +84,7 @@ export const loginController = async (
         //   maxAge: 3600000, // 1 hour
         // });
 
-        res.status(200).json({token, cookie: 'authToken'});
+        res.status(200).json({ token, user: { id: user._id, username: user.username, email: user.email } });
     } catch (error) {
         console.error("Error logging in:", error);
         res.status(500).json({error: "Internal server error"});

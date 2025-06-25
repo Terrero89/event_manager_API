@@ -1,6 +1,12 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
+const authStore = useAuthStore();
+import { storeToRefs } from "pinia";
+
+
+const {login} = authStore;
+const { userId, userEmail, token , user} = storeToRefs(authStore);
 
 
 const password = ref('');
@@ -18,18 +24,8 @@ const validateLoginFields = () => {
 
 const handleLogin = async () => {
   if (!validateLoginFields()) return;
+login(email.value, password.value)
 
-  try {
-    const userCredentials =  {  email: email.value, password: password.value }
-    const response = await $fetch('https://eventmanagerapi-dev.up.railway.app/api/v1/auth/login', {
-      method: 'POST',
-      body:userCredentials,
-    });
-    console.log('Login successful:', response);
-    router.push('/');
-  } catch (error) {
-    errors.value.username = (error as any)?.data?.message || (error as any)?.message || 'Invalid login credentials.';
-  }
 };
 </script>
 

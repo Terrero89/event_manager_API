@@ -27,6 +27,11 @@ export const CONFIG = {
         icon: "i-heroicons-user-solid",
         to: "/login",
       },
+        {
+        label: "Log out",
+        icon: "i-heroicons-user-solid",
+        to: "/login",
+      },
     ],
   ],
   storyLinks: [
@@ -54,6 +59,11 @@ export const CONFIG = {
         label: "Sign In",
         icon: "i-heroicons-user-solid",
         to: "/login",
+      },
+           {
+        label: "Log out",
+        icon: "i-heroicons-user-solid",
+        to: "/",
       },
     ],
   ],
