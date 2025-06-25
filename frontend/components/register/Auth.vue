@@ -26,9 +26,12 @@ const handleRegister = async () => {
   if (!validateRegisterFields()) return;
 
   try {
-      const response = await $fetch('https://eventmanagerapi-dev.up.railway.app/api/v1/auth/register', {
+      const response = await fetch('https://eventmanagerapi-dev.up.railway.app/api/v1/auth/register', {
       method: 'POST',
-      body: {username: username.value, email: email.value, password: password.value},
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({username: username.value, email: email.value, password: password.value}),
     });
     console.log('Registration successful:', response);
     router.push('/login');
