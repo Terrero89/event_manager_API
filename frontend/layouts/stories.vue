@@ -8,10 +8,10 @@ import { CONFIG } from "../config/globalLinks";
       :links="CONFIG.horizontal.storyLinks"
       class="border-b border-gray-200 dark:border-gray-800"
     />
-   
     <div
       class="vertical border-b border-l border-r border-gray-200 dark:border-gray-800"
     >
+  
       <UVerticalNavigation :links="CONFIG.vertical.default" />
     </div>
    

@@ -42,6 +42,18 @@ export const useAuthStore = defineStore('auth', {
       }
     },
 
+    async logout() {
+  this.token = "";
+  this.user = null;
+  this.userEmail = '';
+  this.userId = '';
+  this.userUsername = '';
+
+  localStorage.removeItem('token');
+
+  console.log('User logged out');
+},
+
     async registerUser(username, email, password) {
       try {
         const response = await fetch('https://eventmanagerapi-dev.up.railway.app/api/v1/auth/register', {

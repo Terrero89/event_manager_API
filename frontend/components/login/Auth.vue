@@ -25,6 +25,7 @@ const validateLoginFields = () => {
 const handleLogin = async () => {
   if (!validateLoginFields()) return;
 await login(email.value, password.value)
+// make it navigate if all is good
  router.push('/stories');
 
 };

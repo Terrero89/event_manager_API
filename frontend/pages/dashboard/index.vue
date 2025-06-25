@@ -99,8 +99,10 @@ const currType = ref("");
   <div>
     {{ sprintList }}
     <div class="nav-flex my-2 border-b border-gray-200 dark:border-gray-800">
-      <UHorizontalNavigation :links="navLinks" class="" />
+      <UHorizontalNavigation :links="navLinks" class="" /> 
+   
     </div>
+     
     <div class="nav-flex wrapit">
       <UInputMenu
         color="gray"

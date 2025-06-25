@@ -1,5 +1,16 @@
 <script setup lang="js">
 import { CONFIG } from "../config/globalLinks";
+const authStore = useAuthStore();
+import { storeToRefs } from "pinia";
+
+
+const {login, logout} = authStore;
+const { userId, userEmail, token , user} = storeToRefs(authStore);
+
+const loggingOut = async () => {
+ await logout();
+  navigateTo('/login');
+};  
 </script>
 
 <template>
@@ -10,15 +21,21 @@ import { CONFIG } from "../config/globalLinks";
         :links="CONFIG.horizontal.storyLinks"
         class="border-b border-gray-200 dark:border-gray-800"
       />
+
     </div>
 
+  
     <!-- Main Content Section -->
     <div class="main-content">
+      
       <!-- Vertical Navigation -->
+
       <aside
         class="vertical-navigation border-b border-l border-r border-gray-200 dark:border-gray-800 hide"
       >
+               <UButton @click="loggingOut">Logout</UButton>
         <UVerticalNavigation :links="CONFIG.vertical.default" />
+        
       </aside>
 
       <!-- Page Content -->
@@ -66,6 +83,7 @@ import { CONFIG } from "../config/globalLinks";
 /* Vertical navigation styling */
 .vertical-navigation {
   width: 15rem;
+
 }
 
 @media (max-width: 756px) {
