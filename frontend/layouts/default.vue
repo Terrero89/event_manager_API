@@ -17,11 +17,11 @@ const loggingOut = async () => {
   <div class="layout-container">
     <!-- Horizontal Navigation -->
     <div>
-      <UHorizontalNavigation
+      <!-- <UHorizontalNavigation
         :links="CONFIG.horizontal.storyLinks"
         class="border-b border-gray-200 dark:border-gray-800"
-      />
-
+      /> -->
+<UINavigationNew/>
     </div>
 
   
