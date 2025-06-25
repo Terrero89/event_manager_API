@@ -23,9 +23,15 @@ export const verifyToken = (
   const token = authHeader.split(' ')[1];
 
   try {
-    const decoded = jwt.verify(token, CONFIG.JWT_SECRET as string) as DecodedToken;
+    const decoded = jwt.verify(token, CONFIG.JWT_SECRET as string);
 
-    // ✅ Attach decoded token to `req.user` (not `req.body.user`)
+    // ✅ Validate token structure
+    if (!decoded || typeof decoded !== 'object' || !('id' in decoded)) {
+      res.status(401).json({ message: 'Unauthorized: Malformed token' });
+      return;
+    }
+
+    // ✅ Attach the decoded token to req.user
     (req as any).user = decoded;
 
     next();
@@ -33,5 +39,6 @@ export const verifyToken = (
     res.status(401).json({ message: 'Unauthorized: Invalid token' });
   }
 };
+
 
 

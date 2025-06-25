@@ -6,12 +6,13 @@ export const getEventsController = async (req: Request, res: Response) => {
   const userId = (req as any).user?.id;
 
   if (!userId) {
-    return res.status(401).json({ message: 'Unauthorized: No user ID found' });
+    res.status(401).json({ message: 'Unauthorized: No user ID found' });
+    return;
   }
 
   try {
     const events = await Event.find({ user: userId });
-    res.json(events);
+    res.json(events); // ✅ just send response
   } catch (err) {
     console.error("Error fetching events:", err);
     res.status(500).json({ message: "Server error fetching events" });

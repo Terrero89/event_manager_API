@@ -15,7 +15,12 @@ const verifyToken = (req, res, next) => {
     const token = authHeader.split(' ')[1];
     try {
         const decoded = jsonwebtoken_1.default.verify(token, global_1.CONFIG.JWT_SECRET);
-        // ✅ Attach decoded token to `req.user` (not `req.body.user`)
+        // ✅ Validate token structure
+        if (!decoded || typeof decoded !== 'object' || !('id' in decoded)) {
+            res.status(401).json({ message: 'Unauthorized: Malformed token' });
+            return;
+        }
+        // ✅ Attach the decoded token to req.user
         req.user = decoded;
         next();
     }

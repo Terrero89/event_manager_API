@@ -19,11 +19,12 @@ const getEventsController = (req, res) => __awaiter(void 0, void 0, void 0, func
     var _a;
     const userId = (_a = req.user) === null || _a === void 0 ? void 0 : _a.id;
     if (!userId) {
-        return res.status(401).json({ message: 'Unauthorized: No user ID found' });
+        res.status(401).json({ message: 'Unauthorized: No user ID found' });
+        return;
     }
     try {
         const events = yield events_models_1.Event.find({ user: userId });
-        res.json(events);
+        res.json(events); // ✅ just send response
     }
     catch (err) {
         console.error("Error fetching events:", err);

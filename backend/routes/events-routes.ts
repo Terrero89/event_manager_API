@@ -14,10 +14,9 @@ import { verifyToken} from '../utils/auth-util'
 const router = Router();
 
 // event routes --> api/v1/
-router.get("/", getEventsController);// get all todos route
-router.get("/:id",  getEventController); // get all todo route
-router.delete("/:id",verifyToken, deleteEventController);
-router.patch("/:id",verifyToken, updateEventController); // update todo controller
-router.post("/", verifyToken, createEventController); // delete todo controller
-
+router.get("/", verifyToken, getEventsController);         // ✅ Secure all
+router.get("/:id", verifyToken, getEventController);       // ✅
+router.delete("/:id", verifyToken, deleteEventController); // ✅
+router.patch("/:id", verifyToken, updateEventController);  // ✅
+router.post("/", verifyToken, createEventController); 
 export default router;
