@@ -45,7 +45,6 @@ const getEventController = (req, res) => __awaiter(void 0, void 0, void 0, funct
 exports.getEventController = getEventController;
 const createEventController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { description, date, eventName, eventType, duration, status, sprintId } = req.body;
-    // MORE ERROR HANDLING COMING UP
     try {
         const event = yield events_models_1.Event.create({
             description,
@@ -55,7 +54,7 @@ const createEventController = (req, res) => __awaiter(void 0, void 0, void 0, fu
             duration,
             status,
             sprintId,
-            user: req.user.id // Assuming you have user info in req.user
+            user: req.user.id
         });
         res.status(200).json(event);
     }

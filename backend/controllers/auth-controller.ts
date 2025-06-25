@@ -75,15 +75,6 @@ export const loginController = async (
         const token = jwt.sign(   { id: user._id, email: user.email }, process.env.JWT_SECRET as string, {
             expiresIn: "1h",
         });
-
-        // Set HttpOnly cookie
-        // res.cookie("authToken", token, {
-        //   httpOnly: true,
-        //   secure: process.env.NODE_ENV === 'development', // Only over HTTPS in production
-        //   sameSite: "strict", // Prevent CSRF attacks
-        //   maxAge: 3600000, // 1 hour
-        // });
-
         res.status(200).json({ token, user: { id: user._id, username: user.username, email: user.email } });
     } catch (error) {
         console.error("Error logging in:", error);

@@ -47,7 +47,7 @@ export const useEventStore = defineStore({
           },
           body: JSON.stringify({ ...data }),
         });
-
+        console.log("TOKE WHEN CREATING EVENT", auth.token);
         if (!response.ok) {
           throw new Error("Failed to add event");
         }

@@ -22,7 +22,7 @@ const storySchema = new mongoose_1.default.Schema({
         repoNames: { type: String, required: false, },
         dateAssigned: { type: Date, default: Date.now, },
         dateCompleted: { type: Date, default: Date.now, },
-        user_id: { type: mongoose_1.default.Schema.Types.ObjectId, ref: 'User' }
+        user: { type: mongoose_1.default.Schema.Types.ObjectId, ref: 'User' }
     },
 }, { timestamps: true });
 exports.Stories = mongoose_1.default.model("Stories", storySchema);

@@ -19,7 +19,7 @@ const storySchema = new mongoose.Schema(
     repoNames: {      type: String,      required: false,    },
     dateAssigned: {      type: Date,      default: Date.now,    },
     dateCompleted: {      type: Date,      default: Date.now,    },
-      user_id: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
+      user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
   },
 },
   { timestamps: true }

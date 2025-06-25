@@ -43,6 +43,6 @@ const MeetingsSchema = new mongoose_1.Schema({
     duration: { type: Number, required: true },
     status: { type: String, required: true },
     sprintId: { type: String, required: true },
-    user_id: { type: mongoose_1.default.Schema.Types.ObjectId, ref: 'User' }
+    user: { type: mongoose_1.default.Schema.Types.ObjectId, ref: 'User' }
 }, { timestamps: true });
 exports.Meeting = mongoose_1.default.model("Meetings", MeetingsSchema);
