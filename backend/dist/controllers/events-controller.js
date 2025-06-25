@@ -18,7 +18,9 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const getEventsController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const user_id = req.user_id;
-        const events = yield events_models_1.Event.find({ user_id }).sort({ createdAt: -1 });
+        const events = yield events_models_1.Event.find({ user: req.user.id }).sort({
+            createdAt: -1,
+        });
         res.status(200).json(events); //return all todos
     }
     catch (error) {
@@ -44,7 +46,7 @@ const getEventController = (req, res) => __awaiter(void 0, void 0, void 0, funct
 });
 exports.getEventController = getEventController;
 const createEventController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { description, date, eventName, eventType, duration, status, sprintId } = req.body;
+    const { description, date, eventName, eventType, duration, status, sprintId, } = req.body;
     try {
         const event = yield events_models_1.Event.create({
             description,
@@ -54,7 +56,7 @@ const createEventController = (req, res) => __awaiter(void 0, void 0, void 0, fu
             duration,
             status,
             sprintId,
-            user: req.user.id
+            user: req.user.id,
         });
         res.status(200).json(event);
     }

@@ -2,101 +2,103 @@ import { Request, Response } from "express";
 import { Event } from "../models/events-models";
 import mongoose from "mongoose";
 
-
-
 export const getEventsController = async (req: any, res: Response) => {
-    try {
-        const user_id = req.user_id
+  try {
+    const user_id = req.user_id;
+    const events = await Event.find({ user: req.user.id }).sort({
+      createdAt: -1,
+    });
 
-  const events = await Event.find({user_id}).sort({createdAt: -1})
-
-  res.status(200).json(events); //return all todos
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: "Error fetching Events" });
-    }
-}
+    res.status(200).json(events); //return all todos
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error fetching Events" });
+  }
+};
 
 export const getEventController = async (req: Request, res: Response) => {
-    const { id } = req.params; //grabbing id params from the request object
+  const { id } = req.params; //grabbing id params from the request object
 
-    //?handling error if no id is found
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-        res.status(404).json({ error: "Event does not exist" });
-        return;
-    }
+  //?handling error if no id is found
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    res.status(404).json({ error: "Event does not exist" });
+    return;
+  }
 
-    const event = await Event.findById(id); //finding by specific id from params
-    //error handling for not id found
-    if (!event) {
-        res.status(404).json({ error: "NO Event FOUND" });
-        return;
-    }
+  const event = await Event.findById(id); //finding by specific id from params
+  //error handling for not id found
+  if (!event) {
+    res.status(404).json({ error: "NO Event FOUND" });
+    return;
+  }
 
-    res.status(200).json(event); //return that specific id from tODO
-}
+  res.status(200).json(event); //return that specific id from tODO
+};
 
 export const createEventController = async (req: any, res: Response) => {
-    const {description, date, eventName, eventType, duration, status, sprintId} = req.body
-    
+  const {
+    description,
+    date,
+    eventName,
+    eventType,
+    duration,
+    status,
+    sprintId,
+  } = req.body;
 
-    try {
-        const event = await Event.create({
-         
-            description,
-            date,
-            eventName,
-            eventType,
-            duration,
-            status,
-            sprintId,
-            user:req.user.id
-        });
+  try {
+    const event = await Event.create({
+      description,
+      date,
+      eventName,
+      eventType,
+      duration,
+      status,
+      sprintId,
+      user: req.user.id,
+    });
 
-
-        res.status(200).json(event);
-    } catch (error) {
-        console.error(error)
-    }
-}
+    res.status(200).json(event);
+  } catch (error) {
+    console.error(error);
+  }
+};
 export const updateEventController = async (req: Request, res: Response) => {
-    const { id } = req.params;
-    //check if exist in mongoose
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-        res.status(400).json({ error: "No such event" });
-        return;
+  const { id } = req.params;
+  //check if exist in mongoose
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    res.status(400).json({ error: "No such event" });
+    return;
+  }
+  //__id == mongoDB Id/ update id === __id
+  const event = await Event.findOneAndUpdate(
+    { _id: id },
+    {
+      ...req.body,
     }
-    //__id == mongoDB Id/ update id === __id
-    const event = await Event.findOneAndUpdate(
-        { _id: id },
-        {
+  );
+  //if no todo, throw error
+  if (!event) {
+    res.status(400).json({ error: "No such event available" });
+    return;
+  }
 
-            ...req.body,
-
-        }
-    );
-    //if no todo, throw error
-    if (!event) {
-        res.status(400).json({ error: "No such event available" });
-        return;
-    }
-
-    res.status(200).json(event);
-}
+  res.status(200).json(event);
+};
 export const deleteEventController = async (req: Request, res: Response) => {
-    const { id } = req.params;
+  const { id } = req.params;
 
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-        res.status(404).json({ error: "Event does not exist" });
-        return;
-    }
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    res.status(404).json({ error: "Event does not exist" });
+    return;
+  }
 
-    const event = await Event.findByIdAndDelete(id);
+  const event = await Event.findByIdAndDelete(id);
 
-    if (!event) {
-        res.status(404).json({ error: "No event found" });
-        return;
-    }
+  if (!event) {
+    res.status(404).json({ error: "No event found" });
+    return;
+  }
 
-    res.status(200).json(event);
-}
+  res.status(200).json(event);
+};
