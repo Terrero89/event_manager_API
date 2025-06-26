@@ -1,16 +1,12 @@
 <script setup lang="js">
 import { CONFIG } from "../config/globalLinks";
-const authStore = useAuthStore();
+const auth = useAuthStore();
 import { storeToRefs } from "pinia";
 
 
-const {login, logout} = authStore;
-const { userId, userEmail, token , user} = storeToRefs(authStore);
+const {login, logout} = auth;
+const { userId, userEmail, token , user} = storeToRefs(auth);
 
-const loggingOut = async () => {
- await logout();
-  navigateTo('/login');
-};  
 </script>
 
 <template>
@@ -30,13 +26,14 @@ const loggingOut = async () => {
       
       <!-- Vertical Navigation -->
 
-      <aside
+  <aside v v-if="auth.token" 
         class="vertical-navigation border-b border-l border-r border-gray-200 dark:border-gray-800 hide"
       >
-               <UButton @click="loggingOut">Logout</UButton>
+        
         <UVerticalNavigation :links="CONFIG.vertical.default" />
         
       </aside>
+
 
       <!-- Page Content -->
       <main class="content-area">

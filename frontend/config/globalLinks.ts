@@ -16,11 +16,7 @@ export const CONFIG = {
         icon: "i-heroicons-puzzle-piece",
         to: "/stories",
       },
-      {
-        label: "Todos",
-        icon: "i-heroicons-chart-bar",
-        to: "/todos",
-      },
+      
    
       {
         label: "Sign In",
@@ -114,6 +110,12 @@ export const CONFIG = {
      
       [
      
+
+           {
+        label: "Stories",
+        icon: "i-heroicons-puzzle-piece",
+        to: "/stories",
+      },   
         {
           label: "Sprints",
           icon: "heroicons:chevron-double-right-solid",
@@ -140,6 +142,16 @@ export const CONFIG = {
       
     
         {
+          label: "Standup",
+          icon: "heroicons-user-group-solid",
+          to: "/standup",
+        },
+          {
+          label: "Time off",
+          icon: "heroicons-clock-16-solid",
+          to: "/timeoff",
+        },
+          {
           label: "Dashboard",
           icon: "i-heroicons-chart-bar",
           to: "/dashboard",
