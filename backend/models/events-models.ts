@@ -9,10 +9,10 @@ const EventsSchema: Schema = new Schema({
     date: { type: Date, required: true },
     duration: { type: Number, required: true },
     status: { type: String, required: true },
-    sprintId: { type: String, required: true },
+    sprintId: { type: String, required: false },
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
 
 },{ timestamps: true });
 
 
-export const Event = mongoose.model("Event", EventsSchema, "events");
+export const Event = mongoose.model("Event", EventsSchema);
