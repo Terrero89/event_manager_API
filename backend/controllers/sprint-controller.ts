@@ -2,9 +2,17 @@ import { Request, Response } from "express";
 import { Sprint } from "../models/sprint-model";
 import mongoose from "mongoose";
 
+// Extend Express Request interface to include 'user'
+
 export const getSprintsController = async (req: Request, res: Response) => {
+      const userId = (req as any).user?.id;
+
+  if (!userId) {
+    res.status(401).json({ message: 'Unauthorized: No sprints found' });
+    return;
+  }
   try {
-    const sprints = await Sprint.find({}).sort({ createdAt: -1 });
+    const sprints = await Sprint.find({ user: userId }).sort({ createdAt: -1 });
     res.status(200).json(sprints);
   } catch (error) {
     console.error(error);
@@ -31,7 +39,7 @@ export const createSprintController = async (req: any, res: Response) => {
         summary,
         piNotes,
         storiesUnderSprint,
-        user: req.user.id // Assuming you have user info in req.user
+        user: req.user.id
 
     });
     res.status(200).json(newSprint);

@@ -15,9 +15,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteSprintController = exports.updateSprintController = exports.getSprintController = exports.createSprintController = exports.getSprintsController = void 0;
 const sprint_model_1 = require("../models/sprint-model");
 const mongoose_1 = __importDefault(require("mongoose"));
+// Extend Express Request interface to include 'user'
 const getSprintsController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
+    const userId = (_a = req.user) === null || _a === void 0 ? void 0 : _a.id;
+    if (!userId) {
+        res.status(401).json({ message: 'Unauthorized: No sprints found' });
+        return;
+    }
     try {
-        const sprints = yield sprint_model_1.Sprint.find({}).sort({ createdAt: -1 });
+        const sprints = yield sprint_model_1.Sprint.find({ user: userId }).sort({ createdAt: -1 });
         res.status(200).json(sprints);
     }
     catch (error) {
@@ -36,7 +43,7 @@ const createSprintController = (req, res) => __awaiter(void 0, void 0, void 0, f
             summary,
             piNotes,
             storiesUnderSprint,
-            user: req.user.id // Assuming you have user info in req.user
+            user: req.user.id
         });
         res.status(200).json(newSprint);
     }
