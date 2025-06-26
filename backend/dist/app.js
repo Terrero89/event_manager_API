@@ -44,8 +44,12 @@ app.use("/api/v1/notes", notes_routes_1.default);
 app.use("/api/v1/events", events_routes_1.default); // home route
 app.use("/api/v1/meetings", meetings_routes_1.default);
 app.use("/api/v1/sprints", sprint_routes_1.default);
-mongoose.connect(global_1.CONFIG.MONGODB_URL).then(() => {
-    console.log('Connected MongoDB...');
+app.get('/api/v1/test', (req, res) => {
+    const dbName = mongoose.connection.name;
+    res.json({ connectedTo: dbName });
+});
+mongoose.connect(process.env.MONGODB_URL).then(() => {
+    console.log(`Connected Database ${mongoose.connection.name} in MongoDB`);
 }).catch((error) => console.log(error));
 app.listen(global_1.CONFIG.PORT, () => console.log(`Server running on http://localhost:${global_1.CONFIG.PORT}/api/v1/`));
 module.exports = app;

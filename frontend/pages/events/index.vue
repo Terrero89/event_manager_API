@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { onMounted } from "vue";
 import { CONFIG } from "~/config/globalVariables";
+
+
 const eventsStore = useEventStore();
 import { storeToRefs } from "pinia";
 const sprintsStore = useSprintStore();
@@ -11,18 +13,6 @@ const authStore = useAuthStore();
 const { login } = authStore;
 const { userId, userEmail, token, user } = storeToRefs(authStore);
 
-const props = defineProps([
-  "_id",
-  "description",
-  "date",
-  "eventType",
-  "eventName",
-  "duration",
-  "sprintId",
-  "status",
-  "createdAt",
-  "updatedAt",
-]);
 
 interface Event {
   id: number | string;

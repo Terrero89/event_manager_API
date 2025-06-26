@@ -45,4 +45,4 @@ const EventsSchema = new mongoose_1.Schema({
     sprintId: { type: String, required: true },
     user: { type: mongoose_1.default.Schema.Types.ObjectId, ref: 'User' }
 }, { timestamps: true });
-exports.Event = mongoose_1.default.model("Events", EventsSchema);
+exports.Event = mongoose_1.default.model("Event", EventsSchema, "events");

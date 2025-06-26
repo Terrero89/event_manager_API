@@ -62,6 +62,7 @@ const createEventController = (req, res) => __awaiter(void 0, void 0, void 0, fu
             sprintId,
             user: req.user.id,
         });
+        console.log("✅ New event created:", event); // 👈 Add this
         res.status(200).json(event);
     }
     catch (error) {

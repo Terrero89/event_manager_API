@@ -60,7 +60,7 @@ export const createEventController = async (req: any, res: Response) => {
       sprintId,
       user: req.user.id,
     });
-
+console.log("✅ New event created:", event); // 👈 Add this
     res.status(200).json(event);
   } catch (error) {
     console.error(error);

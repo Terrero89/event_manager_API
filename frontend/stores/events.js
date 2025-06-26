@@ -63,6 +63,8 @@ export const useEventStore = defineStore({
     },
     async deleteEvent(itemID) {
       const config = useRuntimeConfig();
+        const auth = useAuthStore();
+
       const url = `${config.public.apiBase}/events/${itemID}`;
       try {
         const response = await fetch(url, {
