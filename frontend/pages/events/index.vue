@@ -8,20 +8,20 @@ const sprintsStore = useSprintStore();
 const authStore = useAuthStore();
 
 
-const {login} = authStore;
-const { userId, userEmail, token , user} = storeToRefs(authStore);
+const { login } = authStore;
+const { userId, userEmail, token, user } = storeToRefs(authStore);
 
 const props = defineProps([
-    "_id",
-"description",
-"date",
-"eventType",
-"eventName",
-"duration",
-"sprintId",
-"status",
-"createdAt",
-"updatedAt",
+  "_id",
+  "description",
+  "date",
+  "eventType",
+  "eventName",
+  "duration",
+  "sprintId",
+  "status",
+  "createdAt",
+  "updatedAt",
 ]);
 
 interface Event {
@@ -35,7 +35,7 @@ interface Event {
   status: string;
 }
 
-const { fetchEvents, filterEvents, totalFilteredStats} = eventsStore;
+const { fetchEvents, filterEvents, totalFilteredStats } = eventsStore;
 const { events } = storeToRefs(eventsStore) as { events: Ref<Event[]> };
 
 const { fetchSprints } = sprintsStore;
@@ -46,8 +46,8 @@ const { currentSprint, sprintList } = storeToRefs(sprintsStore);
 // const searched = computed(() =>   filterEventsByInput(inputValue.value))
 onMounted(async () => {
 
-  if (token.value !== ""){
-      await fetchEvents();
+  if (token.value !== "") {
+    await fetchEvents();
   }
 });
 const navLinks = [
@@ -78,7 +78,7 @@ const startDate = ref("");
 const endDate = ref("");
 const statusInput = ref("")
 
-const stats = computed(()=> totalFilteredStats(filterEvents(inputValue.value, categoryInput.value, startDate.value, endDate.value,  statusInput.value))
+const stats = computed(() => totalFilteredStats(filterEvents(inputValue.value, categoryInput.value, startDate.value, endDate.value, statusInput.value))
 )
 const showStats = computed(() => {
   return (
@@ -111,121 +111,69 @@ const sortedFilteredEvents = computed(() => {
     <div class="nav-flex my-2 border-b border-gray-200 dark:border-gray-800">
       <UHorizontalNavigation :links="navLinks" class="" />
       <UModal v-model="isOpen">
+        .33+-0
         <div class="p-4">IS HERE</div>
       </UModal>
 
-     <UButton
-        class="my-3"
-        color="blue"
-        variant="soft"
-        label="Add"
-        @Click="isOpen = true"
-        >Insights</UButton
-      >
+      <UButton class="my-3" color="blue" variant="soft" label="Add" @Click="isOpen = true">Insights</UButton>
     </div>
 
     <div class="nav-flex wrapit" v-if="show">
 
-      <UInput
-        color="gray"
-        variant="outline"
-        class="w-full lg:w-48 my-3 mr-2"
-        placeholder="Search..."
-        v-model="inputValue"
-      />
-      <UInputMenu
-        color="gray"
-        variant="outline"
-        trailing-icon="i-heroicons-chevron-down"
-        class="w-full lg:w-48 my-3 mr-2"
-        placeholder="Select by category"
-        :options="CONFIG.variables.eventTypes"
-        v-model="categoryInput"
-      />
-      <UInputMenu
-        color="gray"
-        variant="outline"
-        trailing-icon="i-heroicons-chevron-down"
-        class="w-full lg:w-48 my-3 mr-2"
-        placeholder="Select by status"
-        :options="CONFIG.variables.statusLevel"
-        v-model="statusInput"
-      />
+      <UInput color="gray" variant="outline" class="w-full lg:w-48 my-3 mr-2" placeholder="Search..."
+        v-model="inputValue" />
+      <UInputMenu color="gray" variant="outline" trailing-icon="i-heroicons-chevron-down"
+        class="w-full lg:w-48 my-3 mr-2" placeholder="Select by category" :options="CONFIG.variables.eventTypes"
+        v-model="categoryInput" />
+      <UInputMenu color="gray" variant="outline" trailing-icon="i-heroicons-chevron-down"
+        class="w-full lg:w-48 my-3 mr-2" placeholder="Select by status" :options="CONFIG.variables.statusLevel"
+        v-model="statusInput" />
 
-      <UInput
-        color="gray"
-        variant="outline"
-        v-model="startDate"
-        type="date"
-        placeholder="Start date"
-        class="w-full lg:w-36 my-3 mr-2"
-      />
-      
-      <UInput
-        color="gray"
-        variant="outline"
-        v-model="endDate"
-        type="date"
-        placeholder="End date"
-        class="w-full lg:w-36 my-3 mr-2"
-      />
-      <UButton
-        class="my-3 mx-2 ml-auto"
-        color="teal"
-        variant="outline"
-        label="Clear"
-        @click="
-          inputValue = '';
-          categoryInput = '';
-          startDate = '';
-          endDate = '';
-          statusInput = '';
-        "
-      />
+      <UInput color="gray" variant="outline" v-model="startDate" type="date" placeholder="Start date"
+        class="w-full lg:w-36 my-3 mr-2" />
+
+      <UInput color="gray" variant="outline" v-model="endDate" type="date" placeholder="End date"
+        class="w-full lg:w-36 my-3 mr-2" />
+      <UButton class="my-3 mx-2 ml-auto" color="teal" variant="outline" label="Clear" @click="
+        inputValue = '';
+      categoryInput = '';
+      startDate = '';
+      endDate = '';
+      statusInput = '';
+      " />
     </div>
     <div class="numbers my-2">
 
-<div v-if="showStats" class="numbers my-2">
-  <div class="mr-2">
-    Total {{ categoryInput === '' ? 'Items' : categoryInput}}:
-    <UBadge variant="soft" color="teal" class="font-bold">2</UBadge>
-  </div>
-  <div class="mr-2" v-if="stats.completedCount > 0">
- Status {{statusInput !== "Pending" && statusInput !== "Completed" ? statusInput : "Totals"}}:
-    <UBadge variant="soft" class="font-bold">{{ stats.completedCount }}</UBadge>
-    
-  </div>
-  
+      <div v-if="showStats" class="numbers my-2">
+        <div class="mr-2">
+          Total {{ categoryInput === '' ? 'Items' : categoryInput }}:
+          <UBadge variant="soft" color="teal" class="font-bold">2</UBadge>
+        </div>
+        <div class="mr-2" v-if="stats.completedCount > 0">
+          Status {{ statusInput !== "Pending" && statusInput !== "Completed" ? statusInput : "Totals" }}:
+          <UBadge variant="soft" class="font-bold">{{ stats.completedCount }}</UBadge>
 
-   <div class="mr-2" v-if="stats.pendingCount > 0">
-    Total {{statusInput}}:
-    <UBadge variant="soft" color="teal"  class="font-bold">{{ stats.pendingCount }}</UBadge>
-    
-  </div>
-  <div class="mr-2">
-    Total Hours:
-    <UBadge variant="soft" color="teal"  class="font-bold">{{ stats.totalDuration }}</UBadge>
-  </div>
-</div>
+        </div>
 
-</div>
+
+        <div class="mr-2" v-if="stats.pendingCount > 0">
+          Total {{ statusInput }}:
+          <UBadge variant="soft" color="teal" class="font-bold">{{ stats.pendingCount }}</UBadge>
+
+        </div>
+        <div class="mr-2">
+          Total Hours:
+          <UBadge variant="soft" color="teal" class="font-bold">{{ stats.totalDuration }}</UBadge>
+        </div>
+      </div>
+
+    </div>
     <UIEmptyMessage v-if="events.length < 1" title="events" />
 
-    <EventsList
-      v-else
-      v-for="item in sortedFilteredEvents"
-      :key="item._id"
-      :_id="item._id"
-      :description="item.description"
-      :date="item.date"
-      :eventName="item.eventName"
-      :eventType="item.eventType"
-      :duration="item.duration"
-      :sprintId="item.sprintId"
-      :status="item.status"
-        :updatedAt="item.updatedAt"
-        :createdAt="item.createdAt"
-    />
+    <EventsList v-else v-for="item in sortedFilteredEvents" :key="item._id" :_id="item._id"
+      :description="item.description" :date="item.date" :eventName="item.eventName" :eventType="item.eventType"
+      :duration="item.duration" :sprintId="item.sprintId" :status="item.status" :updatedAt="item.updatedAt"
+      :createdAt="item.createdAt" />
   </div>
 </template>
 
@@ -233,17 +181,19 @@ const sortedFilteredEvents = computed(() => {
 .wrapit {
   flex-wrap: wrap;
 }
+
 .nav-flex {
   display: flex;
   justify-content: flex-start;
 }
+
 .drop {
   margin-right: 5rem;
 }
 
-.numbers{
-  display:flex;
-  justify-content:start;
+.numbers {
+  display: flex;
+  justify-content: start;
 
 }
 </style>

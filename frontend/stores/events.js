@@ -48,7 +48,7 @@ export const useEventStore = defineStore({
           body: JSON.stringify({ ...data }),
       
         });
-        console.log("TOKE WHEN CREATING EVENT", auth.token);
+        // console.log("TOKE WHEN CREATING EVENT", auth.token);
         if (!response.ok) {
           const errorText = await response.text(); // capture backend error message
           console.error("Server responded with:", response.status, errorText);
@@ -87,6 +87,7 @@ export const useEventStore = defineStore({
 
     async updateEvent(itemID, payload) {
       const config = useRuntimeConfig();
+          const auth = useAuthStore();
       const url = `${config.public.apiBase}/events/${itemID}`;
 
       try {

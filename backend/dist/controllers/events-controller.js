@@ -23,7 +23,8 @@ const getEventsController = (req, res) => __awaiter(void 0, void 0, void 0, func
         return;
     }
     try {
-        const events = yield events_models_1.Event.find({ user: userId });
+        const events = yield events_models_1.Event.find({ user: userId }).sort({ createdAt: -1 });
+        ;
         res.json(events); // ✅ just send response
     }
     catch (err) {

@@ -3,9 +3,15 @@ import { Stories } from "../models/story-model";
 import mongoose from "mongoose";
 
 export const getStoriesController = async (req: Request, res: Response) => {
+   const userId = (req as any).user?.id;
+
+  if (!userId) {
+    res.status(401).json({ message: 'Unauthorized: No stories found' });
+    return;
+  }
   try {
-    const allStories = await Stories.find({}).sort({ createdAt: -1 });
-    res.status(200).json(allStories);
+    const allStories = await Stories.find({user: userId }).sort({ createdAt: -1 });
+    res.json(allStories);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Error fetching stories" });
@@ -67,7 +73,7 @@ export const updateStoryController = async (req: Request, res: Response) => {
       ...req.body,
     }
   );
-  //if no exam, throw error
+
   if (!story) {
     res.status(400).json({ error: "No such story available" });
     return;
@@ -111,8 +117,9 @@ export const createStoryController = async (req: any, res: Response) => {
       learning,
       dateAssigned,
       dateCompleted,
-          user: req.user.id // Assuming you have user info in req.user
+      user: req.user.id 
     });
+    console.log("user id",req.user.id) 
     res.status(200).json(story);
   } catch (error) {
     console.log(error);

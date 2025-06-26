@@ -16,9 +16,15 @@ exports.createStoryController = exports.updateStoryController = exports.deleteSt
 const story_model_1 = require("../models/story-model");
 const mongoose_1 = __importDefault(require("mongoose"));
 const getStoriesController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
+    const userId = (_a = req.user) === null || _a === void 0 ? void 0 : _a.id;
+    if (!userId) {
+        res.status(401).json({ message: 'Unauthorized: No stories found' });
+        return;
+    }
     try {
-        const allStories = yield story_model_1.Stories.find({}).sort({ createdAt: -1 });
-        res.status(200).json(allStories);
+        const allStories = yield story_model_1.Stories.find({ user: userId }).sort({ createdAt: -1 });
+        res.json(allStories);
     }
     catch (error) {
         console.error(error);
@@ -65,7 +71,6 @@ const updateStoryController = (req, res) => __awaiter(void 0, void 0, void 0, fu
     }
     //__id == mongoDB Id/ update id === __id
     const story = yield story_model_1.Stories.findOneAndUpdate({ _id: id }, Object.assign({}, req.body));
-    //if no exam, throw error
     if (!story) {
         res.status(400).json({ error: "No such story available" });
         return;
@@ -92,8 +97,9 @@ const createStoryController = (req, res) => __awaiter(void 0, void 0, void 0, fu
             learning,
             dateAssigned,
             dateCompleted,
-            user: req.user.id // Assuming you have user info in req.user
+            user: req.user.id
         });
+        console.log("user id", req.user.id);
         res.status(200).json(story);
     }
     catch (error) {

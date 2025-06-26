@@ -12,17 +12,19 @@ export const useStoryStore = defineStore({
   actions: {
     async fetchStories() {
   const config = useRuntimeConfig();
+      const auth = useAuthStore();
   const url = `${config.public.apiBase}/stories`;
   try {
     const response = await fetch(url, {
       method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${auth.token}`, // ← include token
+          },
     });
 
     if (!response.ok) {
-      throw new Error(`Failed to fetch sprints: ${response.status} ${response.statusText}`);
+      throw new Error(`Failed to fetch stories: ${response.status} ${response.statusText}`);
     }
 
     const data = await response.json();
@@ -32,12 +34,13 @@ export const useStoryStore = defineStore({
     return data;
 
   } catch (error) {
-    console.error("Failed to fetch storiess:", error);
+    console.error("Failed to fetch stories:", error);
     return null;
   }
 },
     async addStory(data) {
        const config = useRuntimeConfig();
+          const auth = useAuthStore();
   const url = `${config.public.apiBase}/stories`;
   // const url = "http://localhost:8080/api/v1/stories"
       try {
@@ -45,26 +48,34 @@ export const useStoryStore = defineStore({
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${auth.token}`,
           },
           body: JSON.stringify({ ...data }),
         });
+        console.log("TOKE WHEN CREATING STORY", auth.token);
         if (!response.ok) {
+          const errorText = await response.text(); // capture backend error message
+          console.error("Server responded with:", response.status, errorText);
           throw new Error("Failed to add event");
         }
-
+        const newStory = await response.json();
+        this.items.push(newStory);
         // No need to generate a unique ID here, data is stored directly
       } catch (error) {
         console.error("Failed to add story:", error);
-      } finally {
-      }
+      } 
     },
 async deleteStory(itemID) {
   const config = useRuntimeConfig();
+    const auth = useAuthStore();
   const url = `${config.public.apiBase}/stories/${itemID}`;
   try {
     const response = await fetch(url, {
       method: "DELETE",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${auth.token}`,
+          }
     });
 
     if (!response.ok) {
@@ -75,19 +86,21 @@ async deleteStory(itemID) {
     // ✅ Update local state after deletion
     this.items = this.items.filter((event) => event._id !== itemID);
   } catch (error) {
-    console.error("Error deleting Event:", error);
+    console.error("Error deleting Story:", error);
   }
 },
     async updateStory(itemID, payload){
   const config = useRuntimeConfig();
+    const auth = useAuthStore();
   const url = `${config.public.apiBase}/stories/${itemID}`;
 
   try {
     const response = await fetch(url, {
       method: "PATCH",
       headers: {
-        "Content-Type": "application/json",
-      },
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${auth.token}`,
+          },
       body: JSON.stringify(payload),
     });
 
@@ -103,7 +116,7 @@ async deleteStory(itemID) {
       this.items[index] = updatedEvent;
     }
   } catch (error) {
-    console.error("Error updating event:", error);
+    console.error("Error updating story:", error);
   }
 },
   },

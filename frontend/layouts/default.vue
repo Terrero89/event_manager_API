@@ -26,7 +26,8 @@ const { userId, userEmail, token , user} = storeToRefs(auth);
       
       <!-- Vertical Navigation -->
 
-  <aside v v-if="auth.token" 
+  <!-- <aside v v-if="auth.token"  -->
+    <aside  
         class="vertical-navigation border-b border-l border-r border-gray-200 dark:border-gray-800 hide"
       >
         

@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <div>LOGIN PAGE UI</div>
+  <div></div>
 </template>
 
 <style scoped>

@@ -11,7 +11,7 @@ export const getEventsController = async (req: Request, res: Response) => {
   }
 
   try {
-    const events = await Event.find({ user: userId });
+    const events = await Event.find({ user: userId }).sort({ createdAt: -1 });;
     res.json(events); // ✅ just send response
   } catch (err) {
     console.error("Error fetching events:", err);
