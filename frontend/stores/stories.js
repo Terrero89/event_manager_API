@@ -60,7 +60,6 @@ export const useStoryStore = defineStore({
         }
         const newStory = await response.json();
         this.items.push(newStory);
-        // No need to generate a unique ID here, data is stored directly
       } catch (error) {
         console.error("Failed to add story:", error);
       } 

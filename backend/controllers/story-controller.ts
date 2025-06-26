@@ -102,24 +102,14 @@ export const createStoryController = async (req: any, res: Response) => {
   } = req.body;
   try {
     const story = await Stories.create({
-      sprintId,
-      storyName,
-      storyNumber,
-      storyDescription,
-      difficultyLevel,
-      storyPoints,
-      workType,
-      developmentType,
-      status,
-      reporter,
-      storyComments,
-      repoNames,
-      learning,
-      dateAssigned,
-      dateCompleted,
-      user: req.user.id 
+      ...req.body,
+  user: req.user.id,
+  debugAddedBy: 'createStoryController',
     });
-    console.log("user id",req.user.id) 
+ console.log("Final story payload", {
+  ...req.body,
+  user: req.user.id
+});
     res.status(200).json(story);
   } catch (error) {
     console.log(error);
