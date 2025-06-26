@@ -50,7 +50,7 @@ app.get('/api/v1/test', (req, res) => {
   const dbName = mongoose.connection.name;
   res.json({ connectedTo: dbName });
 });
-mongoose.connect(process.env.MONGODB_URL).then(() => {
+mongoose.connect(CONFIG.MONGODB_URL).then(() => {
     console.log(`Connected Database ${mongoose.connection.name} in MongoDB`);
 }).catch((error: Error) => console.log(error));
 app.listen(CONFIG.PORT, () => console.log(`Server running on http://localhost:${CONFIG.PORT}/api/v1/`));
