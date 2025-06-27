@@ -12,11 +12,13 @@ export const useSprintStore = defineStore({
   actions: {
     async fetchSprints() {
   const config = useRuntimeConfig();
+        const auth = useAuthStore();
   try {
     const response = await fetch(`${config.public.apiBase}/sprints`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${auth.token}`,
       },
     });
 
@@ -39,13 +41,17 @@ export const useSprintStore = defineStore({
 
      async addSprint(data) {
         const config = useRuntimeConfig();
+        const auth = useAuthStore();
         const url = `${config.public.apiBase}/sprints`;
      
       try {
         const response = await fetch(url, {
           method: "POST",
           body: JSON.stringify({ ...data }),
-          headers: { "Content-Type": "application/json" },
+            headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${auth.token}`, // ← include token
+          },
         });
 
         if (!response.ok) {
@@ -57,13 +63,17 @@ export const useSprintStore = defineStore({
     },
 async deleteSprint(itemID) {
   const config = useRuntimeConfig();
+  const auth = useAuthStore();
   const url = `${config.public.apiBase}/sprints/${itemID}`;
   // const url = this.URL + `/${itemID}`;
 console.log("TEST",url)
   try {
     const response = await fetch(url, {
       method: "DELETE",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${auth.token}`,
+      },
     });
 
     const text = await response.text();
@@ -82,14 +92,16 @@ console.log("TEST",url)
 
     async updateSprint(itemID, payload)  {
   const config = useRuntimeConfig();
+  const auth = useAuthStore();
   const url = `${config.public.apiBase}/sprints/${itemID}`;
 
   try {
     const response = await fetch(url, {
       method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
+     headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${auth.token}`, // ← include token
+          },
       body: JSON.stringify(payload),
     });
 

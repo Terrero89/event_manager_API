@@ -5,9 +5,9 @@ export const useAuthStore = defineStore('auth', {
   state: () => ({
     token:  localStorage.getItem("token") || "",
     user: null,
-    userEmail: '',
-    userId: '',
-    userUsername: '',
+    userEmail: localStorage.getItem("email") || "",
+    userId:  "",
+    userUsername: localStorage.getItem("username") || "",
 
   }),
   actions: {
@@ -36,6 +36,8 @@ export const useAuthStore = defineStore('auth', {
         console.log('Login successful:', data);
         // adding to localStorage
         localStorage.setItem('token', data.token);
+        localStorage.setItem("email", data.user.email);
+        localStorage.setItem("username", data.user.username);
 
       } catch (error) {
         console.error('Login failed:', error.message || error);
@@ -50,6 +52,8 @@ export const useAuthStore = defineStore('auth', {
   this.userUsername = '';
 
   localStorage.removeItem('token');
+  localStorage.removeItem('email');
+  localStorage.removeItem('username');
 
   console.log('User logged out');
 },

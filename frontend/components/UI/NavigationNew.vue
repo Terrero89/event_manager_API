@@ -1,25 +1,28 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router'
-
+import { storeToRefs } from "pinia";
 
 const route = useRoute()
 const auth = useAuthStore()
 
-// const navLinks = [
-//   { name: 'Stories', href: '/stories' },
-// ]
+const {logout } = auth;
+const {token, } = storeToRefs(auth);
 
-const logout = () => {
-  auth.logout()
+const logoutUser = () => {
+  logout()
+
   navigateTo('/login')
 }
+
+
+
 </script>
 
 <template>
   <nav class="test px-6 py-4 flex justify-between items-center shadow-md border-b border-gray-200 dark:border-gray-800">
     <!-- Logo -->
     <NuxtLink to="/" class="text-lg font-bold text-gray-400 hover:opacity-100">
-      EventManager
+      EM
     </NuxtLink>
 
     <!-- Navigation Links -->
@@ -42,7 +45,7 @@ const logout = () => {
 
 
       <!-- Authenticated dropdown -->
-      <div v-if="auth.token" class="relative group">
+      <div v-if="token" class="relative group">
 
         <div class="test2">
           <svg class="text-gray-500 font-semibold" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"
@@ -67,7 +70,7 @@ const logout = () => {
           <NuxtLink to="/dashboard" class="block px-4 py-1 hover:bg-gray-800 text-sm text-white">
             Dashboard
           </NuxtLink>
-          <button @click="logout" class="block w-full text-left px-4 py-1 hover:bg-gray-800 text-sm text-red-400 ">
+          <button @click="logoutUser" class="block w-full text-left px-4 py-1 hover:bg-gray-800 text-sm text-red-400 ">
             Logout
           </button>
         </div>
