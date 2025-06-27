@@ -61,9 +61,11 @@ const logoutUser = () => {
         <NuxtLink to="/config" class=" mr-2 text-gray-300 font-semibold hover:text-white focus:outline-none">
           Config
         </NuxtLink>
-        <button class="text-gray-300 font-semibold hover:text-white focus:outline-none">
+        <!-- <button class="text-gray-300 font-semibold hover:text-white focus:outline-none">
           {{ auth.userUsername || 'User' }}
-        </button>
+        </button> -->
+
+        <span class="nametag text-gray-300 font-semibold hover:text-white focus:outline-none"> {{ auth.userUsername.toUpperCase().slice(0,2) || 'User' }} </span>
         <div
           class="absolute right-0 mt-2 w-40 bg-gray-900 border border-gray-700 rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition duration-200 z-50">
 
@@ -114,6 +116,14 @@ const logoutUser = () => {
 .test2 {
   display: inline-block;
   margin: auto 0;
+
+}
+.nametag{
+text-align:center;
+border-radius: 50%;
+padding: 4px ;
+margin:1rem;
+background: gray;
 
 }
 </style>

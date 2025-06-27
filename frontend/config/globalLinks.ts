@@ -92,21 +92,7 @@ export const CONFIG = {
   vertical: {
 
     default:  [
-      [
-        {
-          label: "",
-          // icon: "i-heroicons-light-bulb",
-          avatar: {
-            srcset: 'https://ipx.nuxt.com/s_32x32/gh_avatar/benjamincanac 2x',
-            alt: 'Sergio Terrero',
-            size: 'md'
-          },
-         
-          to: "/",
-          
-        },
-        
-      ],
+   
      
       [
      
@@ -160,9 +146,5 @@ export const CONFIG = {
       ],
     ],
   },
-
-
-  reporters : ["Sergio Terrero", "Pedro Martinez", "Eugenia Derbez", "Jackie Perex", "Pamela Alvarez"],
-  difficultyLevels : ["Low", "Medium", "High", "Critical"],
 
 };

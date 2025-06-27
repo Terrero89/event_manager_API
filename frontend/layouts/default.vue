@@ -13,10 +13,7 @@ const { userId, userEmail, token , user} = storeToRefs(auth);
   <div class="layout-container">
     <!-- Horizontal Navigation -->
     <div>
-      <!-- <UHorizontalNavigation
-        :links="CONFIG.horizontal.storyLinks"
-        class="border-b border-gray-200 dark:border-gray-800"
-      /> -->
+
 <UINavigationNew/>
     </div>
 
@@ -27,9 +24,8 @@ const { userId, userEmail, token , user} = storeToRefs(auth);
       <!-- Vertical Navigation -->
 
   <!-- <aside v v-if="auth.token"  -->
-    <aside  
-        class="vertical-navigation border-b border-l border-r border-gray-200 dark:border-gray-800 hide"
-      >
+    <aside  class="vertical-navigation mt-4 border-l border-r border-gray-200 dark:border-gray-800 hide" >
+ 
         
         <UVerticalNavigation :links="CONFIG.vertical.default" />
         
