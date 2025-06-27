@@ -102,9 +102,9 @@ export const createStoryController = async (req: any, res: Response) => {
   } = req.body;
   try {
     const story = await Stories.create({
-      ...req.body,
-  user: req.user.id,
-  debugAddedBy: 'createStoryController',
+   ...req.body,
+    user: req.user.id,
+  
     });
  console.log("Final story payload", {
   ...req.body,

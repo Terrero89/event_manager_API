@@ -5,9 +5,6 @@ export const useStoryStore = defineStore({
   id: "story",
   state: () => ({
     items: [],
-    URL: "http://localhost:8080/api/v1/stories",
-    URL_2:
-      "https://project-manager-app-f9829-default-rtdb.firebaseio.com/stories.json",
   }),
   actions: {
     async fetchStories() {
