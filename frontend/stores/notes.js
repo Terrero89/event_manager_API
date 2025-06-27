@@ -9,12 +9,15 @@ export const useNoteStore = defineStore({
 
 async fetchNotes() {
   const config = useRuntimeConfig();
+  const auth = useAuthStore();
   try {
     const response = await fetch(`${config.public.apiBase}/notes`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${auth.token}`, // ← include token
       },
+
     });
 
     if (!response.ok) {
@@ -32,11 +35,15 @@ async fetchNotes() {
 },
     async addNote(data) {
       const config = useRuntimeConfig();
+      const auth = useAuthStore();
       try {
         const response = await fetch(`${config.public.apiBase}/notes`, {
           method: "POST",
           body: JSON.stringify({ ...data }),
-          headers: { "Content-Type": "application/json" },
+             headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${auth.token}`, // ← include token
+          },
         });
 
         if (!response.ok) {
@@ -49,11 +56,15 @@ async fetchNotes() {
 
     async deleteNote(itemID) {
       const config = useRuntimeConfig();
+      const auth = useAuthStore();
       const url = `${config.public.apiBase}/notes/${itemID}`;
       try {
         const response = await fetch(url, {
           method: "DELETE",
-          headers: { "Content-Type": "application/json" },
+             headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${auth.token}`, // ← include token
+          },
         });
 
         if (!response.ok) {
@@ -66,14 +77,16 @@ async fetchNotes() {
 
  async updateNote(itemID, payload) {
   const config = useRuntimeConfig();
+  const auth = useAuthStore();
   const url = `${config.public.apiBase}/notes/${itemID}`;
 
   try {
     const response = await fetch(url, {
       method: "PATCH",
-      headers: {
-        "Content-Type": "application/json"
-      },
+         headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${auth.token}`, // ← include token
+          },
       body: JSON.stringify(payload)
     });
 
@@ -83,7 +96,6 @@ async fetchNotes() {
 
     const updatedNote = await response.json();
 
-    // Update local Pinia state
     const index = this.notes.findIndex(note => note.id === itemID);
     if (index !== -1) {
       this.notes[index] = { id: itemID, ...updatedNote };

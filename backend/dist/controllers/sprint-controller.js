@@ -34,17 +34,16 @@ const getSprintsController = (req, res) => __awaiter(void 0, void 0, void 0, fun
 });
 exports.getSprintsController = getSprintsController;
 const createSprintController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { sprintId, startDate, endDate, summary, piNotes, storiesUnderSprint, } = req.body;
+    // const {
+    //   sprintId,
+    //   startDate,
+    //   endDate,
+    //   summary,
+    //   piNotes,
+    //   storiesUnderSprint,
+    // } = req.body;
     try {
-        const newSprint = yield sprint_model_1.Sprint.create({
-            sprintId,
-            startDate,
-            endDate,
-            summary,
-            piNotes,
-            storiesUnderSprint,
-            user: req.user.id
-        });
+        const newSprint = yield sprint_model_1.Sprint.create(Object.assign(Object.assign({}, req.body), { user: req.user.id }));
         res.status(200).json(newSprint);
     }
     catch (error) {

@@ -12,7 +12,7 @@ import { verifyToken} from '../utils/auth-util'
 const router = Router();
 
 // event routes --> api/v1/
-router.get("/", getMeetingsController,);// get all todos route
+router.get("/", verifyToken, getMeetingsController,);// get all todos route
 router.get("/:id", verifyToken, getMeetingController); // get all todo route
 router.delete("/:id",verifyToken,  deleteMeetingController);
 router.patch("/:id",verifyToken,  updateMeetingController); // update todo controller

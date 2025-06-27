@@ -79,7 +79,23 @@ const updateStoryController = (req, res) => __awaiter(void 0, void 0, void 0, fu
 });
 exports.updateStoryController = updateStoryController;
 const createStoryController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { sprintId, storyName, storyNumber, storyDescription, difficultyLevel, storyPoints, workType, developmentType, status, reporter, storyComments, repoNames, learning, dateAssigned, dateCompleted, } = req.body;
+    // const {
+    //   sprintId,
+    //   storyName,
+    //   storyNumber,
+    //   storyDescription,
+    //   difficultyLevel,
+    //   storyPoints,
+    //   workType,
+    //   developmentType,
+    //   status,
+    //   reporter,
+    //   storyComments,
+    //   repoNames,
+    //   learning,
+    //   dateAssigned,
+    //   dateCompleted,
+    // } = req.body;
     try {
         const story = yield story_model_1.Stories.create(Object.assign(Object.assign({}, req.body), { user: req.user.id }));
         console.log("Final story payload", Object.assign(Object.assign({}, req.body), { user: req.user.id }));

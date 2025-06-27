@@ -5,8 +5,14 @@ import mongoose from "mongoose";
 
 
 export const getNotesController = async (req: Request, res: Response) => {
+    const userId = (req as any).user?.id;
+
+    if (!userId) {
+        res.status(401).json({ message: 'Unauthorized: No user ID found' });
+        return;
+    }
     try {
-        const allTodos = await Note.find({}).sort({ createdAt: -1 });
+        const allTodos = await Note.find({user: userId}).sort({ createdAt: -1 });
         res.status(200).json(allTodos);
     } catch (error) {
         console.error(error);
@@ -34,19 +40,14 @@ export const getNoteController = async (req: Request, res: Response) => {
 }
 
 export const createNoteController = async (req: any, res: Response) => {
-    const {description, date, priorityLevel, noteName, noteType, sprintId} = req.body
+    // const {description, date, priorityLevel, noteName, noteType, sprintId} = req.body
     // MORE ERROR HANDLING COMING UP
 
 
     try {
         const note = await Note.create({
             
-            description,
-            date,
-            priorityLevel,
-            noteType,
-            noteName,
-            sprintId,
+          ...req.body,
             user: req.user.id // Assuming you have user info in req.user
         
         });

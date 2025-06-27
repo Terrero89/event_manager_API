@@ -5,12 +5,18 @@ import mongoose from "mongoose";
 
 
 export const getMeetingsController = async (req: Request, res: Response) => {
+      const userId = (req as any).user?.id;
+
+  if (!userId) {
+    res.status(401).json({ message: 'Unauthorized: No meetings found' });
+    return;
+  }
     try {
-        const allMeetings = await Meeting.find({}).sort({ createdAt: -1 });
+        const allMeetings = await Meeting.find({user: userId}).sort({ createdAt: -1 });
         res.status(200).json(allMeetings);
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: "Error fetching Notes" });
+        console.error(error);  console.error("Error fetching Meetings:", error);
+         res.status(500).json({ message: "Error fetching Meetings" });
     }
 }
 
@@ -34,7 +40,7 @@ export const getMeetingController = async (req: Request, res: Response) => {
 }
 
 export const createMeetingController = async (req: any, res: Response) => {
-    const {  description, date, meetingName, meetingType, duration, status, sprintId} = req.body
+    // const {  description, date, meetingName, meetingType, duration, status, sprintId} = req.body
     
     // MORE ERROR HANDLING COMING UP
 
@@ -42,13 +48,7 @@ export const createMeetingController = async (req: any, res: Response) => {
     try {
         const meeting = await Meeting.create({
        
-            description,
-            date,
-            meetingName,
-            meetingType,
-            duration,
-            status,
-            sprintId,
+           ...req.body,
             user: req.user.id // Assuming you have user info in req.user
         
         });

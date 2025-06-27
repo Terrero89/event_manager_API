@@ -16,13 +16,20 @@ exports.deleteMeetingController = exports.updateMeetingController = exports.crea
 const meetings_models_1 = require("../models/meetings-models");
 const mongoose_1 = __importDefault(require("mongoose"));
 const getMeetingsController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
+    const userId = (_a = req.user) === null || _a === void 0 ? void 0 : _a.id;
+    if (!userId) {
+        res.status(401).json({ message: 'Unauthorized: No meetings found' });
+        return;
+    }
     try {
-        const allMeetings = yield meetings_models_1.Meeting.find({}).sort({ createdAt: -1 });
+        const allMeetings = yield meetings_models_1.Meeting.find({ user: userId }).sort({ createdAt: -1 });
         res.status(200).json(allMeetings);
     }
     catch (error) {
         console.error(error);
-        res.status(500).json({ message: "Error fetching Notes" });
+        console.error("Error fetching Meetings:", error);
+        res.status(500).json({ message: "Error fetching Meetings" });
     }
 });
 exports.getMeetingsController = getMeetingsController;
@@ -43,19 +50,11 @@ const getMeetingController = (req, res) => __awaiter(void 0, void 0, void 0, fun
 });
 exports.getMeetingController = getMeetingController;
 const createMeetingController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { description, date, meetingName, meetingType, duration, status, sprintId } = req.body;
+    // const {  description, date, meetingName, meetingType, duration, status, sprintId} = req.body
     // MORE ERROR HANDLING COMING UP
     try {
-        const meeting = yield meetings_models_1.Meeting.create({
-            description,
-            date,
-            meetingName,
-            meetingType,
-            duration,
-            status,
-            sprintId,
-            user: req.user.id // Assuming you have user info in req.user
-        });
+        const meeting = yield meetings_models_1.Meeting.create(Object.assign(Object.assign({}, req.body), { user: req.user.id // Assuming you have user info in req.user
+         }));
         res.status(200).json(meeting);
     }
     catch (error) {

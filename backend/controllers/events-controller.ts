@@ -39,25 +39,10 @@ export const getEventController = async (req: Request, res: Response) => {
 };
 
 export const createEventController = async (req: any, res: Response) => {
-  const {
-    description,
-    date,
-    eventName,
-    eventType,
-    duration,
-    status,
-    sprintId,
-  } = req.body;
 
   try {
     const event = await Event.create({
-      description,
-      date,
-      eventName,
-      eventType,
-      duration,
-      status,
-      sprintId,
+     ...req.body,
       user: req.user.id,
     });
     res.status(200).json(event);

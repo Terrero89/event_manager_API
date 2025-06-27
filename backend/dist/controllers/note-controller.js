@@ -16,8 +16,14 @@ exports.deleteNoteController = exports.updateNoteController = exports.createNote
 const notes_models_1 = require("../models/notes-models");
 const mongoose_1 = __importDefault(require("mongoose"));
 const getNotesController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
+    const userId = (_a = req.user) === null || _a === void 0 ? void 0 : _a.id;
+    if (!userId) {
+        res.status(401).json({ message: 'Unauthorized: No user ID found' });
+        return;
+    }
     try {
-        const allTodos = yield notes_models_1.Note.find({}).sort({ createdAt: -1 });
+        const allTodos = yield notes_models_1.Note.find({ user: userId }).sort({ createdAt: -1 });
         res.status(200).json(allTodos);
     }
     catch (error) {
@@ -43,18 +49,11 @@ const getNoteController = (req, res) => __awaiter(void 0, void 0, void 0, functi
 });
 exports.getNoteController = getNoteController;
 const createNoteController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { description, date, priorityLevel, noteName, noteType, sprintId } = req.body;
+    // const {description, date, priorityLevel, noteName, noteType, sprintId} = req.body
     // MORE ERROR HANDLING COMING UP
     try {
-        const note = yield notes_models_1.Note.create({
-            description,
-            date,
-            priorityLevel,
-            noteType,
-            noteName,
-            sprintId,
-            user: req.user.id // Assuming you have user info in req.user
-        });
+        const note = yield notes_models_1.Note.create(Object.assign(Object.assign({}, req.body), { user: req.user.id // Assuming you have user info in req.user
+         }));
         res.status(200).json(note);
     }
     catch (error) {

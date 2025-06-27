@@ -21,24 +21,19 @@ export const getSprintsController = async (req: Request, res: Response) => {
 };
 
 export const createSprintController = async (req: any, res: Response) => {
-  const {
-    sprintId,
-    startDate,
-    endDate,
-    summary,
-    piNotes,
-    storiesUnderSprint,
+  // const {
+  //   sprintId,
+  //   startDate,
+  //   endDate,
+  //   summary,
+  //   piNotes,
+  //   storiesUnderSprint,
     
 
-  } = req.body;
+  // } = req.body;
   try {
     const newSprint = await Sprint.create({
-        sprintId,
-        startDate,
-        endDate,
-        summary,
-        piNotes,
-        storiesUnderSprint,
+ ...req.body,
         user: req.user.id
 
     });
