@@ -12,6 +12,8 @@ const auth_routes_1 = __importDefault(require("./routes/auth-routes"));
 const notes_routes_1 = __importDefault(require("./routes/notes-routes"));
 const meetings_routes_1 = __importDefault(require("./routes/meetings-routes"));
 const sprint_routes_1 = __importDefault(require("./routes/sprint-routes"));
+const standups_routes_1 = __importDefault(require("./routes/standups-routes"));
+const timeoff_routes_1 = __importDefault(require("./routes/timeoff-routes"));
 const cors = require("cors");
 // import dotenv from "dotenv";
 // import path = require('path');
@@ -41,13 +43,11 @@ app.use("/api/v1/auth", auth_routes_1.default); // user auth
 app.use("/api/v1/stories", story_routes_1.default); // home route
 app.use("/api/v1/", users_routes_1.default); // home route
 app.use("/api/v1/notes", notes_routes_1.default);
-app.use("/api/v1/events", events_routes_1.default); // home route
+app.use("/api/v1/events", events_routes_1.default);
 app.use("/api/v1/meetings", meetings_routes_1.default);
 app.use("/api/v1/sprints", sprint_routes_1.default);
-app.get('/api/v1/test', (req, res) => {
-    const dbName = mongoose.connection.name;
-    res.json({ connectedTo: dbName });
-});
+app.use("/api/v1/standups", standups_routes_1.default);
+app.use("/api/v1/timeoff", timeoff_routes_1.default);
 mongoose.connect(global_1.CONFIG.MONGODB_URL).then(() => {
     console.log(`Connected Database ${mongoose.connection.name} in MongoDB`);
 }).catch((error) => console.log(error));

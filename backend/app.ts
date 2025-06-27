@@ -8,6 +8,9 @@ import authRoutes from './routes/auth-routes';
 import notesRoutes from './routes/notes-routes';
 import meetingRoutes from './routes/meetings-routes';
 import sprintRoutes from './routes/sprint-routes';
+import standupRoutes from './routes/standups-routes';
+import timeoffRoutes  from './routes/timeoff-routes';
+
 import cors = require('cors');
 // import dotenv from "dotenv";
 // import path = require('path');
@@ -42,14 +45,12 @@ app.use("/api/v1/auth", authRoutes); // user auth
 app.use("/api/v1/stories", storyRoutes); // home route
 app.use("/api/v1/", usersRoutes); // home route
 app.use("/api/v1/notes", notesRoutes);
-app.use("/api/v1/events", eventsRoutes); // home route
+app.use("/api/v1/events", eventsRoutes); 
 app.use("/api/v1/meetings", meetingRoutes);
 app.use("/api/v1/sprints", sprintRoutes);
+app.use("/api/v1/standups", standupRoutes);
+app.use("/api/v1/timeoff", timeoffRoutes);
 
-app.get('/api/v1/test', (req, res) => {
-  const dbName = mongoose.connection.name;
-  res.json({ connectedTo: dbName });
-});
 mongoose.connect(CONFIG.MONGODB_URL).then(() => {
     console.log(`Connected Database ${mongoose.connection.name} in MongoDB`);
 }).catch((error: Error) => console.log(error));
