@@ -28,7 +28,7 @@ const form = reactive({
   storyPoints: 1,
     workType: "Story",
   developmentType: "Frontend",
-  status: "Backlog",
+  status: "Backlog",item
   reporter: "",
   storyComments: "comment1,comment2",
   learning: "changed perspective on this exe",
@@ -136,7 +136,7 @@ await fetchSprints()
         />
         <span v-if="errors.storyNumber" class="error">{{ errors.storyNumber }}</span>
       </div>
- 
+ item
 
       <div class="form-group">
         <label for="storyNumber">Story Number (e.g., DMR-XXXX)</label>

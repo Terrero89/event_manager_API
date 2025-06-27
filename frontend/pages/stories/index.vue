@@ -16,28 +16,7 @@ const { currentSprint, sprintList } = storeToRefs(sprintsStore);
 
 
 
-const props = defineProps([
-  //PROPS HERE
-  "id",
 
-  "storyNumber", // DMR-xxxx
-  "storyName", // C2T xxx
-  "storyDescription", // description
-  "difficultyLevel", // easy, medium, hard
-  "storyPoints", // 1, 2, 3, 5, 8, 13
-  "workType", // feature, bug, production
-  "developmentType", // frontend, backend, fullstack
-  "status", // to do, in progress, demo ready, completed, released
-  "storyComments",
-  "reporter", // reported who assigned story
-  "repoNames", // repo we are going to work on
-  "dateAssigned",
-  "dateCompleted",
-  "sprintId", // PL!, 2 etcc
-  "learning", // comments on learning
-"createdAt",
-  "updatedAt",
-]);
 const links = [
   [],
   [
@@ -163,8 +142,7 @@ const sortedFilteredStories = computed(() => {
         workTypesInput = '';
         " />
       </div>
-      <!-- {{ totalFilteredStoriesStats(filterStories(inputValue, categoryInput, startDate, endDate, statusInput, pointing,
-        workTypesInput)) }} -->
+ 
       <div class="numbers my-2">
 
         <div class="numbers my-2">

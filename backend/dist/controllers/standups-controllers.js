@@ -18,10 +18,10 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const getStandupsController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     const userId = (_a = req.user) === null || _a === void 0 ? void 0 : _a.id;
-    //   if (!userId) {
-    //     res.status(401).json({ message: 'Unauthorized: No user ID found' });
-    //     return;
-    //   }
+    if (!userId) {
+        res.status(401).json({ message: 'Unauthorized: No user ID found' });
+        return;
+    }
     try {
         const standupList = yield standups_models_1.Standup.find({}).sort({ createdAt: -1 });
         res.json(standupList);
@@ -48,7 +48,7 @@ const getStandupController = (req, res) => __awaiter(void 0, void 0, void 0, fun
 exports.getStandupController = getStandupController;
 const createStandupController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const standup = yield standups_models_1.Standup.create(Object.assign({}, req.body));
+        const standup = yield standups_models_1.Standup.create(Object.assign(Object.assign({}, req.body), { user: req.user.id }));
         console.log("CREATING....", Object.assign({}, req.body));
         res.status(200).json(standup);
     }

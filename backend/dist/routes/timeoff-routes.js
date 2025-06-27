@@ -10,4 +10,9 @@ router.get("/:id", timeoff_controller_1.getTimeoffController); // ✅
 router.delete("/:id", timeoff_controller_1.deleteTimeoffController); // ✅
 router.patch("/:id", timeoff_controller_1.updateTimeoffController); // ✅
 router.post("/", timeoff_controller_1.createTimeoffController);
+// router.get("/", verifyToken, getTimeoffListController);         // ✅ Secure all
+// router.get("/:id",verifyToken, getTimeoffController);       // ✅
+// router.delete("/:id",verifyToken, deleteTimeoffController); // ✅
+// router.patch("/:id",verifyToken, updateTimeoffController);  // ✅
+// router.post("/",verifyToken, createTimeoffController);
 exports.default = router;

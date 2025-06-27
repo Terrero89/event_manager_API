@@ -1,19 +1,19 @@
 import { defineStore } from "pinia";
 
-export const useSprintStore = defineStore({
+export const useTimeoffStore = defineStore({
   id: "sprint",
   state: () => ({
-    
+    URL: useRuntimeConfig().public.apiBase + '/timeoff',
     items: [],
     currentSprint:'',
     sprintList: [],
   }),
   actions: {
-    async fetchSprints() {
+    async fetchTimeoff() {
   const config = useRuntimeConfig();
         const auth = useAuthStore();
   try {
-    const response = await fetch(`${config.public.apiBase}/sprints`, {
+    const response = await fetch(this.URL, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -38,13 +38,13 @@ export const useSprintStore = defineStore({
   }
 },
 
-     async addSprint(data) {
+     async addTimeoff(data) {
         const config = useRuntimeConfig();
         const auth = useAuthStore();
-        const url = `${config.public.apiBase}/sprints`;
+    
      
       try {
-        const response = await fetch(url, {
+        const response = await fetch(this.URL, {
           method: "POST",
           body: JSON.stringify({ ...data }),
             headers: {
@@ -60,14 +60,14 @@ export const useSprintStore = defineStore({
         console.error("Failed to add sprints:", error);
       }
     },
-async deleteSprint(itemID) {
+async deleteTimeoff(itemID) {
   const config = useRuntimeConfig();
   const auth = useAuthStore();
-  const url = `${config.public.apiBase}/sprints/${itemID}`;
+
   // const url = this.URL + `/${itemID}`;
-console.log("TEST",url)
+console.log("TEST",this.URL)
   try {
-    const response = await fetch(url, {
+  const response = await fetch(this.URL + `/${itemID}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -89,13 +89,13 @@ console.log("TEST",url)
   }
 },
 
-    async updateSprint(itemID, payload)  {
+    async updateStandup(itemID, payload)  {
   const config = useRuntimeConfig();
   const auth = useAuthStore();
-  const url = `${config.public.apiBase}/sprints/${itemID}`;
+;
 
   try {
-    const response = await fetch(url, {
+    const response = await fetch(this.URL + `/${itemID}`, {
       method: "PATCH",
      headers: {
             'Content-Type': 'application/json',
@@ -131,10 +131,6 @@ console.log("TEST",url)
       const note = this.itemsAsArray.filter((item) => item.id);
       return (id) => note.filter((data) => data.id === id);
     },
-    // listOfId(state) {
-    //   const note = this.itemsAsArray.map((item) => item.id);
-    //   this.sprintList = note;
-    //   return note
-    // },
+
   },
 });

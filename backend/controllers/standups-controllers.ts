@@ -5,10 +5,10 @@ import mongoose from "mongoose";
 export const getStandupsController = async (req: Request, res: Response) => {
   const userId = (req as any).user?.id;
 
-//   if (!userId) {
-//     res.status(401).json({ message: 'Unauthorized: No user ID found' });
-//     return;
-//   }
+  if (!userId) {
+    res.status(401).json({ message: 'Unauthorized: No user ID found' });
+    return;
+  }
 
   try {
     const standupList = await Standup.find({ }).sort({ createdAt: -1 });
@@ -40,7 +40,7 @@ export const createStandupController = async (req: any, res: Response) => {
   try {
     const standup = await Standup.create({
       ...req.body,
-    //   user: req.user.id,
+      user: req.user.id,
     });
     console.log("CREATING....",{...req.body})
     res.status(200).json(standup);

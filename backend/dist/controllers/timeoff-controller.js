@@ -16,11 +16,12 @@ exports.deleteTimeoffController = exports.updateTimeoffController = exports.crea
 const timeoff_models_1 = require("../models/timeoff-models");
 const mongoose_1 = __importDefault(require("mongoose"));
 const getTimeoffListController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    //   const userId = (req as any).user?.id;
-    //   if (!userId) {
-    //     res.status(401).json({ message: 'Unauthorized: No user ID found' });
-    //     return;
-    //   }
+    var _a;
+    const userId = (_a = req.user) === null || _a === void 0 ? void 0 : _a.id;
+    if (!userId) {
+        res.status(401).json({ message: 'Unauthorized: No user ID found' });
+        return;
+    }
     try {
         const timeoffList = yield timeoff_models_1.Timeoff.find({}).sort({ createdAt: -1 });
         res.json(timeoffList);
@@ -47,7 +48,7 @@ const getTimeoffController = (req, res) => __awaiter(void 0, void 0, void 0, fun
 exports.getTimeoffController = getTimeoffController;
 const createTimeoffController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const newEntry = yield timeoff_models_1.Timeoff.create(Object.assign({}, req.body));
+        const newEntry = yield timeoff_models_1.Timeoff.create(Object.assign(Object.assign({}, req.body), { user: req.user.id }));
         console.log("CREATING....", Object.assign({}, req.body));
         res.status(200).json(newEntry);
     }
