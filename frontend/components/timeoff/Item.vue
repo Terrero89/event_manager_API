@@ -36,7 +36,7 @@ const isOpen = ref(false);
   <UIRenderer>
     <div class="item">
       <p><strong>Sprint ID:</strong> {{ props.sprintId }}</p>
-      <p><strong>Reason:</strong> {{ props.title }}</p>
+      <p><strong>Title:</strong> {{ props.title }}</p>
 
       <div class="item-header">
         <p>
@@ -64,7 +64,7 @@ const isOpen = ref(false);
 
       <UModal v-model="isOpen">
         <div class="modal-content">
-          <TimeoffDetails
+          <TimeoffUpdate
             :_id="props._id"
             :sprintId="props.sprintId"
             :title="props.title"

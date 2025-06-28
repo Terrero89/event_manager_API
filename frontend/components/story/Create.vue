@@ -28,7 +28,7 @@ const form = reactive({
   storyPoints: 1,
     workType: "Story",
   developmentType: "Frontend",
-  status: "Backlog",item
+  status: "Backlog",
   reporter: "",
   storyComments: "comment1,comment2",
   learning: "changed perspective on this exe",

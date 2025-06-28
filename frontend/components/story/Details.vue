@@ -86,9 +86,6 @@ onMounted(async () => {
   await fetchStories();
 });
 
-onMounted(async () => {
-  await fetchStories();
-});
 </script>
 
 <template>

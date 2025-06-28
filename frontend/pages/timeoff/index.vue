@@ -12,7 +12,19 @@ const timeoffStore = useTimeoffStore()
 // Actions & state
 const { currentSprint, sprintList } = storeToRefs(sprintStore)
 const { fetchSprints } = sprintStore
-const { items } = storeToRefs(timeoffStore)
+// Define the type for a timeoff item
+interface TimeoffItem {
+  _id: string
+  sprintId: string
+  title: string
+  timeOff: string
+  timeOffType: string
+  date: string
+  createdAt: string
+  updatedAt: string
+}
+
+const { items } = storeToRefs(timeoffStore) as { items: Ref<TimeoffItem[]> }
 const { fetchTimeoff } = timeoffStore
 const {} = timeoffStore
 
@@ -118,7 +130,7 @@ onMounted(async () => {
       />
       <UButton
         class="my-3 mx-2 ml-auto"
-        color="teal"    <TimeoffList
+        color="teal"    
         variant="outline"
         label="Clear"
         @click="

@@ -2,8 +2,21 @@ import { Request, Response } from "express";
 import {  Timeoff } from "../models/timeoff-models";
 import mongoose from "mongoose";
 
+// Extend Express Request interface to include 'user'
+declare global {
+  namespace Express {
+    interface User {
+      id: string;
+      // add other user properties if needed
+    }
+    interface Request {
+      user?: User;
+    }
+  }
+}
+
 export const getTimeoffListController = async (req: Request, res: Response) => {
-  const userId = (req as any).user?.id;
+  const userId = req.user?.id;
 
   if (!userId) {
     res.status(401).json({ message: 'Unauthorized: No user ID found' });

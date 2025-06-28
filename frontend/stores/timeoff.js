@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 
 export const useTimeoffStore = defineStore({
-  id: "sprint",
+  id: "timeoff",
   state: () => ({
     URL: useRuntimeConfig().public.apiBase + '/timeoff',
     items: [],
@@ -89,7 +89,7 @@ console.log("TEST",this.URL)
   }
 },
 
-    async updateStandup(itemID, payload)  {
+    async updateTimeoff(itemID, payload)  {
   const config = useRuntimeConfig();
   const auth = useAuthStore();
 ;
