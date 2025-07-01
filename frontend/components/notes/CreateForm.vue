@@ -48,7 +48,7 @@ const handleSubmit = async () => {
 
   const newNote = {
     // sprintId: currentSprint.value,
-   
+
     noteType: form.noteType,
     description: form.description,
     date: form.date,
@@ -71,7 +71,7 @@ const handleSubmit = async () => {
     <h1 class="title">Create a New Note</h1>
     <form @submit.prevent="handleSubmit">
       <!-- Header Fields -->
-  <div class="form-group">
+      <div class="form-group">
         <label for="storyName">Sprint Id</label>
         <input
           v-model="form.sprintId"
@@ -81,7 +81,6 @@ const handleSubmit = async () => {
         />
         <span v-if="errors.noteName" class="error">{{ errors.noteName }}</span>
       </div>
-
 
       <div class="form-group">
         <label for="reporters">Note Type</label>
@@ -97,7 +96,7 @@ const handleSubmit = async () => {
         </select>
         <span v-if="errors.noteType" class="error">{{ errors.noteType }}</span>
       </div>
-  <div class="form-group">
+      <div class="form-group">
         <label for="reporters">Priority</label>
         <select v-model="form.priorityLevel" id="status">
           <option value="" disabled>Select Type</option>

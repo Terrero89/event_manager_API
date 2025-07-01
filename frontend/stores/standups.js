@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 
 export const useStandupStore = defineStore({
-  id: "sprint",
+  id: "standup",
   state: () => ({
     URL: useRuntimeConfig().public.apiBase + '/standups',
     items: [],
@@ -85,7 +85,7 @@ console.log("TEST",this.URL)
     console.log("✅ Sprint deleted:", text);
     this.items = this.items.filter((event) => event._id !== itemID);
   } catch (error) {
-    console.error("❌ Error deleting sprint:", error);
+    console.error("❌ Error deleting item:", error);
   }
 },
 
@@ -105,7 +105,7 @@ console.log("TEST",this.URL)
     });
 
     if (!response.ok) {
-      throw new Error(`Failed to update sprint: ${response.status} ${response.statusText}`);
+      throw new Error(`Failed to update item: ${response.status} ${response.statusText}`);
     }
 
     const updatedEvent = await response.json();

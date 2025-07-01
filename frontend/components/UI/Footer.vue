@@ -1,60 +1,43 @@
 import { _size } from '../../.nuxt/types/tailwind.config';
 <script setup lang="ts">
 const items = ref([
-
   {
-
     icon: "heroicons:chevron-double-right-solid",
     to: "/sprints",
   },
   {
-
     icon: "heroicons:book-open-16-solid",
     to: "/notes",
   },
   {
-
     icon: "heroicons:calendar-date-range-20-solid",
     to: "/events",
-
-  }
-  ,
-  {
-
-    icon: "heroicons:calendar-date-range-solid",
-    to: "/meetings",
-  
-
   },
   {
-
+    icon: "heroicons:calendar-date-range-solid",
+    to: "/meetings",
+  },
+  {
     icon: "i-heroicons-chart-bar",
     to: "/dashboard",
   },
-
-
-])
-
+]);
 </script>
 
 <template>
   <div>
-
-
     <div class="fix">
       <!-- <UNavigationMenu color="neutral" :items="items" class="w-full border-b border-gray-200 dark:border-gray-800 mx-auto header"  /> -->
-      <UHorizontalNavigation :links="items" class="border-t border-gray-200 dark:border-gray-800 mx-auto header " />
-
+      <UHorizontalNavigation
+        :links="items"
+        class="border-t border-gray-200 dark:border-gray-800 mx-auto header"
+      />
     </div>
-
-
-
   </div>
 </template>
 
 <style scoped>
-
-.fix{
+.fix {
   width: 100%;
   height: 3rem;
   position: fixed;
@@ -62,8 +45,6 @@ const items = ref([
   left: 0;
   z-index: 1000;
   background-color: rgb(15, 15, 15);
-
-  
 }
 
 .nav-link {
@@ -73,9 +54,7 @@ const items = ref([
 .header {
   display: flex;
   justify-content: center;
- 
 }
-
 
 .navbar {
   display: flex;

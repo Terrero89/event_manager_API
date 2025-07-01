@@ -16,53 +16,40 @@ const props = defineProps([
   "dateCompleted",
   "sprintId", // PL!, 2 etcc
   "learning", // comments on learning
-"createdAt",
+  "createdAt",
   "updatedAt",
 ]);
 </script>
 
 <template>
   <div>
-
-  
     <div class="progress">
-      
       <StoryItem
-    :_id="props._id"
-      :storyName="props.storyName"
-      :storyDescription="props.storyDescription"
-      :difficultyLevel="props.difficultyLevel"
-      :storyPoints="props.storyPoints"
-      :workType="props.workType"
-      :developmentType="props.developmentType"
-      :status="props.status"
-      :storyComments="props.storyComments"
-      :dateAssigned="props.dateAssigned"
-      :reporter="props.reporter"
-      :repoNames="props.repoNames"
-      :dateCompleted="props.dateCompleted"
-      :sprintId="props.sprintId"
-      :learning="props.learning"
-      :createdAt="props.createdAt"
+        :_id="props._id"
+        :storyName="props.storyName"
+        :storyDescription="props.storyDescription"
+        :difficultyLevel="props.difficultyLevel"
+        :storyPoints="props.storyPoints"
+        :workType="props.workType"
+        :developmentType="props.developmentType"
+        :status="props.status"
+        :storyComments="props.storyComments"
+        :dateAssigned="props.dateAssigned"
+        :reporter="props.reporter"
+        :repoNames="props.repoNames"
+        :dateCompleted="props.dateCompleted"
+        :sprintId="props.sprintId"
+        :learning="props.learning"
+        :createdAt="props.createdAt"
         :updatedAt="props.updatedAt"
-    
-
-
       />
     </div>
-
-  
   </div>
 </template>
 
 <style scoped>
-
-
-
-
 .progress {
   background-color: #1f242a;
   padding: 0.2rem;
 }
-
 </style>

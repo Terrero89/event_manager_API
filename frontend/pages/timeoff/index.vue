@@ -74,6 +74,7 @@ onMounted(async () => {
 
 <template class="border-b border-gray-200">
   <div>
+  <div>
     <!-- PROGRESS BAR -->
     <UIProgress />
 
@@ -172,6 +173,7 @@ onMounted(async () => {
     />
   </div>
   <div class="my-12"></div>
+  </div>
 </template>
 
 <style scoped>

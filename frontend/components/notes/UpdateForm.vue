@@ -2,34 +2,29 @@
 import { reactive, computed } from "vue";
 import { useRouter } from "vue-router";
 import { CONFIG } from "~/config/globalVariables";
-import {onMounted } from 'vue'
+import { onMounted } from "vue";
 const noteStore = useNoteStore();
 const sprintsStore = useSprintStore();
 import { storeToRefs } from "pinia";
 
-const {  addSprint, fetchSprints} = sprintsStore;
-const {currentSprint, sprintList  } = storeToRefs(sprintsStore);
+const { addSprint, fetchSprints } = sprintsStore;
+const { currentSprint, sprintList } = storeToRefs(sprintsStore);
 
 // update note here
-const {
-  updateNote,
-  deleteNote
-
-} = noteStore;
+const { updateNote, deleteNote } = noteStore;
 const { notes } = storeToRefs(noteStore);
 
 const props = defineProps({
-  noteById: { type: Object, required: true }
+  noteById: { type: Object, required: true },
 });
 
-onMounted(async() => {
-await fetchSprints()
+onMounted(async () => {
+  await fetchSprints();
 });
-
 
 // Replace reactive with ref
 const form = ref({
-  sprintId:  props.noteById.sprintId,
+  sprintId: props.noteById.sprintId,
   description: props.noteById.description,
   date: props.noteById.date,
   noteName: props.noteById.noteName,
@@ -51,19 +46,19 @@ const validateFields = () => {
 const handleSubmit = async () => {
   if (!validateFields()) return;
 
-
-
   console.log({ ...form.value });
   await updateNote(props.noteById._id, { ...form.value });
   navigateTo(`/`);
 };
 
-
-
 const removeItem = async (id) => {
-  if (confirm("Are you sure you want to delete this city? This action cannot be undone.")) {
+  if (
+    confirm(
+      "Are you sure you want to delete this city? This action cannot be undone."
+    )
+  ) {
     await deleteNote(id); // Proceed with the deletion if confirmed
-    console.log(deleteNote(id))
+    console.log(deleteNote(id));
     // Optionally navigate or refresh the page after deletion
     navigateTo(`/`);
   }
@@ -72,90 +67,92 @@ const removeItem = async (id) => {
 
 <template>
   <div class="form-container">
-
- <div>
-  
-</div>
+    <div></div>
     <h1 class="title">Modify Note</h1>
     <form @submit.prevent="handleSubmit">
-    
       <div class="form-group">
         <label for="assignedSprint">Sprint ID</label>
         <select v-model="form.sprintId" id="Sprint">
           <option value="" disabled>Select sprint</option>
-          <option :value="item" v-for="item in sprintList" :key="item">{{item}}</option>
-
+          <option :value="item" v-for="item in sprintList" :key="item">
+            {{ item }}
+          </option>
         </select>
-       <span v-if="errors.sprintId" class="error">{{ errors.sprintId}}</span>
+        <span v-if="errors.sprintId" class="error">{{ errors.sprintId }}</span>
       </div>
       <div class="form-group">
         <label for="reporters">Note Type</label>
         <select v-model="form.noteType" id="status">
           <option value="" disabled>Select Type</option>
-          <option v-for="activity in CONFIG.variables.activityType" :key="activity" :value="activity">{{ activity }}</option>
+          <option
+            v-for="activity in CONFIG.variables.activityType"
+            :key="activity"
+            :value="activity"
+          >
+            {{ activity }}
+          </option>
         </select>
         <span v-if="errors.noteType" class="error">{{ errors.noteType }}</span>
       </div>
-  
+
       <div class="form-group">
         <label for="storyName">Note Name</label>
         <input
-            v-model="form.noteName"
-            type="text"
-            id="story Name"
-            placeholder="Enter Story Name"
+          v-model="form.noteName"
+          type="text"
+          id="story Name"
+          placeholder="Enter Story Name"
         />
-        <span v-if="errors.noteName" class="error">{{ errors.noteName}}</span>
+        <span v-if="errors.noteName" class="error">{{ errors.noteName }}</span>
       </div>
 
-      <div  class="form-group">
+      <div class="form-group">
         <label for="startDate">Start Date:</label>
-        <input v-model="form.date" type="date" id="date"/>
+        <input v-model="form.date" type="date" id="date" />
       </div>
-      <div class="form-group ">
+      <div class="form-group">
         <label for="storyName">Note Description</label>
-        <textarea class="form-control-textarea"
-            v-model="form.description"
-            type="textarea"
-
-            id="note desccription"
-            placeholder="Enter Story Name"
+        <textarea
+          class="form-control-textarea"
+          v-model="form.description"
+          type="textarea"
+          id="note desccription"
+          placeholder="Enter Story Name"
         />
-        <span v-if="errors.noteName" class="error">{{ errors.description}}</span>
+        <span v-if="errors.noteName" class="error">{{
+          errors.description
+        }}</span>
       </div>
-     
 
       <div class="modal-actions">
-        <UButton color="red" @click="removeItem(props.noteById._id)">Delete</UButton>
-        <UButton type="submit">Update</UButton> 
-    </div>
-   
+        <UButton color="red" @click="removeItem(props.noteById._id)"
+          >Delete</UButton
+        >
+        <UButton type="submit">Update</UButton>
+      </div>
     </form>
   </div>
 </template>
 
 <style scoped>
-
-.form-control-textarea{
+.form-control-textarea {
   border: solid 1px #3c3c3c;
   min-height: 15rem;
 }
 /* General Styles */
 body {
-  font-family: 'Arial', sans-serif;
+  font-family: "Arial", sans-serif;
   margin: 0;
   padding: 0;
   background-color: #f9f9f9;
 }
 
-.title{
+.title {
   color: #bababa;
 }
 
 /* Form Container */
 .form-container {
-
-
   padding: 20px;
   background: #2c2c2c;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -282,4 +279,3 @@ select:focus {
   background-color: darkred;
 }
 </style>
-

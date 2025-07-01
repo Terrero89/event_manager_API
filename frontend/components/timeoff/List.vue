@@ -1,16 +1,14 @@
 <script setup lang="ts">
-
-
 const props = defineProps([
-  '_id',
-  'sprintId',     // e.g. 'sprint_5000'
-  'title',        // e.g. 'Dentist emergency'
-  'timeOff',      // e.g. 4
-  'timeOffType',  // e.g. 'Personal'
-  'date',         // ISO string
-  'createdAt',
-  'updatedAt',
-])
+  "_id",
+  "sprintId", // e.g. 'sprint_5000'
+  "title", // e.g. 'Dentist emergency'
+  "timeOff", // e.g. 4
+  "timeOffType", // e.g. 'Personal'
+  "date", // ISO string
+  "createdAt",
+  "updatedAt",
+]);
 </script>
 
 <template>

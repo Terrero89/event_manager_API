@@ -7,8 +7,8 @@ const props = defineProps([
   "summary",
   "piNotes",
   "storiesUnderSprint",
-    "createdAt",
-"updatedAt",
+  "createdAt",
+  "updatedAt",
 ]);
 
 const isOpen = ref(false);
@@ -51,9 +51,11 @@ const isOpen = ref(false);
           class="b mx-2"
           >{{ props.status }}</UButton
         >
-   
-        <UButton variant="soft" class="b" @click="isOpen = true">Details</UButton>
-        <UModal v-model="isOpen"  >
+
+        <UButton variant="soft" class="b" @click="isOpen = true"
+          >Details</UButton
+        >
+        <UModal v-model="isOpen">
           <SprintsDetails
             :_id="props._id"
             :sprintId="props.sprintId"

@@ -1,62 +1,62 @@
 <script setup lang="ts">
-import { storeToRefs } from 'pinia'
-import { ref, onMounted } from 'vue'
-import { CONFIG } from '~/config/globalVariables'
+import { storeToRefs } from "pinia";
+import { ref, onMounted } from "vue";
+import { CONFIG } from "~/config/globalVariables";
 
-const sprintStore  = useSprintStore()
-const timeoffStore = useTimeoffStore()
+const sprintStore = useSprintStore();
+const timeoffStore = useTimeoffStore();
 
-const { sprintList, currentSprint } = storeToRefs(sprintStore)
-const { fetchSprints } = sprintStore
-const {  } = storeToRefs(timeoffStore)
-const { updateTimeoff, deleteTimeoff, fetchTimeoff } = timeoffStore
+const { sprintList, currentSprint } = storeToRefs(sprintStore);
+const { fetchSprints } = sprintStore;
+const {} = storeToRefs(timeoffStore);
+const { updateTimeoff, deleteTimeoff, fetchTimeoff } = timeoffStore;
 
 // Props come from the router when you navigate to /timeoff/:id/edit
 const props = defineProps([
-  '_id',
-  'sprintId',
-  'title',
-  'timeOff',
-  'timeOffType',
-  'date',
-  'createdAt',
-  'updatedAt'
-])
+  "_id",
+  "sprintId",
+  "title",
+  "timeOff",
+  "timeOffType",
+  "date",
+  "createdAt",
+  "updatedAt",
+]);
 
 // Local reactive copy for editing
 const form = ref({
-  sprintId:     props.sprintId,
-  title:        props.title,
-  timeOff:      props.timeOff,
-  timeOffType:  props.timeOffType,
-  date:         props.date  // YYYY-MM-DD for <input type="date">
-})
+  sprintId: props.sprintId,
+  title: props.title,
+  timeOff: props.timeOff,
+  timeOffType: props.timeOffType,
+  date: props.date, // YYYY-MM-DD for <input type="date">
+});
 
 onMounted(async () => {
-  await fetchSprints()
-//   await fetchTimeoff()
-})
+  await fetchSprints();
+  //   await fetchTimeoff()
+});
 
 // Submit updated fields
 const handleSubmit = async () => {
-    const newTimeEntry = {
-    sprintId:    form.value.sprintId,
-    title:       form.value.title,
-    timeOff:     form.value.timeOff,
+  const newTimeEntry = {
+    sprintId: form.value.sprintId,
+    title: form.value.title,
+    timeOff: form.value.timeOff,
     timeOffType: form.value.timeOffType,
-    date:        form.value.date
-  }
-  await updateTimeoff(props._id, newTimeEntry )
-  navigateTo('/')
-}
+    date: form.value.date,
+  };
+  await updateTimeoff(props._id, newTimeEntry);
+  navigateTo("/");
+};
 
 // Delete with confirmation
 const removeItem = async () => {
-  if (confirm('Are you sure you want to delete this request?')) {
-    await deleteTimeoff(props._id)
-    navigateTo('/')
+  if (confirm("Are you sure you want to delete this request?")) {
+    await deleteTimeoff(props._id);
+    navigateTo("/");
   }
-}
+};
 </script>
 
 <template>
@@ -104,28 +104,22 @@ const removeItem = async () => {
             v-for="type in CONFIG.variables.timeoffTypes"
             :key="type"
             :value="type"
-          >{{ type }}</option>
+          >
+            {{ type }}
+          </option>
         </select>
       </div>
 
       <!-- Date -->
       <div class="form-group">
         <label for="date">Date:</label>
-        <input
-          v-model="form.date"
-          type="date"
-          id="date"
-        />
+        <input v-model="form.date" type="date" id="date" />
       </div>
 
       <!-- Actions -->
       <div class="modal-actions">
-        <UButton color="red" @click.prevent="removeItem">
-          Delete
-        </UButton>
-        <UButton type="submit">
-          Update
-        </UButton>
+        <UButton color="red" @click.prevent="removeItem"> Delete </UButton>
+        <UButton type="submit"> Update </UButton>
       </div>
     </form>
   </div>
@@ -137,7 +131,7 @@ const removeItem = async () => {
   margin: 50px auto;
   padding: 20px;
   background: #2c2c2c;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
 }
 h1 {
@@ -154,7 +148,8 @@ label {
   font-weight: bold;
   color: #616060;
 }
-input, select {
+input,
+select {
   width: 100%;
   padding: 10px;
   border: 1px solid #3c3c3c;
@@ -162,7 +157,8 @@ input, select {
   background: #373737;
   color: #fff;
 }
-input:focus, select:focus {
+input:focus,
+select:focus {
   border-color: #007bff;
   outline: none;
 }

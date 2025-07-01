@@ -99,7 +99,7 @@ const storyIdLink = computed(() => {
   border-radius: 0.2rem;
 }
 .frontend-color {
-  background-color: #1e73b6;
+  background-color: #1eb688;
 }
 
 .backend-color {

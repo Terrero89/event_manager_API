@@ -5,11 +5,7 @@ import { onMounted } from "vue";
 const sprintsStore = useSprintStore();
 import { storeToRefs } from "pinia";
 
-const {
-  addSprint,
-
-
-} = sprintsStore;
+const { addSprint } = sprintsStore;
 const { sprintList, currentSprint } = storeToRefs(sprintsStore);
 
 const loadMessage = ref(false);
@@ -42,7 +38,6 @@ const handleSubmit = async () => {
     storiesUnderSprint: sprint.value.storiesUnderSprint,
   };
 
-
   if (sprintDuration < 0) return;
   await addSprint(newSprint);
 
@@ -52,7 +47,6 @@ const handleSubmit = async () => {
     navigateTo(`/`);
   }, 1700);
 };
-
 </script>
 
 <template>
@@ -65,7 +59,6 @@ const handleSubmit = async () => {
         <input v-model="sprint.sprintId" type="text" id="sprintID" />
       </div>
 
-     
       <!-- Start Date -->
       <div>
         <label for="startDate">Start Date:</label>

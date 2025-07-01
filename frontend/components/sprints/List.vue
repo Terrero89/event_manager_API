@@ -8,7 +8,7 @@ const props = defineProps([
   "piNotes",
   "storiesUnderSprint",
   "createdAt",
-"updatedAt",
+  "updatedAt",
 ]);
 const isOpen = ref(false);
 </script>
@@ -28,9 +28,9 @@ const isOpen = ref(false);
         :endDate="props.endDate"
         :summary="props.summary"
         :piNotes="props.piNotes"
-       :storiesUnderSprint="props.storiesUnderSprint"
-          :updatedAt="props.updatedAt"
-            :createdAt="props.createdAt"
+        :storiesUnderSprint="props.storiesUnderSprint"
+        :updatedAt="props.updatedAt"
+        :createdAt="props.createdAt"
       />
     </div>
   </div>

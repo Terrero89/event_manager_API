@@ -16,23 +16,23 @@ const typeColor = computed(() => {
       return "blue";
     case "Standup":
       return "cyan";
+    case "Retros":
+      return "green";
+    case "planning":
+      return "amber";
+    case "Bi weekly Demos":
+      return "purple";
     case "Training":
       return "orange";
-    case "Contribution":
-      return "purple";
-    case "Mentor Meeting":
-      return "yellow";
-    case "Mentee Meeting":
-      return "teal";
-    case "Retrospective":
-      return "green";
-    case "Planning":
-      return "amber";
-    case "Workshops":
-      return "red";
     case "Collaboration":
       return "lime";
-    case "Feedback Session":
+    case "Mentor Meetings":
+      return "yellow";
+    case "Mentee Meetings":
+      return "teal";
+    case "Workshops":
+      return "red";
+    case "Feedback Exchange":
       return "indigo";
     case "Brainstorming":
       return "pink";
@@ -44,6 +44,16 @@ const typeColor = computed(() => {
       return "rose";
     case "Pair Programming":
       return "emerald";
+    case "Volunteering Meetings":
+      return "sky";
+    case "Personal Development":
+      return "lime";
+    case "Professional Development":
+      return "amber";
+    case "ERG Meetings":
+      return "cyan";
+    case "Ad Hoc Meetings":
+      return "stone";
     case "Other":
       return "gray";
     default:

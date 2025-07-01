@@ -5,12 +5,7 @@ import { onMounted } from "vue";
 const sprintsStore = useSprintStore();
 import { storeToRefs } from "pinia";
 
-
-const {
-  updateSprint,
-  deleteSprint,
-    filterItemById,
-} = sprintsStore;
+const { updateSprint, deleteSprint, filterItemById } = sprintsStore;
 const { currentSprint, sprintList } = storeToRefs(sprintsStore);
 
 const props = defineProps([
@@ -23,27 +18,26 @@ const props = defineProps([
   "storiesUnderSprint",
 ]);
 
-function formatDate(value){
+function formatDate(value) {
   const date = new Date(value);
 
   // Add timezone offset
   const localDate = new Date(date.getTime() + date.getTimezoneOffset() * 60000);
 
   const year = localDate.getFullYear();
-  const month = `${localDate.getMonth() + 1}`.padStart(2, '0');
-  const day = `${localDate.getDate()}`.padStart(2, '0');
+  const month = `${localDate.getMonth() + 1}`.padStart(2, "0");
+  const day = `${localDate.getDate()}`.padStart(2, "0");
 
   return `${year}-${month}-${day}`;
 }
 const sprint = ref({
-  sprintId: currentSprint.value ,
+  sprintId: currentSprint.value,
   startDate: formatDate(props.startDate),
   endDate: formatDate(props.endDate),
   summary: props.summary,
   piNotes: props.piNotes,
   storiesUnderSprint: props.storiesUnderSprint,
 });
-
 
 // Calculate duration between startDate and dueDate
 const sprintDuration = computed(() => {
@@ -56,8 +50,6 @@ const sprintDuration = computed(() => {
 });
 
 const handleSubmit = async () => {
-
-
   if (sprintDuration < 0) return;
 
   console.log({ ...sprint.value });
@@ -80,25 +72,21 @@ const removeItem = async (id) => {
 onMounted(async () => {
   await fetchSprints();
 });
-
-
 </script>
-
-
 
 <template>
   <div>
     <!-- <div>{{props.sprintById}}</div> -->
-    ITEM:  {{props._id}}--{{currentSprint}}
+    ITEM: {{ props._id }}--{{ currentSprint }}
     <form @submit.prevent="handleSubmit" class="sprint-details form-container">
-  <h1 class="title">Modify Sprint</h1>
+      <h1 class="title">Modify Sprint</h1>
       <!-- Sprint ID -->
       <div>
         <label for="sprintID">Sprint Id:</label>
         <input v-model="sprint.sprintId" type="text" id="sprintID" />
       </div>
       <!-- Start Date -->
-    
+
       <div>
         <label for="startDate">Start Date:</label>
         <input v-model="sprint.startDate" type="date" id="startDate" />
@@ -113,32 +101,40 @@ onMounted(async () => {
       <!-- Summary -->
       <div>
         <label for="summary">Summary:</label>
-        <textarea class="form-control-textarea" v-model="sprint.summary" id="summary"></textarea>
+        <textarea
+          class="form-control-textarea"
+          v-model="sprint.summary"
+          id="summary"
+        ></textarea>
       </div>
 
       <!-- PI Notes -->
-      <div >
+      <div>
         <label for="piNotes">PI Notes:</label>
-        <textarea  class="form-control-textarea" v-model="sprint.piNotes" id="piNotes" ></textarea>
+        <textarea
+          class="form-control-textarea"
+          v-model="sprint.piNotes"
+          id="piNotes"
+        ></textarea>
       </div>
 
       <!-- Stories Under Sprint -->
-      {{sprint.storiesUnderSprint}}
+      {{ sprint.storiesUnderSprint }}
       <div>
         <label for="storiesUnderSprint">Stories Under Sprint:</label>
         <textarea
-        class="form-control-textarea"
+          class="form-control-textarea"
           v-model.trim="sprint.storiesUnderSprint"
           type="textarea"
           id="storiesUnderSprint"
         />
       </div>
       <div class="modal-actions">
-      <UButton color="red" @click="removeItem(props._id)">Delete</UButton>
-      <UButton type="submit">Update</UButton> 
-      <!-- <button class="delete-button" @click="removeItem(props.sprintById.id)">Delete</button>
+        <UButton color="red" @click="removeItem(props._id)">Delete</UButton>
+        <UButton type="submit">Update</UButton>
+        <!-- <button class="delete-button" @click="removeItem(props.sprintById.id)">Delete</button>
       <button type="submit" class="submit-button">Update</button> -->
-    </div>
+      </div>
       <!-- Calculated Duration -->
       <!--    <p><strong>Sprint Duration:</strong> {{ sprintDuration }} days</p>-->
     </form>
@@ -146,26 +142,24 @@ onMounted(async () => {
 </template>
 
 <style scoped>
-.form-control-textarea{
+.form-control-textarea {
   border: solid 1px #3c3c3c;
   min-height: 7rem;
 }
 /* General Styles */
 body {
-  font-family: 'Arial', sans-serif;
+  font-family: "Arial", sans-serif;
   margin: 0;
   padding: 0;
   background-color: #f9f9f9;
 }
 
-.title{
+.title {
   color: #bababa;
 }
 
 /* Form Container */
 .form-container {
-
-
   padding: 20px;
   background: #2c2c2c;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -292,4 +286,3 @@ select:focus {
   background-color: darkred;
 }
 </style>
-

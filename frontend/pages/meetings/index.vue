@@ -4,7 +4,8 @@ import { CONFIG } from "~/config/globalVariables";
 const meetingStore = useMeetingStore();
 import { storeToRefs } from "pinia";
 
-const { fetchMeetings, totalFilteredMeetingStats, filterMeetings} = meetingStore;
+const { fetchMeetings, totalFilteredMeetingStats, filterMeetings } =
+  meetingStore;
 const { meetings } = storeToRefs(meetingStore);
 // for later use
 // const route = useRoute(); //route object
@@ -41,7 +42,17 @@ const categoryInput = ref("");
 const startDate = ref("");
 const endDate = ref("");
 const statusInput = ref("");
-const stats = computed(()=> totalFilteredMeetingStats(filterMeetings(inputValue.value, categoryInput.value, startDate.value, endDate.value,  statusInput.value)));
+const stats = computed(() =>
+  totalFilteredMeetingStats(
+    filterMeetings(
+      inputValue.value,
+      categoryInput.value,
+      startDate.value,
+      endDate.value,
+      statusInput.value
+    )
+  )
+);
 
 const showStats = computed(() => {
   return (
@@ -59,15 +70,14 @@ const sortedFilteredEvents = computed(() => {
     categoryInput.value,
     startDate.value,
     endDate.value,
-    statusInput.value,
+    statusInput.value
   );
 
   return filtered.slice().sort((a, b) => {
-    const order = { "Pending": 0, "In Progress": 1, "Complete": 2 };
+    const order = { Pending: 0, "In Progress": 1, Complete: 2 };
     return (order[a.status] ?? 99) - (order[b.status] ?? 99);
   });
 });
-
 </script>
 
 <template>
@@ -147,31 +157,37 @@ const sortedFilteredEvents = computed(() => {
       />
     </div>
     <div class="numbers my-2">
+      <div v-if="showStats" class="numbers my-2">
+        <div class="mr-2">
+          Total {{ categoryInput === "" ? "Items" : categoryInput }}:
+          <UBadge variant="soft" color="teal" class="font-bold">2</UBadge>
+        </div>
+        <div class="mr-2" v-if="stats.completedCount > 0">
+          Status
+          {{
+            statusInput !== "Pending" && statusInput !== "Completed"
+              ? statusInput
+              : "Totals"
+          }}:
+          <UBadge variant="soft" class="font-bold">{{
+            stats.completedCount
+          }}</UBadge>
+        </div>
 
-<div v-if="showStats" class="numbers my-2">
-  <div class="mr-2">
-    Total {{ categoryInput === '' ? 'Items' : categoryInput}}:
-    <UBadge variant="soft" color="teal" class="font-bold">2</UBadge>
-  </div>
-  <div class="mr-2" v-if="stats.completedCount > 0">
- Status {{statusInput !== "Pending" && statusInput !== "Completed" ? statusInput : "Totals"}}:
-    <UBadge variant="soft" class="font-bold">{{ stats.completedCount }}</UBadge>
-    
-  </div>
-  
-
-   <div class="mr-2" v-if="stats.pendingCount > 0">
-    Total {{statusInput}}:
-    <UBadge variant="soft" color="teal"  class="font-bold">{{ stats.pendingCount }}</UBadge>
-    
-  </div>
-  <div class="mr-2">
-    Total Hours:
-    <UBadge variant="soft" color="teal"  class="font-bold">{{ stats.totalDuration }}</UBadge>
-  </div>
-</div>
-
-</div>
+        <div class="mr-2" v-if="stats.pendingCount > 0">
+          Total {{ statusInput }}:
+          <UBadge variant="soft" color="teal" class="font-bold">{{
+            stats.pendingCount
+          }}</UBadge>
+        </div>
+        <div class="mr-2">
+          Total Hours:
+          <UBadge variant="soft" color="teal" class="font-bold">{{
+            stats.totalDuration
+          }}</UBadge>
+        </div>
+      </div>
+    </div>
 
     <UIEmptyMessage v-if="meetings.length < 1" title="meetings" />
 
@@ -187,8 +203,8 @@ const sortedFilteredEvents = computed(() => {
       :duration="item.duration"
       :sprintId="item.sprintId"
       :status="item.status"
-       :updatedAt="item.updatedAt"
-        :createdAt="item.createdAt"
+      :updatedAt="item.updatedAt"
+      :createdAt="item.createdAt"
     />
 
     <div class="my-12"></div>
@@ -206,9 +222,8 @@ const sortedFilteredEvents = computed(() => {
 .drop {
   margin-right: 5rem;
 }
-.numbers{
-  display:flex;
-  justify-content:start;
-
+.numbers {
+  display: flex;
+  justify-content: start;
 }
 </style>

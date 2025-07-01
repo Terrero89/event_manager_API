@@ -1,46 +1,47 @@
 <script setup lang="ts">
-import { reactive, ref, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
-import { storeToRefs } from 'pinia'
-import { CONFIG } from '~/config/globalVariables'
+import { reactive, ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
+import { storeToRefs } from "pinia";
+import { CONFIG } from "~/config/globalVariables";
 
-const sprintStore = useSprintStore()
-const timeoffStore = useTimeoffStore()
-const { sprintList, currentSprint } = storeToRefs(sprintStore)
-const { addTimeoff } = timeoffStore
-const { fetchSprints } = sprintStore
+const sprintStore = useSprintStore();
+const timeoffStore = useTimeoffStore();
+const { sprintList, currentSprint } = storeToRefs(sprintStore);
+const { addTimeoff } = timeoffStore;
+const { fetchSprints } = sprintStore;
 
-const loadMessage = ref(false)
-const router = useRouter()
+const loadMessage = ref(false);
+const router = useRouter();
 
 const form = reactive({
-  sprintId: currentSprint.value || '',
-  title: '',
+  sprintId: currentSprint.value || "",
+  title: "",
   timeOff: null as number | null,
-  timeOffType: '',
-  date: '',
-})
+  timeOffType: "",
+  date: "",
+});
 
 const errors = reactive({
-  sprintId: '',
-  title: '',
-  timeOff: '',
-  timeOffType: '',
-  date: '',
-})
+  sprintId: "",
+  title: "",
+  timeOff: "",
+  timeOffType: "",
+  date: "",
+});
 
 const validateFields = () => {
-  errors.sprintId = !form.sprintId ? 'Sprint ID is required' : ''
-  errors.title    = !form.title    ? 'Title is required' : ''
-  errors.timeOff  = form.timeOff == null || form.timeOff < 0 ? 'Valid days off required' : ''
-  errors.timeOffType = !form.timeOffType ? 'Type is required' : ''
-  errors.date     = !form.date     ? 'Date is required' : ''
+  errors.sprintId = !form.sprintId ? "Sprint ID is required" : "";
+  errors.title = !form.title ? "Title is required" : "";
+  errors.timeOff =
+    form.timeOff == null || form.timeOff < 0 ? "Valid hours off required" : "";
+  errors.timeOffType = !form.timeOffType ? "Type is required" : "";
+  errors.date = !form.date ? "Date is required" : "";
 
-  return Object.values(errors).every(e => !e)
-}
+  return Object.values(errors).every((e) => !e);
+};
 
 const handleSubmit = async () => {
-  if (!validateFields()) return
+  if (!validateFields()) return;
 
   const newRequest = {
     sprintId: form.sprintId,
@@ -48,20 +49,20 @@ const handleSubmit = async () => {
     timeOff: form.timeOff,
     timeOffType: form.timeOffType,
     date: new Date(form.date).toISOString(),
-  }
+  };
 
-  await addTimeoff(newRequest)
-  loadMessage.value = true
+  await addTimeoff(newRequest);
+  loadMessage.value = true;
 
   setTimeout(() => {
-    loadMessage.value = false
-    router.push('/')
-  }, 1500)
-}
+    loadMessage.value = false;
+    router.push("/");
+  }, 1500);
+};
 
 onMounted(async () => {
-  await fetchSprints()
-})
+  await fetchSprints();
+});
 </script>
 <template>
   <div class="form-container">
@@ -72,11 +73,7 @@ onMounted(async () => {
         <label for="assignedSprint">Sprint ID</label>
         <select v-model="form.sprintId" id="assignedSprint">
           <option value="" disabled>Select sprint</option>
-          <option
-            v-for="item in sprintList"
-            :key="item"
-            :value="item"
-          >
+          <option v-for="item in sprintList" :key="item" :value="item">
             {{ item }}
           </option>
         </select>
@@ -103,7 +100,7 @@ onMounted(async () => {
           type="number"
           id="timeOff"
           min="0"
-          placeholder="Enter number of days"
+          placeholder="Enter number of hours"
         />
         <span v-if="errors.timeOff" class="error">{{ errors.timeOff }}</span>
       </div>
@@ -121,17 +118,15 @@ onMounted(async () => {
             {{ type }}
           </option>
         </select>
-        <span v-if="errors.timeOffType" class="error">{{ errors.timeOffType }}</span>
+        <span v-if="errors.timeOffType" class="error">{{
+          errors.timeOffType
+        }}</span>
       </div>
 
       <!-- Date -->
       <div class="form-group">
         <label for="date">Date</label>
-        <input
-          v-model="form.date"
-          type="date"
-          id="date"
-        />
+        <input v-model="form.date" type="date" id="date" />
         <span v-if="errors.date" class="error">{{ errors.date }}</span>
       </div>
 
@@ -142,8 +137,6 @@ onMounted(async () => {
   </div>
 </template>
 
-
-
 <style scoped>
 .temp {
   color: rgb(6, 170, 135);
@@ -151,7 +144,7 @@ onMounted(async () => {
 
 /* General Styles */
 body {
-  font-family: 'Arial', sans-serif;
+  font-family: "Arial", sans-serif;
   margin: 0;
   padding: 0;
   background-color: #f9f9f9;
@@ -167,7 +160,7 @@ body {
   margin: 50px auto;
   padding: 20px;
   background: #2c2c2c;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
 }
 

@@ -1,7 +1,4 @@
-
-
 <script setup>
-
 const props = defineProps({
   _id: { type: String, required: true },
   description: String,
@@ -10,29 +7,20 @@ const props = defineProps({
   noteName: String,
   sprintId: String,
   updatedAt: String,
-  createdAt:String,
+  createdAt: String,
 });
 const isOpen = ref(false);
 </script>
 <template>
-
-
-
-    <div>
-        
-        
+  <div>
     <div class="progress">
-        <div class="item-buttons">
-       
+      <div class="item-buttons">
         <UModal v-model="isOpen">
-              <div class="p-4">
-            SHOW DETAILS HERE
-              </div>
-            </UModal>
-        
+          <div class="p-4">SHOW DETAILS HERE</div>
+        </UModal>
       </div>
 
-        <NotesItem
+      <NotesItem
         :_id="props._id"
         :description="props.description"
         :date="props.date"
@@ -40,19 +28,17 @@ const isOpen = ref(false);
         :noteName="props.noteName"
         :priorityLevel="props.priorityLevel"
         :sprintId="props.sprintId"
-          :updatedAt="props.updatedAt"
-      :createdAt="props.createdAt"
+        :updatedAt="props.updatedAt"
+        :createdAt="props.createdAt"
       />
     </div>
-<div class="my-5"></div>
-    </div>
+    <div class="my-5"></div>
+  </div>
 </template>
-
 
 <style scoped>
 .progress {
   background-color: #1f242a;
   padding: 0.2rem;
 }
-
 </style>
