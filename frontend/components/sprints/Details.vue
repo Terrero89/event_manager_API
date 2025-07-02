@@ -129,6 +129,7 @@ onMounted(async () => {
           id="storiesUnderSprint"
         />
       </div>
+      <strong>Last updated: </strong> {{ formatDate(props.createdAt) }}
       <div class="modal-actions">
         <UButton color="red" @click="removeItem(props._id)">Delete</UButton>
         <UButton type="submit">Update</UButton>

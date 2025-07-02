@@ -67,7 +67,7 @@ onMounted(async () => {
 <template class="border-b border-gray-200">
   <div>
   <div>
-  {{ items }}
+
     <!-- PROGRESS BAR -->
     <UIProgress />
 
@@ -148,7 +148,7 @@ onMounted(async () => {
         </UBadge>
       </div>
     </div> -->
-{{items}}
+
     <!-- Empty / List -->
     <UIEmptyMessage v-if="items.length < 1" title="timeoff requests" />
     <StandupList

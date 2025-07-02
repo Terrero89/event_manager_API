@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const props = defineProps([
+     "_id",
   "sprintId",         // e.g. 'sprint_5000'
   "workingOn",        // e.g. 'Building auth flow'
   "notes",            // e.g. 'Fixed routing issues'

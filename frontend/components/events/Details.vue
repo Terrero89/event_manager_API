@@ -164,7 +164,7 @@ const removeItem = async (id) => {
         />
     
       </div>
-
+<strong>Last updated: </strong> {{ formatDate(props.createdAt) }}
       <!-- Submit Button -->
       <div class="modal-actions">
         <UButton color="red" @click="removeItem(props._id)"

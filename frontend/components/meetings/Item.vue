@@ -136,7 +136,7 @@ const isOpen = ref(false);
                   : description
               }}
             </p>
-            <p><strong>Date: </strong> {{ formatDate(date) }}</p>
+            <p><strong>Created on: </strong> {{ formatDate(date) }}</p>
 
             <p><strong>Duration:</strong> {{ duration }} hours</p>
             <p><strong>Sprint ID:</strong> {{ sprintId }}</p>

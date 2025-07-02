@@ -95,18 +95,18 @@ export const CONFIG = {
    
      
       [
-     
+     {
+          label: "Sprints",
+          icon: "heroicons:chevron-double-right-solid",
+          to: "/sprints",
+        },
 
            {
         label: "Stories",
         icon: "i-heroicons-puzzle-piece",
         to: "/stories",
       },   
-        {
-          label: "Sprints",
-          icon: "heroicons:chevron-double-right-solid",
-          to: "/sprints",
-        },
+        
         
      
         {

@@ -16,7 +16,7 @@ const router = useRouter();
 const form = reactive({
   sprintId: currentSprint.value || "",
   title: "",
-  timeOff: null as number | null,
+  timeOff: 0 || null,
   timeOffType: "",
   date: "",
 });
@@ -156,7 +156,7 @@ body {
 
 /* Form Container */
 .form-container {
-  max-width: 600px;
+  max-width: 500px;
   margin: 50px auto;
   padding: 20px;
   background: #2c2c2c;

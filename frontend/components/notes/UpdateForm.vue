@@ -123,7 +123,7 @@ const removeItem = async (id) => {
           errors.description
         }}</span>
       </div>
-
+<strong>Last updated: </strong> {{ formatDate(props.createdAt) }}
       <div class="modal-actions">
         <UButton color="red" @click="removeItem(props.noteById._id)"
           >Delete</UButton

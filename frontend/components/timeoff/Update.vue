@@ -2,16 +2,16 @@
 import { storeToRefs } from "pinia";
 import { ref, onMounted } from "vue";
 import { CONFIG } from "~/config/globalVariables";
+import { useRouter } from "vue-router";
 
 const sprintStore = useSprintStore();
 const timeoffStore = useTimeoffStore();
+const router = useRouter();
 
-const { sprintList, currentSprint } = storeToRefs(sprintStore);
+const { sprintList } = storeToRefs(sprintStore);
 const { fetchSprints } = sprintStore;
-const {} = storeToRefs(timeoffStore);
-const { updateTimeoff, deleteTimeoff, fetchTimeoff } = timeoffStore;
+const { updateTimeoff, deleteTimeoff } = timeoffStore;
 
-// Props come from the router when you navigate to /timeoff/:id/edit
 const props = defineProps([
   "_id",
   "sprintId",
@@ -23,21 +23,26 @@ const props = defineProps([
   "updatedAt",
 ]);
 
-// Local reactive copy for editing
+function formatedDate(value) {
+  const date = new Date(value);
+  const year = date.getFullYear();
+  const month = `${date.getMonth() + 1}`.padStart(2, '0');
+  const day = `${date.getDate()}`.padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
 const form = ref({
   sprintId: props.sprintId,
   title: props.title,
   timeOff: props.timeOff,
   timeOffType: props.timeOffType,
-  date: props.date, // YYYY-MM-DD for <input type="date">
+  date: formatedDate(props.date),
 });
 
 onMounted(async () => {
   await fetchSprints();
-  //   await fetchTimeoff()
 });
 
-// Submit updated fields
 const handleSubmit = async () => {
   const newTimeEntry = {
     sprintId: form.value.sprintId,
@@ -47,26 +52,24 @@ const handleSubmit = async () => {
     date: form.value.date,
   };
   await updateTimeoff(props._id, newTimeEntry);
-  navigateTo("/");
+  router.push("/");
 };
 
-// Delete with confirmation
 const removeItem = async () => {
   if (confirm("Are you sure you want to delete this request?")) {
     await deleteTimeoff(props._id);
-    navigateTo("/");
+    router.push("/");
   }
 };
 </script>
 
 <template>
   <div class="form-container">
-    <h1>Modify Timeoff Request</h1>
-    ID:{{ props._id }}
+    <h1 class="title">Modify Timeoff Request</h1>
     <form @submit.prevent="handleSubmit">
       <!-- Sprint ID -->
       <div class="form-group">
-        <label for="sprintId">Sprint ID:</label>
+        <label for="sprintId">Sprint ID</label>
         <select v-model="form.sprintId" id="sprintId">
           <option value="" disabled>Select sprint</option>
           <option v-for="s in sprintList" :key="s" :value="s">{{ s }}</option>
@@ -75,7 +78,7 @@ const removeItem = async () => {
 
       <!-- Title -->
       <div class="form-group">
-        <label for="title">Reason / Title:</label>
+        <label for="title">Reason / Title</label>
         <input
           v-model="form.title"
           type="text"
@@ -86,18 +89,19 @@ const removeItem = async () => {
 
       <!-- Days Off -->
       <div class="form-group">
-        <label for="timeOff">Days Off:</label>
+        <label for="timeOff">Days Off</label>
         <input
           v-model.number="form.timeOff"
           type="number"
           id="timeOff"
           min="0"
+          step="0.25"
         />
       </div>
 
       <!-- Time Off Type -->
       <div class="form-group">
-        <label for="timeOffType">Type of Time Off:</label>
+        <label for="timeOffType">Type of Time Off</label>
         <select v-model="form.timeOffType" id="timeOffType">
           <option value="" disabled>Select Type</option>
           <option
@@ -112,56 +116,67 @@ const removeItem = async () => {
 
       <!-- Date -->
       <div class="form-group">
-        <label for="date">Date:</label>
+        <label for="date">Date</label>
         <input v-model="form.date" type="date" id="date" />
       </div>
-
+  <strong>Created on: </strong> {{ formatDate(props.updatedAt) }}
       <!-- Actions -->
       <div class="modal-actions">
-        <UButton color="red" @click.prevent="removeItem"> Delete </UButton>
-        <UButton type="submit"> Update </UButton>
+        <UButton color="red" @click.prevent="removeItem">Delete</UButton>
+        <UButton type="submit">Update</UButton>
       </div>
     </form>
   </div>
 </template>
 
 <style scoped>
+.form-control-textarea{
+  border: solid 1px #3c3c3c;
+  min-height: 11rem;
+}
 .form-container {
-  max-width: 600px;
-  margin: 50px auto;
   padding: 20px;
   background: #2c2c2c;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
 }
-h1 {
-  text-align: center;
+
+.title {
   color: #bababa;
+  text-align: center;
   margin-bottom: 20px;
 }
+
 .form-group {
   margin-bottom: 1rem;
 }
+
 label {
   display: block;
   margin-bottom: 5px;
   font-weight: bold;
   color: #616060;
 }
+
 input,
+textarea,
 select {
   width: 100%;
   padding: 10px;
+  font-size: 1rem;
   border: 1px solid #3c3c3c;
   border-radius: 5px;
   background: #373737;
   color: #fff;
 }
+
 input:focus,
+textarea:focus,
 select:focus {
   border-color: #007bff;
   outline: none;
 }
+
 .modal-actions {
   display: flex;
   justify-content: flex-end;

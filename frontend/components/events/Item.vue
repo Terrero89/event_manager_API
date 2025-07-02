@@ -104,9 +104,9 @@ const isOpen = ref(false);
           </div>
           <div class="data">
             <p class="mr-2">
-              <strong>Created:</strong> {{ formatDate(props.createdAt) }}
+              <strong>Created on:</strong> {{ formatDate(props.createdAt) }}
             </p>
-            <p><strong>updated: </strong> {{ formatDate(props.updatedAt) }}</p>
+
           </div>
         </div>
       </div>
