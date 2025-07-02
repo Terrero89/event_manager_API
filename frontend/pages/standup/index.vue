@@ -16,20 +16,7 @@ const {items} = storeToRefs(standupStore)
 const {fetchStandups} = standupStore
 const { fetchSprints } = sprintStore
 // Define the type for a timeoff item
-interface TimeoffItem {
-  _id: string
-  sprintId: string
-  title: string
-  timeOff: string
-  timeOffType: string
-  date: string
-  createdAt: string
-  updatedAt: string
-}
 
-const {  } = storeToRefs(timeoffStore) as { items: Ref<TimeoffItem[]> }
-const { fetchTimeoff } = timeoffStore
-const {} = timeoffStore
 
 
 
@@ -39,8 +26,8 @@ const links = [
   [
     {
       icon: 'i-heroicons-plus',
-      to: '/timeoff/create',
-      badge: { label: 'Request Timeoff', color: 'blue', size: 'md' }
+      to: '/standup/create',
+      badge: { label: 'Add Standup', color: 'blue', size: 'md' }
     }
   ]
 ]
@@ -72,7 +59,7 @@ const endDate       = ref('')
 // Fetch on mount
 onMounted(async () => {
   await fetchSprints()
-  await fetchTimeoff()
+  
   await fetchStandups()
 })
 </script>
@@ -80,6 +67,7 @@ onMounted(async () => {
 <template class="border-b border-gray-200">
   <div>
   <div>
+  {{ items }}
     <!-- PROGRESS BAR -->
     <UIProgress />
 
@@ -171,8 +159,6 @@ onMounted(async () => {
       :sprintId="item.sprintId"
       :workingOn="item.workingOn"
       :title="item.title"
-      :timeOff="item.timeOff"
-      :timeOffType="item.timeOffType"
       :ticketNumber="item.ticketNumber"
       :date="item.date"
       :createdAt="item.createdAt"

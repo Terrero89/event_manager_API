@@ -16,9 +16,9 @@ import { verifyToken} from '../utils/auth-util'
 const router = Router();
 
 // event routes --> api/v1/
-router.get("/",  getStandupsController);         // ✅ Secure all
-router.get("/:id", getStandupController);       // ✅
-router.delete("/:id", deleteStandupController); // ✅
-router.patch("/:id", updateStandupController);  // ✅
-router.post("/", createStandupController);
+router.get("/",verifyToken,    getStandupsController);         // ✅ Secure all
+router.get("/:id",verifyToken, getStandupController);       // ✅
+router.delete("/:id",verifyToken, deleteStandupController); // ✅
+router.patch("/:id",verifyToken, updateStandupController);  // ✅
+router.post("/",verifyToken, createStandupController);
 export default router;

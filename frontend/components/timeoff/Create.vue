@@ -111,7 +111,7 @@ onMounted(async () => {
         <select v-model="form.timeOffType" id="timeOffType">
           <option value="" disabled>Select Type</option>
           <option
-            v-for="type in CONFIG.variables.timeOffTypes"
+            v-for="type in CONFIG.variables.timeoffTypes"
             :key="type"
             :value="type"
           >

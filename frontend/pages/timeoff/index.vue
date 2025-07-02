@@ -36,7 +36,7 @@ const links = [
     {
       icon: 'i-heroicons-plus',
       to: '/timeoff/create',
-      badge: { label: 'Request Timeoff', color: 'blue', size: 'md' }
+      badge: { label: 'Add timeoff', color: 'blue', size: 'md' }
     }
   ]
 ]
