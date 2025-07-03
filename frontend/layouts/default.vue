@@ -3,56 +3,54 @@ import { CONFIG } from "../config/globalLinks";
 const auth = useAuthStore();
 import { storeToRefs } from "pinia";
 
-
-const {login, logout} = auth;
-const { userId, userEmail, token , user} = storeToRefs(auth);
-
+const { login, logout } = auth;
+const { userId, userEmail, token, user, isLoggedIn } = storeToRefs(auth);
+const checkAuth = computed(()=>{
+if(isLoggedIn.value && token.value !== ""){
+  return true
+}else{
+   return false
+}
+ 
+})
 </script>
+
 
 <template>
   <div class="layout-container">
     <!-- Horizontal Navigation -->
     <div>
-
-<UINavigationNew/>
+      <UINavigationNew />
     </div>
 
-  
     <!-- Main Content Section -->
     <div class="main-content">
-      
       <!-- Vertical Navigation -->
-
- <aside  v v-if="auth.token"  class="vertical-navigation mt-4 border-l border-r border-gray-200 dark:border-gray-800 hide" >
-   
- 
-        
+      <aside
+        v-if="checkAuth"
+        class="vertical-navigation mt-4 border-l border-r border-gray-200 dark:border-gray-800 hide"
+      >
         <UVerticalNavigation :links="CONFIG.vertical.default" />
-        
       </aside>
-
 
       <!-- Page Content -->
       <main class="content-area">
         <slot />
       </main>
-  
     </div>
-    <UIFooter class="show"/>
+    <UIFooter class="show" />
   </div>
 </template>
 
 <style scoped>
-
-
 @media (max-width: 600px) {
-  .hide{
-    display:none;
+  .hide {
+    display: none;
   }
 }
 @media (min-width: 600px) {
-  .show{
-    display:none;
+  .show {
+    display: none;
   }
 }
 /* Main container for the layout */
@@ -77,7 +75,6 @@ const { userId, userEmail, token , user} = storeToRefs(auth);
 /* Vertical navigation styling */
 .vertical-navigation {
   width: 15rem;
-
 }
 
 @media (max-width: 756px) {

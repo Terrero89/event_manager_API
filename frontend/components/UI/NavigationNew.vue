@@ -6,10 +6,11 @@ const route = useRoute();
 const auth = useAuthStore();
 
 const { logout } = auth;
-const { token } = storeToRefs(auth);
+const { token, isLoggedIn } = storeToRefs(auth);
 
 const logoutUser = () => {
-  logout();
+    logout();
+    
 
   navigateTo("/login");
 };

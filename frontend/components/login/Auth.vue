@@ -1,48 +1,64 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-const authStore = useAuthStore();
+import { useAuthStore } from '@/stores/auth';
 import { storeToRefs } from "pinia";
 
-
-const {login} = authStore;
-const { userId, userEmail, token , user} = storeToRefs(authStore);
-
+const authStore = useAuthStore();
+const { login,  } = authStore;
+const { userId, userEmail, token, user, isLoggedIn} = storeToRefs(authStore);
 
 const password = ref('');
 const email = ref('');
-const errors = ref<{ email?: string; password?: string,  username?: String,}>({});
+const errorMessage = ref('');
+const isLoggingIn = ref(false); // ✅ new state for "Logging in..."
+const errors = ref<{ email?: string; password?: string }>({});
 const router = useRouter();
 
 const validateLoginFields = () => {
   errors.value = {};
-  // if (!username.value) errors.value.username = 'Username is required.';
-  if (!password.value) errors.value.password = 'Password is required.';
   if (!email.value) errors.value.email = 'Email is required.';
+  if (!password.value) errors.value.password = 'Password is required.';
   return Object.keys(errors.value).length === 0;
 };
 
 const handleLogin = async () => {
+  errorMessage.value = '';
   if (!validateLoginFields()) return;
-await login(email.value, password.value)
-// make it navigate if all is good
- router.push('/stories');
 
+  const success = await login(email.value, password.value);
+
+  if (success) {
+    isLoggingIn.value = true; // ✅ Show "Logging in..."
+     authStore.isLoggedIn = isLoggingIn.value
+   isLoggingIn.value = isLoggingIn.value; // Hide message after 1 second
+      navigateTo('/');   
+
+  } else {
+    authStore.isLoggedIn = isLoggingIn.value
+    errorMessage.value = 'Invalid email or password.';
+    setTimeout(() => {
+      errorMessage.value = '';
+    }, 2000);
+  }
 };
 </script>
+
 
 <template>
   <div class="auth-container">
     <h1>Login</h1>
     <form @submit.prevent="handleLogin">
 
+   
+
       <div class="form-group">
-        <label for="password">Email</label>
+        <label for="email">Email</label>
         <input
-            v-model="email"
-            type="email"
-            id="password"
-            placeholder="Enter your password"
+          v-model="email"
+          type="email"
+          id="email"
+          placeholder="Enter your email"
         />
         <span v-if="errors.email" class="error">{{ errors.email }}</span>
       </div>
@@ -50,22 +66,25 @@ await login(email.value, password.value)
       <div class="form-group">
         <label for="password">Password</label>
         <input
-            v-model="password"
-            type="password"
-            id="password"
-            placeholder="Enter your email"
+          v-model="password"
+          type="password"
+          id="password"
+          placeholder="Enter your password"
         />
         <span v-if="errors.password" class="error">{{ errors.password }}</span>
       </div>
 
       <button type="submit" class="submit-button">Login</button>
     </form>
+   <div v-if="isLoggingIn" class="info">Logging in...</div>
+<div v-if="errorMessage" class="error">{{ errorMessage }}</div>
     <p>
       Don't have an account?
       <NuxtLink to="/register" class="link">Register</NuxtLink>
     </p>
   </div>
 </template>
+
 
 
 <style scoped>
