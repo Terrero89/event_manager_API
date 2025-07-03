@@ -69,7 +69,7 @@ const isOpen = ref(false);
         </div>
         <div class="item-flex">
           <p class="mr-2">
-            <strong>Created on: </strong> {{ formatDate(props.date) }}
+            <strong>Date: </strong> {{ formatDate(props.date) }}
           </p>
        
         </div>
