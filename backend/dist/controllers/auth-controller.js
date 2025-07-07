@@ -21,7 +21,7 @@ const mailer_1 = require("../utils/mailer");
 dotenv_1.default.config();
 // Register a new user
 const registerController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { username, email, password } = req.body;
+    const { fullname, username, email, password } = req.body;
     try {
         const existingUser = yield user_model_1.User.findOne({ email });
         if (existingUser) {
@@ -32,7 +32,7 @@ const registerController = (req, res) => __awaiter(void 0, void 0, void 0, funct
         const salt = yield bcrypt_1.default.genSalt(10);
         const hashedPassword = yield bcrypt_1.default.hash(password, salt);
         // Create new user
-        const user = new user_model_1.User({ username, email, password: hashedPassword });
+        const user = new user_model_1.User({ fullname, username, email, password: hashedPassword });
         yield user.save();
         // Send welcome email
         const emailSubject = "Welcome to Our Event manager app!";
@@ -69,7 +69,7 @@ const loginController = (req, res) => __awaiter(void 0, void 0, void 0, function
         const token = jsonwebtoken_1.default.sign({ id: user._id, email: user.email }, process.env.JWT_SECRET, {
             expiresIn: "1h",
         });
-        res.status(200).json({ token, user: { id: user._id, username: user.username, email: user.email } });
+        res.status(200).json({ token, user: { id: user._id, username: user.username, email: user.email, fullname: user.fullname } });
     }
     catch (error) {
         console.error("Error logging in:", error);

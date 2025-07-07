@@ -1,23 +1,30 @@
 <script setup lang="ts">
-import {ref} from 'vue';
-import {useRouter} from 'vue-router';
-
-const username = ref('');
-const email = ref('');
-const password = ref('');
-const errors = ref<{ username?: string; email?: string; password?: string }>({});
+import { ref } from "vue";
+import { useRouter } from "vue-router";
+const username = ref("");
+const email = ref("");
+const password = ref("");
+const fullname = ref("");
+const errors = ref<{
+  fullname?: string;
+  username?: string;
+  email?: string;
+  password?: string;
+}>({});
 const router = useRouter();
 
 const validateRegisterFields = () => {
   errors.value = {};
-  if (!username.value) errors.value.username = 'Username is required.';
-  if (!email.value) errors.value.email = 'Email is required.';
+  if (!fullname.value) errors.value.fullname = "fullname is required.";
+  if (!username.value) errors.value.username = "Username is required.";
+  if (!email.value) errors.value.email = "Email is required.";
+
   if (!/\S+@\S+\.\S+/.test(email.value)) {
-    errors.value.email = 'Enter a valid email address.';
+    errors.value.email = "Enter a valid email address.";
   }
-  if (!password.value) errors.value.password = 'Password is required.';
+  if (!password.value) errors.value.password = "Password is required.";
   if (password.value.length < 6) {
-    errors.value.password = 'Password must be at least 6 characters.';
+    errors.value.password = "Password must be at least 6 characters.";
   }
   return Object.keys(errors.value).length === 0;
 };
@@ -26,21 +33,28 @@ const handleRegister = async () => {
   if (!validateRegisterFields()) return;
 
   try {
-      const response = await fetch('https://eventmanagerapi-dev.up.railway.app/api/v1/auth/register', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({username: username.value, email: email.value, password: password.value}),
-    });
-    console.log('Registration successful:', response);
-    router.push('/login');
+    const response = await fetch(
+      "https://eventmanagerapi-dev.up.railway.app/api/v1/auth/register",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          fullname: fullname.value,
+          username: username.value,
+          email: email.value,
+          password: password.value,
+        }),
+      }
+    );
+    console.log("Registration successful:", response);
+    router.push("/login");
   } catch (error) {
-    errors.value.username = error?.data?.message || 'Registration failed.';
+    errors.value.username = error?.data?.message || "Registration failed.";
   }
 };
 </script>
-
 
 <template>
   <div class="auth-container">
@@ -49,30 +63,35 @@ const handleRegister = async () => {
       <div class="form-group">
         <label for="username">Username</label>
         <input
-            v-model="username"
-            type="text"
-            id="username"
-            placeholder="Enter your username"
+          v-model="username"
+          type="text"
+          id="username"
+          placeholder="Enter your username"
         />
         <span v-if="errors.username" class="error">{{ errors.username }}</span>
       </div>
       <div class="form-group">
-        <label for="email">Email</label>
+        <label for="email">Full name</label>
         <input
-            v-model="email"
-            type="email"
-            id="email"
-            placeholder="Enter your email"
+          v-model="fullname"
+          type="text"
+          id="fullname"
+          placeholder="Enter your fullname"
         />
+        <span v-if="errors.fullname" class="error">{{ errors.fullname }}</span>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input v-model="email" type="email" id="email" placeholder="Enter your email" />
         <span v-if="errors.email" class="error">{{ errors.email }}</span>
       </div>
       <div class="form-group">
         <label for="password">Password</label>
         <input
-            v-model="password"
-            type="password"
-            id="password"
-            placeholder="Enter your password"
+          v-model="password"
+          type="password"
+          id="password"
+          placeholder="Enter your password"
         />
         <span v-if="errors.password" class="error">{{ errors.password }}</span>
       </div>
@@ -84,7 +103,6 @@ const handleRegister = async () => {
     </p>
   </div>
 </template>
-
 
 <style scoped>
 .auth-container {

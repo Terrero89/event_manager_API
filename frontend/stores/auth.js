@@ -1,7 +1,7 @@
 // store/auth.ts
 import { defineStore } from "pinia";
 
-let logoutTimer: ReturnType<typeof setTimeout> | null = null;
+let logoutTimer = null;
 
 export const useAuthStore = defineStore("auth", {
   state: () => ({
@@ -102,14 +102,14 @@ export const useAuthStore = defineStore("auth", {
       }
     },
 
-    async registerUser(username, email, password) {
+    async registerUser(fullname, username, email, password) {
       try {
         const response = await fetch(
           "https://eventmanagerapi-dev.up.railway.app/api/v1/auth/register",
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ username, email, password }),
+            body: JSON.stringify({ fullname, username, email, password }),
           }
         );
 

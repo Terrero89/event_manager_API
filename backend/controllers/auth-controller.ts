@@ -13,7 +13,7 @@ export const registerController = async (
     req: Request,
     res: Response
 ): Promise<void> => {
-    const {username, email, password} = req.body;
+    const {fullname, username, email, password} = req.body;
     try {
         const existingUser = await User.findOne({email});
         if (existingUser) {
@@ -25,7 +25,7 @@ export const registerController = async (
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
         // Create new user
-        const user = new User({username, email, password: hashedPassword});
+        const user = new User({fullname, username, email, password: hashedPassword});
         await user.save();
 
         // Send welcome email
@@ -75,7 +75,7 @@ export const loginController = async (
         const token = jwt.sign(   { id: user._id, email: user.email }, process.env.JWT_SECRET as string, {
             expiresIn: "1h",
         });
-        res.status(200).json({ token, user: { id: user._id, username: user.username, email: user.email } });
+        res.status(200).json({ token, user: { id: user._id, username: user.username, email: user.email, fullname: user.fullname } });
     } catch (error) {
         console.error("Error logging in:", error);
         res.status(500).json({error: "Internal server error"});
