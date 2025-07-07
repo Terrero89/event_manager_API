@@ -6,6 +6,7 @@ let logoutTimer = null;
 export const useAuthStore = defineStore("auth", {
   state: () => ({
     token: localStorage.getItem("token") || "",
+    fullname: localStorage.getItem("fullname") || "", // Added fullname to state
     user: null,
     userEmail: localStorage.getItem("email") || "",
     userId: "",
@@ -30,6 +31,7 @@ export const useAuthStore = defineStore("auth", {
 
         this.token = data.token;
         this.user = data.user.username;
+        this.fullname = data.user.fullname; // Save fullname from response
         this.userEmail = data.user.email;
         this.userId = data.user.id;
         this.userUsername = data.user.username;
@@ -39,7 +41,7 @@ export const useAuthStore = defineStore("auth", {
         localStorage.setItem("token", data.token);
         localStorage.setItem("email", data.user.email);
         localStorage.setItem("username", data.user.username);
-
+        localStorage.setItem("fullname", data.user.fullname);
         // Save expiration timestamp
         const expiresAt= Date.now() + 30 * 60 * 1000; // 15 minutes
         localStorage.setItem("expiresAt", expiresAt.toString());
@@ -60,6 +62,7 @@ export const useAuthStore = defineStore("auth", {
       this.userId = "";
       this.userUsername = "";
 
+      localStorage.removeItem("fullname"); // Remove fullname from localStorage
       localStorage.removeItem("token");
       localStorage.removeItem("email");
       localStorage.removeItem("username");
