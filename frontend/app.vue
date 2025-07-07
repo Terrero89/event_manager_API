@@ -1,13 +1,17 @@
 <script setup lang="ts">
+// import { useAuthStore } from "@/store/auth";
 
-
+onMounted(() => {
+  const auth = useAuthStore();
+  auth.restoreSessionIfValid();
+});
 </script>
 
 <template>
   <div>
     <NuxtLayout>
       <UContainer>
-        <NuxtPage class="page"/>
+        <NuxtPage class="page" />
       </UContainer>
     </NuxtLayout>
   </div>
@@ -23,6 +27,4 @@
   opacity: 0;
   filter: blur(0.5rem);
 }
-
-
 </style>
