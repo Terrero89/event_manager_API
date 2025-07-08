@@ -105,8 +105,7 @@ onMounted(async () => {
       
       </div>
 
-      <div class="form-group">  startDate:props.startDate
-  endDate:props.endDate,
+      <div class="form-group"> 
         <label for="reporters">Meeting Type</label>
         <select v-model="form.meetingType" id="status">
           <option value="" disabled>Select Type</option>
@@ -135,14 +134,14 @@ onMounted(async () => {
       <div class="form-group">
         <label for="startTime">Start Time</label>
         <input id="startTime" type="time" v-model="form.startTime" />
-        <span v-if="errors.startTime" class="error">{{ errors.startTime }}</span>
+
       </div>
 
       <!-- End Time -->
       <div class="form-group">
         <label for="endTime">End Time</label>
         <input id="endTime" type="time" v-model="form.endTime" />
-        <span v-if="errors.endTime" class="error">{{ errors.endTime }}</span>
+    
       </div>
       <div  class="form-group">
         <label for="duration">Duration</label>

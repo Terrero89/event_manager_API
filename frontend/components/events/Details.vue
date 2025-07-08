@@ -23,6 +23,8 @@ const props = defineProps([
 "date",
 "eventType",
 "eventName",
+ "startTime",
+"endTime",
 "duration",
 "sprintId",
 "status",
@@ -138,14 +140,14 @@ const removeItem = async (id) => {
       <div class="form-group">
         <label for="startTime">Start Time</label>
         <input id="startTime" type="time" v-model="form.startTime" />
-        <span v-if="errors.startTime" class="error">{{ errors.startTime }}</span>
+
       </div>
 
       <!-- End Time -->
       <div class="form-group">
         <label for="endTime">End Time</label>
         <input id="endTime" type="time" v-model="form.endTime" />
-        <span v-if="errors.endTime" class="error">{{ errors.endTime }}</span>
+    
       </div>
         <!-- Duration -->
         <div class="form-group">
