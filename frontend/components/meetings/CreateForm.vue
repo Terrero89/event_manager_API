@@ -22,7 +22,6 @@ const loadMessage = ref(false);
 
 // Main form state
 const form = reactive({
-
   sprintId: currentSprint.value,
   title: "", // Note Title
   meetingName: "", // Event Name
@@ -30,29 +29,46 @@ const form = reactive({
   date: "", // Date
   description: "", // Description
   status: "Completed", // Status
+  startTime: "", // new
+  endTime: "", // new
   duration: "", // Duration
 });
+// simple hh:mm → minutes
+function toMinutes(hhmm) {
+  const [h, m] = hhmm.split(":").map(Number);
+  return h * 60 + m;
+}
 
+// compute duration in decimal hours, two‑decimal precision
+const computedDuration = computed(() => {
+  if (!form.startTime || !form.endTime) return 0;
+  const diffMins = toMinutes(form.endTime) - toMinutes(form.startTime);
+  if (diffMins <= 0) return 0;
+  const hours = diffMins / 60;
+  // round to nearest .25
+  return Math.round(hours * 4) / 4;
+});
+
+watch([() => form.startTime, () => form.endTime], () => {
+  form.duration = computedDuration.value;
+});
 // Error messages
 const errors = reactive({});
 
 // Router
 const router = useRouter();
 
-// Form field validation
-const validateFields = () => {
+function validateFields() {
+  errors.meetingType = form.meetingType ? "" : "Meeting Type is required";
+  errors.meetingName = form.meetingName ? "" : "Meeting Name is required";
+  errors.date = form.date ? "" : "Date is required";
+  errors.startTime = form.startTime ? "" : "Start time required";
+  errors.endTime = form.endTime ? "" : "End time required";
+  errors.description = form.description ? "" : "Description is required";
+  errors.status = form.status ? "" : "Status is required";
 
-  errors.meetingType = !form.meetingType ? "Meeting Type is required" : "";
-  errors.meetingName = !form.meetingName ? "Meeting Name is required" : "";
-  errors.date = !form.date ? "Date is required" : "";
-  errors.duration = !form.duration ? "Duration is required" : "";
-  errors.description = !form.description
-    ? "Meeting Description is required"
-    : "";
-  errors.status = !form.status ? "Status is required" : "";
-
-  return Object.values(errors).every((err) => !err);
-};
+  return Object.values(errors).every((e) => !e);
+}
 
 // Submit handler
 const handleSubmit = async () => {
@@ -66,11 +82,13 @@ const handleSubmit = async () => {
     description: form.description,
     status: form.status,
     duration: form.duration,
+    startTime: form.startTime,
+    endTime: form.endTime,
   };
 
   console.log("Before submission", newMeeting);
   await addMeeting(newMeeting);
- loadMessage.value = true;
+  loadMessage.value = true;
   setTimeout(() => {
     loadMessage.value = false;
     navigateTo(`/`);
@@ -110,11 +128,9 @@ onMounted(async () => {
             {{ activity }}
           </option>
         </select>
-        <span v-if="errors.meetingType" class="error">{{
-          errors.meetingType
-        }}</span>
+        <span v-if="errors.meetingType" class="error">{{ errors.meetingType }}</span>
       </div>
-   
+
       <div class="form-group">
         <label for="eventName">Meeting Name</label>
         <input
@@ -123,9 +139,7 @@ onMounted(async () => {
           id="eventName"
           placeholder="Enter Meeting Name"
         />
-        <span v-if="errors.meetingName" class="error">{{
-          errors.meetingName
-        }}</span>
+        <span v-if="errors.meetingName" class="error">{{ errors.meetingName }}</span>
       </div>
 
       <!-- Date -->
@@ -150,7 +164,19 @@ onMounted(async () => {
         </select>
         <span v-if="errors.status" class="error">{{ errors.status }}</span>
       </div>
+      <!-- Start Time -->
+      <div class="form-group">
+        <label for="startTime">Start Time</label>
+        <input id="startTime" type="time" v-model="form.startTime" />
+        <span v-if="errors.startTime" class="error">{{ errors.startTime }}</span>
+      </div>
 
+      <!-- End Time -->
+      <div class="form-group">
+        <label for="endTime">End Time</label>
+        <input id="endTime" type="time" v-model="form.endTime" />
+        <span v-if="errors.endTime" class="error">{{ errors.endTime }}</span>
+      </div>
       <!-- Duration -->
       <div class="form-group">
         <label for="duration">Duration</label>
@@ -159,7 +185,7 @@ onMounted(async () => {
           step="0.25"
           type="number"
           id="duration"
-          placeholder="Enter Duration (e.g., 2h)"
+          placeholder="Enter Duration"
         />
         <span v-if="errors.duration" class="error">{{ errors.duration }}</span>
       </div>
@@ -173,9 +199,7 @@ onMounted(async () => {
           id="priorityLevel"
           placeholder="Enter Description"
         />
-        <span v-if="errors.description" class="error">{{
-          errors.description
-        }}</span>
+        <span v-if="errors.description" class="error">{{ errors.description }}</span>
       </div>
 
       <!-- Submit Button -->

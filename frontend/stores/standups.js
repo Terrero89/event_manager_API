@@ -70,7 +70,7 @@ console.log("Raw response:", response.status, text);
     async deleteStandup(itemID) {
       const auth = useAuthStore();
       try {
-        const response = await fetch(`${this.getUrl()}/${itemID}`, {
+        const response = await fetch(`${useRuntimeConfig().public.apiBase}/standups/${itemID}`, {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",

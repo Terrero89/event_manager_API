@@ -1,5 +1,4 @@
 <script setup>
-
 const sprintsStore = useSprintStore();
 const meetingStore = useMeetingStore();
 
@@ -19,7 +18,7 @@ const props = defineProps([
   "sprintId",
   "status",
   "createdAt",
-"updatedAt",
+  "updatedAt",
 ]);
 const progressColor = computed(() => {
   switch (props.status) {
@@ -51,7 +50,7 @@ const typeColor = computed(() => {
       return "cyan";
     case "Retros":
       return "green";
-    case "planning":
+    case "Planning":
       return "amber";
     case "Bi weekly Demos":
       return "purple";
@@ -79,21 +78,43 @@ const typeColor = computed(() => {
       return "emerald";
     case "Volunteering Meetings":
       return "sky";
+
     case "Personal Development":
-      return "lime";
+      return "slate";
     case "Professional Development":
-      return "amber";
+      return "zinc";
     case "ERG Meetings":
-      return "cyan";
+      return "neutral";
     case "Ad Hoc Meetings":
       return "stone";
     case "Other":
       return "gray";
+
+    case "Onboarding":
+      return "teal"
+       case "Offboarding":
+      return "orange"
+    case "Coffee Chats":
+           return "cyan";
+    case "Lunch and Learn":
+        return "violet";
+    case "Other":
+      return "mediumseagreen";
+    // extra examples if you need more:
+    case "Follow Up":
+     return "indigo";
+    case "Sprint Review":
+     return "sky";
+    case "All Hands":
+      return "slate";
+    case "Town Hall":
+      return "stone";
+    case "Social Hour":
+      return "fuscia";
     default:
       return "gray";
   }
 });
-
 
 const by = computed(() => {
   return filterItemById(props._id)[0];
@@ -102,7 +123,6 @@ const by = computed(() => {
 onMounted(async () => {
   await fetchMeetings();
 });
-
 
 const isOpen = ref(false);
 </script>
@@ -127,13 +147,19 @@ const isOpen = ref(false);
           </p>
         </div>
         <div class="item-content">
+  <div>
+            <p>
+              <strong>Start Time:</strong>
+             time....
+            </p>
+            <p><strong>End Time:  </strong>time....</p>
+          </div>
+
           <div>
             <p>
               <strong>Description: </strong>
               {{
-                description.length > 15
-                  ? description.slice(0, 15) + "..."
-                  : description
+                description.length > 15 ? description.slice(0, 15) + "..." : description
               }}
             </p>
             <p><strong>Date: </strong> {{ formatDate(date) }}</p>
@@ -146,7 +172,7 @@ const isOpen = ref(false);
 
       <div class="item-buttons my-2">
         <UButton variant="soft" class="" @click="isOpen = true">Details</UButton>
-       
+
         <UModal v-model="isOpen">
           <MeetingsDetails
             :_id="props._id"

@@ -1,14 +1,14 @@
 <script setup lang="ts">
 const props = defineProps([
-     "_id",
-  "sprintId",         // e.g. 'sprint_5000'
-  "workingOn",        // e.g. 'Building auth flow'
-  "notes",            // e.g. 'Fixed routing issues'
-  "learnings",        // e.g. 'Learned about Vue transitions'
-  "repo",             // e.g. 'my-project-repo'
-  "ticketNumber",     // e.g. 'ABC-123'
-  "date",             // ISO string
-   "createdAt",
+  "_id",
+  "sprintId", // e.g. 'sprint_5000'
+  "workingOn", // e.g. 'Building auth flow'
+  "notes", // e.g. 'Fixed routing issues'
+  "learnings", // e.g. 'Learned about Vue transitions'
+  "repo", // e.g. 'my-project-repo'
+  "ticketNumber", // e.g. 'ABC-123'
+  "date", // ISO string
+  "createdAt",
   "updatedAt",
 ]);
 </script>
@@ -16,6 +16,7 @@ const props = defineProps([
 <template>
   <div class="sprint-list">
     <StandupItem
+      :_id="props._id"
       :sprintId="props.sprintId"
       :workingOn="props.workingOn"
       :notes="props.notes"
@@ -23,7 +24,7 @@ const props = defineProps([
       :repo="props.repo"
       :ticketNumber="props.ticketNumber"
       :date="props.date"
-       :createdAt="props.createdAt"
+      :createdAt="props.createdAt"
       :updatedAt="props.updatedAt"
     />
   </div>

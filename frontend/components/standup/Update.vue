@@ -20,17 +20,16 @@ const props = defineProps([
   "repo",
   "ticketNumber",
   "date",
-     "createdAt",
+  "createdAt",
   "updatedAt",
 ]);
-function formatedDate(value) {
+function formatedDate(value: string | number | Date) {
   const date = new Date(value);
   const year = date.getFullYear();
-  const month = `${date.getMonth() + 1}`.padStart(2, '0');
-  const day = `${date.getDate()}`.padStart(2, '0');
+  const month = `${date.getMonth() + 1}`.padStart(2, "0");
+  const day = `${date.getDate()}`.padStart(2, "0");
   return `${year}-${month}-${day}`;
 }
-
 
 // Local form state for editing
 const form = ref({
@@ -40,7 +39,7 @@ const form = ref({
   learnings: props.learnings,
   repo: props.repo,
   ticketNumber: props.ticketNumber,
-date: formatedDate(props.date),
+  date: formatedDate(props.date),
 });
 
 onMounted(async () => {
@@ -63,9 +62,9 @@ const handleSubmit = async () => {
 };
 
 // Delete entry
-const removeItem = async () => {
+const removeItem = async (id: any) => {
   if (confirm("Are you sure you want to delete this standup entry?")) {
-    await deleteStandup(props._id);
+    await deleteStandup(id);
     navigateTo("/");
   }
 };
@@ -96,11 +95,7 @@ const removeItem = async () => {
         <label for="workingOn">Working On</label>
         <select v-model="form.workingOn" id="workingOn">
           <option value="" disabled>Select type</option>
-          <option
-            v-for="type in CONFIG.variables.currentWork"
-            :key="type"
-            :value="type"
-          >
+          <option v-for="type in CONFIG.variables.currentWork" :key="type" :value="type">
             {{ type }}
           </option>
         </select>
@@ -129,22 +124,18 @@ const removeItem = async () => {
         <label for="date">Date</label>
         <input v-model="form.date" type="date" id="date" />
       </div>
-<strong>Last updated: </strong> {{ formatDate(props.createdAt) }}
+      <strong>Last updated: </strong> {{ formatDate(props.createdAt) }}
       <!-- Actions -->
       <div class="modal-actions">
-        <UButton color="red" @click.prevent="removeItem"> Delete </UButton>
+        <UButton color="red" @click.prevent="removeItem(props._id)"> Delete </UButton>
         <UButton type="submit"> Update </UButton>
-        
       </div>
-       
     </form>
   </div>
 </template>
 
 <style scoped>
 .form-container {
-  
-
   padding: 20px;
   background: #2c2c2c;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -165,7 +156,8 @@ label {
   color: #616060;
 }
 input,
-select,textarea {
+select,
+textarea {
   width: 100%;
   padding: 10px;
   border: 1px solid #3c3c3c;
