@@ -7,7 +7,7 @@ export interface IUser extends Document {
     username: string;
     email: string;
     password: string;
-    userType?: string; // Optional field for user type
+    userType?: Array // Optional field for user type
     isValidPassword(password: string): Promise<boolean>;
 }
 const UserSchema: Schema = new Schema({

@@ -45,7 +45,8 @@ const handleRegister = async () => {
           username: username.value,
           email: email.value,
           password: password.value,
-        }),
+          userType: ["user"],
+        })
       }
     );
     console.log("Registration successful:", response);
