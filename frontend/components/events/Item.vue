@@ -9,6 +9,8 @@ const props = defineProps([
   "date",
   "eventType",
   "eventName",
+  "startTime",
+  "endTime",
   "duration",
   "sprintId",
   "status",
@@ -86,6 +88,14 @@ const isOpen = ref(false);
           </p>
         </div>
         <div class="item-content">
+
+          <div>
+            <p>
+              <strong>Start Time:</strong>
+             time....
+            </p>
+            <p><strong>End Time:  </strong>time....</p>
+          </div>
           <div>
             <p>
               <strong>Description: </strong>
@@ -123,6 +133,8 @@ const isOpen = ref(false);
             :date="props.date"
             :eventType="props.eventType"
             :eventName="props.eventName"
+            :startTime="props.startTime"
+            :endTime="props.endTime"
             :duration="props.duration"
             :sprintId="props.sprintId"
             :status="props.status"

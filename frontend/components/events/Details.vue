@@ -44,13 +44,15 @@ function formatDate(value){
 // ref
 // Main form state using ref
 const form = ref({
-   
+
   sprintId: currentSprint.value || '',
   eventName: props.eventName,
   eventType: props.eventType,
   date: formatDate(props.date) ,
   description: props.description,
   status: props.status,
+   startTime:props.startTime || "",
+  endTime:props.endTime || "",
   duration: props.duration,
 });
 
@@ -74,28 +76,22 @@ const removeItem = async (id) => {
     navigateTo(`/`);
   }
 };
-
-
 </script>
 
 <template>
-
   <div class="form-container">
-  
-  <h1 class="title">Modify Event</h1>
-   <form @submit.prevent="handleSubmit">
-  
-       <!-- Sprint -->
+    <h1 class="title">Modify Event</h1>
+    <form @submit.prevent="handleSubmit">
+      <!-- Sprint -->
       <div class="form-group">
-        <label for="sprint">Sprint Id {{form.sprintId}}</label>
+        <label for="sprint">Sprint Id {{ form.sprintId }}</label>
         <select v-model="form.sprintId" id="Event">
           <option value="" disabled>Select sprint</option>
-          <option :value="item" v-for="item in sprintList"  :key="item" >{{ item }}</option>
+          <option :value="item" v-for="item in sprintList" :key="item">{{ item }}</option>
         </select>
-      
       </div>
 
-       <!-- Event Type -->
+      <!-- Event Type -->
       <div class="form-group">
         <label for="reporters">Event Type</label>
         <select v-model="form.eventType" id="status">
@@ -108,75 +104,79 @@ const removeItem = async (id) => {
             {{ activity }}
           </option>
         </select>
-       <!-- Event Name -->
-      <div class="form-group">
-        <label for="eventName">Event Name</label>
-        <input
-          v-model="form.eventName"
-          type="text"
-          id="eventName"
-          placeholder="Enter Event Name"
-        />
- 
-      </div>
-          <div class="form-group">
-        <label for="date">Date</label>
-        <input v-model="form.date" type="date" id="date" />
-   
-      </div>
+        <!-- Event Name -->
+        <div class="form-group">
+          <label for="eventName">Event Name</label>
+          <input
+            v-model="form.eventName"
+            type="text"
+            id="eventName"
+            placeholder="Enter Event Name"
+          />
+        </div>
+        <div class="form-group">
+          <label for="date">Date</label>
+          <input v-model="form.date" type="date" id="date" />
+        </div>
 
         <!-- Status -->
+        <div class="form-group">
+          <label for="reporters">Status</label>
+          <select v-model="form.status" id="status">
+            <option value="" disabled>Select Type</option>
+            <option
+              v-for="activity in CONFIG.variables.statusLevel"
+              :key="activity"
+              :value="activity"
+            >
+              {{ activity }}
+            </option>
+          </select>
+        </div>
+
+            <!-- Start Time -->
       <div class="form-group">
-        <label for="reporters">Status</label>
-        <select v-model="form.status" id="status">
-          <option value="" disabled>Select Type</option>
-          <option
-            v-for="activity in CONFIG.variables.statusLevel"
-            :key="activity"
-            :value="activity"
-          >
-            {{ activity }}
-          </option>
-        </select>
-       
-      </div>
-      <!-- Duration -->
-      <div class="form-group">
-        <label for="duration">Duration</label>
-        <input
-          v-model="form.duration"
-          step="0.25"
-          type="number"
-          id="duration"
-          placeholder="Enter Duration (e.g., 2h)"
-        />
-     
-      </div>
-      <!-- Priority Level -->
-      <div class="form-group">
-        <label for="priorityLevel">Description</label>
-        <textarea
-          class="form-control-textarea"
-          v-model="form.description"
-          type="text"
-          id="priorityLevel"
-          placeholder="Enter Priority (e.g., High)"
-        />
-    
-      </div>
-<strong>Last updated: </strong> {{ formatDate(props.createdAt) }}
-      <!-- Submit Button -->
-      <div class="modal-actions">
-        <UButton color="red" @click="removeItem(props._id)"
-          >Delete</UButton
-        >
-        <UButton type="submit">Update</UButton>
+        <label for="startTime">Start Time</label>
+        <input id="startTime" type="time" v-model="form.startTime" />
+        <span v-if="errors.startTime" class="error">{{ errors.startTime }}</span>
       </div>
 
-
+      <!-- End Time -->
+      <div class="form-group">
+        <label for="endTime">End Time</label>
+        <input id="endTime" type="time" v-model="form.endTime" />
+        <span v-if="errors.endTime" class="error">{{ errors.endTime }}</span>
       </div>
-   </form>
-    
+        <!-- Duration -->
+        <div class="form-group">
+          <label for="duration">Duration</label>
+          <input
+            v-model="form.duration"
+            step="0.25"
+            type="number"
+            id="duration"
+            placeholder="Enter Duration (e.g., 2h)"
+          />
+        </div>
+        <!-- Priority Level -->
+        <div class="form-group">
+          <label for="priorityLevel">Description</label>
+          <textarea
+            class="form-control-textarea"
+            v-model="form.description"
+            type="text"
+            id="priorityLevel"
+            placeholder="Enter Priority (e.g., High)"
+          />
+        </div>
+        <strong>Last updated: </strong> {{ formatDate(props.createdAt) }}
+        <!-- Submit Button -->
+        <div class="modal-actions">
+          <UButton color="red" @click="removeItem(props._id)">Delete</UButton>
+          <UButton type="submit">Update</UButton>
+        </div>
+      </div>
+    </form>
   </div>
 </template>
 

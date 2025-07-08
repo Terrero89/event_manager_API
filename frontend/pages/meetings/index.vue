@@ -200,6 +200,8 @@ const sortedFilteredEvents = computed(() => {
       :date="item.date"
       :meetingName="item.meetingName"
       :meetingType="item.meetingType"
+      :startTime="item.startTime"
+      :endTime="item.endTime"
       :duration="item.duration"
       :sprintId="item.sprintId"
       :status="item.status"

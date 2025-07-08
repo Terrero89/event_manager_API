@@ -5,6 +5,8 @@ const props = defineProps([
   "date",
   "eventType",
   "eventName",
+  "startTime",
+"endTime",
   "duration",
   "sprintId",
   "status",
@@ -30,6 +32,8 @@ const isOpen = ref(false);
         :date="props.date"
         :eventType="props.eventType"
         :eventName="props.eventName"
+        :startTime="props.startTime"
+        :endTime="props.endTime"
         :duration="props.duration"
         :sprintId="props.sprintId"
         :status="props.status"

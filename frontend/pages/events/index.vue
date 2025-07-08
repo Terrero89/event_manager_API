@@ -23,6 +23,9 @@ interface Event {
   duration: string | number;
   sprintId: number | string;
   status: string;
+  startTime: String;
+  endTime:String;
+
 }
 
 const { fetchEvents, filterEvents, totalFilteredStats } = eventsStore;
@@ -162,7 +165,8 @@ const sortedFilteredEvents = computed(() => {
 
     <EventsList v-else v-for="item in sortedFilteredEvents" :key="item._id" :_id="item._id"
       :description="item.description" :date="item.date" :eventName="item.eventName" :eventType="item.eventType"
-      :duration="item.duration" :sprintId="item.sprintId" :status="item.status" :updatedAt="item.updatedAt"
+      :duration="item.duration" :sprintId="item.sprintId" :status="item.status"     :startTime="item.startTime"
+      :endTime="item.endTime" :updatedAt="item.updatedAt"
       :createdAt="item.createdAt" />
   </div>
 </template>

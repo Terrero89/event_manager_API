@@ -40,6 +40,8 @@ const EventsSchema = new mongoose_1.Schema({
     eventType: { type: String, required: true },
     description: { type: String, required: true },
     date: { type: Date, required: true },
+    startTime: { type: String, required: true },
+    endTime: { type: String, required: true },
     duration: { type: Number, required: true },
     status: { type: String, required: true },
     sprintId: { type: String, required: false },

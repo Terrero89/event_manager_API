@@ -23,6 +23,8 @@ const props = defineProps([
   "date",
   "meetingType",
   "meetingName",
+  "startTime",
+"endTime",
   "duration",
   "sprintId",
   "status",
@@ -50,6 +52,8 @@ const form = ref({
   description: props.description,
   meetingName: props.meetingName,
   meetingType: props.meetingType,
+  startTime:props.startTime || "",
+  endTime:props.endTime || "",
   duration: props.duration,
   status: props.status,
   date: formatDate(props.date),
@@ -101,7 +105,8 @@ onMounted(async () => {
       
       </div>
 
-      <div class="form-group">
+      <div class="form-group">  startDate:props.startDate
+  endDate:props.endDate,
         <label for="reporters">Meeting Type</label>
         <select v-model="form.meetingType" id="status">
           <option value="" disabled>Select Type</option>
@@ -124,6 +129,20 @@ onMounted(async () => {
       <div  class="form-group">
         <label for="startDate">Start Date:</label>
         <input v-model="form.date" type="date" id="date"/>
+      </div>
+
+          <!-- Start Time -->
+      <div class="form-group">
+        <label for="startTime">Start Time</label>
+        <input id="startTime" type="time" v-model="form.startTime" />
+        <span v-if="errors.startTime" class="error">{{ errors.startTime }}</span>
+      </div>
+
+      <!-- End Time -->
+      <div class="form-group">
+        <label for="endTime">End Time</label>
+        <input id="endTime" type="time" v-model="form.endTime" />
+        <span v-if="errors.endTime" class="error">{{ errors.endTime }}</span>
       </div>
       <div  class="form-group">
         <label for="duration">Duration</label>

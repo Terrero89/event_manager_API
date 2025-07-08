@@ -8,6 +8,8 @@ const props = defineProps([
 "date",
 "meetingType",
 "meetingName",
+"startTime",
+"endTime",
 "duration",
 "sprintId",
 "status",
@@ -40,6 +42,8 @@ const isOpen = ref(false);
             :date="props.date"
             :meetingName="props.meetingName"
             :meetingType="props.meetingType"
+            :startTime="props.startTime"
+      :endTime="props.endTime"
             :duration="props.duration"
             :sprintId="props.sprintId"
             :status="props.status"
