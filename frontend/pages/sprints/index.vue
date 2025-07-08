@@ -32,6 +32,8 @@ const show = computed(()=> {
 }
 return true
 });
+
+definePageMeta({ requiresAuth: true });
 </script>
 <template>
   <div>

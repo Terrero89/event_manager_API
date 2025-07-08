@@ -4,8 +4,7 @@ import { CONFIG } from "~/config/globalVariables";
 const meetingStore = useMeetingStore();
 import { storeToRefs } from "pinia";
 
-const { fetchMeetings, totalFilteredMeetingStats, filterMeetings } =
-  meetingStore;
+const { fetchMeetings, totalFilteredMeetingStats, filterMeetings } = meetingStore;
 const { meetings } = storeToRefs(meetingStore);
 // for later use
 // const route = useRoute(); //route object
@@ -78,6 +77,8 @@ const sortedFilteredEvents = computed(() => {
     return (order[a.status] ?? 99) - (order[b.status] ?? 99);
   });
 });
+
+definePageMeta({ requiresAuth: true });
 </script>
 
 <template>
@@ -88,12 +89,7 @@ const sortedFilteredEvents = computed(() => {
         <div class="p-4">IS HERE</div>
       </UModal>
 
-      <UButton
-        class="my-3"
-        color="blue"
-        variant="soft"
-        label="Add"
-        @Click="isOpen = true"
+      <UButton class="my-3" color="blue" variant="soft" label="Add" @Click="isOpen = true"
         >Insights</UButton
       >
     </div>
@@ -169,9 +165,7 @@ const sortedFilteredEvents = computed(() => {
               ? statusInput
               : "Totals"
           }}:
-          <UBadge variant="soft" class="font-bold">{{
-            stats.completedCount
-          }}</UBadge>
+          <UBadge variant="soft" class="font-bold">{{ stats.completedCount }}</UBadge>
         </div>
 
         <div class="mr-2" v-if="stats.pendingCount > 0">

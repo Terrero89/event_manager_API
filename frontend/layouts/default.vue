@@ -11,10 +11,13 @@ if(isLoggedIn.value && token.value !== ""){
 }else{
    return false
 }
- 
+
+})
+definePageMeta({
+  middleware: "auth",
+  requiresAuth: true
 })
 </script>
-
 
 <template>
   <div class="layout-container">

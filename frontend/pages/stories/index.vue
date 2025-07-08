@@ -91,6 +91,8 @@ const sortedFilteredStories = computed(() => {
     }),
   ];
 });
+
+definePageMeta({ requiresAuth: true });
 </script>
 <template class="border-b border-gray-200">
   <div>

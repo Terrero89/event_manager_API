@@ -62,6 +62,8 @@ onMounted(async () => {
   
   await fetchStandups()
 })
+
+definePageMeta({ requiresAuth: true });
 </script>
 
 <template class="border-b border-gray-200">

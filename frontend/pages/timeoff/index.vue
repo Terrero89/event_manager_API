@@ -70,6 +70,8 @@ onMounted(async () => {
   await fetchSprints()
   await fetchTimeoff()
 })
+
+definePageMeta({ requiresAuth: true });
 </script>
 
 <template class="border-b border-gray-200">

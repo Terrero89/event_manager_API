@@ -5,7 +5,7 @@ const noteStore = useNoteStore();
 const sprintsStore = useSprintStore();
 import { storeToRefs } from "pinia";
 
-const { fetchNotes, filterNotes} = noteStore;
+const { fetchNotes, filterNotes } = noteStore;
 const { notes } = storeToRefs(noteStore);
 
 const { fetchSprints } = sprintsStore;
@@ -27,7 +27,7 @@ const props = defineProps([
   "noteName",
   "sprintId",
   "updatedAt",
-  "createdAt"
+  "createdAt",
 ]);
 
 const navLinks = [
@@ -55,17 +55,10 @@ const show = computed(() => {
 const inputValue = ref("");
 const inputType = ref("");
 
-
-
-
 const isOpen = ref(false);
 
-
-
-
-
-
-</script> 
+definePageMeta({ requiresAuth: true });
+</script>
 
 <template>
   <div>
@@ -75,47 +68,38 @@ const isOpen = ref(false);
         <div class="p-4">IS HERE</div>
       </UModal>
 
-      <UButton
-        class="my-3"
-        color="blue"
-        variant="soft"
-        label="Add"
-        @Click="isOpen = true"
+      <UButton class="my-3" color="blue" variant="soft" label="Add" @Click="isOpen = true"
         >Insights</UButton
       >
-    
     </div>
 
     <div class="nav-flex wrapit" v-if="show">
       <UInput
-        class="w-full lg:w-48 my-3 mr-2 "
+        class="w-full lg:w-48 my-3 mr-2"
         placeholder="Search..."
         v-model="inputValue"
       />
-
- 
-
 
       <UInputMenu
         color="gray"
         variant="outline"
         trailing-icon="i-heroicons-chevron-down"
-        class="w-full lg:w-48 my-3 mr-2 "
+        class="w-full lg:w-48 my-3 mr-2"
         placeholder="Select by type"
         :options="CONFIG.variables.activityType"
         v-model="inputType"
       />
 
-     <UButton
-        class=" my-3 mx-2 ml-auto "
+      <UButton
+        class="my-3 mx-2 ml-auto"
         color="teal"
         variant="outline"
         label="Clear"
-        @click="inputValue = ''; inputType = ''"
-  
+        @click="
+          inputValue = '';
+          inputType = '';
+        "
       />
-
-
     </div>
 
     <UIEmptyMessage v-if="notes.length < 1" title="notes" />
@@ -149,6 +133,4 @@ const isOpen = ref(false);
 .drop {
   margin-right: 5rem;
 }
-
-
 </style>

@@ -9,9 +9,13 @@ const { logout } = auth;
 const { token, isLoggedIn } = storeToRefs(auth);
 
 const logoutUser = () => {
+  location.reload();
   logout();
 
+  /*************  ✨ Windsurf Command 🌟  *************/
+
   navigateTo("/login");
+  /*******  1fbe858e-edc0-4a07-8e76-293983e84631  *******/
 };
 </script>
 

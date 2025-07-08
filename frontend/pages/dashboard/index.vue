@@ -92,6 +92,8 @@ const navLinks = [
 
 
 const currType = ref("");
+
+definePageMeta({ requiresAuth: true });
 </script>
 
 <template>
