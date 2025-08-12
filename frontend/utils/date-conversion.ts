@@ -193,7 +193,7 @@ export function formatDate(dateString: string | number | Date) {
 }
 
 // display 
-export function formatDateReadable(date: { getFullYear: () => any; getMonth: () => number; getDate: () => any; })  {
+export function formatDateReadable(date:any)  {
   const y = date.getFullYear();
   const m = String(date.getMonth() + 1).padStart(2, '0');
   const d = String(date.getDate()).padStart(2, '0');
@@ -201,14 +201,14 @@ export function formatDateReadable(date: { getFullYear: () => any; getMonth: () 
 }
 
 //Time 
-export function convert24To12NoAmPm(timeStr: { split: (arg0: string) => { (): any; new(): any; map: { (arg0: NumberConstructor): [any, any]; new(): any; }; }; }) {
+export function convert24To12NoAmPm(timeStr:any) {
   let [hours, minutes] = timeStr.split(':').map(Number);
   hours = hours % 12 || 12; // 0 → 12, 13 → 1, etc.
   return `${hours}:${minutes.toString().padStart(2, '0')}`;
 }
 
 
-export function convert24To12(timeStr: { split: (arg0: string) => { (): any; new(): any; map: { (arg0: NumberConstructor): [any, any]; new(): any; }; }; }) {
+export function convert24To12(timeStr: any) {
   let [hours, minutes] = timeStr.split(':').map(Number);
   const ampm = hours >= 12 ? 'PM' : 'AM';
   hours = hours % 12 || 12; // turn 0 into 12
@@ -216,7 +216,7 @@ export function convert24To12(timeStr: { split: (arg0: string) => { (): any; new
 }
 
 
-export function calculateTotalDuration(startTime: { split: (arg0: string) => { (): any; new(): any; map: { (arg0: NumberConstructor): [any, any]; new(): any; }; }; }, endTime: { split: (arg0: string) => { (): any; new(): any; map: { (arg0: NumberConstructor): [any, any]; new(): any; }; }; }) {
+export function calculateTotalDuration(startTime: any, endTime: any) {
   // Assuming startTime and endTime are strings in 'HH:mm' format
   const [startHours, startMinutes] = startTime.split(':').map(Number);
   const [endHours, endMinutes] = endTime.split(':').map(Number);
@@ -228,7 +228,7 @@ export function calculateTotalDuration(startTime: { split: (arg0: string) => { (
   endDate.setHours(endHours, endMinutes);
 
   // Calculate duration in minutes
-  const durationMinutes = (endDate - startDate) / (1000 * 60);
+  const durationMinutes = (endDate.getTime() - startDate.getTime()) / (1000 * 60);
 
   // Convert minutes to hours (and round down)
   const durationHours = Math.floor(durationMinutes / 60);

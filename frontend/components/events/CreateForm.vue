@@ -19,7 +19,7 @@ const form = reactive({
   sprintId: currentSprint.value || "",
   eventName: "", // Event Name
   eventType: "", // Event Type
-  date: formatDateReadable(new Date()), // Date
+  date: "", // Date
   description: "", // Description
   status: "Pending", // Status
   startTime: "", // new
@@ -77,7 +77,7 @@ const handleSubmit = async () => {
     date: form.date,
     description: form.description,
     status: form.status,
-    startTime: form.startTime.toString(),
+    startTime: form.startTime,
     endTime: form.endTime,
     duration: form.duration,
   };
