@@ -192,9 +192,31 @@ export function formatDate(dateString: string | number | Date) {
 
 }
 
+// display 
+export function formatDateReadable(date: { getFullYear: () => any; getMonth: () => number; getDate: () => any; })  {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, '0');
+  const d = String(date.getDate()).padStart(2, '0');
+  return `${y}-${m}-${d}`;
+}
+
+//Time 
+export function convert24To12NoAmPm(timeStr: { split: (arg0: string) => { (): any; new(): any; map: { (arg0: NumberConstructor): [any, any]; new(): any; }; }; }) {
+  let [hours, minutes] = timeStr.split(':').map(Number);
+  hours = hours % 12 || 12; // 0 → 12, 13 → 1, etc.
+  return `${hours}:${minutes.toString().padStart(2, '0')}`;
+}
 
 
-export function calculateTotalDuration(startTime, endTime) {
+export function convert24To12(timeStr: { split: (arg0: string) => { (): any; new(): any; map: { (arg0: NumberConstructor): [any, any]; new(): any; }; }; }) {
+  let [hours, minutes] = timeStr.split(':').map(Number);
+  const ampm = hours >= 12 ? 'PM' : 'AM';
+  hours = hours % 12 || 12; // turn 0 into 12
+  return `${hours}:${minutes.toString().padStart(2, '0')} ${ampm}`;
+}
+
+
+export function calculateTotalDuration(startTime: { split: (arg0: string) => { (): any; new(): any; map: { (arg0: NumberConstructor): [any, any]; new(): any; }; }; }, endTime: { split: (arg0: string) => { (): any; new(): any; map: { (arg0: NumberConstructor): [any, any]; new(): any; }; }; }) {
   // Assuming startTime and endTime are strings in 'HH:mm' format
   const [startHours, startMinutes] = startTime.split(':').map(Number);
   const [endHours, endMinutes] = endTime.split(':').map(Number);
@@ -214,9 +236,3 @@ export function calculateTotalDuration(startTime, endTime) {
   return durationHours;
 }
 
-
-// Example usage:
-//   const startTime = '14:35';
-//   const endTime = '15:47';
-//   const duration = calculateTotalDuration(startTime, endTime);
-//   console.log(duration); // Output: "1:12 hours"

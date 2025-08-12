@@ -76,33 +76,27 @@ const isOpen = ref(false);
         <div class="item-header">
           <p>
             <strong>Event Type:</strong>
-            <UBadge :color="typeColor" variant="soft">
-              {{ props.eventType }}</UBadge
-            >
+            <UBadge :color="typeColor" variant="soft"> {{ props.eventType }}</UBadge>
           </p>
           <p>
             <strong>Status:</strong>
-            <UBadge :color="progressColor" variant="soft">
-              {{ props.status }}</UBadge
-            >
+            <UBadge :color="progressColor" variant="soft"> {{ props.status }}</UBadge>
           </p>
         </div>
         <div class="item-content">
-
           <div>
             <p>
               <strong>Start Time:</strong>
-             time....
+              {{ props.startTime }}
             </p>
-            <p><strong>End Time:  </strong>time....</p>
+
+            <p><strong>End Time: </strong>{{ props.endTime }}</p>
           </div>
           <div>
             <p>
               <strong>Description: </strong>
               {{
-                description.length > 15
-                  ? description.slice(0, 15) + "..."
-                  : description
+                description.length > 15 ? description.slice(0, 15) + "..." : description
               }}
             </p>
             <p><strong>Date: </strong> {{ formatDate(date) }}</p>
@@ -116,15 +110,12 @@ const isOpen = ref(false);
             <p class="mr-2">
               <strong>Created on:</strong> {{ formatDate(props.createdAt) }}
             </p>
-
           </div>
         </div>
       </div>
 
       <div class="item-buttons my-2">
-        <UButton variant="soft" class="" @click="isOpen = true"
-          >Details</UButton
-        >
+        <UButton variant="soft" class="" @click="isOpen = true">Details</UButton>
 
         <UModal v-model="isOpen">
           <EventsDetails

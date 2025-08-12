@@ -80,7 +80,8 @@ const typeColor = computed(() => {
       return "emerald";
     case "Volunteering Meetings":
       return "sky";
-
+    case "Prod Support":
+      return "cyan";
     case "Personal Development":
       return "slate";
     case "Professional Development":
@@ -93,20 +94,20 @@ const typeColor = computed(() => {
       return "gray";
 
     case "Onboarding":
-      return "teal"
-       case "Offboarding":
-      return "orange"
+      return "teal";
+    case "Offboarding":
+      return "orange";
     case "Coffee Chats":
-           return "cyan";
+      return "cyan";
     case "Lunch and Learn":
-        return "violet";
+      return "violet";
     case "Other":
       return "mediumseagreen";
     // extra examples if you need more:
     case "Follow Up":
-     return "indigo";
+      return "indigo";
     case "Sprint Review":
-     return "sky";
+      return "sky";
     case "All Hands":
       return "slate";
     case "Town Hall":
@@ -149,12 +150,13 @@ const isOpen = ref(false);
           </p>
         </div>
         <div class="item-content">
-  <div>
+          <div>
             <p>
               <strong>Start Time:</strong>
-             time....
+              {{ props.startTime || "" }}
+             
             </p>
-            <p><strong>End Time:  </strong>time....</p>
+            <p><strong>End Time: </strong> {{ props.endTime || "" }}</p>
           </div>
 
           <div>
@@ -183,7 +185,7 @@ const isOpen = ref(false);
             :meetingName="props.meetingName"
             :meetingType="props.meetingType"
             :startDate="props.startDate"
-      :endDate="props.endDate"
+            :endDate="props.endDate"
             :duration="props.duration"
             :sprintId="props.sprintId"
             :status="props.status"

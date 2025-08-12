@@ -45,7 +45,8 @@ const typeColor = computed(() => {
       return "emerald";
     case "Volunteering Meetings":
       return "sky";
-
+    case "Prod Support":
+      return "cyan";
     case "Personal Development":
       return "slate";
     case "Professional Development":
@@ -92,26 +93,30 @@ const isOpen = ref(false);
         <p><strong>Name: </strong> {{ noteName }}</p>
 
         <div class="item-header">
+         <p>
+            <strong>Description: </strong>
+            {{ description.length > 25 ? description.slice(0, 25) + "..." : description }}
+          </p>
           <p>
             <strong>Type:</strong>
             <UBadge variant="soft" :color="typeColor"> {{ props.noteType }}</UBadge>
           </p>
-          <p>
-            <strong>Description: </strong>
-            {{ description.length > 25 ? description.slice(0, 25) + "..." : description }}
-          </p>
+         
         </div>
 
         <div class="item-content">
           <div>
+          
             <p><strong>Date: </strong> {{ formatDate(date) }}</p>
 
             <p><strong>Priority Level:</strong> {{ priorityLevel }}</p>
             <p><strong>Sprint ID:</strong> {{ sprintId }}</p>
+            
           </div>
         </div>
         <div>
           <div class="data">
+          
             <p class="mr-2">
               <strong>Created on:</strong> {{ formatDate(props.createdAt) }}
             </p>

@@ -19,9 +19,9 @@ const form = reactive({
   sprintId: currentSprint.value || "",
   eventName: "", // Event Name
   eventType: "", // Event Type
-  date: "", // Date
-  description: "ddddd", // Description
-  status: "Completed", // Status
+  date: formatDateReadable(new Date()), // Date
+  description: "", // Description
+  status: "Pending", // Status
   startTime: "", // new
   endTime: "", // new duration: 0, // Duration
   duration: 0,
@@ -77,8 +77,7 @@ const handleSubmit = async () => {
     date: form.date,
     description: form.description,
     status: form.status,
-
-     startTime: form.startTime,
+    startTime: form.startTime.toString(),
     endTime: form.endTime,
     duration: form.duration,
   };
@@ -95,19 +94,23 @@ const handleSubmit = async () => {
 onMounted(async () => {
   await fetchSprints();
 });
+
+definePageMeta({ requiresAuth: true });
 </script>
 <template>
   <div class="form-container">
     <h1 class="title">Create a New Event</h1>
     <form @submit.prevent="handleSubmit">
+      <!-- Sprint -->
       <div class="form-group">
-        <label for="eventName">Sprint Id</label>
-        <input
-          v-model="form.sprintId"
-          type="text"
-          id="sprintId"
-          placeholder="Enter Event Name"
-        />
+        <label for="sprint">Sprint</label>
+        <select v-model="form.sprintId" id="sprint">
+          <option value="" disabled>Select sprint</option>
+          <option :value="item" v-for="item in sprintList" :key="item">
+            {{ item }}
+          </option>
+        </select>
+        <span v-if="errors.sprintId" class="error">{{ errors.sprintId }}</span>
       </div>
 
       <div class="form-group">
@@ -171,6 +174,7 @@ onMounted(async () => {
         <input id="endTime" type="time" v-model="form.endTime" />
         <span v-if="errors.endTime" class="error">{{ errors.endTime }}</span>
       </div>
+
       <!-- Duration -->
       <div class="form-group">
         <label for="duration">Duration</label>
@@ -187,11 +191,11 @@ onMounted(async () => {
       <!-- Priority Level -->
       <div class="form-group">
         <label for="priorityLevel">Description</label>
-        <input
+        <textarea
           v-model="form.description"
           type="text"
           id="priorityLevel"
-          placeholder="Enter Priority (e.g., High)"
+          placeholder="Description"
         />
         <span v-if="errors.description" class="error">{{ errors.description }}</span>
       </div>

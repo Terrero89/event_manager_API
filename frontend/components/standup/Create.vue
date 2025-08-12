@@ -78,6 +78,9 @@ onMounted(async () => {
   await fetchSprints();
     await fetchSprints();
 });
+
+
+definePageMeta({ requiresAuth: true });
 </script>
 <template>
     

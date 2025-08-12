@@ -1,15 +1,14 @@
-
 <script setup lang="ts">
+definePageMeta({ requiresAuth: true });
 </script>
 
 <template>
-    <div>
-      <h1>Create Note</h1>
-      <NotesCreateForm/>
-    </div>
-  </template>
+  <div>
+    <h1>Create Note</h1>
 
-
+    <NotesCreateForm />
+  </div>
+</template>
 
 <style scoped>
 h1 {

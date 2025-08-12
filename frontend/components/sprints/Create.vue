@@ -10,12 +10,12 @@ const { sprintList, currentSprint } = storeToRefs(sprintsStore);
 
 const loadMessage = ref(false);
 const sprint = ref({
-  sprintId: "SP-",
-  startDate: "2025-01-22",
-  endDate: "2025-01-29",
-  summary: "summary1, summary2,summary3",
-  piNotes: "note1, note2, note3",
-  storiesUnderSprint: "DMR-001, DMR-002, DMR-003",
+  sprintId: "SPRINT-",
+  startDate: "",
+  endDate: "",
+  summary: "N/A",
+  piNotes: "N/A",
+  storiesUnderSprint: "N/A",
 });
 
 // Calculate duration between startDate and endDate
@@ -47,6 +47,9 @@ const handleSubmit = async () => {
     navigateTo(`/`);
   }, 1700);
 };
+
+
+definePageMeta({ requiresAuth: true });
 </script>
 
 <template>

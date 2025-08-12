@@ -4,7 +4,7 @@ export const CONFIG = {
         difficultyLevels: ["Low", "Medium", "High", "Critical"],
         workTypes: ["Story", "Bug", "Non-prod", "Tasks", "Tech Debt", "Spike", "Feature", "Epic"],
         developmentTypes: ["Frontend", "Backend", "Fullstack"],
-        status: ["Backlog", "Blocked", "To Do", "In Progress", "Demo Ready", "Completed", "Released"],
+        status: ["Backlog", "Blocked", "Test Ready", "Test In Progress", "To Do", "In Progress", "Demo Ready", "Completed", "Released"],
 
         statusLevel: ["Pending", "In Progress", "Completed",],
         repoNames: ["example1", "example2", "example3", "example4", "example5"],
@@ -20,6 +20,7 @@ export const CONFIG = {
             "Collaboration",
             "Mentor Meetings",
             "Mentee Meetings",
+            "Prod Support",
             "Workshops",
             "Feedback Exchange",
             "Brainstorming",
@@ -54,7 +55,7 @@ export const CONFIG = {
 ],
         points: ['1', '2', '3', '5', '8', '13'],
         timeoffTypes: ["Vacation", "Sick Leave", "Personal Leave", "Compensatory Time Off", "Unpaid Leave", "Maternity/Paternity Leave", "Bereavement Leave", "Jury Duty", "Military Leave", "Public Service Leave", "Other"],
-        currentWork: ["Story","Spike", "Feature", "Bug Fix", "Technical Debt", "Research", "Documentation", "Testing", "Code Review", "Deployment", "Maintenance", "Other"],
+        currentWork: ["Story","Spike", "Feature", "Bug Fix","Testing", "Technical Debt", "Research", "Documentation", "Testing", "Code Review", "Deployment", "Maintenance", "Other"],
     },
 
 };

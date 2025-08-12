@@ -161,7 +161,7 @@ onMounted(async () => {
           <option :value="status" v-for="status in CONFIG.variables.status" :key="status">{{status}}</option>
 
         </select>
-        
+       
       </div>
       <div class="form-group">
         <label for="reporters">Reporter</label>

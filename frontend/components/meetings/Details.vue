@@ -6,11 +6,10 @@ import { CONFIG } from "~/config/globalVariables";
 const { addSprint, fetchSprints } = sprintsStore;
 const { sprintList, currentSprint } = storeToRefs(sprintsStore);
 
-const { updateMeeting, fetchMeetings, deleteMeeting,filterItemById } = meetingStore;
+const { updateMeeting, fetchMeetings, deleteMeeting, filterItemById } = meetingStore;
 
 const { meetings } = storeToRefs(meetingStore);
 // for later use
-
 
 onMounted(async () => {
   await fetchMeetings();
@@ -24,12 +23,12 @@ const props = defineProps([
   "meetingType",
   "meetingName",
   "startTime",
-"endTime",
+  "endTime",
   "duration",
   "sprintId",
   "status",
   "createdAt",
-"updatedAt",
+  "updatedAt",
 ]);
 
 const by = computed(() => {
@@ -42,40 +41,34 @@ const by = computed(() => {
 function formatDate(value) {
   const date = new Date(value);
   const year = date.getFullYear();
-  const month = `${date.getMonth() + 1}`.padStart(2, '0');
-  const day = `${date.getDate()}`.padStart(2, '0');
+  const month = `${date.getMonth() + 1}`.padStart(2, "0");
+  const day = `${date.getDate()}`.padStart(2, "0");
   return `${year}-${month}-${day}`;
 }
 // Replace reactive with ref
 const form = ref({
-  sprintId:  props.sprintId,
+  sprintId: props.sprintId,
   description: props.description,
   meetingName: props.meetingName,
   meetingType: props.meetingType,
-  startTime:props.startTime || "",
-  endTime:props.endTime || "",
+  startTime: props.startTime,
+  endTime: props.endTime,
   duration: props.duration,
   status: props.status,
   date: formatDate(props.date),
-
 });
 
 const errors = reactive({});
 const router = useRouter();
 
-
 const handleSubmit = async () => {
-
-
-  await  updateMeeting(props._id, { ...form.value });
+  await updateMeeting(props._id, { ...form.value });
   navigateTo(`/`);
 };
 
 const removeItem = async (id) => {
   if (
-    confirm(
-      "Are you sure you want to delete this meeting? This action cannot be undone."
-    )
+    confirm("Are you sure you want to delete this meeting? This action cannot be undone.")
   ) {
     await deleteMeeting(id); // Proceed with the deletion if confirmed
 
@@ -90,115 +83,114 @@ onMounted(async () => {
 
 <template>
   <div class="form-container">
- <div>
-</div>
+    <div></div>
     <h1 class="title">Modify Meeting</h1>
     <form @submit.prevent="handleSubmit">
-
-        <!-- Sprint -->
+      <!-- Sprint -->
       <div class="form-group">
         <label for="sprint">Sprint Id </label>
         <select v-model="form.sprintId" id="Event">
           <option value="" disabled>Select sprint</option>
-          <option :value="item" v-for="item in sprintList"  :key="item" >{{ item }}</option>
+          <option :value="item" v-for="item in sprintList" :key="item">{{ item }}</option>
         </select>
-      
       </div>
 
-      <div class="form-group"> 
+      <div class="form-group">
         <label for="reporters">Meeting Type</label>
         <select v-model="form.meetingType" id="status">
           <option value="" disabled>Select Type</option>
-          <option v-for="activity in CONFIG.variables.activityType" :key="activity" :value="activity">{{ activity }}</option>
+          <option
+            v-for="activity in CONFIG.variables.activityType"
+            :key="activity"
+            :value="activity"
+          >
+            {{ activity }}
+          </option>
         </select>
-     
       </div>
-        {{props._id}}
+
       <div class="form-group">
         <label for="storyName">Meeting Name</label>
         <input
-            v-model="form.meetingName"
-            type="text"
-            id="story Name"
-            placeholder="Enter Story Name"
+          v-model="form.meetingName"
+          type="text"
+          id="story Name"
+          placeholder="Enter Story Name"
         />
-    
       </div>
 
-      <div  class="form-group">
+      <div class="form-group">
         <label for="startDate">Start Date:</label>
-        <input v-model="form.date" type="date" id="date"/>
+        <input v-model="form.date" type="date" id="date" />
       </div>
 
-          <!-- Start Time -->
+      <!-- Start Time -->
       <div class="form-group">
         <label for="startTime">Start Time</label>
         <input id="startTime" type="time" v-model="form.startTime" />
-
       </div>
-
+      meeting :: {{ props.startTime }}
       <!-- End Time -->
       <div class="form-group">
         <label for="endTime">End Time</label>
         <input id="endTime" type="time" v-model="form.endTime" />
-    
       </div>
-      <div  class="form-group">
+      <div class="form-group">
         <label for="duration">Duration</label>
-        <input v-model="form.duration"  
-        step="0.25" type="number" id="duration"/>
+        <input v-model="form.duration" step="0.25" type="number" id="duration" />
       </div>
       <div class="form-group">
         <label for="assignedSprint">Status</label>
         <select v-model="form.status" id="Status">
           <option value="" disabled>Select sprint</option>
-          <option v-for="activity in CONFIG.variables.statusLevel" :key="activity" :value="activity">{{ activity }}</option>
-
+          <option
+            v-for="activity in CONFIG.variables.statusLevel"
+            :key="activity"
+            :value="activity"
+          >
+            {{ activity }}
+          </option>
         </select>
-  
       </div>
-      <div class="form-group ">
+      <div class="form-group">
         <label for="storyName">Description</label>
-        <textarea class="form-control-textarea"
-            v-model="form.description"
-            type="textarea"
-            id="story Name"
-            placeholder="Enter Story Name"
+        <textarea
+          class="form-control-textarea"
+          v-model="form.description"
+          type="textarea"
+          id="story Name"
+          placeholder="Enter Story Name"
         />
-     
       </div>
-     
-<strong>Last updated: </strong> {{ formatDate(props.createdAt) }}
+
+      <strong>Last updated: </strong> {{ formatDate(props.createdAt) }}
       <div class="modal-actions">
         <UButton color="red" @click="removeItem(props._id)">Delete</UButton>
-        <UButton type="submit">Update</UButton> 
-    </div>
-   
+        <UButton type="submit">Update</UButton>
+      </div>
     </form>
   </div>
 </template>
 
 <style scoped>
 /* General Styles */
-.form-control-textarea{
+.form-control-textarea {
   border: solid 1px #3c3c3c;
   min-height: 11rem;
 }
 body {
-  font-family: 'Arial', sans-serif;
+  font-family: "Arial", sans-serif;
   margin: 0;
   padding: 0;
   background-color: #f9f9f9;
 }
 
-.title{
+.title {
   color: #bababa;
 }
 
 /* Form Container */
 .form-container {
-
-
   padding: 20px;
   background: #2c2c2c;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -325,4 +317,3 @@ select:focus {
   background-color: darkred;
 }
 </style>
-

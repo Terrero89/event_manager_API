@@ -1,10 +1,6 @@
-<script setup>
-import { ref, computed } from 'vue'
-
-
-
+<script setup lang="ts">
+definePageMeta({ requiresAuth: true });
 </script>
-
 <template>
 <div >
   <SprintsCreate/>

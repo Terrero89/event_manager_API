@@ -24,7 +24,7 @@ const loadMessage = ref(false);
 const form = reactive({
   sprintId: currentSprint.value,
   description: "", // Note Description
-  date: "", // Start Date
+  date: '', // Start Date
   priorityLevel: "N/A", // Unused but included for validation
   noteName: "", // Note Name
   noteType: "", // Note Type
@@ -47,7 +47,7 @@ const handleSubmit = async () => {
   if (!validateFields()) return;
 
   const newNote = {
-    // sprintId: currentSprint.value,
+    sprintId: currentSprint.value,
 
     noteType: form.noteType,
     description: form.description,
@@ -64,22 +64,25 @@ const handleSubmit = async () => {
     navigateTo(`/`);
   }, 1700);
 };
+
+definePageMeta({ requiresAuth: true });
 </script>
 
 <template>
   <div class="form-container">
     <h1 class="title">Create a New Note</h1>
     <form @submit.prevent="handleSubmit">
-      <!-- Header Fields -->
+   
+          <!-- Sprint -->
       <div class="form-group">
-        <label for="storyName">Sprint Id</label>
-        <input
-          v-model="form.sprintId"
-          type="text"
-          id="story Name"
-          placeholder="Enter Story Name"
-        />
-        <span v-if="errors.noteName" class="error">{{ errors.noteName }}</span>
+        <label for="sprint">Sprint</label>
+        <select v-model="form.sprintId" id="sprint">
+          <option value="" disabled>Select sprint</option>
+          <option :value="item" v-for="item in sprintList" :key="item">
+            {{ item }}
+          </option>
+        </select>
+     
       </div>
 
       <div class="form-group">
@@ -127,16 +130,14 @@ const handleSubmit = async () => {
         <input v-model="form.date" type="date" id="date" />
       </div>
       <div class="form-group">
-        <label for="storyName">Note Descriptiopn</label>
-        <input
+        <label for="storyName">Note Description</label>
+        <textarea
           v-model="form.description"
           type="text"
           id="story Name"
-          placeholder="Enter Story Name"
+          placeholder="Enter Description"
         />
-        <span v-if="errors.noteName" class="error">{{
-          errors.description
-        }}</span>
+        <span v-if="errors.noteName" class="error">{{ errors.description }}</span>
       </div>
 
       <button type="submit" class="submit-button">Submit</button>
