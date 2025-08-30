@@ -40,7 +40,6 @@ const NotesSchema = new mongoose_1.Schema({
     noteType: { type: String, required: true },
     description: { type: String, required: true },
     date: { type: Date, required: true },
-    priorityLevel: { type: String, required: true },
     sprintId: { type: String, required: false },
     user: { type: mongoose_1.default.Schema.Types.ObjectId, ref: 'User' }
 }, { timestamps: true });

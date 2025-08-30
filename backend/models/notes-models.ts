@@ -7,7 +7,6 @@ const NotesSchema: Schema = new Schema({
     noteType: { type: String, required: true },
     description: { type: String, required: true },
     date: { type: Date, required: true },
-    priorityLevel: { type: String, required: true },
     sprintId: { type: String, required: false },
       user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
 
