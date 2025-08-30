@@ -22,19 +22,8 @@ const progressColor = computed(() => {
   switch (props.status) {
     case "Completed":
       return "blue";
-    case "In Progress":
-      return "orange";
     case "Pending":
       return "purple";
-    case "Backlog":
-      return "teal";
-    case "Review":
-      return "green";
-    case "Done":
-      return "yellow";
-
-    case "Epic":
-
     default:
       return "black";
   }

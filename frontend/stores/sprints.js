@@ -29,7 +29,7 @@ export const useSprintStore = defineStore({
     this.items = data;
      
       this.sprintList = this.items.map((item) => item.sprintId);
-      this.currentSprint = this.sprintList.reverse()[0];
+      this.currentSprint = this.sprintList[0];
     return data;
 
   } catch (error) {

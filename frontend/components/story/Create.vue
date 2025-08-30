@@ -1,10 +1,10 @@
 <script setup>
+import { storeToRefs } from "pinia";
 import { reactive, ref } from "vue";
 import { useRouter } from "vue-router";
 import { CONFIG } from "~/config/globalVariables";
 const sprintsStore = useSprintStore();
 const storyStore = useStoryStore();
-import { storeToRefs } from "pinia";
 
 const { addSprint, fetchSprints } = sprintsStore;
 const { addStory } = storyStore;
@@ -208,7 +208,7 @@ onMounted(async () => {
           <option value="" disabled>Select Status</option>
           <option
             :value="status"
-            v-for="status in CONFIG.variables.status"
+            v-for="status in CONFIG.variables.developmentStatus"
             :key="status"
           >
             {{ status }}

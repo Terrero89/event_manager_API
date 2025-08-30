@@ -6,9 +6,6 @@ import { storeToRefs } from "pinia";
 
 const { fetchMeetings, totalFilteredMeetingStats, filterMeetings } = meetingStore;
 const { meetings } = storeToRefs(meetingStore);
-// for later use
-// const route = useRoute(); //route object
-// const destId = route.params.destinationID;
 
 onMounted(async () => {
   await fetchMeetings();

@@ -26,21 +26,10 @@ const progressColor = computed(() => {
   switch (props.status) {
     case "Completed":
       return "blue";
-    case "In Progress":
-      return "orange";
     case "Pending":
       return "purple";
-    case "Backlog":
-      return "teal";
-    case "Review":
-      return "green";
-    case "Done":
-      return "yellow";
-
-    case "Epic":
-
     default:
-      return "gray";
+      return "black";
   }
 });
 
@@ -56,7 +45,9 @@ const typeColor = computed(() => {
       return "amber";
     case "Bi weekly Demos":
       return "purple";
-    case "Training":
+    case "Demos":
+      return "emerald";
+case "Training":
       return "orange";
     case "Collaboration":
       return "lime";
@@ -92,7 +83,6 @@ const typeColor = computed(() => {
       return "stone";
     case "Other":
       return "gray";
-
     case "Onboarding":
       return "teal";
     case "Offboarding":
@@ -154,7 +144,6 @@ const isOpen = ref(false);
             <p>
               <strong>Start Time:</strong>
               {{ props.startTime || "" }}
-             
             </p>
             <p><strong>End Time: </strong> {{ props.endTime || "" }}</p>
           </div>

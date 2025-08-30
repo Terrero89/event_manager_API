@@ -2,13 +2,12 @@ export const CONFIG = {
     variables: {
         reporters: ["Sergio Terrero", "Pedro Martinez", "Eugenia Derbez", "Jackie Perex", "Pamela Alvarez"],
         difficultyLevels: ["Low", "Medium", "High", "Critical"],
-        workTypes: ["Story", "Bug", "Non-prod", "Tasks", "Tech Debt", "Spike", "Feature", "Epic"],
+        workTypes: ["Story", "Bug", "Non-prod", "Tasks", "Tech Debt", "Spike", "Feature", "Epic", "Testing"],
         developmentTypes: ["Frontend", "Backend", "Fullstack"],
-        status: ["Backlog", "Blocked", "Test Ready", "Test In Progress", "To Do", "In Progress", "Demo Ready", "Completed", "Released"],
-
-        statusLevel: ["Pending", "In Progress", "Completed",],
+        developmentStatus: ["Backlog", "To Do", "In Progress", "Test Ready", "Test In Progress", "Demo Ready", "Completed", "Released", "Blocked"],
+        statusLevel: ["Pending", "Completed",],
         repoNames: ["example1", "example2", "example3", "example4", "example5"],
-        sprints: ['PL-001', 'P:-002'],
+
         activityType: [
             "1x1",
             "Standup",
@@ -16,6 +15,7 @@ export const CONFIG = {
             "Planning",
             "Sprint Review",
             "Bi-weekly Demos",
+            "Demos",
             "Training",
             "Collaboration",
             "Mentor Meetings",
@@ -35,7 +35,6 @@ export const CONFIG = {
             "Ad Hoc Meetings",
             "Coffee Chats",
             "Lunch and Learn",
-            "Sprint Review",
             "Town Hall",
             "Social Hour",
             "Follow up",
@@ -43,19 +42,19 @@ export const CONFIG = {
             "Offboarding",
             "Other"
         ],
-        eventTypes:[
-  "ERG Events",
-  "Volunteering",
-  "Workshops",
-  "Company Events",
-  "Networking",
-  "Hackathons",
-  "Team Events",
-  "Other"
-],
+        eventTypes: [
+            "ERG Events",
+            "Volunteering",
+            "Workshops",
+            "Company Events",
+            "Networking",
+            "Hackathons",
+            "Team Events",
+            "Other"
+        ],
         points: ['1', '2', '3', '5', '8', '13'],
         timeoffTypes: ["Vacation", "Sick Leave", "Personal Leave", "Compensatory Time Off", "Unpaid Leave", "Maternity/Paternity Leave", "Bereavement Leave", "Jury Duty", "Military Leave", "Public Service Leave", "Other"],
-        currentWork: ["Story","Spike", "Feature", "Bug Fix","Testing", "Technical Debt", "Research", "Documentation", "Testing", "Code Review", "Deployment", "Maintenance", "Other"],
-    },
-
+        currentWork: ["Story", "Spike", "Feature", "Bug Fix", "Testing", "Technical Debt", "Research", "Documentation", "Code Review", "Deployment", "Maintenance", "Other"],
+        // devStatus: ["Active", "Inactive", "On Hold", "Retired"],
+    }
 };

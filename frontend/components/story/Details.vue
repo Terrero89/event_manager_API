@@ -1,8 +1,7 @@
 <script setup>
 import { storeToRefs } from "pinia";
-import { ref, computed } from "vue";
+import { onMounted, ref } from "vue";
 import { CONFIG } from "~/config/globalVariables";
-import { onMounted } from "vue";
 const storyStore = useStoryStore();
 
 
@@ -156,7 +155,7 @@ onMounted(async () => {
         <label for="status">Status</label>
         <select v-model="story.status" id="status">
           <option value="" disabled>Select Status</option>
-          <option :value="status" v-for="status in CONFIG.variables.status" :key="status">{{status}}</option>
+          <option :value="status" v-for="status in CONFIG.variables.developmentStatus" :key="status">{{status}}</option>
 
         </select>
         
