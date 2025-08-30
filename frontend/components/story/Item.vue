@@ -100,6 +100,9 @@ const pointsColor = computed(() => {
       return "red";
   }
 });
+
+
+
 const isOpen = ref(false);
 </script>
 
@@ -109,15 +112,24 @@ const isOpen = ref(false);
     <UIRenderer>
       <div class="item">
         <p><strong>Sprint Id: </strong> {{ props.sprintId }}</p>
-        <p><strong>Number: </strong> {{ props.storyNumber }}</p>
-        <p>
-          <strong>Name:</strong>
-          {{
-            props.storyName.length > 35
-              ? props.storyName.slice(0, 35) + "..."
-              : props.storyName
-          }}
-        </p>
+        <div class="item-header">
+          <div>
+            <p>
+              <strong>Number: </strong>
+
+              <UBadge variant="soft" color="gray"> {{ props.storyNumber }}</UBadge>
+            </p>
+            <p>
+              <strong>Name:</strong>
+              {{
+                props.storyName.length > 35
+                  ? props.storyName.slice(0, 35) + "..."
+                  : props.storyName
+              }}
+            </p>
+          </div>
+        </div>
+
         <div class="item-header">
           <p>
             <strong>Development: </strong>
@@ -131,7 +143,8 @@ const isOpen = ref(false);
             <UBadge :color="workTypeColor" variant="soft"> {{ props.workType }}</UBadge>
           </p>
         </div>
-        <div class="item-status">
+       
+        <div class="item-header">
           <p>
             <strong>Points: </strong>
             <UBadge :color="pointsColor" variant="soft"> {{ props.storyPoints }} </UBadge>
@@ -143,7 +156,6 @@ const isOpen = ref(false);
         </div>
 
         <div class="item-content">
-          <p><strong>Created on: </strong> {{ formatDate(props.createdAt) }}</p>
           <div>
             <p><strong>Start Date: </strong> {{ formatDate(props.dateAssigned) }}</p>
             <p>

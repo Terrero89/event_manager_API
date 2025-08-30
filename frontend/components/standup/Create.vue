@@ -23,8 +23,8 @@ const form = reactive({
   notes: "",
   learnings: "",
   repo: "",
-  ticketNumber: "",
-  date: "",
+  ticketNumber: "UBT-",
+  date: new Date(),
 });
 
 // Validation errors
@@ -35,7 +35,7 @@ const errors = reactive({
   learnings: "",
   repo: "",
   ticketNumber: "",
-  date: "",
+
 });
 
 // Field validation
@@ -124,7 +124,7 @@ definePageMeta({ requiresAuth: true });
 
       <!-- Notes -->
       <div class="form-group">
-        <label for="notes">Notes</label>
+        <label for="notes">Daily Updates</label>
         <textarea v-model="form.notes" id="notes" rows="3" />
         <span v-if="errors.notes" class="error">{{ errors.notes }}</span>
       </div>
@@ -139,17 +139,11 @@ definePageMeta({ requiresAuth: true });
       <!-- Repo -->
       <div class="form-group">
         <label for="repo">Repo</label>
-        <input v-model="form.repo" type="text" id="repo" />
+        <textarea v-model="form.repo" type="text" id="repo" />
         <span v-if="errors.repo" class="error">{{ errors.repo }}</span>
       </div>
 
    
-      <!-- Date -->
-      <!-- <div class="form-group">
-        <label for="date">Date</label>
-        <input v-model="form.date" type="date" id="date" />
-        <span v-if="errors.date" class="error">{{ errors.date }}</span>
-      </div> -->
 
       <button type="submit" class="submit-button">Submit</button>
        <div class="temp my-4" v-if="loadMessage">Submitting Request...</div>

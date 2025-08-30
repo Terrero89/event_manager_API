@@ -2,15 +2,15 @@
 import { ref } from "vue";
 
 const props = defineProps([
-     "_id",
-  "sprintId",         // e.g. 'sprint_5000'
-  "workingOn",        // e.g. 'Building auth flow'
-  "notes",            // e.g. 'Fixed routing issues'
-  "learnings",        // e.g. 'Learned about Vue transitions'
-  "repo",             // e.g. 'my-project-repo'
-  "ticketNumber",     // e.g. 'ABC-123'
-  "date",             // ISO string
-   "createdAt",
+  "_id",
+  "sprintId", // e.g. 'sprint_5000'
+  "workingOn", // e.g. 'Building auth flow'
+  "notes", // e.g. 'Fixed routing issues'
+  "learnings", // e.g. 'Learned about Vue transitions'
+  "repo", // e.g. 'my-project-repo'
+  "ticketNumber", // e.g. 'ABC-123'
+  "date", // ISO string
+  "createdAt",
   "updatedAt",
 ]);
 const typeColor = computed(() => {
@@ -44,6 +44,20 @@ const typeColor = computed(() => {
   }
 });
 
+// Define a palette of colors
+const colors = [  "#FFD93D", "#6A4C93", "#1A535C","#FF6B6B", "#4ECDC4",];
+
+const repoList = computed(() => {
+  return props.repo
+    .split(",") // split by comma
+    .map((item: string, index: number) => {
+      return {
+        name: item.trim(), // remove extra spaces
+        color: colors[index % colors.length], // assign a color in order
+      };
+    });
+});
+
 const isOpen = ref(false);
 </script>
 
@@ -54,66 +68,66 @@ const isOpen = ref(false);
         <p><strong>Sprint ID:</strong> {{ props.sprintId }}</p>
 
         <div class="item-header">
-        
-               <p>
+          <p>
             <strong>Working On: </strong>
             <UBadge :color="typeColor" variant="soft">
-              {{ props.workingOn}}
+              {{ props.workingOn }}
             </UBadge>
           </p>
-               <p>
+          <p>
             <strong>Ticket #: </strong>
-            <UBadge color="indigo" variant="outline"  >
-              {{ props.ticketNumber}}
+            <UBadge color="indigo" variant="outline">
+              {{ props.ticketNumber }}
             </UBadge>
           </p>
+        </div>
+        <div class="item-flex">
+          <p class="mr-2"><strong>Repos</strong> {{ props.repo }}</p>
         </div>
 
         <div class="item-flex">
-          <p class="mr-2">
-            <strong>Repos:</strong> {{ props.repo }}
-          </p>
-       
+          <p class="mr-2"><strong>Repos</strong></p>
+          <div class="flex flex-wrap gap-2">
+            <span
+              v-for="(repo, index) in repoList"
+              :key="index"
+              :style="{ color: repo.color }"
+              class="font-medium"
+            >
+              <UBadge color="repo.color" variant="outline">
+                {{ repo.name }}
+              </UBadge>
+            </span>
+          </div>
         </div>
-  <div class="item-flex">
-     <!-- <p class= "mr-2"> <strong>Notes:</strong> {{ props.notes }}</p>
+
+        <div class="item-flex">
+          <!-- <p class= "mr-2"> <strong>Notes:</strong> {{ props.notes }}</p>
           <p><strong>Learnings:</strong> {{ props.learnings }}</p> -->
-      
         </div>
 
-         <div class="item-flex">
-  
-          <p class="mr-2">
-            <strong>Date:</strong> {{ formatDate(props.date) }}
-          </p>
-        
-         
+        <div class="item-flex">
+          <p class="mr-2"><strong>Date:</strong> {{ formatDate(props.date) }}</p>
         </div>
-        <div class="item-content">
-       
-
-          
-        </div>
+        <div class="item-content"></div>
       </div>
 
-
-
-   <div class="item-buttons my-2">
+      <div class="item-buttons my-2">
         <UButton variant="soft" @click="isOpen = true">Details</UButton>
 
         <UModal v-model="isOpen">
-    <StandupUpdate
-        :_id="props._id"
-      :sprintId="props.sprintId"
-      :workingOn="props.workingOn"
-      :notes="props.notes"
-      :learnings="props.learnings"
-      :repo="props.repo"
-      :ticketNumber="props.ticketNumber"
-      :date="props.date"
-       :createdAt="props.createdAt"
-      :updatedAt="props.updatedAt"
-    />
+          <StandupUpdate
+            :_id="props._id"
+            :sprintId="props.sprintId"
+            :workingOn="props.workingOn"
+            :notes="props.notes"
+            :learnings="props.learnings"
+            :repo="props.repo"
+            :ticketNumber="props.ticketNumber"
+            :date="props.date"
+            :createdAt="props.createdAt"
+            :updatedAt="props.updatedAt"
+          />
         </UModal>
       </div>
     </UIRenderer>

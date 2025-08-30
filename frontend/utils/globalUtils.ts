@@ -7,3 +7,12 @@ export function getInitials(name: string) {
     .map(part => part[0].toUpperCase())
     .join('');
 }
+
+
+
+
+
+export function splitAndOrder(value:string){
+  const newList = value.split(",")
+  return newList.sort()
+}
