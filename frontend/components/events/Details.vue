@@ -12,55 +12,53 @@ const { sprintList, currentSprint } = storeToRefs(sprintsStore);
 const { addEvent, updateEvent, deleteEvent } = eventsStore;
 const { events } = storeToRefs(eventsStore);
 
-
 onMounted(async () => {
   await fetchSprints();
 });
 
 const props = defineProps([
-    "_id",
-"description",
-"date",
-"eventType",
-"eventName",
- "startTime",
-"endTime",
-"duration",
-"sprintId",
-"status",
-"createdAt",
-"updatedAt",
+  "_id",
+  "description",
+  "date",
+  "eventType",
+  "eventName",
+  "startTime",
+  "endTime",
+  "duration",
+  "sprintId",
+  "status",
+  "createdAt",
+  "updatedAt",
 ]);
-function formatDate(value){
-  const date = new Date(value);
+// function formatDate(value){
+//   const date = new Date(value);
 
-  // Add timezone offset
-  const localDate = new Date(date.getTime() + date.getTimezoneOffset() * 60000);
+//   // Add timezone offset
+//   const localDate = new Date(date.getTime() + date.getTimezoneOffset() * 60000);
 
-  const year = localDate.getFullYear();
-  const month = `${localDate.getMonth() + 1}`.padStart(2, '0');
-  const day = `${localDate.getDate()}`.padStart(2, '0');
+//   const year = localDate.getFullYear();
+//   const month = `${localDate.getMonth() + 1}`.padStart(2, '0');
+//   const day = `${localDate.getDate()}`.padStart(2, '0');
 
-  return `${year}-${month}-${day}`;
-}
+//   return `${year}-${month}-${day}`;
+// }
 // ref
 // Main form state using ref
 const form = ref({
-
-  sprintId: currentSprint.value || '',
+  sprintId: currentSprint.value || "",
   eventName: props.eventName,
   eventType: props.eventType,
-  date: formatDate(props.date) ,
+  date: realDateFormatter(props.date),
   description: props.description,
   status: props.status,
-   startTime:props.startTime || "",
-  endTime:props.endTime || "",
+  startTime: props.startTime || "",
+  endTime: props.endTime || "",
   duration: props.duration,
+ createdAt:props.createdAt,
+  updatedAt:props.updatedAt,
 });
 
 const handleSubmit = async () => {
-
-
   console.log({ ...form.value });
   await updateEvent(props._id, { ...form.value });
   navigateTo(`/`);
@@ -68,9 +66,7 @@ const handleSubmit = async () => {
 
 const removeItem = async (id) => {
   if (
-    confirm(
-      "Are you sure you want to delete this city? This action cannot be undone."
-    )
+    confirm("Are you sure you want to delete this city? This action cannot be undone.")
   ) {
     await deleteEvent(id); // Proceed with the deletion if confirmed
 
@@ -82,6 +78,7 @@ const removeItem = async (id) => {
 
 <template>
   <div class="form-container">
+ 
     <h1 class="title">Modify Event</h1>
     <form @submit.prevent="handleSubmit">
       <!-- Sprint -->
@@ -136,19 +133,17 @@ const removeItem = async (id) => {
           </select>
         </div>
 
-            <!-- Start Time -->
-      <div class="form-group">
-        <label for="startTime">Start Time</label>
-        <input id="startTime" type="time" v-model="form.startTime" />
+        <!-- Start Time -->
+        <div class="form-group">
+          <label for="startTime">Start Time</label>
+          <input id="startTime" type="time" v-model="form.startTime" />
+        </div>
 
-      </div>
-
-      <!-- End Time -->
-      <div class="form-group">
-        <label for="endTime">End Time</label>
-        <input id="endTime" type="time" v-model="form.endTime" />
-    
-      </div>
+        <!-- End Time -->
+        <div class="form-group">
+          <label for="endTime">End Time</label>
+          <input id="endTime" type="time" v-model="form.endTime" />
+        </div>
         <!-- Duration -->
         <div class="form-group">
           <label for="duration">Duration</label>
@@ -171,7 +166,7 @@ const removeItem = async (id) => {
             placeholder="Enter Priority (e.g., High)"
           />
         </div>
-        <strong>Last updated: </strong> {{ formatDate(props.createdAt) }}
+        <strong>Last updated: </strong> {{ formatDate(props.updatedAt) === '' ? "No update" :  formatDate(props.updatedAt)}}
         <!-- Submit Button -->
         <div class="modal-actions">
           <UButton color="red" @click="removeItem(props._id)">Delete</UButton>

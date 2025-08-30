@@ -39,17 +39,11 @@ const validateFields = () => {
   errors.storyTitle = !form.storyTitle ? "Story Title is required" : "";
   errors.storyName = !form.storyName ? "Story Name is required" : "";
   errors.storyNumber = !form.storyNumber ? "Story Number is required" : "";
-  errors.storyDescription = !form.storyDescription
-    ? "Story description is required"
-    : "";
-  errors.difficultyLevel = !form.difficultyLevel
-    ? "Difficulty Level is required"
-    : "";
+  errors.storyDescription = !form.storyDescription ? "Story description is required" : "";
+  errors.difficultyLevel = !form.difficultyLevel ? "Difficulty Level is required" : "";
   errors.storyPoints = !form.storyPoints ? "Story Points are required" : "";
   errors.workType = !form.workType ? "Work Type is required" : "";
-  errors.developmentType = !form.developmentType
-    ? "Development Type is required"
-    : "";
+  errors.developmentType = !form.developmentType ? "Development Type is required" : "";
   errors.status = !form.status ? "Status is required" : "";
   errors.reporter = !form.reporter ? "Reporter is required" : "";
   errors.storyComments = !form.storyComments ? "Comments are required" : "";
@@ -96,7 +90,7 @@ onMounted(async () => {
 
 <template>
   <div class="form-container">
-    <h1 class="title">Create a New Story</h1>
+    <h1 class="title">Ceate a New Story</h1>
     <form @submit.prevent="handleSubmit">
       <!-- Header Fields -->
       <div class="form-group">
@@ -119,11 +113,9 @@ onMounted(async () => {
           id="storyName"
           placeholder="Enter Story Number"
         />
-        <span v-if="errors.storyNumber" class="error">{{
-          errors.storyNumber
-        }}</span>
+        <span v-if="errors.storyNumber" class="error">{{ errors.storyNumber }}</span>
       </div>
-      item
+    
 
       <div class="form-group">
         <label for="storyNumber">Story Number (e.g., DMR-XXXX)</label>
@@ -133,9 +125,7 @@ onMounted(async () => {
           id="storyNumber"
           placeholder="Enter Story Number"
         />
-        <span v-if="errors.storyNumber" class="error">{{
-          errors.storyNumber
-        }}</span>
+        <span v-if="errors.storyNumber" class="error">{{ errors.storyNumber }}</span>
       </div>
 
       <div class="form-group">
@@ -166,20 +156,14 @@ onMounted(async () => {
           <option value="8">8</option>
           <option value="13">13</option>
         </select>
-        <span v-if="errors.storyPoints" class="error">{{
-          errors.storyPoints
-        }}</span>
+        <span v-if="errors.storyPoints" class="error">{{ errors.storyPoints }}</span>
       </div>
 
       <div class="form-group">
         <label for="workType">Work Type</label>
         <select v-model="form.workType" id="workType">
           <option value="" disabled>Select Work Type</option>
-          <option
-            :value="type"
-            v-for="type in CONFIG.variables.workTypes"
-            :key="type"
-          >
+          <option :value="type" v-for="type in CONFIG.variables.workTypes" :key="type">
             {{ type }}
           </option>
         </select>
@@ -252,9 +236,7 @@ onMounted(async () => {
           id="storyComments"
           placeholder="Enter Story Comments"
         ></textarea>
-        <span v-if="errors.storyComments" class="error">{{
-          errors.storyComments
-        }}</span>
+        <span v-if="errors.storyComments" class="error">{{ errors.storyComments }}</span>
       </div>
 
       <div class="form-group">

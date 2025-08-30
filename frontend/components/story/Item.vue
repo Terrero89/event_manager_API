@@ -41,20 +41,22 @@ const workTypeColor = computed(() => {
   switch (props.workType) {
     case "Story":
       return "blue";
-    case "Spike":
-      return "teal";
     case "Bug":
       return "purple";
-    case "Feature":
-      return "blue";
-    case "non-prod":
+    case "Non-prod":
       return "orange";
-    case "Epic":
-      return "green";
+    case "Tasks":
+      return "cyan";
     case "Tech Debt":
       return "red";
+    case "Spike":
+      return "teal";
+    case "Feature":
+      return "indigo";
     case "Epic":
-
+      return "green";
+    case "Testing":
+      return "pink";
     default:
       return "black";
   }
@@ -82,6 +84,22 @@ const progressColor = computed(() => {
   }
 });
 
+const pointsColor = computed(() => {
+  switch (props.storyPoints) {
+    case 1:
+      return "green";
+    case 2:
+      return "blue";
+    case 3:
+      return "orange";
+    case 5:
+      return "red";
+    case 8:
+      return "red";
+    case 13:
+      return "red";
+  }
+});
 const isOpen = ref(false);
 </script>
 
@@ -103,29 +121,23 @@ const isOpen = ref(false);
 
           <p>
             <strong>Work Type:</strong>
-            <UBadge :color="workTypeColor" variant="soft">
-              {{ props.workType }}</UBadge
-            >
+            <UBadge :color="workTypeColor" variant="soft"> {{ props.workType }}</UBadge>
           </p>
         </div>
         <div class="item-status">
           <p>
             <strong>Points: </strong>
-            <UBadge color="red" variant="soft"> {{ props.storyPoints }}</UBadge>
+            <UBadge :color="pointsColor" variant="soft"> {{ props.storyPoints }}</UBadge>
           </p>
           <p>
             <strong>Status:</strong>
-            <UBadge :color="progressColor" variant="soft">
-              {{ props.status }}</UBadge
-            >
+            <UBadge :color="progressColor" variant="soft"> {{ props.status }}</UBadge>
           </p>
         </div>
 
         <div class="item-content">
           <div>
-            <p>
-              <strong>Start Date: </strong> {{ formatDate(props.dateAssigned) }}
-            </p>
+            <p><strong>Start Date: </strong> {{ formatDate(props.dateAssigned) }}</p>
             <p>
               <strong>End Date: </strong>
               {{

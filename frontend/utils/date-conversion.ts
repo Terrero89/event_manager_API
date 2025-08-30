@@ -176,21 +176,7 @@ export function formatNumber(number: number) {
 //   const options = { year: 'numeric', month: 'short', day: 'numeric' };
 //   return new Date(date).toLocaleDateString('en-US', options);
 // }
-export function formatDate(dateString: string | number | Date) {
-  const date = new Date(dateString);
 
-  // If the date is invalid, return an empty string or handle the error appropriately
-  if (isNaN(date.getTime())) {
-    return '';
-  }
-
-  // Add a day to the date
-  date.setDate(date.getDate() + 1);
-
-  const options = { year: 'numeric', month: 'short', day: 'numeric' };
-  return date.toLocaleDateString('en-US', options);   
-
-}
 
 // display 
 export function formatDateReadable(date:any)  {
@@ -236,3 +222,37 @@ export function calculateTotalDuration(startTime: any, endTime: any) {
   return durationHours;
 }
 
+
+/*
+DATE FORMATS 
+*/
+
+// CONVERTS THE DATE TO A READABLE NICER WAY TO DISPLAY 
+export function formatDate(dateString: string | number | Date) {
+  const date = new Date(dateString);
+
+  // If the date is invalid, return an empty string or handle the error appropriately
+  if (isNaN(date.getTime())) {
+    return '';
+  }
+
+  // Add a day to the date
+  date.setDate(date.getDate());
+
+  const options = { year: 'numeric' as const, month: 'short' as const, day: 'numeric' as const };
+  return date.toLocaleDateString('en-US', options);   
+
+}
+// MAKES THE DATE IN A FORMAT THE INPUT DATE FIELD CAN DISPLAY IT CORRECTLY
+export function realDateFormatter(value: string | number | Date){
+  const date = new Date(value);
+
+  // Add timezone offset
+  const localDate = new Date(date.getTime() + date.getTimezoneOffset() * 60000);
+
+  const year = localDate.getFullYear();
+  const month = `${localDate.getMonth() + 1}`.padStart(2, '0');
+  const day = `${localDate.getDate()}`.padStart(2, '0');
+
+  return `${year}-${month}-${day}`;
+}

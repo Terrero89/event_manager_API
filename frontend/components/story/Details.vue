@@ -50,16 +50,13 @@ const story = ref({
     storyComments: props.storyComments,
     reporter: props.reporter,
     repoNames: props.repoNames,
-    dateAssigned:props.dateAssigned,
-    dateCompleted:props.dateCompleted,
+    dateAssigned:realDateFormatter(props.dateAssigned),
+    dateCompleted:realDateFormatter(props.dateCompleted),
     sprintId: props.sprintId,
     learning: props.learning,
     createdAt:props.createdAt,
     updatedAt:props.updatedAt,
     
-
-
-
 });
 
 
@@ -98,7 +95,6 @@ onMounted(async () => {
         <label for="sprintId">Sprint ID:</label>
         <input v-model="story.sprintId" type="text" id="sprintId" />
       </div>  
-
       <div>
         <label for="storyTitle">Description:</label>
         <input
@@ -196,7 +192,7 @@ onMounted(async () => {
         ></textarea>
   
       </div>
-      <strong>Last updated: </strong> {{ formatDate(props.createdAt) }}
+      <strong>Last updated: </strong> {{ formatDate(updatedAt) }}
       <div class="modal-actions">
         <UButton color="red" @click="removeItem(props._id)">Delete</UButton>
         <UButton type="submit">Update</UButton> 
