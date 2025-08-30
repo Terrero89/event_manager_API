@@ -54,8 +54,8 @@ const form = ref({
   startTime: props.startTime || "",
   endTime: props.endTime || "",
   duration: props.duration,
- createdAt:props.createdAt,
-  updatedAt:props.updatedAt,
+  createdAt: props.createdAt,
+  updatedAt: props.updatedAt,
 });
 
 const handleSubmit = async () => {
@@ -78,7 +78,6 @@ const removeItem = async (id) => {
 
 <template>
   <div class="form-container">
- 
     <h1 class="title">Modify Event</h1>
     <form @submit.prevent="handleSubmit">
       <!-- Sprint -->
@@ -166,7 +165,10 @@ const removeItem = async (id) => {
             placeholder="Enter Priority (e.g., High)"
           />
         </div>
-        <strong>Last updated: </strong> {{ formatDate(props.updatedAt) === '' ? "No update" :  formatDate(props.updatedAt)}}
+        <strong>Last updated: </strong>
+        {{
+          formatDate(props.updatedAt) === "" ? "No update" : formatDate(props.updatedAt)
+        }}
         <!-- Submit Button -->
         <div class="modal-actions">
           <UButton color="red" @click="removeItem(props._id)">Delete</UButton>
