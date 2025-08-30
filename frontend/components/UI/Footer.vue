@@ -21,6 +21,14 @@ const items = ref([
     icon: "i-heroicons-chart-bar",
     to: "/dashboard",
   },
+  {
+    icon: "heroicons-user-group-solid",
+    to: "/standup",
+  },
+  {
+    icon: "heroicons-clock-16-solid",
+    to: "/timeoff",
+  },
 ]);
 </script>
 

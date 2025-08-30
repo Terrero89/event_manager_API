@@ -59,20 +59,20 @@ const typeColor = computed(() => {
       return "gray";
 
     case "Onboarding":
-      return "teal"
-       case "Offboarding":
-      return "orange"
+      return "teal";
+    case "Offboarding":
+      return "orange";
     case "Coffee Chats":
-           return "cyan";
+      return "cyan";
     case "Lunch and Learn":
-        return "violet";
+      return "violet";
     case "Other":
       return "mediumseagreen";
     // extra examples if you need more:
     case "Follow Up":
-     return "indigo";
+      return "indigo";
     case "Sprint Review":
-     return "sky";
+      return "sky";
     case "All Hands":
       return "slate";
     case "Town Hall":
@@ -90,10 +90,10 @@ const isOpen = ref(false);
   <div>
     <UIRenderer>
       <div class="item">
-        <p><strong>Name: </strong> {{ noteName }}</p>
+        <p><strong>Sprint ID:</strong> {{ props.sprintId }}</p>
 
         <div class="item-header">
-         <p>
+          <p>
             <strong>Description: </strong>
             {{ description.length > 25 ? description.slice(0, 25) + "..." : description }}
           </p>
@@ -101,22 +101,15 @@ const isOpen = ref(false);
             <strong>Type:</strong>
             <UBadge variant="soft" :color="typeColor"> {{ props.noteType }}</UBadge>
           </p>
-         
         </div>
 
         <div class="item-content">
           <div>
-          
             <p><strong>Date: </strong> {{ formatDate(date) }}</p>
-
-    
-            <p><strong>Sprint ID:</strong> {{ sprintId }}</p>
-            
           </div>
         </div>
         <div>
           <div class="data">
-          
             <p class="mr-2">
               <strong>Created on:</strong> {{ formatDate(props.createdAt) }}
             </p>

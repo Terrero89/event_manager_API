@@ -100,7 +100,7 @@ onMounted(async () => {
 
       <!-- Summary -->
       <div>
-        <label for="summary">Summary:</label>
+        <label for="summary">Sprint Goals:</label>
         <textarea
           class="form-control-textarea"
           v-model="sprint.summary"
@@ -118,8 +118,7 @@ onMounted(async () => {
         ></textarea>
       </div>
 
-      <!-- Stories Under Sprint -->
-      {{ sprint.storiesUnderSprint }}
+   
       <div>
         <label for="storiesUnderSprint">Stories Under Sprint:</label>
         <textarea

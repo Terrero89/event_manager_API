@@ -45,7 +45,7 @@ const typeColor = computed(() => {
 });
 
 // Define a palette of colors
-const colors = [  "#FFD93D", "#6A4C93", "#1A535C","#FF6B6B", "#4ECDC4",];
+const colors = ["#FFD93D", "#6A4C93", "#1A535C", "#FF6B6B", "#4ECDC4"];
 
 const repoList = computed(() => {
   return props.repo
@@ -80,9 +80,6 @@ const isOpen = ref(false);
               {{ props.ticketNumber }}
             </UBadge>
           </p>
-        </div>
-        <div class="item-flex">
-          <p class="mr-2"><strong>Repos</strong> {{ props.repo }}</p>
         </div>
 
         <div class="item-flex">

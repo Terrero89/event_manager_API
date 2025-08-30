@@ -47,7 +47,7 @@ const typeColor = computed(() => {
       return "purple";
     case "Demos":
       return "emerald";
-case "Training":
+    case "Training":
       return "orange";
     case "Collaboration":
       return "lime";
@@ -125,10 +125,12 @@ const isOpen = ref(false);
     <!-- <h3>ITEM COMPONENT</h3> -->
     <UIRenderer>
       <div class="item">
-        <p><strong>Meeting Name: </strong> {{ meetingName }}</p>
         <!-- <h1>{{id}}</h1> -->
-
         <div class="item-header">
+          <p><strong>Sprint ID:</strong> {{ sprintId }}</p>
+        </div>
+        <div class="item-header">
+          <p><strong>Meeting Name: </strong> {{ meetingName.length > 20 ? ( meetingName.slice(0,20) + '...') : meetingName }}</p>
           <!-- <p><strong>Meeting Type:</strong> {{ meetingType }}</p> -->
           <p>
             <strong>Meeting Type:</strong>
@@ -143,7 +145,7 @@ const isOpen = ref(false);
           <div>
             <p>
               <strong>Start Time:</strong>
-              {{  to12HourFormat(props.startTime) || "" }}
+              {{ to12HourFormat(props.startTime) || "" }}
             </p>
             <p><strong>End Time: </strong> {{ to12HourFormat(props.endTime) || "" }}</p>
           </div>
@@ -158,7 +160,6 @@ const isOpen = ref(false);
             <p><strong>Date: </strong> {{ formatDate(date) }}</p>
 
             <p><strong>Duration:</strong> {{ duration }} hours</p>
-            <p><strong>Sprint ID:</strong> {{ sprintId }}</p>
           </div>
         </div>
       </div>

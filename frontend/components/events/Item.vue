@@ -60,7 +60,7 @@ const isOpen = ref(false);
     <!-- <h3>ITEM COMPONENT</h3> -->
     <UIRenderer>
       <div class="item">
-        <p><strong>Event Name: </strong> {{ eventName }}</p>
+        <p><strong>Event Name: </strong>  {{ eventName.length > 20 ? ( eventName.slice(0,20) + '...') : eventName }}</p>
 
         <div class="item-header">
           <p>
