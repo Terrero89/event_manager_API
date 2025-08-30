@@ -23,12 +23,11 @@ const loadMessage = ref(false);
 // Main form state
 const form = reactive({
   sprintId: currentSprint.value,
-  title: "", // Note Title
+  title: "", // Title
   meetingName: "", // Event Name
   meetingType: "", // Event Type
-  date: "", // Date
   description: "", // Description
-  status: "Completed", // Status
+  status: "Pending", // Status
   startTime: "", // new
   endTime: "", // new
   duration: "", // Duration
@@ -61,7 +60,7 @@ const router = useRouter();
 function validateFields() {
   errors.meetingType = form.meetingType ? "" : "Meeting Type is required";
   errors.meetingName = form.meetingName ? "" : "Meeting Name is required";
-  errors.date = form.date ? "" : "Date is required";
+
   errors.startTime = form.startTime ? "" : "Start time required";
   errors.endTime = form.endTime ? "" : "End time required";
   errors.description = form.description ? "" : "Description is required";
@@ -78,7 +77,7 @@ const handleSubmit = async () => {
     sprintId: form.sprintId,
     meetingName: form.meetingName,
     meetingType: form.meetingType,
-    date: form.date,
+    date: new Date(),
     description: form.description,
     status: form.status,
     duration: form.duration,
@@ -144,12 +143,7 @@ definePageMeta({ requiresAuth: true });
         <span v-if="errors.meetingName" class="error">{{ errors.meetingName }}</span>
       </div>
 
-      <!-- Date -->
-      <div class="form-group">
-        <label for="date">Date</label>
-        <input v-model="form.date" type="date" id="date" />
-        <span v-if="errors.date" class="error">{{ errors.date }}</span>
-      </div>
+
 
       <!-- Status -->
       <div class="form-group">

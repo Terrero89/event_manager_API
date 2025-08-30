@@ -17,7 +17,7 @@ const loadMessage = ref(false);
 const form = reactive({
   sprintId: currentSprint.value || "",
   storyTitle: "c2t please",
-  storyNumber: "dm123",
+  storyNumber: "UBT-",
   storyName: "storyName",
   storyDescription: "descriptiopn",
   difficultyLevel: "Low",
@@ -118,7 +118,7 @@ onMounted(async () => {
     
 
       <div class="form-group">
-        <label for="storyNumber">Story Number (e.g., DMR-XXXX)</label>
+        <label for="storyNumber">Story Number (e.g., UBTXXXX)</label>
         <input
           v-model="form.storyNumber"
           type="text"

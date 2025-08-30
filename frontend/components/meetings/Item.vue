@@ -143,9 +143,9 @@ const isOpen = ref(false);
           <div>
             <p>
               <strong>Start Time:</strong>
-              {{ props.startTime || "" }}
+              {{  to12HourFormat(props.startTime) || "" }}
             </p>
-            <p><strong>End Time: </strong> {{ props.endTime || "" }}</p>
+            <p><strong>End Time: </strong> {{ to12HourFormat(props.endTime) || "" }}</p>
           </div>
 
           <div>
@@ -173,8 +173,8 @@ const isOpen = ref(false);
             :date="props.date"
             :meetingName="props.meetingName"
             :meetingType="props.meetingType"
-            :startDate="props.startDate"
-            :endDate="props.endDate"
+            :startTime="props.startTime"
+            :endTime="props.endTime"
             :duration="props.duration"
             :sprintId="props.sprintId"
             :status="props.status"

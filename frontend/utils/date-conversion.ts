@@ -161,21 +161,11 @@ export function isDateGreater(date1: Date, date2: Date): boolean {
 function that transform data input  2024-02-28 when receiving a new Date()
 */
 
-// export function formatDate(date: any) {
-//   const year = date.getFullYear();
-//   const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based, so add 1
-//   const day = String(date.getDate()).padStart(2, '0');
-//   return `${year}-${month}-${day}`;
-// }
 
 export function formatNumber(number: number) {
   return new Intl.NumberFormat('en-US').format(number);
 }
 
-// export function formatDate(date: any) {
-//   const options = { year: 'numeric', month: 'short', day: 'numeric' };
-//   return new Date(date).toLocaleDateString('en-US', options);
-// }
 
 
 // display 
@@ -227,7 +217,7 @@ export function calculateTotalDuration(startTime: any, endTime: any) {
 DATE FORMATS 
 */
 
-// CONVERTS THE DATE TO A READABLE NICER WAY TO DISPLAY 
+//DISPLAY IT NICER ---  CONVERTS THE DATE TO A READABLE NICER WAY TO DISPLAY 
 export function formatDate(dateString: string | number | Date) {
   const date = new Date(dateString);
 
@@ -243,16 +233,37 @@ export function formatDate(dateString: string | number | Date) {
   return date.toLocaleDateString('en-US', options);   
 
 }
-// MAKES THE DATE IN A FORMAT THE INPUT DATE FIELD CAN DISPLAY IT CORRECTLY
-export function realDateFormatter(value: string | number | Date){
+//DISPLAYS IT IN INPUT FIELDS ---  MAKES THE DATE IN A FORMAT THE INPUT DATE FIELD CAN DISPLAY IT CORRECTLY
+
+
+export function realDateFormatter(value: string | number | Date) {
   const date = new Date(value);
 
-  // Add timezone offset
-  const localDate = new Date(date.getTime() + date.getTimezoneOffset() * 60000);
+  if (isNaN(date.getTime())) {
+    return '';
+  }
 
-  const year = localDate.getFullYear();
-  const month = `${localDate.getMonth() + 1}`.padStart(2, '0');
-  const day = `${localDate.getDate()}`.padStart(2, '0');
+  const year = date.getFullYear(); // local year
+  const month = String(date.getMonth() + 1).padStart(2, '0'); // local month
+  const day = String(date.getDate()).padStart(2, '0'); // local day
 
   return `${year}-${month}-${day}`;
+}
+
+
+
+/*
+TIME FORMAT FUNCTION UTILITIES
+ */
+
+export function to12HourFormat(time: string): string {
+  if (!time) return ""; // Prevent error when input is empty
+  const [hourStr, minute] = time.split(":");
+  const hour = parseInt(hourStr, 10);
+
+  if (isNaN(hour) || !minute) return ""; // Extra safety
+
+  const suffix = hour >= 12 ? "PM" : "AM";
+  const adjustedHour = hour % 12 || 12;
+  return `${adjustedHour}:${minute} ${suffix}`;
 }

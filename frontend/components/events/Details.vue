@@ -54,8 +54,8 @@ const form = ref({
   startTime: props.startTime || "",
   endTime: props.endTime || "",
   duration: props.duration,
-  createdAt: props.createdAt,
-  updatedAt: props.updatedAt,
+  createdAt: realDateFormatter(props.createdAt),
+  updatedAt: realDateFormatter(props.updatedAt),
 });
 
 const handleSubmit = async () => {
@@ -81,6 +81,7 @@ const removeItem = async (id) => {
     <h1 class="title">Modify Event</h1>
     <form @submit.prevent="handleSubmit">
       <!-- Sprint -->
+
       <div class="form-group">
         <label for="sprint">Sprint Id {{ form.sprintId }}</label>
         <select v-model="form.sprintId" id="Event">
@@ -114,7 +115,7 @@ const removeItem = async (id) => {
         </div>
         <div class="form-group">
           <label for="date">Date</label>
-          <input v-model="form.date" type="date" id="date" />
+          <input v-model="form.createdAt" type="date" id="date" />
         </div>
 
         <!-- Status -->
@@ -167,7 +168,9 @@ const removeItem = async (id) => {
         </div>
         <strong>Last updated: </strong>
         {{
-          formatDate(props.updatedAt) === "" ? "No update" : formatDate(props.updatedAt)
+          formatDate(props.updatedAt) === ""
+            ? "No update yet"
+            : formatDate(props.updatedAt)
         }}
         <!-- Submit Button -->
         <div class="modal-actions">

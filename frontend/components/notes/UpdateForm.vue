@@ -26,9 +26,10 @@ onMounted(async () => {
 const form = ref({
   sprintId: props.noteById.sprintId,
   description: props.noteById.description,
-  date: props.noteById.date,
+  date: realDateFormatter(props.noteById.date),
   noteName: props.noteById.noteName,
   noteType: props.noteById.noteType,
+  updatedAt: new Date(),
 });
 
 const errors = reactive({});
@@ -53,9 +54,7 @@ const handleSubmit = async () => {
 
 const removeItem = async (id) => {
   if (
-    confirm(
-      "Are you sure you want to delete this city? This action cannot be undone."
-    )
+    confirm("Are you sure you want to delete this city? This action cannot be undone.")
   ) {
     await deleteNote(id); // Proceed with the deletion if confirmed
     console.log(deleteNote(id));
@@ -69,6 +68,7 @@ const removeItem = async (id) => {
   <div class="form-container">
     <div></div>
     <h1 class="title">Modify Note</h1>
+    {{ props.noteById.date }}
     <form @submit.prevent="handleSubmit">
       <div class="form-group">
         <label for="assignedSprint">Sprint ID</label>
@@ -119,15 +119,16 @@ const removeItem = async (id) => {
           id="note desccription"
           placeholder="Enter Story Name"
         />
-        <span v-if="errors.noteName" class="error">{{
-          errors.description
-        }}</span>
+        <span v-if="errors.noteName" class="error">{{ errors.description }}</span>
       </div>
-<strong>Last updated: </strong> {{ formatDate(props.createdAt) }}
+      <strong>Last updated: </strong>
+      {{
+        formatDate(props.noteById.updatedAt) === ""
+          ? "No updates yet"
+          : formatDate(props.noteById.updatedAt)
+      }}
       <div class="modal-actions">
-        <UButton color="red" @click="removeItem(props.noteById._id)"
-          >Delete</UButton
-        >
+        <UButton color="red" @click="removeItem(props.noteById._id)">Delete</UButton>
         <UButton type="submit">Update</UButton>
       </div>
     </form>

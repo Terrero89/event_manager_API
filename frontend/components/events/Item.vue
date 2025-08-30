@@ -76,10 +76,10 @@ const isOpen = ref(false);
           <div>
             <p>
               <strong>Start Time:</strong>
-              {{ props.startTime }}
+              {{ to12HourFormat(props.startTime) }}
             </p>
 
-            <p><strong>End Time: </strong>{{ props.endTime }}</p>
+            <p><strong>End Time: </strong>{{ to12HourFormat(props.endTime) }}</p>
           </div>
           <div>
             <p>
@@ -118,6 +118,8 @@ const isOpen = ref(false);
             :duration="props.duration"
             :sprintId="props.sprintId"
             :status="props.status"
+            :updatedAt="props.updatedAt"
+        :createdAt="props.createdAt"
           />
         </UModal>
       </div>

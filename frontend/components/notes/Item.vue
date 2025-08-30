@@ -109,7 +109,7 @@ const isOpen = ref(false);
           
             <p><strong>Date: </strong> {{ formatDate(date) }}</p>
 
-            <p><strong>Priority Level:</strong> {{ priorityLevel }}</p>
+    
             <p><strong>Sprint ID:</strong> {{ sprintId }}</p>
             
           </div>

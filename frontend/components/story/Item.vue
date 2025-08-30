@@ -108,9 +108,16 @@ const isOpen = ref(false);
     <!-- change color based on development, workType etc. -->
     <UIRenderer>
       <div class="item">
-        <p><strong>Sprint Id:</strong> {{ props.sprintId }}</p>
-        <p><strong>Story Name:</strong> {{ props.storyName }}</p>
-
+        <p><strong>Sprint Id: </strong> {{ props.sprintId }}</p>
+        <p><strong>Number: </strong> {{ props.storyNumber }}</p>
+        <p>
+          <strong>Name:</strong>
+          {{
+            props.storyName.length > 35
+              ? props.storyName.slice(0, 35) + "..."
+              : props.storyName
+          }}
+        </p>
         <div class="item-header">
           <p>
             <strong>Development: </strong>
@@ -120,22 +127,23 @@ const isOpen = ref(false);
           </p>
 
           <p>
-            <strong>Work Type:</strong>
+            <strong>Work Type: </strong>
             <UBadge :color="workTypeColor" variant="soft"> {{ props.workType }}</UBadge>
           </p>
         </div>
         <div class="item-status">
           <p>
             <strong>Points: </strong>
-            <UBadge :color="pointsColor" variant="soft"> {{ props.storyPoints }}</UBadge>
+            <UBadge :color="pointsColor" variant="soft"> {{ props.storyPoints }} </UBadge>
           </p>
           <p>
-            <strong>Status:</strong>
+            <strong>Development Status: </strong>
             <UBadge :color="progressColor" variant="soft"> {{ props.status }}</UBadge>
           </p>
         </div>
 
         <div class="item-content">
+          <p><strong>Created on: </strong> {{ formatDate(props.createdAt) }}</p>
           <div>
             <p><strong>Start Date: </strong> {{ formatDate(props.dateAssigned) }}</p>
             <p>
@@ -160,6 +168,7 @@ const isOpen = ref(false);
             <StoryDetails
               :_id="props._id"
               :storyName="props.storyName"
+              :storyNumber="props.storyNumber"
               :storyDescription="props.storyDescription"
               :difficultyLevel="props.difficultyLevel"
               :storyPoints="props.storyPoints"

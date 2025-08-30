@@ -27,6 +27,7 @@ const props = defineProps([
       <StoryItem
         :_id="props._id"
         :storyName="props.storyName"
+        :storyNumber="props.storyNumber"
         :storyDescription="props.storyDescription"
         :difficultyLevel="props.difficultyLevel"
         :storyPoints="props.storyPoints"

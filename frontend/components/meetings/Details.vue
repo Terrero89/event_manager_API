@@ -38,24 +38,20 @@ const by = computed(() => {
     }
   }
 });
-function formatDate(value) {
-  const date = new Date(value);
-  const year = date.getFullYear();
-  const month = `${date.getMonth() + 1}`.padStart(2, "0");
-  const day = `${date.getDate()}`.padStart(2, "0");
-  return `${year}-${month}-${day}`;
-}
+
 // Replace reactive with ref
 const form = ref({
   sprintId: props.sprintId,
   description: props.description,
   meetingName: props.meetingName,
   meetingType: props.meetingType,
-  startTime: props.startTime,
-  endTime: props.endTime,
+  startTime: props.startTime || "",
+  endTime: props.endTime|| "",
   duration: props.duration,
   status: props.status,
-  date: formatDate(props.date),
+  date: realDateFormatter(props.date),
+  createdAt: realDateFormatter(props.createdAt),
+  updatedAt: realDateFormatter(props.updatedAt),
 });
 
 const errors = reactive({});
@@ -94,7 +90,6 @@ onMounted(async () => {
           <option :value="item" v-for="item in sprintList" :key="item">{{ item }}</option>
         </select>
       </div>
-
       <div class="form-group">
         <label for="reporters">Meeting Type</label>
         <select v-model="form.meetingType" id="status">
@@ -129,7 +124,6 @@ onMounted(async () => {
         <label for="startTime">Start Time</label>
         <input id="startTime" type="time" v-model="form.startTime" />
       </div>
-      meeting :: {{ props.startTime }}
       <!-- End Time -->
       <div class="form-group">
         <label for="endTime">End Time</label>
@@ -163,7 +157,10 @@ onMounted(async () => {
         />
       </div>
 
-      <strong>Last updated: </strong> {{ formatDate(props.createdAt) }}
+      <strong>Last updated: </strong>
+      {{
+        formatDate(props.updatedAt) === "" ? "No update yet" : formatDate(props.updatedAt)
+      }}
       <div class="modal-actions">
         <UButton color="red" @click="removeItem(props._id)">Delete</UButton>
         <UButton type="submit">Update</UButton>

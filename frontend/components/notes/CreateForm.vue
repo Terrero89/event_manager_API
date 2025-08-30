@@ -24,8 +24,8 @@ const loadMessage = ref(false);
 const form = reactive({
   sprintId: currentSprint.value,
   description: "", // Note Description
-  date: '', // Start Date
-  priorityLevel: "N/A", // Unused but included for validation
+  priorityLevel: "Low",
+  date: realDateFormatter(new Date()), // Start Date
   noteName: "", // Note Name
   noteType: "", // Note Type
 });
@@ -36,7 +36,6 @@ const router = useRouter();
 const validateFields = () => {
   errors.sprintId = !form.sprintId ? "Sprint is required" : "";
   errors.noteType = !form.noteType ? "Note Type is required" : "";
-  errors.priorityLevel = !form.priorityLevel ? "Priority is required" : "";
   errors.noteName = !form.noteName ? "Note Name is required" : "";
   errors.date = !form.date ? "Date is required" : "";
   errors.description = !form.description ? "Note Description is required" : "";
@@ -71,9 +70,9 @@ definePageMeta({ requiresAuth: true });
 <template>
   <div class="form-container">
     <h1 class="title">Create a New Note</h1>
+    {{ realDateFormatter(form.date) }}
     <form @submit.prevent="handleSubmit">
-   
-          <!-- Sprint -->
+      <!-- Sprint -->
       <div class="form-group">
         <label for="sprint">Sprint</label>
         <select v-model="form.sprintId" id="sprint">
@@ -82,7 +81,6 @@ definePageMeta({ requiresAuth: true });
             {{ item }}
           </option>
         </select>
-     
       </div>
 
       <div class="form-group">
