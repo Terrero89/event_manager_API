@@ -5,6 +5,11 @@ const items = ref([
     icon: "heroicons:chevron-double-right-solid",
     to: "/sprints",
   },
+
+  {
+    icon: "i-heroicons-puzzle-piece",
+    to: "/stories",
+  },
   {
     icon: "heroicons:book-open-16-solid",
     to: "/notes",
