@@ -5,13 +5,13 @@ let logoutTimer = null;
 
 export const useAuthStore = defineStore("auth", {
   state: () => ({
-    token: "",
-    fullname:  "", // Added fullname to state
+    token: localStorage.getItem("token") || "",
+    fullname: localStorage.getItem("fullname") || "", // Added fullname to state
     user: null,
-    userEmail:  "",
-    userId: "",
-    userUsername:  "",
-    isLoggedIn: false, // true if token exists
+    userEmail: localStorage.getItem("email") || "",
+    userId: localStorage.getItem("id") || "",
+    userUsername: localStorage.getItem("username") || "",
+    isLoggedIn: !!localStorage.getItem("token") || false, // true if token exists
   }),
 
   actions: {
@@ -54,26 +54,27 @@ export const useAuthStore = defineStore("auth", {
       }
     },
 
-    async logout() {
-      this.isLoggedIn = false;
-      this.token = "";
-      this.user = null;
-      this.userEmail = "";
-      this.userId = "";
-      this.userUsername = "";
+   async logout(showMessage = true) {
+  this.isLoggedIn = false;
+  this.token = "";
+  this.user = null;
+  this.userEmail = "";
+  this.userId = "";
+  this.userUsername = "";
 
-      localStorage.removeItem("fullname"); // Remove fullname from localStorage
-      localStorage.removeItem("token");
-      localStorage.removeItem("email");
-      localStorage.removeItem("username");
-      localStorage.removeItem("expiresAt");
+  localStorage.removeItem("fullname");
+  localStorage.removeItem("token");
+  localStorage.removeItem("email");
+  localStorage.removeItem("username");
+  localStorage.removeItem("expiresAt");
 
-      if (logoutTimer) clearTimeout(logoutTimer);
-      logoutTimer = null;
+  if (logoutTimer) clearTimeout(logoutTimer);
+  logoutTimer = null;
 
-      console.log("User logged out");
-    },
-
+  if (showMessage) {
+    console.log("User logged out");
+  }
+},
     startAutoLogoutTimer() {
       if (logoutTimer) clearTimeout(logoutTimer);
 

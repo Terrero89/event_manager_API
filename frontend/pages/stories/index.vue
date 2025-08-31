@@ -98,7 +98,7 @@ const sortedFilteredStories = computed(() => {
   ];
 });
 
-definePageMeta({ requiresAuth: true });
+// definePageMeta({ requiresAuth: true });
 </script>
 <template class="border-b border-gray-200">
   <div>
@@ -213,9 +213,7 @@ definePageMeta({ requiresAuth: true });
 
           <div class="mr-2">
             Items in {{ statusInput }}:
-            <UBadge variant="soft" class="font-bold">{{
-              stats.filterType
-            }}</UBadge>
+            <UBadge variant="soft" class="font-bold">{{ stats.filterType }}</UBadge>
           </div>
 
           <div class="mr-2" v-if="stats.filterType > 0">

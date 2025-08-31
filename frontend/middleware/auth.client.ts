@@ -2,8 +2,10 @@
 import { useAuthStore } from "~/stores/auth";
 
 export default defineNuxtPlugin(() => {
-  if (process.client) {
-    const auth = useAuthStore();
-    auth.restoreSessionIfValid();
-  }
+  const nuxtApp = useNuxtApp();
+
+  if (!nuxtApp.isClient) return;
+
+  const auth = useAuthStore();
+  auth.restoreSessionIfValid();
 });
