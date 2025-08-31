@@ -99,7 +99,7 @@ const sortedFilteredEvents = computed(() => {
     return (order[a.status] ?? 99) - (order[b.status] ?? 99);
   });
 });
-definePageMeta({ requiresAuth: true });
+
 </script>
 <template>
   <div>

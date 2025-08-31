@@ -80,7 +80,7 @@ onMounted(async () => {
 });
 
 
-definePageMeta({ requiresAuth: true });
+
 </script>
 <template>
     

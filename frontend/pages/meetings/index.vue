@@ -75,7 +75,7 @@ const sortedFilteredEvents = computed(() => {
   });
 });
 
-definePageMeta({ requiresAuth: true });
+
 </script>
 
 <template>

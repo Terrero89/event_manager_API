@@ -97,8 +97,6 @@ const handleSubmit = async () => {
 onMounted(async () => {
   await fetchSprints();
 });
-
-definePageMeta({ requiresAuth: true });
 </script>
 <template>
   <div class="form-container">
@@ -142,8 +140,6 @@ definePageMeta({ requiresAuth: true });
         />
         <span v-if="errors.meetingName" class="error">{{ errors.meetingName }}</span>
       </div>
-
-
 
       <!-- Status -->
       <div class="form-group">

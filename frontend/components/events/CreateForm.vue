@@ -94,8 +94,6 @@ const handleSubmit = async () => {
 onMounted(async () => {
   await fetchSprints();
 });
-
-definePageMeta({ requiresAuth: true });
 </script>
 <template>
   <div class="form-container">

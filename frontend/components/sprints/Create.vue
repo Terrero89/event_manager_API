@@ -49,7 +49,7 @@ const handleSubmit = async () => {
 };
 
 
-definePageMeta({ requiresAuth: true });
+
 </script>
 
 <template>

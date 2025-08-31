@@ -57,7 +57,7 @@ const inputType = ref("");
 
 const isOpen = ref(false);
 
-definePageMeta({ requiresAuth: true });
+
 </script>
 
 <template>
