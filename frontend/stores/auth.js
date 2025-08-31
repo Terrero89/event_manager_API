@@ -5,13 +5,13 @@ let logoutTimer = null;
 
 export const useAuthStore = defineStore("auth", {
   state: () => ({
-    token: localStorage.getItem("token") || "",
-    fullname: localStorage.getItem("fullname") || "", // Added fullname to state
+    token: "",
+    fullname:  "", // Added fullname to state
     user: null,
-    userEmail: localStorage.getItem("email") || "",
+    userEmail:  "",
     userId: "",
-    userUsername: localStorage.getItem("username") || "",
-    isLoggedIn: !!localStorage.getItem("token"), // true if token exists
+    userUsername:  "",
+    isLoggedIn: false, // true if token exists
   }),
 
   actions: {

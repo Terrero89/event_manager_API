@@ -21,11 +21,10 @@
 import { useAuthStore } from "~/stores/auth";
 
 export default defineNuxtRouteMiddleware((to) => {
-  console.log("[auth.global] checking route:", to.path, "requiresAuth?", to.meta.requiresAuth);
-  const auth = useAuthStore();
-
-  if (to.meta.requiresAuth && !auth.isLoggedIn) {
-    console.log("[auth.global] redirecting to /login because isLoggedIn=", auth.isLoggedIn);
-    return navigateTo("/login");
+  if (process.client) {  // Only check auth on client
+    const auth = useAuthStore();
+    if (to.meta.requiresAuth && !auth.isLoggedIn) {
+      return navigateTo("/login");
+    }
   }
 });
