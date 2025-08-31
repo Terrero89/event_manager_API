@@ -6,9 +6,7 @@ const storyStore = useStoryStore();
 const sprintsStore = useSprintStore();
 
 const { fetchStories, filterStories, totalFilteredStoriesStats } = storyStore;
-const { items } = storeToRefs<{
-  items: Array<{ progressType: string; [key: string]: any }>;
-}>(storyStore);
+const { items } = storeToRefs(storyStore);
 
 const { fetchSprints } = sprintsStore;
 const { currentSprint, sprintList } = storeToRefs(sprintsStore);
@@ -118,7 +116,7 @@ const sortedFilteredStories = computed(() => {
           color="blue"
           variant="soft"
           label="Add"
-          @Click="isOpen = true"
+          @click="isOpen = true"
           >Insights</UButton
         >
       </div>

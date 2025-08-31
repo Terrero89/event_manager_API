@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup >
 import { onMounted, ref, computed } from "vue";
 import { storeToRefs } from "pinia";
 import { CONFIG } from "~/config/globalVariables";
@@ -36,20 +36,6 @@ const inputValue = ref("");
 const typeFilter = ref("");
 const startDate = ref("");
 const endDate = ref("");
-
-// Stats & filtered list
-// const stats = computed(() =>
-//   totalFilteredTimeoffStats(
-//     filterTimeoffs(inputValue.value, typeFilter.value, startDate.value, endDate.value)
-//   )
-// )
-// const showStats = computed(() =>
-//   inputValue.value || typeFilter.value || startDate.value || endDate.value
-// )
-// const sortedFiltered = computed(() => {
-//   // no special “In Progress” sorting—just return filtered
-//   return filterTimeoffs(inputValue.value, typeFilter.value, startDate.value, endDate.value)
-// })
 
 // Fetch on mount
 onMounted(async () => {
@@ -131,22 +117,6 @@ onMounted(async () => {
           "
         />
       </div>
-
-      <!-- Stats -->
-      <!-- <div class="numbers my-2" v-if="showStats">
-      <div class="mr-2">
-        Total Requests:
-        <UBadge variant="soft" color="teal" class="font-bold">
-          {{ stats.totalItems }}
-        </UBadge>
-      </div>
-      <div class="mr-2" v-if="stats.byType > 0">
-        {{ typeFilter || 'All Types' }}:
-        <UBadge variant="soft" color="teal" class="font-bold">
-          {{ stats.byType }}
-        </UBadge>
-      </div>
-    </div> -->
 
       <!-- Empty / List -->
       <UIEmptyMessage v-if="items.length < 1" title="timeoff requests" />
