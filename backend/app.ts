@@ -12,8 +12,6 @@ import standupRoutes from './routes/standups-routes';
 import timeoffRoutes  from './routes/timeoff-routes';
 
 import cors = require('cors');
-// import dotenv from "dotenv";
-// import path = require('path');
 require("dotenv").config();
 
 const mongoose = require('mongoose');

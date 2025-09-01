@@ -15,8 +15,6 @@ const sprint_routes_1 = __importDefault(require("./routes/sprint-routes"));
 const standups_routes_1 = __importDefault(require("./routes/standups-routes"));
 const timeoff_routes_1 = __importDefault(require("./routes/timeoff-routes"));
 const cors = require("cors");
-// import dotenv from "dotenv";
-// import path = require('path');
 require("dotenv").config();
 const mongoose = require('mongoose');
 const app = (0, express_1.default)();
