@@ -104,7 +104,7 @@ definePageMeta({ requiresAuth: true });
   <div>
     <div class="">
       <!--PROGRESS BAR -->
-      <UIProgress />
+
       <!---->
       <!--DROPDOWN IN STORIES-->
       <div class="nav-flex my-2 border-b border-gray-200 dark:border-gray-800">
