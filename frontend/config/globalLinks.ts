@@ -102,9 +102,9 @@ export const CONFIG = {
         },
 
            {
-        label: "Stories",
+        label: "Story",
         icon: "i-heroicons-puzzle-piece",
-        to: "/stories",
+        to: "/story",
       },   
         
         
