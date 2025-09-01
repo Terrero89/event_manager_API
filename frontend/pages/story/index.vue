@@ -29,7 +29,7 @@ onMounted(async () => {
   await fetchStories();
 });
 
-// definePageMeta({ requiresAuth: true });
+definePageMeta({ requiresAuth: true });
 </script>
 <template class="border-b border-gray-200">
   <div>
