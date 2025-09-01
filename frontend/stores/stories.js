@@ -8,9 +8,10 @@ export const useStoryStore = defineStore({
   }),
   actions: {
     async fetchStories() {
+        const url = "http://localhost:8080/api/v1/stories"
   const config = useRuntimeConfig();
       const auth = useAuthStore();
-  const url = `${config.public.apiBase}/stories`;
+  // const url = `${config.public.apiBase}/stories`;
   try {
     const response = await fetch(url, {
       method: 'GET',
