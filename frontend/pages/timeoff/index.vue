@@ -42,11 +42,11 @@ const links = [
 const isOpen = ref(false);
 
 // Search / filter inputs
-const show = computed(() => items.value.length > 0);
-const inputValue = ref("");
-const typeFilter = ref("");
-const startDate = ref("");
-const endDate = ref("");
+// const show = computed(() => items.value.length > 0);
+// const inputValue = ref("");
+// const typeFilter = ref("");
+// const startDate = ref("");
+// const endDate = ref("");
 
 // Stats & filtered list
 // const stats = computed(() =>
@@ -93,7 +93,7 @@ onMounted(async () => {
       </div>
 
       <!-- Filters -->
-      <div class="nav-flex wrapit" v-if="show">
+      <!-- <div class="nav-flex wrapit" v-if="show">
         <UInput
           v-model="inputValue"
           placeholder="Search by reason..."
@@ -138,7 +138,7 @@ onMounted(async () => {
             endDate = '';
           "
         />
-      </div>
+      </div> -->
 
       <!-- Stats -->
       <!-- <div class="numbers my-2" v-if="showStats">

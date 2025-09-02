@@ -12,9 +12,9 @@ export const CONFIG = {
     ],
     [
       {
-        label: "Stories",
+        label: "Story",
         icon: "i-heroicons-puzzle-piece",
-        to: "/stories",
+        to: "/story",
       },
       
    
@@ -39,11 +39,11 @@ export const CONFIG = {
       },
     ],
     [
-      {
-        label: "Stories",
+    {
+        label: "Story",
         icon: "i-heroicons-puzzle-piece",
-        to: "/stories",
-      },      
+        to: "/story",
+      },  
       {
         label: "Config",
         icon: "heroicons:cog-8-tooth-20-solid",
@@ -66,11 +66,11 @@ export const CONFIG = {
  footer: [
   
     [
-      {
-        label: "Stories",
+    {
+        label: "Story",
         icon: "i-heroicons-puzzle-piece",
-        to: "/stories",
-      },      
+        to: "/story",
+      },    
       {
         label: "Config",
         icon: "heroicons:cog-8-tooth-20-solid",

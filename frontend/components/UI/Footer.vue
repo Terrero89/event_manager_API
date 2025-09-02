@@ -8,7 +8,7 @@ const items = ref([
 
   {
     icon: "i-heroicons-puzzle-piece",
-    to: "/stories",
+    to: "/story",
   },
   {
     icon: "heroicons:book-open-16-solid",

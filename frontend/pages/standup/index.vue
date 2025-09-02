@@ -1,4 +1,4 @@
-<script setup >
+<script setup>
 import { onMounted, ref, computed } from "vue";
 import { storeToRefs } from "pinia";
 import { CONFIG } from "~/config/globalVariables";
@@ -31,11 +31,11 @@ const links = [
 const isOpen = ref(false);
 
 // Search / filter inputs
-const show = computed(() => items.value.length > 0);
-const inputValue = ref("");
-const typeFilter = ref("");
-const startDate = ref("");
-const endDate = ref("");
+// const show = computed(() => items.value.length > 0);
+// const inputValue = ref("");
+// const typeFilter = ref("");
+// const startDate = ref("");
+// const endDate = ref("");
 
 // Fetch on mount
 onMounted(async () => {
@@ -71,7 +71,7 @@ onMounted(async () => {
       </div>
 
       <!-- Filters -->
-      <div class="nav-flex wrapit" v-if="show">
+      <!-- <div class="nav-flex wrapit" v-if="show">
         <UInput
           v-model="inputValue"
           placeholder="Search by reason..."
@@ -116,7 +116,7 @@ onMounted(async () => {
             endDate = '';
           "
         />
-      </div>
+      </div> -->
 
       <!-- Empty / List -->
       <UIEmptyMessage v-if="items.length < 1" title="timeoff requests" />
