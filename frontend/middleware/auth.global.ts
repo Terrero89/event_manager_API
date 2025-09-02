@@ -7,7 +7,7 @@ export default defineNuxtRouteMiddleware((to) => {
   const nuxtApp = useNuxtApp();
 
   // Only run on the client
-  if (!nuxtApp.isClient) return;
+  // if (!nuxtApp.isClient) return;
 
   const auth = useAuthStore();
 

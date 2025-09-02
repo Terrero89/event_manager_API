@@ -3,8 +3,7 @@ import { onMounted } from "vue";
 const noteStore = useNoteStore();
 import { storeToRefs } from "pinia";
 
-
-const {  itemsAsArray, filterItemById } = noteStore;
+const { itemsAsArray, filterItemById } = noteStore;
 const { notes } = storeToRefs(noteStore);
 
 const props = defineProps({
@@ -15,20 +14,19 @@ const props = defineProps({
   noteName: String,
   priorityLevel: String,
   sprintId: String,
-   updatedAt: String,
-  createdAt:String,
+  updatedAt: String,
+  createdAt: String,
 });
 
 const by = computed(() => {
   return filterItemById(props._id)[0];
 });
-onMounted(async () => {
- 
-});
+onMounted(async () => {});
 </script>
 
 <template>
   <div class="modal-details">
-    <NotesUpdateForm :noteById="by"/>
+
+    <NotesUpdateForm :noteById="by" />
   </div>
 </template>

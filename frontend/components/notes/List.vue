@@ -12,8 +12,8 @@ const props = defineProps({
 const isOpen = ref(false);
 </script>
 <template>
-  <div>
-    <div class="progress">
+  <div class="progress">
+    <div>
       <div class="item-buttons">
         <UModal v-model="isOpen">
           <div class="p-4">SHOW DETAILS HERE</div>
@@ -32,7 +32,8 @@ const isOpen = ref(false);
         :createdAt="props.createdAt"
       />
     </div>
-    <div class="my-5"></div>
+
+    <div class="my-1"></div>
   </div>
 </template>
 

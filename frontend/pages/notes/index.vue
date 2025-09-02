@@ -56,8 +56,6 @@ const inputValue = ref("");
 const inputType = ref("");
 
 const isOpen = ref(false);
-
-
 </script>
 
 <template>
@@ -126,11 +124,18 @@ const isOpen = ref(false);
 .wrapit {
   flex-wrap: wrap;
 }
+
 .nav-flex {
   display: flex;
   justify-content: flex-start;
 }
+
 .drop {
   margin-right: 5rem;
+}
+
+.numbers {
+  display: flex;
+  justify-content: start;
 }
 </style>

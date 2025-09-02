@@ -6,9 +6,25 @@ const storyStore = useStoryStore();
 const sprintsStore = useSprintStore();
 
 interface Story {
-  id: number;
+  id: string | number;
+  _id: string;
+  sprintId: string;
+  storyNumber: string | number;
   storyName: string;
-  // add other properties if needed
+  storyDescription: string;
+  difficultyLevel: string | number;
+  storyPoints: number;
+  workType: string;
+  developmentType: string;
+  status: string;
+  storyComments: string;
+  reporter: string;
+  repoNames: string[];
+  dateAssigned: string | Date;
+  dateCompleted: string | Date | null;
+  learning: string;
+  createdAt: string | Date;
+  updatedAt: string | Date;
 }
 
 const { fetchStories, filterStories, totalFilteredStoriesStats } = storyStore;
@@ -36,7 +52,30 @@ definePageMeta({ requiresAuth: true });
     <div>
       <h2 class="text-lg font-medium">Stories</h2>
       <ul>
-        <li v-for="story in items" :key="story.id">{{ story.storyName }}</li>
+        <li
+          v-for="item in items"
+          :key="item.id"
+          :_id="item._id"
+          :sprintId="item.sprintId"
+          :storyNumber="item.storyNumber"
+          :storyName="item.storyName"
+          :storyDescription="item.storyDescription"
+          :difficultyLevel="item.difficultyLevel"
+          :storyPoints="item.storyPoints"
+          :workType="item.workType"
+          :developmentType="item.developmentType"
+          :status="item.status"
+          :storyComments="item.storyComments"
+          :reporter="item.reporter"
+          :repoNames="item.repoNames"
+          :dateAssigned="item.dateAssigned"
+          :dateCompleted="item.dateCompleted"
+          :learning="item.learning"
+          :createdAt="item.createdAt"
+          :updatedAt="item.updatedAt"
+        >
+          {{ item.storyName }}-{{item.storyNumber}}
+        </li>
       </ul>
     </div>
   </div>

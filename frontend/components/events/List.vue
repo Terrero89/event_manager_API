@@ -6,7 +6,7 @@ const props = defineProps([
   "eventType",
   "eventName",
   "startTime",
-"endTime",
+  "endTime",
   "duration",
   "sprintId",
   "status",
@@ -24,8 +24,7 @@ const isOpen = ref(false);
           <div class="p-4">SHOW DETAILS HERE</div>
         </UModal>
       </div>
-      <!-- List: {{props.id}}
-{{props}} -->
+
       <EventsItem
         :_id="_id"
         :description="props.description"
