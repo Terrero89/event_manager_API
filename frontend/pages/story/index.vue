@@ -49,35 +49,52 @@ definePageMeta({ requiresAuth: true });
 </script>
 <template class="border-b border-gray-200">
   <div>
-    <div>
-      <h2 class="text-lg font-medium">Stories</h2>
-      <ul>
-        <li
-          v-for="item in items"
-          :key="item.id"
-          :_id="item._id"
-          :sprintId="item.sprintId"
-          :storyNumber="item.storyNumber"
-          :storyName="item.storyName"
-          :storyDescription="item.storyDescription"
-          :difficultyLevel="item.difficultyLevel"
-          :storyPoints="item.storyPoints"
-          :workType="item.workType"
-          :developmentType="item.developmentType"
-          :status="item.status"
-          :storyComments="item.storyComments"
-          :reporter="item.reporter"
-          :repoNames="item.repoNames"
-          :dateAssigned="item.dateAssigned"
-          :dateCompleted="item.dateCompleted"
-          :learning="item.learning"
-          :createdAt="item.createdAt"
-          :updatedAt="item.updatedAt"
-        >
-          {{ item.storyName }}-{{item.storyNumber}}
-        </li>
-      </ul>
-    </div>
+    <!-- <div class="numbers my-2">
+      <div class="numbers my-2">
+        <div class="mr-2">
+          Total {{ categoryInput === "" ? "Items" : categoryInput }}:
+          <UBadge variant="soft" color="teal" class="font-bold">{{
+            stats.totalItems
+          }}</UBadge>
+        </div>
+
+        <div class="mr-2">
+          Items in {{ statusInput }}:
+          <UBadge variant="soft" class="font-bold">{{ stats.filterType }}</UBadge>
+        </div>
+
+        <div class="mr-2" v-if="stats.filterType > 0">
+          Total {{ statusInput }}:
+          <UBadge variant="soft" color="teal" class="font-bold">{{
+            stats.filterType
+          }}</UBadge>
+        </div>
+      </div>
+    </div> -->
+    <UIEmptyMessage v-if="items.length < 1" title="stories" />
+    <StoryList
+      v-else
+      v-for="item in items"
+      :key="item._id"
+      :_id="item._id"
+      :sprintId="item.sprintId"
+      :storyNumber="item.storyNumber"
+      :storyName="item.storyName"
+      :storyDescription="item.storyDescription"
+      :difficultyLevel="item.difficultyLevel"
+      :storyPoints="item.storyPoints"
+      :workType="item.workType"
+      :developmentType="item.developmentType"
+      :status="item.status"
+      :storyComments="item.storyComments"
+      :reporter="item.reporter"
+      :repoNames="item.repoNames"
+      :dateAssigned="item.dateAssigned"
+      :dateCompleted="item.dateCompleted"
+      :learning="item.learning"
+      :createdAt="item.createdAt"
+      :updatedAt="item.updatedAt"
+    />
   </div>
 </template>
 
