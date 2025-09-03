@@ -54,10 +54,9 @@ const typeColor = computed(() => {
     case "ERG Meetings":
       return "neutral";
     case "Ad Hoc Meetings":
-      return "stone";
+      return "cyan";
     case "Other":
       return "gray";
-
     case "Onboarding":
       return "teal";
     case "Offboarding":
@@ -68,7 +67,6 @@ const typeColor = computed(() => {
       return "violet";
     case "Other":
       return "mediumseagreen";
-    // extra examples if you need more:
     case "Follow Up":
       return "indigo";
     case "Sprint Review":
@@ -90,8 +88,8 @@ const isOpen = ref(false);
   <div>
     <UIRenderer>
       <div class="item">
-        <p><strong>Sprint ID:</strong> {{ props.sprintId }}</p>
-
+        <!-- <p><strong>Sprint ID:</strong> {{ props.sprintId }}</p> -->
+        <p><strong>Sprint ID:</strong> {{ props.noteName }}</p>
         <div class="item-header">
           <p>
             <strong>Description: </strong>

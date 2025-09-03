@@ -28,6 +28,8 @@ const progressColor = computed(() => {
       return "blue";
     case "Pending":
       return "purple";
+    case "Cancelled":
+      return "red";
     default:
       return "black";
   }
@@ -126,11 +128,14 @@ const isOpen = ref(false);
     <UIRenderer>
       <div class="item">
         <!-- <h1>{{id}}</h1> -->
-        <div class="item-header">
+        <!-- <div class="item-header">
           <p><strong>Sprint ID:</strong> {{ sprintId }}</p>
-        </div>
+        </div> -->
+        <p>
+          <strong>Meeting Name: </strong>
+          {{ meetingName.length > 20 ? meetingName.slice(0, 20) + "..." : meetingName }}
+        </p>
         <div class="item-header">
-          <p><strong>Meeting Name: </strong> {{ meetingName.length > 20 ? ( meetingName.slice(0,20) + '...') : meetingName }}</p>
           <!-- <p><strong>Meeting Type:</strong> {{ meetingType }}</p> -->
           <p>
             <strong>Meeting Type:</strong>

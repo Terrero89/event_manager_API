@@ -65,7 +65,7 @@ const isOpen = ref(false);
   <div>
     <UIRenderer>
       <div class="item">
-        <p><strong>Sprint ID:</strong> {{ props.sprintId }}</p>
+        <!-- <p><strong>Sprint ID:</strong> {{ props.sprintId }}</p> -->
 
         <div class="item-header">
           <p>
@@ -83,7 +83,7 @@ const isOpen = ref(false);
         </div>
 
         <div class="item-flex">
-          <p class="mr-2"><strong>Repos</strong></p>
+          <p class="mr-2"><strong>Repos:</strong></p>
           <div class="flex flex-wrap gap-2">
             <span
               v-for="(repo, index) in repoList"
@@ -91,7 +91,7 @@ const isOpen = ref(false);
               :style="{ color: repo.color }"
               class="font-medium"
             >
-              <UBadge color="repo.color" variant="outline">
+              <UBadge :color="repo.color" variant="outline">
                 {{ repo.name }}
               </UBadge>
             </span>

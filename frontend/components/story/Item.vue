@@ -101,7 +101,19 @@ const pointsColor = computed(() => {
   }
 });
 
+// Define a palette of colors
+const colors = ["#FFD93D", "#6A4C93", "#1A535C", "#FF6B6B", "#4ECDC4"];
 
+const repoList = computed(() => {
+  return props.repoNames
+    .split(",") // split by comma
+    .map((item: string, index: number) => {
+      return {
+        name: item.trim(), // remove extra spaces
+        color: colors[index % colors.length], // assign a color in order
+      };
+    });
+});
 
 const isOpen = ref(false);
 </script>
@@ -143,7 +155,7 @@ const isOpen = ref(false);
             <UBadge :color="workTypeColor" variant="soft"> {{ props.workType }}</UBadge>
           </p>
         </div>
-       
+
         <div class="item-header">
           <p>
             <strong>Points: </strong>
@@ -156,6 +168,21 @@ const isOpen = ref(false);
         </div>
 
         <div class="item-content">
+          <div class="item-flex">
+            <p class="mr-2"><strong>Repos:</strong></p>
+            <div class="flex flex-wrap gap-2">
+              <span
+                v-for="(repo, index) in repoList"
+                :key="index"
+                :style="{ color: repo.color }"
+                class="font-medium"
+              >
+                <UBadge :color="repo.color" variant="outline">
+                  {{ repo.name }}
+                </UBadge>
+              </span>
+            </div>
+          </div>
           <div>
             <p><strong>Start Date: </strong> {{ formatDate(props.dateAssigned) }}</p>
             <p>

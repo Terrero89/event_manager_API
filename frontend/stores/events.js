@@ -125,44 +125,14 @@ export const useEventStore = defineStore({
       return state.events;
     },
 
-    //finds item based on parentDestinationID
+    //refactored
     filterItemById: (state) => (id) => {
       return state.events.filter((item) => item._id === id);
     },
-    filterEventsByEventType: (state) => (byCategory) => {
-      // Step 1: Filter by destination ID (parentDestinationID)
-      let currEvents = state.events;
-      if (byCategory === "ERG Meeting") {
-        currEvents = currEvents.filter((data) => data.eventType === "ERG Meeting");
-      }
-      if (byCategory === "Volunteering") {
-        currEvents = currEvents.filter((data) => data.eventType === "Volunteering");
-      }
-      if (byCategory === "Contribution") {
-        currEvents = currEvents.filter((data) => data.eventType === "Contribution");
-      }
-      if (byCategory === "Training") {
-        currEvents = currEvents.filter((data) => data.eventType === "Training");
-      }
-      if (byCategory === "Company") {
-        currEvents = currEvents.filter((data) => data.eventType === "Company");
-      }
-      if (byCategory === "Networking") {
-        currEvents = currEvents.filter((data) => data.eventType === "Networking");
-      }
-      if (byCategory === "Personal Development") {
-        currEvents = currEvents.filter((data) => data.eventType === "Personal Development");
-      }
-      if (byCategory === "Professional Development") {
-        currEvents = currEvents.filter((data) => data.eventType === "Professional Development");
-      }
-      if (byCategory === "Mentorship Program") {
-        currEvents = currEvents.filter((data) => data.eventType === "Mentorship Program");
-      }
-      if (byCategory === "Presentation") {
-        currEvents = currEvents.filter((data) => data.eventType === "Presentation");
-      }
-      return currEvents;
+
+
+filterEventsByEventType: (state) => (byCategory) => {
+      return state.events.filter((data) => data.eventType === byCategory);
     },
 
     filterEventsByInput: (state) => (inputValue) => {

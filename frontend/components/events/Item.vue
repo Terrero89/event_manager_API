@@ -24,6 +24,8 @@ const progressColor = computed(() => {
       return "blue";
     case "Pending":
       return "purple";
+    case "Cancelled":
+      return "red";
     default:
       return "black";
   }
@@ -60,7 +62,10 @@ const isOpen = ref(false);
     <!-- <h3>ITEM COMPONENT</h3> -->
     <UIRenderer>
       <div class="item">
-        <p><strong>Event Name: </strong>  {{ eventName.length > 20 ? ( eventName.slice(0,20) + '...') : eventName }}</p>
+        <p>
+          <strong>Event Name: </strong>
+          {{ eventName.length > 20 ? eventName.slice(0, 20) + "..." : eventName }}
+        </p>
 
         <div class="item-header">
           <p>
@@ -119,7 +124,7 @@ const isOpen = ref(false);
             :sprintId="props.sprintId"
             :status="props.status"
             :updatedAt="props.updatedAt"
-        :createdAt="props.createdAt"
+            :createdAt="props.createdAt"
           />
         </UModal>
       </div>
