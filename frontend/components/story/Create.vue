@@ -115,7 +115,6 @@ onMounted(async () => {
         />
         <span v-if="errors.storyNumber" class="error">{{ errors.storyNumber }}</span>
       </div>
-    
 
       <div class="form-group">
         <label for="storyNumber">Story Number (e.g., UBTXXXX)</label>
@@ -217,17 +216,19 @@ onMounted(async () => {
 
       <!-- <div class="form-group">
         <label for="repos">Repo Names</label>
-        <input type="text" class="form-control"
-            v-model="form.repoNames"
-            id="repos"
-            placeholder="Enter repos following a coma"
-        ></input>
+        <select v-model="form.workType" id="workType">
+          <option value="" disabled></option>
+          <option :value="type" v-for="type in CONFIG.variables.servicesList" :key="type">
+            {{ type }}
+          </option>
+        </select>
         <span v-if="errors.repoNames" class="error">{{ errors.repoNames }}</span>
-      </div>
+      </div> -->
+
       <div>
         <label for="startDate">Date Assigned:</label>
-        <input v-model="form.dateAssigned" type="date" id="startDate"/>
-      </div> -->
+        <input v-model="form.dateAssigned" type="date" id="startDate" />
+      </div>
 
       <div class="form-group">
         <label for="storyDescription">Story Comments</label>

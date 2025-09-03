@@ -33,6 +33,28 @@ const { items } = storeToRefs(storyStore) as { items: Ref<Story[]> };
 const { fetchSprints } = sprintsStore;
 const { currentSprint, sprintList } = storeToRefs(sprintsStore);
 
+const inputValue = ref("");
+const categoryInput = ref("");
+const startDate = ref("");
+const endDate = ref("");
+const statusInput = ref("");
+const pointing = ref("");
+const workTypesInput = ref(""); 
+
+const stats = computed(() =>
+  totalFilteredStoriesStats(
+    filterStories(
+      inputValue.value,
+      categoryInput.value,
+      startDate.value,
+      endDate.value,
+      statusInput.value,
+      pointing.value,
+      workTypesInput.value
+    )
+  )
+);
+
 // const show = computed(() => {
 //   if (items.value.length < 1) {
 //     return false;
@@ -49,7 +71,7 @@ definePageMeta({ requiresAuth: true });
 </script>
 <template class="border-b border-gray-200">
   <div>
-    <!-- <div class="numbers my-2">
+    <div class="numbers my-2">
       <div class="numbers my-2">
         <div class="mr-2">
           Total {{ categoryInput === "" ? "Items" : categoryInput }}:
@@ -70,7 +92,7 @@ definePageMeta({ requiresAuth: true });
           }}</UBadge>
         </div>
       </div>
-    </div> -->
+    </div>
     <UIEmptyMessage v-if="items.length < 1" title="stories" />
     <StoryList
       v-else
