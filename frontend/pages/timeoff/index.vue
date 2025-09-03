@@ -15,11 +15,11 @@ interface TimeoffItem {
   _id: string;
   sprintId: string;
   title: string;
-  timeOff: string;
+  timeOff: Number;
   timeOffType: string;
-  date: string;
-  createdAt: string;
-  updatedAt: string;
+  date: string | Date
+  createdAt: string | Date;
+  updatedAt: string | Date ;
 }
 
 const { items } = storeToRefs(timeoffStore) as { items: Ref<TimeoffItem[]> };
