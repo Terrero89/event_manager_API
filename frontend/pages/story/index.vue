@@ -39,7 +39,7 @@ const startDate = ref("");
 const endDate = ref("");
 const statusInput = ref("");
 const pointing = ref("");
-const workTypesInput = ref(""); 
+const workTypesInput = ref("");
 
 const stats = computed(() =>
   totalFilteredStoriesStats(
@@ -61,6 +61,20 @@ const stats = computed(() =>
 //   }
 //   return true;
 // });
+const links = [
+  [],
+  [
+    {
+      icon: "i-heroicons-plus",
+      to: "/stories/create",
+      badge: {
+        label: "Add Story",
+        color: "blue",
+        size: "md",
+      },
+    },
+  ],
+];
 const isOpen = ref(false);
 
 onMounted(async () => {
@@ -72,6 +86,25 @@ definePageMeta({ requiresAuth: true });
 <template class="border-b border-gray-200">
   <div>
     <div class="numbers my-2">
+    <!--PROGRESS BAR -->
+      <UIProgress />
+      <!---->
+      <!--DROPDOWN IN STORIES-->
+      <div class="nav-flex my-2 border-b border-gray-200 dark:border-gray-800">
+        <UHorizontalNavigation :links="links" class="" />
+        <UModal v-model="isOpen">
+          <div class="p-4">IS HERE</div>
+        </UModal>
+
+        <UButton
+          class="my-3"
+          color="blue"
+          variant="soft"
+          label="Add"
+          @click="isOpen = true"
+          >Insights</UButton
+        >
+      </div>
       <div class="numbers my-2">
         <div class="mr-2">
           Total {{ categoryInput === "" ? "Items" : categoryInput }}:
