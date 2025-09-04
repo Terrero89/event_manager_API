@@ -142,7 +142,7 @@ async deleteStory(itemID) {
 
   if (nameFilter) {
     filteredItems = filteredItems.filter((item) =>
-      item.storyTitle.toLowerCase().includes(nameFilter.toLowerCase())
+      item.storyName.toLowerCase().includes(nameFilter.toLowerCase())
     );
   }
 
