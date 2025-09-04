@@ -57,7 +57,9 @@ const workTypeColor = computed(() => {
       return "green";
     case "Testing":
       return "pink";
+   
     default:
+    
       return "black";
   }
 });
@@ -76,7 +78,8 @@ const progressColor = computed(() => {
       return "green";
     case "Done":
       return "yellow";
-
+ case "Test In Progress":
+      return "cyan";
     case "Epic":
 
     default:

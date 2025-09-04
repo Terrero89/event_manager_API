@@ -86,24 +86,18 @@ definePageMeta({ requiresAuth: true });
 <template class="border-b border-gray-200">
   <div>
     <div class="numbers my-2">
-    <!--PROGRESS BAR -->
-      <UIProgress />
-      <!---->
-      <!--DROPDOWN IN STORIES-->
+      <!--PROGRESS BAR -->
+      <!-- <UIProgress /> -->
+  
       <div class="nav-flex my-2 border-b border-gray-200 dark:border-gray-800">
-        <UHorizontalNavigation :links="links" class="" />
-        <UModal v-model="isOpen">
-          <div class="p-4">IS HERE</div>
-        </UModal>
-
         <UButton
-          class="my-3"
+          class="my-3 move"
           color="blue"
           variant="soft"
+          to="stories/create"
           label="Add"
           @click="isOpen = true"
-          >Insights</UButton
-        >
+        ></UButton>
       </div>
       <div class="numbers my-2">
         <div class="mr-2">
@@ -154,6 +148,9 @@ definePageMeta({ requiresAuth: true });
 </template>
 
 <style scoped>
+.move{
+  margin-left:auto;
+}
 .wrapit {
   flex-wrap: wrap;
 }
