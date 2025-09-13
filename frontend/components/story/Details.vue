@@ -1,10 +1,8 @@
-<script setup>
+<script setup >
 import { storeToRefs } from "pinia";
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watch } from "vue";
 import { CONFIG } from "~/config/globalVariables";
 const storyStore = useStoryStore();
-
-
 
 const { fetchStories,
     updateStory,
@@ -17,28 +15,29 @@ const { fetchStories,
  
 const props = defineProps([
   "_id",
-  "storyNumber", // DMR-xxxx
-  "storyName", // C2T xxx
-  "storyDescription", // description
-  "difficultyLevel", // easy, medium, hard
-  "storyPoints", // 1, 2, 3, 5, 8, 13
-  "workType", // feature, bug, production
-  "developmentType", // frontend, backend, fullstack
-  "status", // to do, in progress, demo ready, completed, released
+  "storyNumber",
+  "storyName",
+  "storyDescription",
+  "difficultyLevel",
+  "storyPoints",
+  "workType",
+  "developmentType",
+  "status",
   "storyComments",
-  "reporter", // reported who assigned story
-  "repoNames", // repo we are going to work on
+  "reporter",
+  "repoNames",
   "dateAssigned",
   "dateCompleted",
-  "sprintId", // PL!, 2 etcc
-  "learning", // comments on learning
-"createdAt",
+  "sprintId",
+  "learning",
+  "createdAt",
   "updatedAt",
+  "daysPassed"
 ]);
 
 
+
 const story = ref({
-  
     status: props.status,
     storyTitle: props.storyTitle,
     storyName: props.storyName,
@@ -50,44 +49,64 @@ const story = ref({
     storyComments: props.storyComments,
     reporter: props.reporter,
     repoNames: props.repoNames,
-    dateAssigned:realDateFormatter(props.dateAssigned),
-    dateCompleted:realDateFormatter(props.dateCompleted),
+    dateAssigned: inputDateFormatter(props.dateAssigned),
+    dateCompleted: inputDateFormatter(props.dateCompleted),
     sprintId: props.sprintId,
     learning: props.learning,
-    createdAt:props.createdAt,
-    updatedAt:props.updatedAt,
-    
+    createdAt: props.createdAt,
+    updatedAt: props.updatedAt,
+    daysPassed: props.daysPassed
 });
 
-
-
 const handleSubmit = async () => {
-
-
-
   await updateStory(props._id, { ...story.value });
   navigateTo(`/`);
 };
 
-
 const removeItem = async (id) => {
   if (confirm("Are you sure you want to delete this city? This action cannot be undone.")) {
-    await deleteStory(id); // Proceed with the deletion if confirmed
- 
-    // Optionally navigate or refresh the page after deletionsprintID
+    await deleteStory(id);
     navigateTo(`/`);
   }
 };
+
 onMounted(async () => {
   await fetchStories();
 });
 
+// helper to calculate days
+function calculateDays(start, end) {
+  const startDate = new Date(start);
+  const endDate = new Date(end);
+  if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) return 0;
+  const diffTime = endDate.getTime() - startDate.getTime();
+  return Math.max(0, Math.ceil(diffTime / (1000 * 60 * 60 * 24)-1));
+}
+
+// 🔎 Watcher for status/date changes
+watch(
+  () => [story.value.status, story.value.dateCompleted],
+  () => {
+    if (story.value.status === "Completed" || story.value.status === "Released") {
+      story.value.daysPassed = calculateDays(story.value.dateAssigned, story.value.dateCompleted);
+    } else {
+      story.value.daysPassed = calculateDays(story.value.dateAssigned, new Date());
+    }
+  },
+  { immediate: true }
+);
+
+const endDate = ref('')
 </script>
+
 
 <template>
   <div>
-    <!-- <div>{{props.sprintById}}</div> -->
-   
+  <div>dataAss: {{story.dateAssigned}}</div>
+    <div>updatedAt: {{props.updatedAt}}</div>
+
+    <div>daysPassed: {{story.daysPassed}}</div>
+
     <form @submit.prevent="handleSubmit" class="sprint-details form-container">
       <h1>Modify Sprint</h1>
       <!-- Sprint ID -->
@@ -95,14 +114,7 @@ onMounted(async () => {
         <label for="sprintId">Sprint ID:</label>
         <input v-model="story.sprintId" type="text" id="sprintId" />
       </div>  
-      <div>
-        <label for="storyTitle">Description:</label>
-        <input
-          v-model="story.storyDescription"
-          type="text"
-          id="relatedStoryId"
-        />
-      </div>
+ 
 
       <div class="form-group">
         <label for="storyPoints">Story Points</label>
@@ -178,9 +190,18 @@ onMounted(async () => {
         <input v-model="story.dateAssigned" type="date" id="DateAssigned"/>
       </div>
 
+
        <div>
         <label for="startDate">Date Completed:</label>
         <input v-model="story.dateCompleted" type="date" id="DateCompleted"/>
+      </div>
+            <div>
+        <label for="storyTitle">Description:</label>
+        <textarea
+          v-model="story.storyDescription"
+          type="text"
+          id="relatedStoryId"
+        />
       </div>
       <div class="form-group">
         <label for="storyDescription">Story Comments</label>
@@ -192,6 +213,7 @@ onMounted(async () => {
         ></textarea>
   
       </div>
+     
       <strong>Last updated: </strong> {{ formatDate(updatedAt) }}
       <div class="modal-actions">
         <UButton color="red" @click="removeItem(props._id)">Delete</UButton>

@@ -19,11 +19,11 @@ const form = reactive({
   sprintId: currentSprint.value || "",
   eventName: "", // Event Name
   eventType: "", // Event Type
-  // date: realDateFormatter(new Date()), // Date
+  date: realDateFormatter(new Date()), // Date
   description: "", // Description
   status: "Pending", // Status
   startTime: "", // new
-  endTime: "", // new duration: 0, // Duration
+  endTime: "", // new duration: 0, // Duration`
   duration: 0,
 });
 
@@ -99,7 +99,7 @@ onMounted(async () => {
   <div class="form-container">
     <h1 class="title">Create a New Event</h1>
     <form @submit.prevent="handleSubmit">
-      <!-- Sprint -->
+      <!-- Sprinte a New Event -->
       <div class="form-group">
         <label for="sprint">Sprint</label>
         <select v-model="form.sprintId" id="sprint">

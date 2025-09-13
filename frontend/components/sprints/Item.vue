@@ -23,9 +23,9 @@ const isOpen = ref(false);
 
         <div class="item-content">
           <div>
-            <p><strong>Start Date: </strong> {{ formatDate(startDate) }}</p>
-            <p><strong>End Date: </strong> {{ formatDate(endDate) }}</p>
-          </div>
+            <p><strong>Start Date: </strong> {{ formatDate(props.startDate) }}</p>
+            <p><strong>End Date: </strong> {{ formatDate(props.endDate) }}</p>
+          </div> {{props.startDate}}
         </div>
       </div>
 
@@ -52,9 +52,7 @@ const isOpen = ref(false);
           >{{ props.status }}</UButton
         >
 
-        <UButton variant="soft" class="b" @click="isOpen = true"
-          >Details</UButton
-        >
+        <UButton variant="soft" class="b" @click="isOpen = true">Details</UButton>
         <UModal v-model="isOpen">
           <SprintsDetails
             :_id="props._id"

@@ -18,6 +18,7 @@ const props = defineProps([
   "learning", // comments on learning
   "createdAt",
   "updatedAt",
+  "daysPassed"
 ]);
 </script>
 
@@ -43,6 +44,7 @@ const props = defineProps([
         :learning="props.learning"
         :createdAt="props.createdAt"
         :updatedAt="props.updatedAt"
+         :daysPassed="props.daysPassed"
       />
     </div>
   </div>

@@ -19,6 +19,7 @@ learning: { type: String, required: true },
 repoNames: { type: String, required: true },
 dateAssigned: { type: Date, default: Date.now },
 dateCompleted: { type: Date, default: Date.now },
+daysPassed: {type:Number, required: false},
 user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }
 
 },

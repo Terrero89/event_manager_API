@@ -112,7 +112,6 @@ definePageMeta({ requiresAuth: true });
     <div class="numbers my-2">
       <!--PROGRESS BAR -->
       <!-- <UIProgress /> -->
-     
 
       <div class="nav-flex my-2 border-b border-gray-200 dark:border-gray-800">
         <UButton
@@ -125,7 +124,7 @@ definePageMeta({ requiresAuth: true });
         ></UButton>
       </div>
 
-          <div class="nav-flex wrapit" v-if="show">
+      <div class="nav-flex wrapit" v-if="show">
         <UInput
           color="gray"
           variant="outline"
@@ -226,28 +225,15 @@ definePageMeta({ requiresAuth: true });
       </div>
     </div>
     <UIEmptyMessage v-if="items.length < 1" title="stories" />
-    <StoryList
-      v-else
-      v-for="item in sortedFilteredStories"
-      :key="item._id"
-      :_id="item._id"
-      :sprintId="item.sprintId"
-      :storyNumber="item.storyNumber"
-      :storyName="item.storyName"
-      :storyDescription="item.storyDescription"
-      :difficultyLevel="item.difficultyLevel"
-      :storyPoints="item.storyPoints"
-      :workType="item.workType"
-      :developmentType="item.developmentType"
-      :status="item.status"
-      :storyComments="item.storyComments"
-      :reporter="item.reporter"
-      :repoNames="item.repoNames"
-      :dateAssigned="item.dateAssigned"
-      :dateCompleted="item.dateCompleted"
-      :learning="item.learning"
-      :createdAt="item.createdAt"
-      :updatedAt="item.updatedAt"
+    <StoryList v-else v-for="item in sortedFilteredStories" :key="item._id"
+    :_id="item._id" :sprintId="item.sprintId" :storyNumber="item.storyNumber"
+    :storyName="item.storyName" :storyDescription="item.storyDescription"
+    :difficultyLevel="item.difficultyLevel" :storyPoints="item.storyPoints"
+    :workType="item.workType" :developmentType="item.developmentType"
+    :status="item.status" :storyComments="item.storyComments" :reporter="item.reporter"
+    :repoNames="item.repoNames" :dateAssigned="item.dateAssigned"
+    :dateCompleted="item.dateCompleted" :learning="item.learning"
+    :createdAt="item.createdAt" :updatedAt="item.updatedAt" :daysPassed="item.daysPassed"
     />
   </div>
 </template>

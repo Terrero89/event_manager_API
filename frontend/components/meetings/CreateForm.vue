@@ -31,6 +31,7 @@ const form = reactive({
   startTime: "", // new
   endTime: "", // new
   duration: "", // Duration
+    date: realDateFormatter(new Date()), // Date
 });
 // simple hh:mm → minutes
 function toMinutes(hhmm) {
@@ -100,6 +101,7 @@ onMounted(async () => {
 </script>
 <template>
   <div class="form-container">
+  {{form.date}}
     <h1 class="title">Create a Meeting</h1>
     <form @submit.prevent="handleSubmit">
       <!-- Sprint -->
@@ -155,6 +157,12 @@ onMounted(async () => {
           </option>
         </select>
         <span v-if="errors.status" class="error">{{ errors.status }}</span>
+      </div>
+      <!-- DATE -->
+         <div class="form-group">
+        <label for="date">Date</label>
+        <input v-model="form.date" type="date" id="date" />
+        <span v-if="errors.date" class="error">{{ errors.date }}</span>
       </div>
       <!-- Start Time -->
       <div class="form-group">

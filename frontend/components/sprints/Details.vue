@@ -18,18 +18,6 @@ const props = defineProps([
   "storiesUnderSprint",
 ]);
 
-function formatDate(value) {
-  const date = new Date(value);
-
-  // Add timezone offset
-  const localDate = new Date(date.getTime() + date.getTimezoneOffset() * 60000);
-
-  const year = localDate.getFullYear();
-  const month = `${localDate.getMonth() + 1}`.padStart(2, "0");
-  const day = `${localDate.getDate()}`.padStart(2, "0");
-
-  return `${year}-${month}-${day}`;
-}
 const sprint = ref({
   sprintId: currentSprint.value,
   startDate: formatDate(props.startDate),
@@ -59,9 +47,7 @@ const handleSubmit = async () => {
 
 const removeItem = async (id) => {
   if (
-    confirm(
-      "Are you sure you want to delete this city? This action cannot be undone."
-    )
+    confirm("Are you sure you want to delete this city? This action cannot be undone.")
   ) {
     await deleteSprint(id); // Proceed with the deletion if confirmed
 
@@ -118,7 +104,6 @@ onMounted(async () => {
         ></textarea>
       </div>
 
-   
       <div>
         <label for="storiesUnderSprint">Stories Under Sprint:</label>
         <textarea

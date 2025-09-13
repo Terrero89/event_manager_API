@@ -24,12 +24,12 @@ const form = reactive({
   storyPoints: 1,
   workType: "Story",
   developmentType: "Frontend",
-  status: "Backlog",
-  reporter: "",
+  status: "",
+  reporter: "Pedro Martinez",
   storyComments: "comment1,comment2",
   learning: "changed perspective on this exe",
   repoNames: "repo1, repo2",
-  dateAssigned: new Date(),
+  dateAssigned: realDateFormatter(new Date()),
 });
 const errors = reactive({});
 const router = useRouter();
@@ -71,8 +71,8 @@ const handleSubmit = async () => {
     storyComments: form.storyComments,
     repoNames: form.repoNames,
     learning: form.learning,
-    dateAssigned: new Date(),
-    dateCompleted: new Date(),
+    dateAssigned: form.dateAssigned,
+    dateCompleted: "",
   };
 
   await addStory(newStory);
@@ -91,6 +91,7 @@ onMounted(async () => {
 <template>
   <div class="form-container">
     <h1 class="title">Ceate a New Story</h1>
+    {{form.dateAssigned}}
     <form @submit.prevent="handleSubmit">
       <!-- Header Fields -->
       <div class="form-group">

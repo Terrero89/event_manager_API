@@ -47,14 +47,13 @@ const handleSubmit = async () => {
     navigateTo(`/`);
   }, 1700);
 };
-
-
-
 </script>
 
 <template>
   <div>
+
     <form @submit.prevent="handleSubmit" class="sprint-details form-container">
+   
       <h1>Add new Sprint</h1>
       <!-- Sprint ID -->
       <div>

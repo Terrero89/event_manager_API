@@ -220,18 +220,13 @@ DATE FORMATS
 //DISPLAY IT NICER ---  CONVERTS THE DATE TO A READABLE NICER WAY TO DISPLAY 
 export function formatDate(dateString: string | number | Date) {
   const date = new Date(dateString);
+  if (isNaN(date.getTime())) return '';
 
-  // If the date is invalid, return an empty string or handle the error appropriately
-  if (isNaN(date.getTime())) {
-    return '';
-  }
+  const year = date.getUTCFullYear();
+  const month = date.toLocaleString('en-US', { month: 'short', timeZone: 'UTC' });
+  const day = date.getUTCDate();
 
-  // Add a day to the date
-  date.setDate(date.getDate());
-
-  const options = { year: 'numeric' as const, month: 'short' as const, day: 'numeric' as const };
-  return date.toLocaleDateString('en-US', options);   
-
+  return `${month} ${day}, ${year}`;
 }
 //DISPLAYS IT IN INPUT FIELDS ---  MAKES THE DATE IN A FORMAT THE INPUT DATE FIELD CAN DISPLAY IT CORRECTLY
 
@@ -249,6 +244,21 @@ export function realDateFormatter(value: string | number | Date) {
 
   return `${year}-${month}-${day}`;
 }
+
+export function inputDateFormatter(value: string | number | Date) {
+  const date = new Date(value);
+
+  if (isNaN(date.getTime())) {
+    return '';
+  }
+
+  const year = date.getFullYear(); // local year
+  const month = String(date.getMonth() + 1).padStart(2, '0'); // local month
+  const day = String(date.getDate() + 1).padStart(2, '0'); // local day
+
+  return `${year}-${month}-${day}`;
+}
+
 
 
 

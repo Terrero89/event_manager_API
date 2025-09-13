@@ -19,9 +19,10 @@ const props = defineProps([
   "dateAssigned",
   "dateCompleted",
   "sprintId", // PL!, 2 etcc
-  "learning", // comments on learning
+  "learning", // comments"averageDays" on learning
   "createdAt",
   "updatedAt",
+  "daysPassed",
 ]);
 
 const developmentTypeColor = computed(() => {
@@ -57,9 +58,8 @@ const workTypeColor = computed(() => {
       return "green";
     case "Testing":
       return "pink";
-   
+
     default:
-    
       return "black";
   }
 });
@@ -78,7 +78,7 @@ const progressColor = computed(() => {
       return "green";
     case "Done":
       return "yellow";
- case "Test In Progress":
+    case "Test In Progress":
       return "cyan";
     case "Epic":
 
@@ -116,6 +116,7 @@ const repoList = computed(() => {
         color: colors[index % colors.length], // assign a color in order
       };
     });
+  new Date();
 });
 
 const isOpen = ref(false);
@@ -130,12 +131,9 @@ const isOpen = ref(false);
         <div class="item-header">
           <div>
             <p>
-              <strong>Number: </strong>
-
+              <strong>Story:</strong>
               <UBadge variant="soft" color="gray"> {{ props.storyNumber }}</UBadge>
-            </p>
-            <p>
-              <strong>Name:</strong>
+
               {{
                 props.storyName.length > 35
                   ? props.storyName.slice(0, 35) + "..."
@@ -164,6 +162,7 @@ const isOpen = ref(false);
             <strong>Points: </strong>
             <UBadge :color="pointsColor" variant="soft"> {{ props.storyPoints }} </UBadge>
           </p>
+
           <p>
             <strong>Development Status: </strong>
             <UBadge :color="progressColor" variant="soft"> {{ props.status }}</UBadge>
@@ -172,6 +171,10 @@ const isOpen = ref(false);
 
         <div class="item-content">
           <div class="item-flex">
+            <p>
+              <strong>Average days </strong>
+              <UBadge :color="progressColor" variant="soft"> {{ daysPassed }}</UBadge>
+            </p>
             <p class="mr-2"><strong>Repos:</strong></p>
             <div class="flex flex-wrap gap-2">
               <span
@@ -186,9 +189,10 @@ const isOpen = ref(false);
               </span>
             </div>
           </div>
+
           <div>
-            <p><strong>Start Date: </strong> {{ formatDate(props.dateAssigned) }}</p>
-            <p>
+            <p><strong>Date: </strong> {{ formatDate(props.createdAt) }}</p>
+            <p v-if="props.dateCompleted === '' ? 'No completed' : props.dateCompleted ">
               <strong>End Date: </strong>
               {{
                 formatDate(props.dateCompleted)
@@ -226,6 +230,7 @@ const isOpen = ref(false);
               :learning="props.learning"
               :createdAt="props.createdAt"
               :updatedAt="props.updatedAt"
+              :daysPassed="props.daysPassed"
             />
           </div>
         </UModal>
