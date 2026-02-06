@@ -137,7 +137,12 @@ export const CONFIG = {
           icon: "heroicons-clock-16-solid",
           to: "/timeoff",
         },
-          {
+        {
+          label: "Days Off",
+          icon: "heroicons-calendar-days-20-solid",
+          to: "/daysoff",
+        },
+        {
           label: "Dashboard",
           icon: "i-heroicons-chart-bar",
           to: "/dashboard",
