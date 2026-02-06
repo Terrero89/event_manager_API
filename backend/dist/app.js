@@ -5,32 +5,43 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const global_1 = require("./config/global");
-const events_routes_1 = __importDefault(require("./routes/events-routes"));
-const story_routes_1 = __importDefault(require("./routes/story-routes"));
-const users_routes_1 = __importDefault(require("./routes/users-routes"));
 const auth_routes_1 = __importDefault(require("./routes/auth-routes"));
-const notes_routes_1 = __importDefault(require("./routes/notes-routes"));
+const events_routes_1 = __importDefault(require("./routes/events-routes"));
 const meetings_routes_1 = __importDefault(require("./routes/meetings-routes"));
+const notes_routes_1 = __importDefault(require("./routes/notes-routes"));
 const sprint_routes_1 = __importDefault(require("./routes/sprint-routes"));
 const standups_routes_1 = __importDefault(require("./routes/standups-routes"));
+const story_routes_1 = __importDefault(require("./routes/story-routes"));
 const timeoff_routes_1 = __importDefault(require("./routes/timeoff-routes"));
+const users_routes_1 = __importDefault(require("./routes/users-routes"));
 const cors = require("cors");
 require("dotenv").config();
 const mongoose = require('mongoose');
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
-app.use(cors());
-// app.use(
-//   cors({
-//     origin: ['http://localhost:3000', 'https://myfrontenddomain.com'], // Multiple domains
-//     methods: ['GET', 'POST', 'PUT', 'DELETE'], // Specific methods
-//     allowedHeaders: ['Content-Type', 'Authorization'], // Custom headers
-//     exposedHeaders: ['Authorization'], // Headers exposed to the client
-//     credentials: true, // Allow cookies
-//     maxAge: 600, // Cache preflight response for 10 minutes
-//   })
-// );eventskRoutes
+// CORS Configuration
+app.use(cors({
+    origin: (origin, callback) => {
+        // Allow localhost for development
+        if (!origin || origin.includes('localhost') || origin.includes('127.0.0.1')) {
+            callback(null, true);
+        }
+        // Allow deployed frontend URLs
+        else if (origin && (origin.includes('https://eventmanagerapi-dev.up.railway.app') || origin.includes('netlify.app') || origin.includes('railway.app'))) {
+            callback(null, true);
+        }
+        // Fallback: allow all origins (use with caution in production)
+        else {
+            callback(null, true);
+        }
+    },
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    exposedHeaders: ['Authorization'],
+    credentials: true,
+    maxAge: 3600, // Cache preflight response for 1 hour
+}));
 // global middleware
 app.use((req, res, next) => {
     console.log(`${req.method} ${req.path} ${req.url}`);

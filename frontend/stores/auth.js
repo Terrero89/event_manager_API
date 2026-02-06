@@ -27,11 +27,15 @@ export const useAuthStore = defineStore("auth", {
         );
 
         const data = await response.json();
-        if (!response.ok) throw new Error(data.message || "Login failed");
+        if (!response.ok) {
+          const errorMsg = data.message || "Login failed";
+          console.error("[Auth] Login error:", errorMsg);
+          throw new Error(errorMsg);
+        }
 
         this.token = data.token;
         this.user = data.user.username;
-        this.fullname = data.user.fullname; // Save fullname from response
+        this.fullname = data.user.fullname;
         this.userEmail = data.user.email;
         this.userId = data.user.id;
         this.userUsername = data.user.username;
@@ -42,15 +46,17 @@ export const useAuthStore = defineStore("auth", {
         localStorage.setItem("email", data.user.email);
         localStorage.setItem("username", data.user.username);
         localStorage.setItem("fullname", data.user.fullname);
+        localStorage.setItem("id", data.user.id);
         // Save expiration timestamp
-        const expiresAt= Date.now() + 30 * 60 * 1000; // 15 minutes
+        const expiresAt = Date.now() + 30 * 60 * 1000; // 30 minutes
         localStorage.setItem("expiresAt", expiresAt.toString());
 
         this.startAutoLogoutTimer();
-
-        return true;
+        console.log("[Auth] Login successful");
+        return { success: true };
       } catch (error) {
-        return false;
+        console.error("[Auth] Login failed:", error.message);
+        return { success: false, error: error.message };
       }
     },
 

@@ -1,15 +1,14 @@
 import express, { Express, Request, Response } from 'express';
-import bodyParser from 'body-parser';
 import { CONFIG } from './config/global';
-import eventsRoutes from './routes/events-routes';
-import storyRoutes from './routes/story-routes';
-import usersRoutes from './routes/users-routes';
 import authRoutes from './routes/auth-routes';
-import notesRoutes from './routes/notes-routes';
+import eventsRoutes from './routes/events-routes';
 import meetingRoutes from './routes/meetings-routes';
+import notesRoutes from './routes/notes-routes';
 import sprintRoutes from './routes/sprint-routes';
 import standupRoutes from './routes/standups-routes';
-import timeoffRoutes  from './routes/timeoff-routes';
+import storyRoutes from './routes/story-routes';
+import timeoffRoutes from './routes/timeoff-routes';
+import usersRoutes from './routes/users-routes';
 
 import cors = require('cors');
 require("dotenv").config();
@@ -21,17 +20,30 @@ const app: Express = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(cors());
-// app.use(
-//   cors({
-//     origin: ['http://localhost:3000', 'https://myfrontenddomain.com'], // Multiple domains
-//     methods: ['GET', 'POST', 'PUT', 'DELETE'], // Specific methods
-//     allowedHeaders: ['Content-Type', 'Authorization'], // Custom headers
-//     exposedHeaders: ['Authorization'], // Headers exposed to the client
-//     credentials: true, // Allow cookies
-//     maxAge: 600, // Cache preflight response for 10 minutes
-//   })
-// );eventskRoutes
+// CORS Configuration
+app.use(
+    cors({
+        origin: (origin, callback) => {
+            // Allow localhost for development
+            if (!origin || origin.includes('localhost') || origin.includes('127.0.0.1')) {
+                callback(null, true);
+            }
+            // Allow deployed frontend URLs
+            else if (origin && (origin.includes('https://eventmanagerapi-dev.up.railway.app') || origin.includes('netlify.app') || origin.includes('railway.app'))) {
+                callback(null, true);
+            }
+            // Fallback: allow all origins (use with caution in production)
+            else {
+                callback(null, true);
+            }
+        },
+        methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+        allowedHeaders: ['Content-Type', 'Authorization'],
+        exposedHeaders: ['Authorization'],
+        credentials: true,
+        maxAge: 3600, // Cache preflight response for 1 hour
+    })
+);
 // global middleware
 app.use((req: Request, res: Response, next: express.NextFunction) => {
     console.log(`${req.method} ${req.path} ${req.url}`);
@@ -43,7 +55,7 @@ app.use("/api/v1/auth", authRoutes); // user auth
 app.use("/api/v1/stories", storyRoutes); // home route
 app.use("/api/v1/", usersRoutes); // home route
 app.use("/api/v1/notes", notesRoutes);
-app.use("/api/v1/events", eventsRoutes); 
+app.use("/api/v1/events", eventsRoutes);
 app.use("/api/v1/meetings", meetingRoutes);
 app.use("/api/v1/sprints", sprintRoutes);
 app.use("/api/v1/standups", standupRoutes);

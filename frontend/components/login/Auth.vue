@@ -1,57 +1,56 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
-import { useAuthStore } from '@/stores/auth';
+import { useAuthStore } from "@/stores/auth";
 import { storeToRefs } from "pinia";
+import { ref } from "vue";
+import { useRouter } from "vue-router";
 
 const authStore = useAuthStore();
-const { login,  } = authStore;
-const { userId, userEmail, token, user, isLoggedIn} = storeToRefs(authStore);
+const { login } = authStore;
+const { userId, userEmail, token, user, isLoggedIn } = storeToRefs(authStore);
 
-const password = ref('');
-const email = ref('');
-const errorMessage = ref('');
+const password = ref("");
+const email = ref("");
+const errorMessage = ref("");
 const isLoggingIn = ref(false); // ✅ new state for "Logging in..."
 const errors = ref<{ email?: string; password?: string }>({});
 const router = useRouter();
 
 const validateLoginFields = () => {
   errors.value = {};
-  if (!email.value) errors.value.email = 'Email is required.';
-  if (!password.value) errors.value.password = 'Password is required.';
+  if (!email.value) errors.value.email = "Email is required.";
+  if (!password.value) errors.value.password = "Password is required.";
   return Object.keys(errors.value).length === 0;
 };
 
 const handleLogin = async () => {
-  errorMessage.value = '';
+  errorMessage.value = "";
   if (!validateLoginFields()) return;
 
-  const success = await login(email.value, password.value);
+  isLoggingIn.value = true;
+  const result = await login(email.value, password.value);
 
-  if (success) {
-    isLoggingIn.value = true; // ✅ Show "Logging in..."
-     authStore.isLoggedIn = isLoggingIn.value
-   isLoggingIn.value = isLoggingIn.value; // Hide message after 1 second
-      navigateTo('/');   
-
-  } else {
-    authStore.isLoggedIn = isLoggingIn.value
-    errorMessage.value = 'Invalid email or password.';
+  if (result.success) {
+    console.log("[Login] Authentication successful");
+    isLoggingIn.value = true;
+    authStore.isLoggedIn = true;
     setTimeout(() => {
-      errorMessage.value = '';
-    }, 2000);
+      navigateTo("/");
+    }, 500);
+  } else {
+    isLoggingIn.value = false;
+    errorMessage.value = result.error || "Invalid email or password.";
+    console.error("[Login] Authentication failed:", result.error);
+    setTimeout(() => {
+      errorMessage.value = "";
+    }, 3000);
   }
 };
 </script>
-
 
 <template>
   <div class="auth-container">
     <h1>Login</h1>
     <form @submit.prevent="handleLogin">
-
-   
-
       <div class="form-group">
         <label for="email">Email</label>
         <input
@@ -76,16 +75,14 @@ const handleLogin = async () => {
 
       <button type="submit" class="submit-button">Login</button>
     </form>
-   <div v-if="isLoggingIn" class="info">Logging in...</div>
-<div v-if="errorMessage" class="error">{{ errorMessage }}</div>
+    <div v-if="isLoggingIn" class="info">Logging in...</div>
+    <div v-if="errorMessage" class="error">{{ errorMessage }}</div>
     <p>
       Don't have an account?
       <NuxtLink to="/register" class="link">Register</NuxtLink>
     </p>
   </div>
 </template>
-
-
 
 <style scoped>
 .auth-container {
