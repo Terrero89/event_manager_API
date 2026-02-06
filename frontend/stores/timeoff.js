@@ -15,7 +15,6 @@ export const useTimeoffStore = defineStore({
     },
 
     async fetchTimeoff() {
-      const config = useRuntimeConfig();
       const auth = useAuthStore();
       const URL = this.getURL();
 
@@ -53,7 +52,6 @@ export const useTimeoffStore = defineStore({
     },
 
     async addTimeoff(data) {
-      const config = useRuntimeConfig();
       const auth = useAuthStore();
       const URL = this.getURL();
 
@@ -87,7 +85,6 @@ export const useTimeoffStore = defineStore({
     },
 
     async deleteTimeoff(itemID) {
-      const config = useRuntimeConfig();
       const auth = useAuthStore();
       const URL = this.getURL();
 
@@ -119,7 +116,6 @@ export const useTimeoffStore = defineStore({
     },
 
     async updateTimeoff(itemID, payload) {
-      const config = useRuntimeConfig();
       const auth = useAuthStore();
       const URL = this.getURL();
 

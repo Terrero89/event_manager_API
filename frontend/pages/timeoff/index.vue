@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { onMounted, ref, computed } from "vue";
 import { storeToRefs } from "pinia";
-import { CONFIG } from "~/config/globalVariables";
+import { onMounted, ref } from "vue";
 
 // Stores
 const sprintStore = useSprintStore();
@@ -17,9 +16,9 @@ interface TimeoffItem {
   title: string;
   timeOff: Number;
   timeOffType: string;
-  date: string | Date
+  date: string | Date;
   createdAt: string | Date;
-  updatedAt: string | Date ;
+  updatedAt: string | Date;
 }
 
 const { items } = storeToRefs(timeoffStore) as { items: Ref<TimeoffItem[]> };

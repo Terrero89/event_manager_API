@@ -4,7 +4,6 @@ import { onMounted, ref } from "vue";
 
 // Stores
 const sprintStore = useSprintStore();
-const timeoffStore = useTimeoffStore();
 const standupStore = useStandupStore();
 
 // Actions & state

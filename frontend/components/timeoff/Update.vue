@@ -1,13 +1,11 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
 import { onMounted, ref } from "vue";
-import { useRouter } from "vue-router";
 import { CONFIG } from "~/config/globalVariables";
 import { formatDate } from "~/utils/date-conversion";
 
 const sprintStore = useSprintStore();
 const timeoffStore = useTimeoffStore();
-const router = useRouter();
 
 const { sprintList } = storeToRefs(sprintStore);
 const { fetchSprints } = sprintStore;
@@ -53,13 +51,13 @@ const handleSubmit = async () => {
     date: form.value.date,
   };
   await updateTimeoff(props._id, newTimeEntry);
-  router.push("/");
+  navigateTo("/");
 };
 
 const removeItem = async () => {
   if (confirm("Are you sure you want to delete this request?")) {
     await deleteTimeoff(props._id);
-    router.push("/");
+    navigateTo("/");
   }
 };
 </script>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { reactive, ref, onMounted } from "vue";
-import { useRouter } from "vue-router";
 import { storeToRefs } from "pinia";
+import { onMounted, reactive, ref } from "vue";
+import { useRouter } from "vue-router";
 import { CONFIG } from "~/config/globalVariables";
 
 const sprintStore = useSprintStore();
@@ -56,7 +56,7 @@ const handleSubmit = async () => {
 
   setTimeout(() => {
     loadMessage.value = false;
-    router.push("/");
+    navigateTo("/");
   }, 1500);
 };
 

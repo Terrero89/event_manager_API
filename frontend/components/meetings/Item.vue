@@ -152,7 +152,10 @@ const isOpen = ref(false);
               <strong>Start Time:</strong>
               {{ to12HourFormat(props.startTime) || "" }}
             </p>
-            <p><strong>End Time: </strong> {{ to12HourFormat(props.endTime) || "" }}</p>
+            <p>
+              <strong>End Time: </strong>
+              {{ to12HourFormat(props.endTime) || "" }}
+            </p>
           </div>
 
           <div>

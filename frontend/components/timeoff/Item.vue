@@ -3,16 +3,16 @@ import { computed, ref } from "vue";
 import { formatDate } from "~/utils/date-conversion";
 
 // Props for a timeoff entry
-const props = defineProps<{
-  _id: string;
-  sprintId: string;
-  title: string;
-  timeOff: number;
-  timeOffType: string;
-  date: string;
-  createdAt: string;
-  updatedAt: string;
-}>();
+const props = defineProps([
+  "_id",
+  "sprintId",
+  "title",
+  "timeOff",
+  "timeOffType",
+  "date",
+  "createdAt",
+  "updatedAt",
+]);
 
 // Pick a badge color based on type of time off
 const typeColor = computed(() => {
