@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { computed, ref } from "vue";
 import { formatDate } from "~/utils/date-conversion";
 
 const props = defineProps([
@@ -105,7 +105,9 @@ const isOpen = ref(false);
         </div>
 
         <div class="item-flex">
-          <p class="mr-2"><strong>Date:</strong> {{ formatDate(props.date) }}</p>
+          <p class="mr-2">
+            <strong>Date:</strong> {{ formatDate(props.date) }}
+          </p>
         </div>
         <div class="item-content"></div>
       </div>

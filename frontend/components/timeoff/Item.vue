@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
+import { formatDate } from "~/utils/date-conversion";
 
 // Props for a timeoff entry
 const props = defineProps<{
@@ -71,7 +72,6 @@ const isOpen = ref(false);
           <p class="mr-2">
             <strong>Date: </strong> {{ formatDate(props.date) }}
           </p>
-       
         </div>
         <div class="item-content"></div>
       </div>

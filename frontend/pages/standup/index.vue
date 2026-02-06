@@ -1,7 +1,6 @@
 <script setup>
-import { onMounted, ref, computed } from "vue";
 import { storeToRefs } from "pinia";
-import { CONFIG } from "~/config/globalVariables";
+import { onMounted, ref } from "vue";
 
 // Stores
 const sprintStore = useSprintStore();

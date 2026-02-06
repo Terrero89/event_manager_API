@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
-import { ref, onMounted } from "vue";
-import { CONFIG } from "~/config/globalVariables";
+import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
+import { CONFIG } from "~/config/globalVariables";
+import { formatDate } from "~/utils/date-conversion";
 
 const sprintStore = useSprintStore();
 const timeoffStore = useTimeoffStore();
@@ -23,11 +24,11 @@ const props = defineProps([
   "updatedAt",
 ]);
 
-function formatedDate(value) {
+function formatedDate(value: string | Date) {
   const date = new Date(value);
   const year = date.getFullYear();
-  const month = `${date.getMonth() + 1}`.padStart(2, '0');
-  const day = `${date.getDate()}`.padStart(2, '0');
+  const month = `${date.getMonth() + 1}`.padStart(2, "0");
+  const day = `${date.getDate()}`.padStart(2, "0");
   return `${year}-${month}-${day}`;
 }
 
@@ -119,7 +120,7 @@ const removeItem = async () => {
         <label for="date">Date</label>
         <input v-model="form.date" type="date" id="date" />
       </div>
-  <strong>Created on: </strong> {{ formatDate(props.updatedAt) }}
+      <strong>Created on: </strong> {{ formatDate(props.updatedAt) }}
       <!-- Actions -->
       <div class="modal-actions">
         <UButton color="red" @click.prevent="removeItem">Delete</UButton>
@@ -130,7 +131,7 @@ const removeItem = async () => {
 </template>
 
 <style scoped>
-.form-control-textarea{
+.form-control-textarea {
   border: solid 1px #3c3c3c;
   min-height: 11rem;
 }
