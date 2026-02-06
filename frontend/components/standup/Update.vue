@@ -96,11 +96,7 @@ const removeItem = async (id: any) => {
         <label for="workingOn">Working On</label>
         <select v-model="form.workingOn" id="workingOn">
           <option value="" disabled>Select type</option>
-          <option
-            v-for="type in CONFIG.variables.currentWork"
-            :key="type"
-            :value="type"
-          >
+          <option v-for="type in CONFIG.variables.currentWork" :key="type" :value="type">
             {{ type }}
           </option>
         </select>
@@ -132,9 +128,7 @@ const removeItem = async (id: any) => {
       <strong>Last updated: </strong> {{ formatDate(props.createdAt) }}
       <!-- Actions -->
       <div class="modal-actions">
-        <UButton color="red" @click.prevent="removeItem(props._id)">
-          Delete
-        </UButton>
+        <UButton color="red" @click.prevent="removeItem(props._id)"> Delete </UButton>
         <UButton type="submit"> Update </UButton>
       </div>
     </form>

@@ -3,134 +3,166 @@ import { defineStore } from "pinia";
 export const useTimeoffStore = defineStore({
   id: "timeoff",
   state: () => ({
-    URL: useRuntimeConfig().public.apiBase + '/timeoff',
     items: [],
-    currentSprint:'',
+    currentSprint: "",
     sprintList: [],
   }),
+
   actions: {
+    getURL() {
+      const config = useRuntimeConfig();
+      return config.public.apiBase + "/timeoff";
+    },
+
     async fetchTimeoff() {
-  const config = useRuntimeConfig();
-        const auth = useAuthStore();
-  try {
-    const response = await fetch(this.URL, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${auth.token}`,
-      },
-    });
+      const config = useRuntimeConfig();
+      const auth = useAuthStore();
+      const URL = this.getURL();
 
-    if (!response.ok) {
-      throw new Error(`Failed to fetch sprints: ${response.status} ${response.statusText}`);
-    }
-
-    const data = await response.json();
-    this.items = data;
-     
-      this.sprintList = this.items.map((item) => item.sprintId);
-      this.currentSprint = this.sprintList.reverse()[0];
-    return data;
-
-  } catch (error) {
-    console.error("Failed to fetch sprints:", error);
-    return null;
-  }
-},
-
-     async addTimeoff(data) {
-        const config = useRuntimeConfig();
-        const auth = useAuthStore();
-    
-     
       try {
-        const response = await fetch(this.URL, {
-          method: "POST",
-          body: JSON.stringify({ ...data }),
-            headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${auth.token}`, // ← include token
+        if (!auth.token) {
+          console.warn("[Timeoff] No auth token available");
+          return null;
+        }
+
+        const response = await fetch(URL, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${auth.token}`,
           },
         });
 
         if (!response.ok) {
-          throw new Error("Failed to add sprints");
+          throw new Error(
+            `Failed to fetch timeoff: ${response.status} ${response.statusText}`
+          );
         }
+
+        const data = await response.json();
+        this.items = data;
+        this.sprintList = this.items.map((item) => item.sprintId);
+        this.currentSprint = this.sprintList.reverse()[0];
+        console.log("[Timeoff] Fetched successfully:", data.length, "items");
+        return data;
       } catch (error) {
-        console.error("Failed to add sprints:", error);
+        console.error("[Timeoff] Fetch failed:", error);
+        this.items = [];
+        return null;
       }
     },
-async deleteTimeoff(itemID) {
-  const config = useRuntimeConfig();
-  const auth = useAuthStore();
 
-  // const url = this.URL + `/${itemID}`;
-console.log("TEST",this.URL)
-  try {
-  const response = await fetch(this.URL + `/${itemID}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${auth.token}`,
-      },
-    });
+    async addTimeoff(data) {
+      const config = useRuntimeConfig();
+      const auth = useAuthStore();
+      const URL = this.getURL();
 
-    const text = await response.text();
+      try {
+        if (!auth.token) {
+          console.warn("[Timeoff] No auth token for add");
+          return null;
+        }
 
-    if (!response.ok) {
-      console.error("❌ Delete failed:", response.status, text);
-      return;
-    }
-
-    console.log("✅ Sprint deleted:", text);
-    this.items = this.items.filter((event) => event._id !== itemID);
-  } catch (error) {
-    console.error("❌ Error deleting sprint:", error);
-  }
-},
-
-    async updateTimeoff(itemID, payload)  {
-  const config = useRuntimeConfig();
-  const auth = useAuthStore();
-;
-
-  try {
-    const response = await fetch(this.URL + `/${itemID}`, {
-      method: "PATCH",
-     headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${auth.token}`, // ← include token
+        const response = await fetch(URL, {
+          method: "POST",
+          body: JSON.stringify({ ...data }),
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${auth.token}`,
           },
-      body: JSON.stringify(payload),
-    });
+        });
 
-    if (!response.ok) {
-      throw new Error(`Failed to update sprint: ${response.status} ${response.statusText}`);
-    }
+        if (!response.ok) {
+          throw new Error("Failed to add timeoff");
+        }
 
-    const updatedEvent = await response.json();
+        const newItem = await response.json();
+        this.items.push(newItem);
+        console.log("[Timeoff] Added successfully");
+        return newItem;
+      } catch (error) {
+        console.error("[Timeoff] Add failed:", error);
+        return null;
+      }
+    },
 
-    // ✅ Update local Pinia state directly
-    const index = this.items.findIndex((event) => event._id === itemID);
-    if (index !== -1) {
-      this.items[index] = updatedEvent;
-    }
-  } catch (error) {
-    console.error("Error updating event:", error);
-  }
-},
+    async deleteTimeoff(itemID) {
+      const config = useRuntimeConfig();
+      const auth = useAuthStore();
+      const URL = this.getURL();
+
+      try {
+        if (!auth.token) {
+          console.warn("[Timeoff] No auth token for delete");
+          return false;
+        }
+
+        const response = await fetch(URL + `/${itemID}`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${auth.token}`,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error(`Delete failed: ${response.status}`);
+        }
+
+        this.items = this.items.filter((event) => event._id !== itemID);
+        console.log("[Timeoff] Deleted successfully");
+        return true;
+      } catch (error) {
+        console.error("[Timeoff] Delete failed:", error);
+        return false;
+      }
+    },
+
+    async updateTimeoff(itemID, payload) {
+      const config = useRuntimeConfig();
+      const auth = useAuthStore();
+      const URL = this.getURL();
+
+      try {
+        if (!auth.token) {
+          console.warn("[Timeoff] No auth token for update");
+          return null;
+        }
+
+        const response = await fetch(URL + `/${itemID}`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${auth.token}`,
+          },
+          body: JSON.stringify(payload),
+        });
+
+        if (!response.ok) {
+          throw new Error(`Failed to update: ${response.status}`);
+        }
+
+        const updatedItem = await response.json();
+        const index = this.items.findIndex((event) => event._id === itemID);
+        if (index !== -1) {
+          this.items[index] = updatedItem;
+        }
+        console.log("[Timeoff] Updated successfully");
+        return updatedItem;
+      } catch (error) {
+        console.error("[Timeoff] Update failed:", error);
+        return null;
+      }
+    },
   },
-  getters: {
 
+  getters: {
     itemsAsArray: (state) => {
       return state.items;
     },
 
-    //finds item based on parentDestinationID
     filterItemById(state) {
-      const note = this.itemsAsArray.filter((item) => item.id);
-      return (id) => note.filter((data) => data.id === id);
+      return (id) => state.items.filter((item) => item._id === id);
     },
-
   },
 });
