@@ -2,6 +2,7 @@
 import { storeToRefs } from "pinia";
 import { ref, onMounted } from "vue";
 import { CONFIG } from "~/config/globalVariables";
+import { formatDate } from "~/utils/date-conversion";
 
 const sprintStore = useSprintStore();
 const standupStore = useStandupStore();

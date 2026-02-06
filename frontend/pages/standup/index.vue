@@ -119,7 +119,7 @@ onMounted(async () => {
       </div> -->
 
       <!-- Empty / List -->
-      <UIEmptyMessage v-if="items.length < 1" title="timeoff requests" />
+      <UIEmptyMessage v-if="items.length < 1" title="standup entries" />
       <StandupList
         v-else
         v-for="item in items"
@@ -127,7 +127,8 @@ onMounted(async () => {
         :_id="item._id"
         :sprintId="item.sprintId"
         :workingOn="item.workingOn"
-        :title="item.title"
+        :notes="item.notes"
+        :learnings="item.learnings"
         :ticketNumber="item.ticketNumber"
         :repo="item.repo"
         :date="item.date"
