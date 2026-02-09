@@ -1,5 +1,4 @@
 import { defineStore } from "pinia";
-import { CONFIG } from "~/config/globalVariables";
 
 export const useStoryStore = defineStore({
   id: "story",
@@ -8,40 +7,39 @@ export const useStoryStore = defineStore({
   }),
   actions: {
     async fetchStories() {
-      
-  const config = useRuntimeConfig();
+      const config = useRuntimeConfig();
       const auth = useAuthStore();
-  const url = `${config.public.apiBase}/stories`;
-  try {
-    const response = await fetch(url, {
-      method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
+      const url = `${config.public.apiBase}/stories`;
+      try {
+        const response = await fetch(url, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
             Authorization: `Bearer ${auth.token}`, // ← include token
           },
-    });
+        });
 
-    if (!response.ok) {
-      throw new Error(`Failed to fetch stories: ${response.status} ${response.statusText}`);
-    }
+        if (!response.ok) {
+          throw new Error(
+            `Failed to fetch stories: ${response.status} ${response.statusText}`,
+          );
+        }
 
-    const data = await response.json();
-    
-    this.items = data;
-     
-     
-    return data;
+        const data = await response.json();
 
-  } catch (error) {
-    console.error("Failed to fetch stories:", error);
-    return null;
-  }
-},
+        this.items = data;
+
+        return data;
+      } catch (error) {
+        console.error("Failed to fetch stories:", error);
+        return null;
+      }
+    },
     async addStory(data) {
-       const config = useRuntimeConfig();
-          const auth = useAuthStore();
-  const url = `${config.public.apiBase}/stories`;
-  // const url = "http://localhost:8080/api/v1/stories"
+      const config = useRuntimeConfig();
+      const auth = useAuthStore();
+      const url = `${config.public.apiBase}/stories`;
+      // const url = "http://localhost:8080/api/v1/stories"
       try {
         const response = await fetch(url, {
           method: "POST",
@@ -61,62 +59,64 @@ export const useStoryStore = defineStore({
         this.items.push(newStory);
       } catch (error) {
         console.error("Failed to add story:", error);
-      } 
+      }
     },
-async deleteStory(itemID) {
-  const config = useRuntimeConfig();
-    const auth = useAuthStore();
-  const url = `${config.public.apiBase}/stories/${itemID}`;
-  try {
-    const response = await fetch(url, {
-      method: "DELETE",
-      headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${auth.token}`,
-          }
-    });
-
-    if (!response.ok) {
-      console.error("Error, request failed");
-      return;
-    }
-
-    // ✅ Update local state after deletion
-    this.items = this.items.filter((event) => event._id !== itemID);
-  } catch (error) {
-    console.error("Error deleting Story:", error);
-  }
-},
-    async updateStory(itemID, payload){
-  const config = useRuntimeConfig();
-    const auth = useAuthStore();
-  const url = `${config.public.apiBase}/stories/${itemID}`;
-
-  try {
-    const response = await fetch(url, {
-      method: "PATCH",
-      headers: {
+    async deleteStory(itemID) {
+      const config = useRuntimeConfig();
+      const auth = useAuthStore();
+      const url = `${config.public.apiBase}/stories/${itemID}`;
+      try {
+        const response = await fetch(url, {
+          method: "DELETE",
+          headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${auth.token}`,
           },
-      body: JSON.stringify(payload),
-    });
+        });
 
-    if (!response.ok) {
-      throw new Error(`Failed to update event: ${response.status} ${response.statusText}`);
-    }
+        if (!response.ok) {
+          console.error("Error, request failed");
+          return;
+        }
 
-    const updatedEvent = await response.json();
+        // ✅ Update local state after deletion
+        this.items = this.items.filter((event) => event._id !== itemID);
+      } catch (error) {
+        console.error("Error deleting Story:", error);
+      }
+    },
+    async updateStory(itemID, payload) {
+      const config = useRuntimeConfig();
+      const auth = useAuthStore();
+      const url = `${config.public.apiBase}/stories/${itemID}`;
 
-    // ✅ Update local Pinia state directly
-    const index = this.items.findIndex((event) => event._id === itemID);
-    if (index !== -1) {
-      this.items[index] = updatedEvent;
-    }
-  } catch (error) {
-    console.error("Error updating story:", error);
-  }
-},
+      try {
+        const response = await fetch(url, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${auth.token}`,
+          },
+          body: JSON.stringify(payload),
+        });
+
+        if (!response.ok) {
+          throw new Error(
+            `Failed to update event: ${response.status} ${response.statusText}`,
+          );
+        }
+
+        const updatedEvent = await response.json();
+
+        // ✅ Update local Pinia state directly
+        const index = this.items.findIndex((event) => event._id === itemID);
+        if (index !== -1) {
+          this.items[index] = updatedEvent;
+        }
+      } catch (error) {
+        console.error("Error updating story:", error);
+      }
+    },
   },
   getters: {
     itemsAsArray: (state) => {
@@ -129,104 +129,108 @@ async deleteStory(itemID) {
       return (id) => story.filter((data) => data.id === id);
     },
 
-    filterStories: (state) => (
-  nameFilter,
-  typeFilter,
-  startDate,
-  endDate,
-  statusFilter,
-  pointing,
-  workType
-) => {
-  let filteredItems = state.items;
+    filterStories:
+      (state) =>
+      (
+        nameFilter,
+        typeFilter,
+        startDate,
+        endDate,
+        statusFilter,
+        pointing,
+        workType,
+      ) => {
+        let filteredItems = state.items;
 
-  if (nameFilter) {
-    filteredItems = filteredItems.filter((item) =>
-      item.storyName.toLowerCase().includes(nameFilter.toLowerCase())
-    );
-  }
+        if (nameFilter) {
+          filteredItems = filteredItems.filter((item) =>
+            item.storyName.toLowerCase().includes(nameFilter.toLowerCase()),
+          );
+        }
 
-  if (typeFilter) {
-    filteredItems = filteredItems.filter(
-      (item) => item.developmentType === typeFilter
-    );
-  }
+        if (typeFilter) {
+          filteredItems = filteredItems.filter(
+            (item) => item.developmentType === typeFilter,
+          );
+        }
 
-  if (workType) {
-    filteredItems = filteredItems.filter(
-      (item) => item.workType === workType
-    );
-  }
+        if (workType) {
+          filteredItems = filteredItems.filter(
+            (item) => item.workType === workType,
+          );
+        }
 
-  if (startDate && endDate) {
-    filteredItems = filteredItems.filter((item) => {
-      const eventDate = new Date(item.dateAssigned);
-      return !isNaN(eventDate) &&
-        eventDate >= new Date(startDate) &&
-        eventDate <= new Date(endDate);
-    });
-  } else if (startDate) {
-    filteredItems = filteredItems.filter((item) => {
-      const eventDate = new Date(item.dateAssigned);
-      return !isNaN(eventDate) &&
-        eventDate.toISOString().split("T")[0] ===
-        new Date(startDate).toISOString().split("T")[0];
-    });
-  } else if (endDate) {
-    filteredItems = filteredItems.filter((item) => {
-      const eventDate = new Date(item.dateAssigned);
-      return !isNaN(eventDate) &&
-        eventDate.toISOString().split("T")[0] ===
-        new Date(endDate).toISOString().split("T")[0];
-    });
-  }
+        if (startDate && endDate) {
+          filteredItems = filteredItems.filter((item) => {
+            const eventDate = new Date(item.dateAssigned);
+            return (
+              !isNaN(eventDate) &&
+              eventDate >= new Date(startDate) &&
+              eventDate <= new Date(endDate)
+            );
+          });
+        } else if (startDate) {
+          filteredItems = filteredItems.filter((item) => {
+            const eventDate = new Date(item.dateAssigned);
+            return (
+              !isNaN(eventDate) &&
+              eventDate.toISOString().split("T")[0] ===
+                new Date(startDate).toISOString().split("T")[0]
+            );
+          });
+        } else if (endDate) {
+          filteredItems = filteredItems.filter((item) => {
+            const eventDate = new Date(item.dateAssigned);
+            return (
+              !isNaN(eventDate) &&
+              eventDate.toISOString().split("T")[0] ===
+                new Date(endDate).toISOString().split("T")[0]
+            );
+          });
+        }
 
-  if (statusFilter) {
-    filteredItems = filteredItems.filter(
-      (item) => item.status === statusFilter
-    );
-  }
+        if (statusFilter) {
+          filteredItems = filteredItems.filter(
+            (item) => item.status === statusFilter,
+          );
+        }
 
-  if (pointing) {
-    if (Array.isArray(pointing)) {
-      filteredItems = filteredItems.filter((item) =>
-        pointing.includes(String(item.storyPoints))
-      );
-    } else {
-      filteredItems = filteredItems.filter(
-        (item) => String(item.storyPoints) === pointing
-      );
-    }
-  }
+        if (pointing) {
+          if (Array.isArray(pointing)) {
+            filteredItems = filteredItems.filter((item) =>
+              pointing.includes(String(item.storyPoints)),
+            );
+          } else {
+            filteredItems = filteredItems.filter(
+              (item) => String(item.storyPoints) === pointing,
+            );
+          }
+        }
 
-  return filteredItems;
-},
+        return filteredItems;
+      },
 
+    totalFilteredStoriesStats: () => (items) => {
+      let statusType = [
+        "Backlog",
+        "To Do",
+        "In Progress",
+        "Demo Ready",
+        "Completed",
+        "Released",
+      ];
 
-totalFilteredStoriesStats: () => (items) => {
-  let statusType =  ["Backlog", "To Do", "In Progress", "Demo Ready", "Completed", "Released"]
-  
-  const totalItems = items.length;
+      const totalItems = items.length;
 
-  // by frontent etc
-  const filterType = items.filter(
-    (item) => item.status === statusType
-  ).length
+      // by frontent etc
+      const filterType = items.filter(
+        (item) => item.status === statusType,
+      ).length;
 
-
-
-   
-
-    return {
-      totalItems,
-      filterType,
-    
-
-    };
-
-  },
-
-
-    
+      return {
+        totalItems,
+        filterType,
+      };
+    },
   },
 });

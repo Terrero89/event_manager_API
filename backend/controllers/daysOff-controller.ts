@@ -6,8 +6,9 @@ import { DaysOff } from "../models/daysoff-model";
 export const createDaysOffController = async (req: any, res: Response) => {
   try {
     console.log(req.body); // check if req.body is empty
-    if(!req.body){
-      return res.status(400).json({ message: "DaysOff request body is empty" });
+    if (!req.body) {
+      res.status(400).json({ message: "DaysOff request body is empty" });
+      return;
     }
     const daysOff = await DaysOff.create({
       ...req.body,

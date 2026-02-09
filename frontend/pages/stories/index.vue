@@ -56,9 +56,9 @@ const stats = computed(() =>
       endDate.value,
       statusInput.value,
       pointing.value,
-      workTypesInput.value
-    )
-  )
+      workTypesInput.value,
+    ),
+  ),
 );
 
 const showStats = computed(() => {
@@ -81,7 +81,7 @@ const sortedFilteredStories = computed(() => {
     endDate.value,
     statusInput.value,
     pointing.value,
-    workTypesInput.value
+    workTypesInput.value,
   );
 
   const inProgress = filtered.filter((s) => s.status === "In Progress");
@@ -95,8 +95,6 @@ const sortedFilteredStories = computed(() => {
     }),
   ];
 });
-
-
 </script>
 <template class="border-b border-gray-200">
   <div>
@@ -211,7 +209,9 @@ const sortedFilteredStories = computed(() => {
 
           <div class="mr-2">
             Items in {{ statusInput }}:
-            <UBadge variant="soft" class="font-bold">{{ stats.filterType }}</UBadge>
+            <UBadge variant="soft" class="font-bold">{{
+              stats.filterType
+            }}</UBadge>
           </div>
 
           <div class="mr-2" v-if="stats.filterType > 0">
