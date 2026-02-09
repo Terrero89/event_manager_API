@@ -14,6 +14,7 @@ const standups_routes_1 = __importDefault(require("./routes/standups-routes"));
 const story_routes_1 = __importDefault(require("./routes/story-routes"));
 const timeoff_routes_1 = __importDefault(require("./routes/timeoff-routes"));
 const users_routes_1 = __importDefault(require("./routes/users-routes"));
+const daysOff_routes_1 = __importDefault(require("./routes/daysOff-routes"));
 const cors = require("cors");
 require("dotenv").config();
 const mongoose = require('mongoose');
@@ -57,6 +58,7 @@ app.use("/api/v1/meetings", meetings_routes_1.default);
 app.use("/api/v1/sprints", sprint_routes_1.default);
 app.use("/api/v1/standups", standups_routes_1.default);
 app.use("/api/v1/timeoff", timeoff_routes_1.default);
+app.use("/api/v1/daysOff", daysOff_routes_1.default);
 mongoose.connect(global_1.CONFIG.MONGODB_URL).then(() => {
     console.log(`Connected Database ${mongoose.connection.name} in MongoDB`);
 }).catch((error) => console.log(error));

@@ -9,6 +9,7 @@ import standupRoutes from './routes/standups-routes';
 import storyRoutes from './routes/story-routes';
 import timeoffRoutes from './routes/timeoff-routes';
 import usersRoutes from './routes/users-routes';
+import daysOffRoutes from './routes/daysOff-routes';
 
 import cors = require('cors');
 require("dotenv").config();
@@ -60,6 +61,7 @@ app.use("/api/v1/meetings", meetingRoutes);
 app.use("/api/v1/sprints", sprintRoutes);
 app.use("/api/v1/standups", standupRoutes);
 app.use("/api/v1/timeoff", timeoffRoutes);
+app.use("/api/v1/daysOff", daysOffRoutes);
 
 mongoose.connect(CONFIG.MONGODB_URL).then(() => {
     console.log(`Connected Database ${mongoose.connection.name} in MongoDB`);
