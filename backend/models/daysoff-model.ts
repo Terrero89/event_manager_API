@@ -2,7 +2,7 @@ import mongoose, { Schema } from 'mongoose';
 
 
 const DaysOffSchema: Schema = new Schema({
-
+    currentYear: { type: Number, required: true },
     previousYearHours: { type: Number, required: true }, // hours from prev year
     currentPersonalDaysHours: {type: Number, required: false}, // total of personal days per year given
     currentSickDaysHours: {type: Number, required: false}, // total of sick days per year given

@@ -126,12 +126,7 @@ export const CONFIG = {
           to: "/meetings",
         },
       
-    
-        {
-          label: "Standup",
-          icon: "heroicons-user-group-solid",
-          to: "/standup",
-        },
+  
           {
           label: "Time off",
           icon: "heroicons-clock-16-solid",

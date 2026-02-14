@@ -13,11 +13,17 @@ const { updateDaysoff, deleteDaysoff } = daysoffStore;
 
 const props = defineProps([
   "_id",
-  "sprintId",
-  "title",
-  "timeOff",
-  "timeOffType",
-  "date",
+  "currentYear",
+  "previousYearHours",
+  "currentPersonalDaysHours",
+  "currentSickDaysHours",
+  "currentVacationDaysHours",
+  "currentHolidayDaysHours",
+  "currentAccrueHoursForYear",
+  "currentAccruedHoursForMonth",
+  "currentAccruedMonthsPerYear",
+  "status",
+  "description",
   "createdAt",
   "updatedAt",
 ]);
@@ -31,11 +37,18 @@ function formatedDate(value: string | Date) {
 }
 
 const form = ref({
-  sprintId: props.sprintId,
-  title: props.title,
-  timeOff: props.timeOff,
-  timeOffType: props.timeOffType,
-  date: formatedDate(props.date),
+  currentYear: props.currentYear || 0,
+  date: formatedDate(props.createdAt) || "",
+  previousYearHours: props.previousYearHours || 0,
+  currentPersonalDaysHours: props.currentPersonalDaysHours || 0,
+  currentSickDaysHours: props.currentSickDaysHours || 0,
+  currentVacationDaysHours: props.currentVacationDaysHours || 0,
+  currentHolidayDaysHours: props.currentHolidayDaysHours || 0,
+  currentAccrueHoursForYear: props.currentAccrueHoursForYear || 0,
+  currentAccruedHoursForMonth: props.currentAccruedHoursForMonth,
+  currentAccruedMonthsPerYear: props.currentAccruedMonthsPerYear,
+  status: props.status || "",
+  description: props.description || "",
 });
 
 onMounted(async () => {
@@ -44,11 +57,18 @@ onMounted(async () => {
 
 const handleSubmit = async () => {
   const newTimeEntry = {
-    sprintId: form.value.sprintId,
-    title: form.value.title,
-    timeOff: form.value.timeOff,
-    timeOffType: form.value.timeOffType,
+    currentYear: form.value.currentYear,
     date: form.value.date,
+    previousYearHours: form.value.previousYearHours,
+    currentPersonalDaysHours: form.value.currentPersonalDaysHours,
+    currentSickDaysHours: form.value.currentSickDaysHours,
+    currentVacationDaysHours: form.value.currentVacationDaysHours,
+    currentHolidayDaysHours: form.value.currentHolidayDaysHours,
+    currentAccrueHoursForYear: form.value.currentAccrueHoursForYear,
+    currentAccruedHoursForMonth: form.value.currentAccruedHoursForMonth,
+    currentAccruedMonthsPerYear: form.value.currentAccruedMonthsPerYear,
+    status: form.value.status,
+    description: form.value,
   };
   await updateDaysoff(props._id, newTimeEntry);
   navigateTo("/daysoff");
@@ -67,32 +87,31 @@ const removeItem = async () => {
     <h1 class="title">Modify Days Off Request</h1>
     <form @submit.prevent="handleSubmit">
       <!-- Sprint ID -->
-      <div class="form-group">
-        <label for="sprintId">Sprint ID</label>
-        <select v-model="form.sprintId" id="sprintId">
-          <option value="" disabled>Select sprint</option>
-          <option v-for="item in sprintList" :key="item" :value="item">
-            {{ item }}
-          </option>
-        </select>
-      </div>
-
       <!-- Title -->
       <div class="form-group">
-        <label for="title">Reason / Title</label>
-        <input v-model="form.title" type="text" id="title" />
+        <label for="title">Year</label>
+        <input v-model="form.currentYear" type="text" id="title" />
+      </div>
+
+      <div class="form-group">
+        <label for="title">Previous Year Hours Available</label>
+        <input v-model="form.previousYearHours" type="text" id="title" />
       </div>
 
       <!-- Days Off -->
       <div class="form-group">
-        <label for="timeOff">Hours Off</label>
-        <input v-model.number="form.timeOff" type="number" id="timeOff" />
+        <label for="timeOff">Days Off</label>
+        <input
+          v-model.number="form.currentPersonalDaysHours"
+          type="number"
+          id="timeOff"
+        />
       </div>
 
       <!-- Type -->
       <div class="form-group">
         <label for="timeOffType">Type</label>
-        <select v-model="form.timeOffType" id="timeOffType">
+        <select v-model="form.status" id="timeOffType">
           <option>Vacation</option>
           <option>Sick Leave</option>
           <option>Personal Leave</option>
@@ -110,12 +129,7 @@ const removeItem = async () => {
 
       <div class="modal-actions">
         <UButton type="submit" color="blue" variant="soft">Update</UButton>
-        <UButton
-          type="button"
-          color="red"
-          variant="soft"
-          @click="removeItem"
-        >
+        <UButton type="button" color="red" variant="soft" @click="removeItem">
           Delete
         </UButton>
       </div>

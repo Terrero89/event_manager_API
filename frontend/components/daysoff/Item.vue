@@ -4,18 +4,24 @@ import { formatDate } from "~/utils/date-conversion";
 
 const props = defineProps([
   "_id",
-  "sprintId",
-  "title",
-  "timeOff",
-  "timeOffType",
-  "date",
+  "currentYear",
+  "previousYearHours",
+  "currentPersonalDaysHours",
+  "currentSickDaysHours",
+  "currentVacationDaysHours",
+  "currentHolidayDaysHours",
+  "currentAccrueHoursForYear",
+  "currentAccruedHoursForMonth",
+  "currentAccruedMonthsPerYear",
+  "status",
+  "description",
   "createdAt",
   "updatedAt",
 ]);
 
 // Pick a badge color based on type of time off
 const typeColor = computed(() => {
-  switch (props.timeOffType) {
+  switch (props.status) {
     case "Vacation":
       return "green";
     case "Sick Leave":
@@ -50,44 +56,92 @@ const isOpen = ref(false);
   <div>
     <UIRenderer>
       <div class="item">
-        <p><strong>Title: </strong> {{ props.title }}</p>
-
+        <p class="mb-4">
+          <strong>Current Year </strong>
+          <UBadge :color="typeColor" variant="soft">{{ props.currentYear }} </UBadge>
+        </p>
+        <p>
+          <strong>Previous Year Hours: </strong>
+          <UBadge :color="typeColor" variant="soft"
+            >{{ props.previousYearHours }}
+          </UBadge>
+        </p>
         <div class="item-header">
-          <p><strong>Sprint ID: </strong> {{ props.sprintId }}</p>
           <p>
-            <strong>Type: </strong>
+            <strong>Personal Days Hours: </strong>
             <UBadge :color="typeColor" variant="soft">
-              {{ props.timeOffType }}
+              {{ props.currentPersonalDaysHours }}
+            </UBadge>
+          </p>
+
+          <p>
+            <strong>Sick Days Hours: </strong
+            ><UBadge :color="typeColor" variant="soft">
+              {{ props.currentSickDaysHours }}
             </UBadge>
           </p>
           <p>
-            <strong>Hours:</strong>
+            <strong>Current Holidays Hours: </strong>
+            <UBadge :color="typeColor" variant="soft">
+              {{ props.currentHolidayDaysHours }}
+            </UBadge>
+          </p>
+
+          <p>
+            <strong>Current Accrued Hours For Year: </strong>
+            <UBadge :color="typeColor" variant="soft">
+              {{ props.currentAccrueHoursForYear }}
+            </UBadge>
+          </p>
+          <p>
+            <strong>Current Accrued Hours For Month: </strong>
+            <UBadge :color="typeColor" variant="soft">
+              {{ props.currentAccruedHoursForMonth }}
+            </UBadge>
+          </p>
+
+          <p>
+            <strong>Current Accrued Months Per Year: </strong>
+            <UBadge :color="typeColor" variant="soft">
+              {{ props.currentAccruedMonthsPerYear }}
+            </UBadge>
+          </p>
+          <p>
+            <strong>Vacation Days Hours: </strong>
+            <UBadge :color="typeColor" variant="soft">
+              {{ props.currentVacationDaysHours }}
+            </UBadge>
+          </p>
+          <p>
+            <strong>Holiday Hours:</strong>
             <UBadge color="red" variant="soft">
-              {{ props.timeOff }}
+              {{ props.currentHolidayDaysHours }}
             </UBadge>
           </p>
         </div>
         <div class="item-flex">
-          <p class="mr-2">
-            <strong>Date: </strong> {{ formatDate(props.date) }}
-          </p>
+          <p class="mr-2"><strong>Date: </strong> {{ formatDate(props.createdAt) }}</p>
         </div>
         <div class="item-content"></div>
       </div>
 
       <div class="item-buttons my-2">
-        <UButton variant="soft" class="" @click="isOpen = true"
-          >Details</UButton
-        >
+        <UButton variant="soft" class="" @click="isOpen = true">Details</UButton>
 
         <UModal v-model="isOpen">
           <DaysoffUpdate
-            :_id="props._id"
-            :sprintId="props.sprintId"
-            :title="props.title"
-            :timeOff="props.timeOff"
-            :timeOffType="props.timeOffType"
-            :date="props.date"
+            :id="props._id"
+            :currentYear="props.currentYear"
+            :previousYearHours="props.previousYearHours"
+            :currentPersonalDaysHours="props.currentPersonalDaysHours"
+            :currentSickDaysHours="props.currentSickDaysHours"
+            :currentVacationDaysHours="props.currentVacationDaysHours"
+            :currentHolidayDaysHours="props.currentHolidayDaysHours"
+            :currentAccrueHoursForYear="props.currentAccrueHoursForYear"
+            :currentAccruedHoursForMonth="props.currentAccruedHoursForMonth"
+            :currentAccruedMonthsPerYear="props.currentAccruedMonthsPerYear"
+            :status="props.status"
+            :description="props.description"
             :createdAt="props.createdAt"
             :updatedAt="props.updatedAt"
           />

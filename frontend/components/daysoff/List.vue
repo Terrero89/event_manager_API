@@ -1,11 +1,17 @@
 <script setup lang="ts">
 const props = defineProps([
   "_id",
-  "sprintId",
-  "title",
-  "timeOff",
-  "timeOffType",
-  "date",
+  "currentYear",
+  "previousYearHours",
+  "currentPersonalDaysHours",
+  "currentSickDaysHours",
+  "currentVacationDaysHours",
+  "currentHolidayDaysHours",
+  "currentAccrueHoursForYear",
+  "currentAccruedHoursForMonth",
+  "currentAccruedMonthsPerYear",
+  "status",
+  "description",
   "createdAt",
   "updatedAt",
 ]);
@@ -14,12 +20,18 @@ const props = defineProps([
 <template>
   <div class="daysoff-list">
     <DaysoffItem
-      :_id="props._id"
-      :sprintId="props.sprintId"
-      :title="props.title"
-      :timeOff="props.timeOff"
-      :timeOffType="props.timeOffType"
-      :date="props.date"
+      :id="props._id"
+      :currentYear="props.currentYear"
+      :previousYearHours="props.previousYearHours"
+      :currentPersonalDaysHours="props.currentPersonalDaysHours"
+      :currentSickDaysHours="props.currentSickDaysHours"
+      :currentVacationDaysHours="props.currentVacationDaysHours"
+      :currentHolidayDaysHours="props.currentHolidayDaysHours"
+      :currentAccrueHoursForYear="props.currentAccrueHoursForYear"
+      :currentAccruedHoursForMonth="props.currentAccruedHoursForMonth"
+      :currentAccruedMonthsPerYear="props.currentAccruedMonthsPerYear"
+      :status="props.status"
+      :description="props.description"
       :createdAt="props.createdAt"
       :updatedAt="props.updatedAt"
     />

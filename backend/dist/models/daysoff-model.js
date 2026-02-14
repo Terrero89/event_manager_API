@@ -36,6 +36,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.DaysOff = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
 const DaysOffSchema = new mongoose_1.Schema({
+    currentYear: { type: Number, required: true },
     previousYearHours: { type: Number, required: true }, // hours from prev year
     currentPersonalDaysHours: { type: Number, required: false }, // total of personal days per year given
     currentSickDaysHours: { type: Number, required: false }, // total of sick days per year given
