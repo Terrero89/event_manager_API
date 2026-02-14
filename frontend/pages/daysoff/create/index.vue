@@ -13,7 +13,6 @@ const loadMessage = ref(false);
 const router = useRouter();
 
 const form = reactive({
-  sprintId: currentSprint.value || "",
   title: "",
   timeOff: 0 || null,
   timeOffType: "",
@@ -21,7 +20,6 @@ const form = reactive({
 });
 
 const errors = reactive({
-  sprintId: "",
   title: "",
   timeOff: "",
   timeOffType: "",
@@ -29,7 +27,6 @@ const errors = reactive({
 });
 
 const validateFields = () => {
-  errors.sprintId = !form.sprintId ? "Sprint ID is required" : "";
   errors.title = !form.title ? "Title is required" : "";
   errors.timeOff =
     form.timeOff == null || form.timeOff < 0 ? "Valid hours off required" : "";
@@ -43,7 +40,6 @@ const handleSubmit = async () => {
   if (!validateFields()) return;
 
   const newRequest = {
-    sprintId: form.sprintId,
     title: form.title,
     timeOff: form.timeOff,
     timeOffType: form.timeOffType,
@@ -68,19 +64,32 @@ onMounted(async () => {
   <div class="form-container">
     <h1 class="title">Request Days Off</h1>
     <form @submit.prevent="handleSubmit">
-      <!-- Sprint Selector -->
+      <!-- Type Selector -->
       <div class="form-group">
-        <label for="assignedSprint">Sprint ID</label>
-        <select v-model="form.sprintId" id="assignedSprint">
-          <option value="" disabled>Select sprint</option>
-          <option v-for="item in sprintList" :key="item" :value="item">
-            {{ item }}
-          </option>
+        <label for="timeOffType">Type of absence</label>
+        <select v-model="form.timeOffType" id="timeOffType">
+          <option value="" disabled>Select type</option>
+          <option>Vacation</option>
+          <option>Sick Leave</option>
+          <option>Personal Leave</option>
+          <option>Compensatory Time Off</option>
+          <option>Unpaid Leave</option>
+          <option>Other</option>
         </select>
-        <span v-if="errors.sprintId" class="error">{{ errors.sprintId }}</span>
+        <span v-if="errors.timeOffType" class="error">{{ errors.timeOffType }}</span>
+      </div>
+      <div class="form-group">
+        <label for="timeOff">Hours Off</label>
+        <input
+          step="4"
+          v-model.number="form.timeOff"
+          type="number"
+          id="timeOff"
+          placeholder="e.g. 8"
+        />
+        <span v-if="errors.timeOff" class="error">{{ errors.timeOff }}</span>
       </div>
 
-      <!-- Title -->
       <div class="form-group">
         <label for="title">Reason / Title</label>
         <input
@@ -92,44 +101,10 @@ onMounted(async () => {
         <span v-if="errors.title" class="error">{{ errors.title }}</span>
       </div>
 
-      <!-- Days Off -->
-      <div class="form-group">
-        <label for="timeOff">Hours Off</label>
-        <input
-          v-model.number="form.timeOff"
-          type="number"
-          id="timeOff"
-          placeholder="e.g. 8"
-        />
-        <span v-if="errors.timeOff" class="error">{{ errors.timeOff }}</span>
-      </div>
-
-      <!-- Type Selector -->
-      <div class="form-group">
-        <label for="timeOffType">Type</label>
-        <select v-model="form.timeOffType" id="timeOffType">
-          <option value="" disabled>Select type</option>
-          <option>Vacation</option>
-          <option>Sick Leave</option>
-          <option>Personal Leave</option>
-          <option>Compensatory Time Off</option>
-          <option>Unpaid Leave</option>
-          <option>Other</option>
-        </select>
-        <span v-if="errors.timeOffType" class="error">{{
-          errors.timeOffType
-        }}</span>
-      </div>
-
       <!-- Date -->
       <div class="form-group">
         <label for="date">Date</label>
-        <input
-          v-model="form.date"
-          type="date"
-          id="date"
-          placeholder="Select date"
-        />
+        <input v-model="form.date" type="date" id="date" placeholder="Select date" />
         <span v-if="errors.date" class="error">{{ errors.date }}</span>
       </div>
 

@@ -1,6 +1,6 @@
 export const CONFIG = {
     variables: {
-        reporters: ["Sergio Terrero", "Pedro Martinez", "Eugenia Derbez", "Jackie Perex", "Pamela Alvarez"],
+        reporters: ["Ashley Farr", "Gopi", "Niteesh", "Ramu Kotha", "Muhammad Talha"],
         difficultyLevels: ["Low", "Medium", "High", "Critical"],
         workTypes: ["Story", "Bug", "Non-prod", "Tasks", "Tech Debt", "Spike", "Feature", "Epic", "Testing"],
         developmentTypes: ["Frontend", "Backend", "Fullstack"],

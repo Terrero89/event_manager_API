@@ -11,7 +11,8 @@ export const useDaysoffStore = defineStore({
   actions: {
     getURL() {
       const config = useRuntimeConfig();
-      return config.public.apiBase + "/timeoff";
+      // config.public.apiBase is coming from the public runtime config which is set in nuxt.config.ts
+      return config.public.apiBase + "/daysoff";
     },
 
     async fetchDaysoff() {

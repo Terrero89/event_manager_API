@@ -4,7 +4,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       apiBase: process.env.API_LOCAL ||  "https://eventmanagerapi-dev.up.railway.app/api/v1",
-      firebaseBase: process.env.FIREBASE_BASE || 'https://project-manager-app-f9829-default-rtdb.firebaseio.com',
+      firebaseBase: process.env.FIREBASE_BASE || "https://eventmanagerapi-dev.up.railway.app/api/v1",
     }
   },
 
