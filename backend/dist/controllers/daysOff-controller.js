@@ -13,6 +13,11 @@ exports.deleteDaysOffController = exports.updateDaysOffController = exports.getD
 const daysoff_model_1 = require("../models/daysoff-model");
 const createDaysOffController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        console.log(req.body); // check if req.body is empty
+        if (!req.body) {
+            res.status(400).json({ message: "DaysOff request body is empty" });
+            return;
+        }
         const daysOff = yield daysoff_model_1.DaysOff.create(Object.assign(Object.assign({}, req.body), { user: req.user.id }));
         res.status(200).json(daysOff);
     }
